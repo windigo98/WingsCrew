@@ -18,4 +18,10 @@ window.WINGS_APPS = [
     url: "https://windigo98.github.io/Net-pulse/",
     badge: "Connectivity checker",
   },
+  {
+    name: "Litter Crusaders Maps",
+    blurb: "Catch litter creatures on the map, fill your Litter-dex, and send park bosses packing.",
+    url: "https://windigo98.github.io/Littler-Crusaders-Maps/",
+    badge: "Play",
+  },
 ];
