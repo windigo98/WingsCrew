@@ -64,3 +64,7 @@ No `https://` and no path. IONOS may store it as `windigo98.github.io.`.
 3. Turn on **Enforce HTTPS**.
 
 GitHub then serves this project on `wingscrew.com` and redirects `www.wingscrew.com` to the apex. Saving the custom domain adds a `CNAME` file on `main`. Leave that file out until you are ready for the redirect. The `github.io` URL above keeps working until that custom domain is saved.
+
+## License
+
+Copyright (c) 2026 WingsCrew (windigo98). All rights reserved. The source is published for viewing only. See [LICENSE](LICENSE).
