@@ -7,7 +7,7 @@
 // badge  Small label above the title, shown in small caps
 window.WINGS_APPS = [
   {
-    name: "Sip & Spill",
+    name: "Pour Decisions",
     blurb: "Spicy questions, truths, and dares. Pass the phone, or let a host read the card.",
     url: "https://windigo98.github.io/Sip-and-Spill/",
     badge: "21+ party game",
