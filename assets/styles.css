@@ -113,8 +113,12 @@ p {
 .nav {
   display: flex;
   align-items: center;
-  gap: 1.05rem;
-  flex-shrink: 0;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 0.65rem 1.05rem;
+  flex-shrink: 1;
+  min-width: 0;
+  max-width: 100%;
 }
 
 .nav a {
@@ -126,6 +130,12 @@ p {
 
 .nav a[aria-current="true"] {
   color: var(--cream);
+}
+
+.nav a.tip,
+.nav a.feedback {
+  color: var(--gold-ink);
+  font-weight: 600;
 }
 
 .tip {
@@ -143,12 +153,15 @@ p {
 }
 
 .tip:hover,
-.tip:focus-visible {
+.tip:focus-visible,
+.nav a.tip:hover,
+.nav a.tip:focus-visible {
   background: #e3bc63;
   color: var(--gold-ink);
 }
 
-.share {
+.share,
+.feedback {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -163,17 +176,24 @@ p {
   font-weight: 600;
   line-height: 1;
   white-space: nowrap;
+  text-decoration: none;
   cursor: pointer;
 }
 
-.nav .share {
+.nav .share,
+.nav .feedback {
   min-height: 2.35rem;
   height: 2.35rem;
   padding: 0 0.85rem;
+  font-size: 0.98rem;
 }
 
 .share:hover,
-.share:focus-visible {
+.share:focus-visible,
+.feedback:hover,
+.feedback:focus-visible,
+.nav a.feedback:hover,
+.nav a.feedback:focus-visible {
   background: #e3bc63;
   color: var(--gold-ink);
 }
@@ -370,7 +390,8 @@ h1 {
 }
 
 .tip:focus-visible,
-.share:focus-visible {
+.share:focus-visible,
+.feedback:focus-visible {
   outline: 2px solid var(--cream);
   outline-offset: 3px;
 }
@@ -418,7 +439,8 @@ h1 {
     font-size: 0.92rem;
   }
 
-  .nav .share {
+  .nav .share,
+  .nav .feedback {
     padding: 0 0.7rem;
   }
 

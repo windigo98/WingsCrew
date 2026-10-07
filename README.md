@@ -17,7 +17,7 @@ Edit [`assets/apps.js`](assets/apps.js). Each entry has:
 
 Append an object and the card grid picks it up. On a phone the cards stack. Wider screens flow them into as many columns as fit.
 
-The **Tip** button goes to [Cash App $windigo98](https://cash.app/$windigo98). **Shop** is a coming-soon placeholder. Nothing there is for sale.
+The **Tip** button goes to [Cash App $windigo98](https://cash.app/$windigo98). **Feedback** opens an email to [dovewingsbusiness@gmail.com](mailto:dovewingsbusiness@gmail.com). **Shop** is a coming-soon placeholder. Nothing there is for sale.
 
 ## GitHub Pages
 
