@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Crew Lab — Testing</title>
+    <meta name="robots" content="noindex" />
+    <meta
+      name="description"
+      content="Unlisted WingsCrew page for checking in-progress builds and live apps."
+    />
+    <meta name="theme-color" content="#0b0a09" />
+    <link rel="icon" href="../assets/brand/favicon.ico" sizes="any" />
+    <link rel="icon" type="image/png" sizes="32x32" href="../assets/brand/favicon-32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="../assets/brand/favicon-16.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="../assets/brand/apple-touch-icon.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,560;0,9..144,650;1,9..144,560&family=Outfit:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../assets/styles.css" />
+  </head>
+  <body>
+    <a class="skip" href="#main">Skip to content</a>
+    <header class="site-header" id="top">
+      <div class="wrap bar">
+        <a class="brand" href="../">
+          <picture>
+            <source srcset="../assets/brand/logo.webp" type="image/webp" />
+            <img
+              class="brand-logo"
+              src="../assets/brand/logo.png"
+              width="532"
+              height="720"
+              alt="WingsCrew"
+            />
+          </picture>
+          <span aria-hidden="true">WingsCrew</span>
+        </a>
+      </div>
+    </header>
+
+    <main id="main">
+      <section class="hero">
+        <div class="wrap">
+          <p class="eyebrow">WingsCrew</p>
+          <h1>Crew Lab</h1>
+          <p class="tagline">Testing</p>
+          <p class="lede">In-progress builds and live apps for a quick check.</p>
+        </div>
+      </section>
+
+      <section class="section" id="progress" aria-labelledby="progress-title">
+        <div class="wrap">
+          <h2 class="section-title" id="progress-title">
+            <span class="dash" aria-hidden="true">—</span> In progress
+          </h2>
+          <div class="apps-grid" data-lab="progress"></div>
+        </div>
+      </section>
+
+      <section class="section" id="live" aria-labelledby="live-title">
+        <div class="wrap">
+          <h2 class="section-title" id="live-title">
+            <span class="dash" aria-hidden="true">—</span> Live apps
+          </h2>
+          <div class="apps-grid" data-lab="live"></div>
+          <noscript>
+            <p class="empty">JavaScript is off, so the testing list is hidden.</p>
+          </noscript>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="wrap">
+        <p>WingsCrew · windigo98</p>
+        <p>© 2026 WingsCrew. All rights reserved.</p>
+      </div>
+    </footer>
+
+    <script src="../assets/lab-apps.js"></script>
+    <script src="../assets/lab.js"></script>
+  </body>
+</html>
