@@ -104,10 +104,19 @@ p {
   letter-spacing: -0.02em;
 }
 
-.brand img {
-  width: 28px;
-  height: 28px;
+.brand picture {
   display: block;
+  flex: 0 0 auto;
+  line-height: 0;
+}
+
+.brand .brand-logo {
+  width: auto;
+  height: 2.75rem;
+  max-width: 3.5rem;
+  max-height: 2.75rem;
+  display: block;
+  object-fit: contain;
 }
 
 .nav {
@@ -451,9 +460,21 @@ h1 {
   .brand {
     font-size: 0.98rem;
   }
+
+  .brand .brand-logo {
+    height: 2.35rem;
+    max-height: 2.35rem;
+    max-width: 2.9rem;
+  }
 }
 
 @media (min-width: 760px) {
+  .brand .brand-logo {
+    height: 3.35rem;
+    max-height: 3.35rem;
+    max-width: 4.2rem;
+  }
+
   .apps-grid {
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 1rem;
