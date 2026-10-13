@@ -123,12 +123,25 @@ const fmtHM=hm=>{const [h,m]=hm.split(':').map(Number);const d=new Date();d.setH
 let toastT;
 function toast(msg,ms=2600){const t=$('#toast');t.textContent=msg;t.classList.add('show');clearTimeout(toastT);toastT=setTimeout(()=>t.classList.remove('show'),ms);}
 let voice=null;
-function pickVoice(){const v=speechSynthesis.getVoices();voice=v.find(x=>/en[-_]US/i.test(x.lang)&&/Samantha|Google|Natural|Aria|Jenny/i.test(x.name))||v.find(x=>/^en/i.test(x.lang))||null;}
+const VOICES=[['af_heart','Warm woman'],['am_michael','Warm man'],['bm_george','Calm older British man'],['bf_emma','Calm British woman'],['af_bella','Cheerful kid-friendly'],['af_nicole','Gentle soft woman'],['am_fenrir','Steady deeper man'],['af_sarah','Bright friendly woman']];
+const VSAMPLE='Good morning. Let\u2019s get you ready. Step one: find your keys. They\u2019re usually by the front door.';
+let VMAN=null,curAudio=null;
+fetch('audio/manifest.json').then(r=>r.ok?r.json():null).then(j=>{VMAN=j;}).catch(()=>{});
+function normT(t){return String(t).replace(/[\u2018\u2019]/g,"'").replace(/\s+/g,' ').trim();}
+function myVoice(){return (S.voices&&S.voices[S.who])||'af_heart';}
+function audioFor(text,vid){if(!VMAN)return null;const h=VMAN.lines[normT(text)];if(!h)return null;const vs=VMAN.voices[vid];return vs&&vs.includes(h)?`audio/${vid}/${h}.mp3`:null;}
+function pickVoice(){const v=speechSynthesis.getVoices().filter(x=>/^en/i.test(x.lang));
+  const score=x=>(/Natural|Neural|Online/i.test(x.name)?8:0)+(/Google|Samantha|Aria|Jenny|Ava|Serena|Daniel/i.test(x.name)?4:0)+(/en[-_]US/i.test(x.lang)?2:0)+(x.localService?0:1);
+  voice=v.sort((a,b)=>score(b)-score(a))[0]||null;}
 if('speechSynthesis' in window){pickVoice();speechSynthesis.onvoiceschanged=pickVoice;}
-function speak(text,show=true){
+function stopSpeech(){if(curAudio){curAudio.pause();curAudio=null;}try{if('speechSynthesis' in window)speechSynthesis.cancel();}catch(e){}}
+function speakTTS(text){if(!('speechSynthesis' in window))return;try{const u=new SpeechSynthesisUtterance(text);u.rate=.92;u.pitch=1;if(voice)u.voice=voice;speechSynthesis.speak(u);}catch(e){}}
+function speak(text,show=true,vid){
   if(show)toast(text,Math.max(2600,text.length*70));
-  if(!('speechSynthesis' in window))return;
-  try{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(text);u.rate=.92;u.pitch=1;if(voice)u.voice=voice;speechSynthesis.speak(u);}catch(e){}
+  stopSpeech();
+  const src=audioFor(text,vid||myVoice());
+  if(src){const a=new Audio(src);curAudio=a;a.play().catch(()=>{if(curAudio===a){curAudio=null;speakTTS(text);}});return;}
+  speakTTS(text);
 }
 let actx;
 function chime(big){
@@ -181,7 +194,7 @@ function scr_onboard(step){
     body:`<div class="choices row3">${o.map(([k,l,i,d])=>`<button class="choice" data-act="who" data-v="${k}" aria-pressed="${S.who===k}">${ic(i)}<span>${l}<small>${d}</small></span></button>`).join('')}</div>`,
     next:()=>nav(3),acts:{who:el=>{S.who=el.dataset.v;save();render();}}});}
   if(step===3)return Object.assign(base,{name:'How should I help?',portal:portal({title:'How should I help?'}),guide:'Choose what feels comfortable. You can change these later in More.',
-    body:settingsRows(['read','size','sensory']),next:()=>nav(4),acts:settingActs});
+    body:settingsRows(['read','voice','size','sensory']),next:()=>nav(4),acts:settingActs});
   if(step===4)return Object.assign(base,{name:'Pick your world',portal:portal({title:W().name+' world'}),guide:'Tap a world. It shows in the window above. Then tap Next.',
     body:worldPicker(),next:()=>nav(5),acts:settingActs});
   if(step===5)return Object.assign(base,{name:'Your first checklist',portal:portal({title:'Your first checklist'}),guide:'Keep the things you need. Tap the X to remove one, or add your own.',
@@ -213,7 +226,9 @@ function scr_onboard(step){
 const settingActs={
   set:el=>{const k=el.dataset.k;let v=el.dataset.v;if(v==='true')v=true;if(v==='false')v=false;S[k]=v;save();applyClasses();render();
     if(k==='readAloud'&&v)speak('Read aloud is on. I will read each step to you.');},
-  world:el=>{S.world=el.dataset.v;save();render();}
+  world:el=>{S.world=el.dataset.v;save();render();},
+  voice:el=>{S.voices=Object.assign({},S.voices,{[S.who]:el.dataset.v});save();render();speak(VSAMPLE,false,el.dataset.v);},
+  vplay:el=>speak(VSAMPLE,false,el.dataset.v)
 };
 function seg(k,opts){return `<div class="seg" role="group">${opts.map(([v,l])=>`<button data-act="set" data-k="${k}" data-v="${v}" aria-pressed="${String(S[k])===String(v)}">${l}</button>`).join('')}</div>`;}
 function settingsRows(which){
@@ -223,7 +238,8 @@ function settingsRows(which){
     size:`<div class="setrow"><div class="lbl">${ic('text')}Text size</div>${seg('textSize',[['normal','Normal'],['large','Large'],['xl','Extra large']])}</div>`,
     sensory:`<div class="setrow"><div class="lbl">${ic('sparkle')}Sounds and motion</div>${seg('sensory',[['calm','Calm'],['full','Full']])}<p class="sub" style="margin-top:6px">${S.sensory==='calm'?'Calm: no sounds, very little movement.':'Full: gentle chimes, shimmer and motion.'}</p></div>`,
     bad:`<div class="setrow"><div class="lbl">${ic('heart')}Bad day mode</div>${seg('badDay',[[true,'On'],[false,'Off']])}</div>`,
-    world:`<div class="setrow"><div class="lbl">${ic('image')}World</div>${worldPicker(true)}</div>`
+    world:`<div class="setrow"><div class="lbl">${ic('image')}World</div>${worldPicker(true)}</div>`,
+    voice:`<div class="setrow"><div class="lbl">${ic('speaker')}Reading voice</div><div class="vpick" role="radiogroup" aria-label="Reading voice">${VOICES.map(([id,n])=>`<div class="vrow"><button class="vchoose" role="radio" data-act="voice" data-v="${id}" aria-checked="${myVoice()===id}" aria-pressed="${myVoice()===id}">${n}</button><button class="vplay" data-act="vplay" data-v="${id}" aria-label="Play sample: ${n}">${ic('speaker')}Play</button></div>`).join('')}</div></div>`
   };
   return `<div class="card">${which.map(w=>rows[w]).join('')}</div>`;
 }
@@ -392,7 +408,7 @@ function scr_more(){
     body:`<div class="tools" style="grid-template-columns:repeat(2,1fr)">
       <button class="tool" data-act="nav" data-to="donecheck">${ic('shieldcheck')}Done-check</button><button class="tool" data-act="nav" data-to="where">${ic('search')}Where is it?</button>
       <button class="tool" data-act="nav" data-to="whos">${ic('whos')}Who\u2019s that?</button><button class="tool" data-act="tour">${ic('compass')}Replay the tour</button></div>
-    <h2 style="margin:6px 4px 10px">Settings</h2>${settingsRows(['guide','read','size','sensory','bad','world'])}
+    <h2 style="margin:6px 4px 10px">Settings</h2>${settingsRows(['guide','read','voice','size','sensory','bad','world'])}
     <div class="card"><div class="setrow"><div class="lbl">${ic('repeat')}Reset prototype</div><p class="sub">Clears everything and starts again from Welcome.</p><button class="btn block" data-act="reset">Reset everything</button></div></div>
     <p class="footer">Highkeep prototype \u00b7 \u00a9 2026 WingsCrew. All rights reserved.</p>`,
     acts:Object.assign({},settingActs,{tour:()=>{go('home');setTimeout(startTour,450);},
@@ -510,7 +526,7 @@ function showTour(){
 }
 function endTour(){$('#overlay-root').innerHTML='';S.tourDone=true;save();toast('Tour finished. Tap Where am I? any time.');}
 window.addEventListener('resize',()=>{if($('.tour-spot'))showTour();});
-window.Highkeep={startTour,state:()=>S,flip,reveal,game:()=>game};
+window.Highkeep={guide:()=>cur&&guideText(cur).speech,TOUR:()=>TOUR,startTour,state:()=>S,flip,reveal,game:()=>game};
 
 render();
 })();
