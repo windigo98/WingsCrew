@@ -1,2 +1,3 @@
 User-agent: *
 Disallow: /highkeep-preview/
+Disallow: /wtb-clarity-preview/
