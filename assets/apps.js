@@ -1,17 +1,14 @@
-// WingsCrew apps. The homepage renders one card per entry.
-// Add an object to this list to publish another app. No other files need to change.
+// WingsCrew apps. The homepage renders one card per entry that is not adult.
+// Add an object to this list to publish another app.
+// For an adult app, set adult: true, or add it to adult-apps.js instead.
+// Adult entries are listed on /21plus/ and left off the homepage.
 //
 // name   Visible title
 // blurb  Short description under the title
 // url    Where "Open app" goes (https)
 // badge  Small label above the title, shown in small caps
+// adult  Optional. true sends the card to the 21+ page instead of the homepage.
 window.WINGS_APPS = [
-  {
-    name: "Tipsy Tease & Spilt Tea",
-    blurb: "Spicy questions, truths, and dares. Pass the phone, or let a host read the card.",
-    url: "https://windigo98.github.io/Sip-and-Spill/",
-    badge: "21+ party game",
-  },
   {
     name: "Net Pulse",
     blurb: "Checks whether this phone can actually reach the internet, then shows latency and speed.",

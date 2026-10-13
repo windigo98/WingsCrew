@@ -141,6 +141,30 @@ p {
   color: var(--cream);
 }
 
+.nav a.adult-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 2.35rem;
+  padding: 0 0.8rem;
+  border: 1px solid rgba(214, 174, 78, 0.72);
+  border-radius: 999px;
+  color: var(--gold);
+  font-size: 0.86rem;
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+}
+
+.nav a.adult-link:focus-visible {
+  background: var(--gold);
+  border-color: var(--gold);
+  color: var(--gold-ink);
+  outline: 2px solid var(--cream);
+  outline-offset: 3px;
+}
+
 .nav a.tip,
 .nav a.feedback {
   color: var(--gold-ink);
@@ -210,6 +234,68 @@ p {
 .share.is-copied {
   background: var(--cream);
   color: var(--gold-ink);
+}
+
+.age-gate {
+  padding: 0.6rem 0 2.4rem;
+}
+
+.age-card {
+  max-width: 36rem;
+}
+
+.age-card h1 {
+  max-width: 14ch;
+  font-size: clamp(2.05rem, 8vw, 2.85rem);
+  line-height: 1.05;
+}
+
+.age-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 1.35rem;
+}
+
+.age-no {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 2.75rem;
+  padding: 0 1.05rem;
+  border: 1px solid rgba(244, 240, 230, 0.28);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--cream);
+  font: inherit;
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.age-no:hover,
+.age-no:focus-visible {
+  border-color: var(--gold);
+  color: var(--gold);
+}
+
+.age-content {
+  display: none;
+}
+
+html.age-ok .age-gate {
+  display: none;
+}
+
+html.age-ok .age-content {
+  display: block;
+}
+
+.age-page .hero h1 {
+  max-width: 11ch;
+  font-size: clamp(2.45rem, 10vw, 4.4rem);
+  line-height: 0.95;
 }
 
 .hero {
@@ -393,7 +479,8 @@ h1 {
 .app-card:focus-visible,
 .see-apps:focus-visible,
 .brand:focus-visible,
-.nav a:focus-visible {
+.nav a:focus-visible,
+.age-no:focus-visible {
   outline: 2px solid var(--gold);
   outline-offset: 3px;
 }
@@ -436,6 +523,11 @@ h1 {
 
   .nav {
     margin-left: auto;
+  }
+
+  .nav a.adult-link {
+    flex: 1 0 100%;
+    margin-top: 0.15rem;
   }
 }
 
@@ -550,6 +642,13 @@ h1 {
 
   .nav a:hover {
     color: var(--cream);
+  }
+
+  .nav a.adult-link:hover,
+  .nav a.adult-link:focus-visible {
+    background: var(--gold);
+    border-color: var(--gold);
+    color: var(--gold-ink);
   }
 }
 
