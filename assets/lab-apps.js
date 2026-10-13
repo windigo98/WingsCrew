@@ -33,8 +33,9 @@ window.WINGS_LAB = [
   {
     group: "progress",
     name: "WTB Clarity 2plat",
-    blurb: "No build to open yet.",
-    status: "coming soon",
+    blurb: "Preview build on this site.",
+    status: "live",
+    url: "/wtb-clarity-preview/",
   },
   {
     group: "live",
