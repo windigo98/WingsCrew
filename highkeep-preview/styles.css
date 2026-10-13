@@ -375,3 +375,10 @@ p{margin:.3rem 0 .6rem}
 .stepbar.nob{grid-template-columns:1fr auto}
 .stepbar.nob .stepcount{text-align:left;padding-left:8px}
 .stepbar.nob .dots{justify-content:flex-start}
+/* Voice picker */
+.vpick{display:flex;flex-direction:column;gap:8px;margin-top:8px}
+.vrow{display:flex;gap:8px;align-items:stretch}
+.vrow .vchoose{flex:1;text-align:left;padding:12px 14px;border-radius:14px;border:2px solid rgba(80,70,140,.25);background:rgba(255,255,255,.7);font:inherit;font-size:1.05rem;cursor:pointer;min-height:48px}
+.vrow .vchoose[aria-checked="true"]{border-color:#3b3f86;background:#3b3f86;color:#fff}
+.vrow .vplay{display:flex;align-items:center;gap:6px;padding:0 14px;border-radius:14px;border:2px solid rgba(80,70,140,.25);background:#fff;font:inherit;cursor:pointer;min-height:48px}
+.vrow .vplay svg{width:20px;height:20px}
