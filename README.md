@@ -14,8 +14,15 @@ Edit [`assets/apps.js`](assets/apps.js). Each entry has:
 | `blurb` | Short description |
 | `url` | Link for “Open app” |
 | `badge` | Small label above the title |
+| `adult` | Optional. Set to `true` to list the app on the 21+ page instead of the homepage. |
 
 Append an object and the card grid picks it up. On a phone the cards stack. Wider screens flow them into as many columns as fit.
+
+## 21+ page
+
+Adult humor and games live at [`/21plus/`](21plus/index.html). The first visit asks “You must be 21 or older to enter.” **Yes** is stored in `localStorage` under `wingscrew-21plus`. **No** returns to the homepage.
+
+Add a card by appending to [`assets/adult-apps.js`](assets/adult-apps.js), or by setting `adult: true` on an entry in `apps.js`. Either way it shows on the 21+ page and stays off the homepage. The homepage header links here. The page sends `noindex`.
 
 The **Tip** button goes to [Cash App $windigo98](https://cash.app/$windigo98). **Feedback** opens an email to [dovewingsbusiness@gmail.com](mailto:dovewingsbusiness@gmail.com). **Shop** is a coming-soon placeholder. Nothing there is for sale.
 

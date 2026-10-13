@@ -1,6 +1,32 @@
 (function () {
+  var AGE_KEY = "wingscrew-21plus";
   var mount = document.querySelector("[data-apps]");
-  var apps = Array.isArray(window.WINGS_APPS) ? window.WINGS_APPS : [];
+
+  function isAdult(app) {
+    return !!(app && app.adult);
+  }
+
+  function appList() {
+    var all = Array.isArray(window.WINGS_APPS) ? window.WINGS_APPS : [];
+    var dedicated = Array.isArray(window.WINGS_ADULT_APPS) ? window.WINGS_ADULT_APPS : [];
+    var adultMode = mount && mount.getAttribute("data-apps") === "adult";
+    var source = adultMode
+      ? dedicated.concat(all.filter(isAdult))
+      : all.filter(function (app) {
+          return app && !isAdult(app);
+        });
+    var seen = {};
+
+    return source.filter(function (app) {
+      if (!app || !app.name || !app.url) return false;
+      var key = String(app.url);
+      if (seen[key]) return false;
+      seen[key] = true;
+      return true;
+    });
+  }
+
+  var apps = appList();
 
   function escapeHtml(value) {
     return String(value)
@@ -192,7 +218,45 @@
     });
   }
 
+  function wireAgeGate() {
+    var gate = document.querySelector("[data-age-gate]");
+    if (!gate) return;
+
+    var yes = gate.querySelector("[data-age-yes]");
+    var no = gate.querySelector("[data-age-no]");
+
+    function grant() {
+      try {
+        window.localStorage.setItem(AGE_KEY, "yes");
+      } catch (error) {
+        /* private mode still unlocks for this visit */
+      }
+      document.documentElement.classList.add("age-ok");
+      var heading = document.querySelector(".age-content h1");
+      if (!heading || typeof heading.focus !== "function") return;
+      heading.setAttribute("tabindex", "-1");
+      heading.focus();
+    }
+
+    if (yes) yes.addEventListener("click", grant);
+
+    if (no) {
+      no.addEventListener("click", function () {
+        window.location.href = "../";
+      });
+    }
+
+    if (
+      !document.documentElement.classList.contains("age-ok") &&
+      yes &&
+      typeof yes.focus === "function"
+    ) {
+      yes.focus();
+    }
+  }
+
   renderApps();
   watchNav();
   wireShare();
+  wireAgeGate();
 })();
