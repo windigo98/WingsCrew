@@ -100,20 +100,50 @@ const plantSVG=`<svg class="plant glow" viewBox="0 0 120 120" aria-hidden="true"
 <circle cx="61" cy="46" r="4" fill="#fff4c0"/></svg>`;
 
 /* ---------------- Data ---------------- */
-const WORLDS={
- fantasy:{name:'Fantasy',img:'floating_isles',pos:'64% 30%',desc:'Floating isles above the clouds',paint:'68% 35%'},
- medieval:{name:'Medieval',img:'blossom_tree',pos:'50% 35%',desc:'A palace in a great blossom tree',paint:'55% 40%'},
- modern:{name:'Modern',img:'crystal_cliff',pos:'74% 40%',desc:'Crystal towers by a glowing sea',paint:'78% 40%',note:'Preview art: the Modern world reuses the crystal cliff for now. Its dreamlike skyline scene is still to be painted.'},
- scifi:{name:'Sci-fi',img:'star_citadel',pos:'66% 45%',desc:'A star citadel among the planets',paint:'68% 45%'}
+const THEMES={
+ fantasy:{name:'Fantasy',blurb:'Floating isles, glass palaces and glowing forests'},
+ medieval:{name:'Medieval',blurb:'Castles on misty lakes and mountain keeps'},
+ modern:{name:'Modern',blurb:'Calm glass, gardens and towers by the sea'},
+ scifi:{name:'Sci-fi',blurb:'Star citadels, ring worlds and nebulae'},
+ kids:{name:'Kids',blurb:'Gentle, bright and friendly places',kids:true}
 };
+/* Scenes: f = file under img/ (scenes/... have a small version in img/scenes/sm/). pos = crop focus for windows and thumbnails, paint = crop focus for framed paintings. */
+const SCENES=[
+ {id:'floating_isles',theme:'fantasy',f:'floating_isles',short:'Floating isles',title:'Floating isles above the clouds',pos:'64% 30%',paint:'68% 35%'},
+ {id:'blossom_tree',theme:'fantasy',f:'blossom_tree',short:'Blossom tree',title:'A palace in a great blossom tree',pos:'50% 35%',paint:'55% 40%'},
+ {id:'crystal_cliff',theme:'fantasy',f:'crystal_cliff',short:'Crystal cliff',title:'Crystal towers by a glowing sea',pos:'74% 40%',paint:'78% 40%'},
+ {id:'underwater_glass',theme:'fantasy',f:'scenes/fantasy_underwater_glass_palace',short:'Glass palace',title:'A glass palace beneath the waves',pos:'55% 55%',paint:'55% 55%'},
+ {id:'waterfall_citadel',theme:'fantasy',f:'scenes/fantasy_waterfall_citadel',short:'Waterfall citadel',title:'A waterfall citadel among the clouds',pos:'55% 40%',paint:'55% 40%'},
+ {id:'aurora_ice',theme:'fantasy',f:'scenes/fantasy_aurora_ice_palace',short:'Aurora palace',title:'An ice palace under the aurora',pos:'55% 45%',paint:'55% 45%'},
+ {id:'misty_lake',theme:'medieval',f:'scenes/medieval_misty_lake_castle',short:'Misty lake castle',title:'A castle on a misty lake at golden hour',pos:'40% 50%',paint:'40% 50%'},
+ {id:'mountain_keep',theme:'medieval',f:'scenes/medieval_mountain_keep',short:'Mountain keep',title:'A keep above the mountain mist',pos:'70% 55%',paint:'70% 55%'},
+ {id:'sky_villa',theme:'modern',f:'scenes/modern_sky_villa',short:'Sky villa',title:'A glass-and-garden villa in the sky',pos:'60% 50%',paint:'60% 50%'},
+ {id:'coastal_tower',theme:'modern',f:'scenes/modern_coastal_tower',short:'Coastal tower',title:'A quiet coastal tower at dusk',pos:'75% 40%',paint:'75% 40%'},
+ {id:'star_citadel',theme:'scifi',f:'star_citadel',short:'Star citadel',title:'A star citadel among the planets',pos:'66% 45%',paint:'68% 45%'},
+ {id:'ringworld',theme:'scifi',f:'scenes/scifi_ringworld_palace',short:'Ring-world palace',title:'A palace on a ring world',pos:'70% 70%',paint:'70% 70%'},
+ {id:'nebula_observatory',theme:'scifi',f:'scenes/scifi_nebula_observatory',short:'Nebula keep',title:'An observatory keep in the nebula',pos:'40% 60%',paint:'40% 60%'},
+ {id:'cloud_castle',theme:'kids',f:'scenes/kids_cloud_castle',short:'Cloud castle',title:'A candy-colored cloud castle',pos:'40% 55%',paint:'40% 55%'},
+ {id:'treehouse',theme:'kids',f:'scenes/kids_treehouse_kingdom',short:'Treehouse kingdom',title:'A treehouse kingdom with friendly lanterns',pos:'50% 50%',paint:'50% 50%'},
+ {id:'rainbow_bridges',theme:'kids',f:'scenes/kids_rainbow_bridge_palace',short:'Rainbow bridges',title:'A storybook palace with rainbow bridges',pos:'55% 45%',paint:'55% 45%'}
+];
+const sceneById=id=>SCENES.find(x=>x.id===id);
+const themeScenes=t=>SCENES.filter(x=>x.theme===t);
+const isKidSetup=()=>S.who==='child';
+const availThemes=()=>Object.keys(THEMES).filter(k=>!THEMES[k].kids||isKidSetup());
 const KEY='highkeep.proto.v1';
-const DEF=()=>({onboarded:false,who:'me',readAloud:false,textSize:'normal',sensory:'calm',world:'fantasy',guide:true,badDay:false,
+const DEF=()=>({onboarded:false,who:'me',readAloud:false,textSize:'normal',sensory:'calm',world:'fantasy',scene:'floating_isles',looks:{},guide:true,badDay:false,
  checklist:[{id:'c1',label:'Socks',done:false},{id:'c2',label:'Keys',done:false},{id:'c3',label:'Wallet',done:false},{id:'c4',label:'Meds',done:false}],
  leaveTime:'08:30',gauge:35,awarded:{},keeps:[],tourDone:false,
  doneChecks:[{id:'d1',label:'Took my meds',icon:'pill',at:null},{id:'d2',label:'Stove is off',icon:'flame',at:null},{id:'d3',label:'Door locked',icon:'lock',at:null},{id:'d4',label:'Lights off',icon:'bulb',at:null}],
  doneLog:[],places:[{id:'p1',item:'Spare key',where:'Under the blue flowerpot by the back door',photo:null,at:Date.now()-86400000*2}],cardBest:null});
 let S;
 try{S=Object.assign(DEF(),JSON.parse(localStorage.getItem(KEY)||'{}'));}catch(e){S=DEF();}
+function normLook(){if(!THEMES[S.world]||(THEMES[S.world].kids&&!isKidSetup()))S.world='fantasy';const c=sceneById(S.scene);if(!c||c.theme!==S.world)S.scene=themeScenes(S.world)[0].id;}
+normLook();
+function rememberLook(){S.looks=Object.assign({},S.looks,{[S.who]:{world:S.world,scene:S.scene}});}
+function switchPerson(who){rememberLook();S.who=who;const l=S.looks&&S.looks[who];
+  if(l&&THEMES[l.world]){S.world=l.world;S.scene=l.scene;}else if(who==='child'){S.world='kids';S.scene=themeScenes('kids')[0].id;}
+  normLook();rememberLook();}
 function save(){try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){toast('Storage is full. Try a smaller photo.');}}
 
 /* ---------------- Helpers ---------------- */
@@ -157,8 +187,9 @@ function applyClasses(){
   const rm=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   h.classList.toggle('calm',S.sensory!=='full'||rm);
 }
-const W=()=>WORLDS[S.world]||WORLDS.fantasy;
-const imgUrl=(n,sm)=>`img/${n}${sm?'_sm':''}.jpg`;
+const asWorld=sc=>Object.assign({},sc,{name:THEMES[sc.theme].name,img:sc.f,desc:sc.title});
+const W=t=>asWorld(!t||t===S.world?(sceneById(S.scene)||themeScenes(S.world)[0]):(themeScenes(t)[0]||SCENES[0]));
+const imgUrl=(n,sm)=>n.startsWith('scenes/')?(sm?`img/scenes/sm/${n.slice(7)}.jpg`:`img/${n}.jpg`):`img/${n}${sm?'_sm':''}.jpg`;
 
 /* Gauge */
 let pendingReveal=false;
@@ -192,7 +223,7 @@ function scr_onboard(step){
   if(step===2){const o=[['me','Myself','person','I want help remembering'],['care','Someone I care for','heart','A parent, partner or friend'],['child','A child','child','Picture routines and calm steps']];
     return Object.assign(base,{name:'Who is this for?',portal:portal({title:'Who is this for?'}),guide:'Tap the one that fits, then tap Next.',
     body:`<div class="choices row3">${o.map(([k,l,i,d])=>`<button class="choice" data-act="who" data-v="${k}" aria-pressed="${S.who===k}">${ic(i)}<span>${l}<small>${d}</small></span></button>`).join('')}</div>`,
-    next:()=>nav(3),acts:{who:el=>{S.who=el.dataset.v;save();render();}}});}
+    next:()=>nav(3),acts:{who:el=>{switchPerson(el.dataset.v);save();render();}}});}
   if(step===3)return Object.assign(base,{name:'How should I help?',portal:portal({title:'How should I help?'}),guide:'Choose what feels comfortable. You can change these later in More.',
     body:settingsRows(['read','voice','size','sensory']),next:()=>nav(4),acts:settingActs});
   if(step===4)return Object.assign(base,{name:'Pick your world',portal:portal({title:W().name+' world'}),guide:'Tap a world. It shows in the window above. Then tap Next.',
@@ -226,7 +257,8 @@ function scr_onboard(step){
 const settingActs={
   set:el=>{const k=el.dataset.k;let v=el.dataset.v;if(v==='true')v=true;if(v==='false')v=false;S[k]=v;save();applyClasses();render();
     if(k==='readAloud'&&v)speak('Read aloud is on. I will read each step to you.');},
-  world:el=>{S.world=el.dataset.v;save();render();},
+  theme:el=>{const t=el.dataset.v;if(!THEMES[t]||!availThemes().includes(t))return;S.world=t;S.scene=themeScenes(t)[0].id;rememberLook();save();render();},
+  scene:el=>{const c=sceneById(el.dataset.v);if(!c||c.theme!==S.world)return;S.scene=c.id;rememberLook();save();render();},
   voice:el=>{S.voices=Object.assign({},S.voices,{[S.who]:el.dataset.v});save();render();speak(VSAMPLE,false,el.dataset.v);},
   vplay:el=>speak(VSAMPLE,false,el.dataset.v)
 };
@@ -244,8 +276,11 @@ function settingsRows(which){
   return `<div class="card">${which.map(w=>rows[w]).join('')}</div>`;
 }
 function worldPicker(inner){
-  const g=`<div class="worlds">${Object.entries(WORLDS).map(([k,w])=>`<button class="world" data-act="world" data-v="${k}" aria-pressed="${S.world===k}" aria-label="${w.name}: ${w.desc}"><img src="${imgUrl(w.img,1)}" alt="" style="object-position:${w.pos}"><span>${w.name}</span></button>`).join('')}</div>
-  ${W().note?`<p class="note">${W().note}</p>`:`<p class="sub" style="margin-top:8px">${W().desc}.</p>`}`;
+  const kid=isKidSetup(),ts=availThemes(),list=themeScenes(S.world),cur=W();
+  const g=`<div class="themes" role="group" aria-label="World type">${ts.map(k=>`<button class="theme" data-act="theme" data-v="${k}" aria-pressed="${S.world===k}">${THEMES[k].name}</button>`).join('')}</div>
+  <div class="worlds">${list.map(w=>`<button class="world" data-act="scene" data-v="${w.id}" aria-pressed="${cur.id===w.id}" aria-label="${esc(w.short)}: ${esc(w.title)}"><img src="${imgUrl(w.f,1)}" alt="" style="object-position:${w.pos}" loading="lazy" decoding="async"><span>${esc(w.short)}</span></button>`).join('')}</div>
+  <p class="sub" style="margin-top:8px">${esc(cur.desc)}.${kid?' A caregiver can choose for a young child.':''}</p>
+  ${kid?'':'<p class="sub tiny-note">Kid-friendly worlds appear when this is set up for a child.</p>'}`;
   return inner?g:`<div class="card">${g}</div>`;
 }
 
@@ -389,15 +424,17 @@ function scr_practice(){
 
 function scr_palace(){
   const lvl=['Seedling','Gardener','Builder','Architect','Palace Keeper'][Math.min(4,S.keeps.length)];
-  const ex=Object.entries(WORLDS).filter(([k])=>k!==S.world||true).map(([k,w])=>({img:w.img,title:w.desc,label:'Example',pos:w.paint}));
-  const mine=S.keeps.map((k,i)=>({img:WORLDS[k.world].img,pos:WORLDS[k.world].paint,title:`Keep ${i+1} \u00b7 ${WORLDS[k.world].name}`,label:'Built '+fmtDay(k.at)}));
+  const keepScene=k=>{const c=sceneById(k.scene);return c&&c.theme===k.world?c:themeScenes(k.world)[0]||SCENES[0];};
+  const mine=S.keeps.map((k,i)=>{const c=keepScene(k);return {img:c.f,pos:c.paint,title:`Keep ${i+1} \u00b7 ${THEMES[c.theme].name}`,label:'Built '+fmtDay(k.at)};});
+  const paint=(p)=>`<button class="painting" data-act="view" data-img="${p.img}" data-pos="${p.pos}" data-t="${esc(p.title)}"><div class="frame"><img src="${imgUrl(p.img,1)}" alt="" style="object-position:${p.pos}" loading="lazy" decoding="async"></div><span class="plaque"><small>${esc(p.label)}</small>${esc(p.title)}</span></button>`;
+  const groups=availThemes().sort((x,y)=>(y===S.world)-(x===S.world)).map(t=>`<details class="gal-group"${t===S.world?' open':''}><summary>${THEMES[t].name}<small>${themeScenes(t).length} scenes</small></summary><div class="gallery">${themeScenes(t).map(c=>paint({img:c.f,pos:c.paint,title:c.title,label:THEMES[t].name})).join('')}</div></details>`).join('');
   return {name:'Palace',tab:'palace',topLeft:'brand',portal:{size:'small',world:S.world,title:'Your Palace'},
     guide:`Your keep is ${S.gauge}% full. When it fills, a painting is revealed and hung in your hall.`,
     body:`<div class="gauge-big" id="biggauge">${gaugeSVG(S.gauge)}<span class="pct">${S.gauge}%</span><span>Level: ${lvl}</span></div>
     <div class="card" style="text-align:center"><p>Every thing you check off, and every game you finish, adds golden light. Missed days never take light away.</p>
     <button class="btn" data-act="demo">${ic('sparkle')}Demo: finish my keep now</button></div>
     <section class="hall"><h2>Gallery hall</h2><p class="sub" style="text-align:center">Your finished keeps hang here. Tap one to step inside.</p>
-    <div class="gallery">${[...mine.reverse(),...ex].map((p,i)=>`<button class="painting" data-act="view" data-img="${p.img}" data-pos="${p.pos}" data-t="${esc(p.title)}"><div class="frame"><img src="${imgUrl(p.img,1)}" alt="" style="object-position:${p.pos}" loading="lazy"></div><span class="plaque"><small>${esc(p.label)}</small>${esc(p.title)}</span></button>`).join('')}</div></section>`,
+    ${mine.length?`<div class="gallery">${[...mine].reverse().map(paint).join('')}</div>`:''}<h3 class="gal-h">Example scenes by world</h3>${groups}</section>`,
     acts:{demo:()=>{S.gauge=99;save();addGauge(1,null,false);render();},
       view:el=>{overlay(`<div class="modal-back" data-close><div class="modal" style="width:min(900px,100%);padding:14px"><div class="painting"><div class="frame"><img src="${imgUrl(el.dataset.img)}" alt="" style="aspect-ratio:16/9;object-fit:cover"></div><span class="plaque">${el.dataset.t}</span></div><div class="acts"><button class="btn primary" data-close>Close</button></div></div></div>`);}}};
 }
@@ -434,7 +471,7 @@ function getScreen(){
   }
 }
 function portalHTML(p){
-  const w=WORLDS[p.world]||W();
+  const w=W(p.world);
   const cls=p.size==='home'?'':'small';
   let inner='';
   if(p.inner)inner+=p.inner;
@@ -497,7 +534,7 @@ function reveal(){
    <div class="acts" style="display:flex;justify-content:center"><button class="btn primary" id="hang">${ic('sparkle')}Hang it in my hall</button></div></div></div>`);
   const r=$('.reveal');setTimeout(()=>{r.classList.add('open');chime(true);},document.documentElement.classList.contains('calm')?300:1100);
   if(S.readAloud)speak('Your keep is complete! A new painting for your gallery hall.',false);
-  $('#hang').onclick=()=>{S.keeps.push({world:S.world,at:Date.now()});S.gauge=0;S.awarded={};save();$('#overlay-root').innerHTML='';go('palace');toast('Hung in your gallery hall. A new keep begins!');};
+  $('#hang').onclick=()=>{S.keeps.push({world:S.world,scene:S.scene,at:Date.now()});S.gauge=0;S.awarded={};save();$('#overlay-root').innerHTML='';go('palace');toast('Hung in your gallery hall. A new keep begins!');};
 }
 
 /* Tour */
