@@ -767,7 +767,8 @@
     }
   }
 
-  function broadcast() {
+  function publish(doPaint) {
+    if (!ui.table) return;
     var pub = hostPub();
     ui.pub = pub;
     ui.you = ui.table.privateFor("host");
@@ -778,7 +779,11 @@
     for (var s = 0; s < ui.screens.length; s++) {
       send(ui.screens[s], { t: "state", pub: pub, you: { screen: true } });
     }
-    paint();
+    if (doPaint !== false) paint();
+  }
+
+  function broadcast() {
+    publish(true);
   }
 
   function dropConn(conn) {
@@ -1562,8 +1567,11 @@
   }
 
   function paint() {
+    if (ui.painting) return;
     var root = ui.root || document.getElementById("crh-app");
     if (!root || !ui.active) return;
+    ui.painting = true;
+    try {
     ui.root = root;
     document.body.classList.toggle("crh-screen", ui.role === "screen");
     capture();
@@ -1592,6 +1600,9 @@
     }
     restore();
     ensureClock();
+    } finally {
+      ui.painting = false;
+    }
   }
 
   function copyText(value, node) {
@@ -1800,7 +1811,7 @@
       ui.hostName = target.value;
       if (ui.table && ui.role === "host" && (!ui.pub || ui.pub.phase === "lobby")) {
         ui.table.setHostName(ui.hostName);
-        broadcast();
+        publish(false);
       }
     }
     if (target.getAttribute("data-join-name") != null) ui.joinName = target.value;
