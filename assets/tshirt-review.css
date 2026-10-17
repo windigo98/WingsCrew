@@ -118,6 +118,122 @@
   object-fit: contain;
 }
 
+.review-card.panel {
+  padding-top: 0.85rem;
+  padding-right: 0;
+  padding-left: 0;
+}
+
+.review-card.panel > :not(.review-art) {
+  margin-left: 1.05rem;
+  margin-right: 1.05rem;
+}
+
+.review-zoom {
+  display: block;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: zoom-in;
+  touch-action: manipulation;
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+.review-zoom-hint {
+  margin: 0.4rem 1.05rem 0;
+  color: var(--muted);
+  font-size: 0.82rem;
+  text-align: center;
+}
+
+.review-flag {
+  display: block;
+  margin-top: 0.85rem;
+  color: var(--gold);
+  font-size: 0.82rem;
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+.review-lightbox {
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh;
+  max-width: none;
+  max-height: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: #0b0a09;
+  color: var(--cream);
+}
+
+.review-lightbox::backdrop {
+  background: #0b0a09;
+}
+
+.review-lightbox[hidden] {
+  display: none;
+}
+
+.review-lightbox-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: calc(0.55rem + env(safe-area-inset-top)) 0.75rem 0.45rem;
+}
+
+.review-lightbox-close,
+.review-lightbox-zoom {
+  min-height: 2.75rem;
+  padding: 0 1rem;
+  border-radius: 999px;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+  touch-action: manipulation;
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+.review-lightbox-close {
+  border: 1px solid rgba(244, 240, 230, 0.28);
+  background: transparent;
+  color: var(--cream);
+}
+
+.review-lightbox-zoom {
+  border: 0;
+  background: var(--gold);
+  color: var(--gold-ink);
+}
+
+.review-lightbox .review-zoom-hint {
+  margin: 0 0.85rem 0.45rem;
+}
+
+.review-lightbox-stage {
+  height: calc(100dvh - 7rem);
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+  touch-action: pan-x pan-y;
+}
+
+.review-lightbox-stage img {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-width: none;
+}
+
+.review-lightbox-stage.is-zoomed img {
+  width: 1000px;
+}
+
 .review-has-back {
   margin-top: 0.45rem;
   color: var(--gold);
@@ -359,6 +475,9 @@
 
 .review-back a:focus-visible,
 .review-filters button:focus-visible,
+.review-zoom:focus-visible,
+.review-lightbox-close:focus-visible,
+.review-lightbox-zoom:focus-visible,
 .review-yes:focus-visible,
 .review-no:focus-visible,
 .review-pending:focus-visible,
@@ -373,6 +492,12 @@
 .review-copy:focus-visible {
   outline: 2px solid var(--cream);
   outline-offset: 3px;
+}
+
+@media (max-width: 720px) {
+  .tshirt-page .section .wrap {
+    width: min(720px, calc(100% - 0.5rem));
+  }
 }
 
 @media (max-width: 360px) {

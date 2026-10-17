@@ -6,6 +6,7 @@
 // image       File name in crew-lab/tshirts/. Local files only. Do not hotlink.
 // description Short line under the title. Leave "" when there is no line.
 // hasBack     true when the shirt includes a back print.
+// flag        Optional text label on the card. Omit it when there is nothing to flag.
 //
 // An empty list shows "No designs yet".
 window.WINGS_TSHIRTS = [
@@ -15,6 +16,7 @@ window.WINGS_TSHIRTS = [
     image: "01-armor-off.webp",
     description: "",
     hasBack: false,
+    flag: "Tweaks requested - revised version",
   },
   {
     id: "02-it-go-boom",
@@ -29,6 +31,7 @@ window.WINGS_TSHIRTS = [
     image: "03-love-peace-bacon.webp",
     description: "",
     hasBack: false,
+    flag: "Tweaks requested - revised version",
   },
   {
     id: "04-hurt-more-twit",
@@ -36,6 +39,7 @@ window.WINGS_TSHIRTS = [
     image: "04-hurt-more-twit.webp",
     description: "",
     hasBack: false,
+    flag: "Tweaks requested - revised version",
   },
   {
     id: "05-complaint-machine",
@@ -393,6 +397,7 @@ window.WINGS_TSHIRTS = [
     image: "55-eagle-flag.webp",
     description: "",
     hasBack: false,
+    flag: "Needs real art",
   },
   {
     id: "56-tea-bagger",
@@ -428,6 +433,7 @@ window.WINGS_TSHIRTS = [
     image: "60-marry-fuck-kill.webp",
     description: "",
     hasBack: false,
+    flag: "Meaning unconfirmed",
   },
   {
     id: "61-more-cowbell-rx",
@@ -568,6 +574,7 @@ window.WINGS_TSHIRTS = [
     image: "80-jargon.webp",
     description: "",
     hasBack: false,
+    flag: "Needs real art / check",
   },
   {
     id: "81-distressed-skull",
@@ -575,6 +582,7 @@ window.WINGS_TSHIRTS = [
     image: "81-distressed-skull.webp",
     description: "",
     hasBack: false,
+    flag: "Needs real art / check",
   },
   {
     id: "82-extra-like-avocado",
@@ -582,6 +590,7 @@ window.WINGS_TSHIRTS = [
     image: "82-extra-like-avocado.webp",
     description: "",
     hasBack: false,
+    flag: "Needs real art / check",
   },
   {
     id: "83-regal-avocado",
@@ -589,6 +598,7 @@ window.WINGS_TSHIRTS = [
     image: "83-regal-avocado.webp",
     description: "",
     hasBack: false,
+    flag: "Needs real art / check",
   },
   {
     id: "84-taste-my-rainbow",
@@ -596,6 +606,7 @@ window.WINGS_TSHIRTS = [
     image: "84-taste-my-rainbow.webp",
     description: "",
     hasBack: false,
+    flag: "Needs real art / check",
   },
   {
     id: "85-math-drip",
@@ -603,6 +614,7 @@ window.WINGS_TSHIRTS = [
     image: "85-math-drip.webp",
     description: "",
     hasBack: false,
+    flag: "Needs real art / check",
   },
   {
     id: "86-rainbow-drip-candy",
@@ -610,6 +622,7 @@ window.WINGS_TSHIRTS = [
     image: "86-rainbow-drip-candy.webp",
     description: "",
     hasBack: false,
+    flag: "Needs real art / check",
   },
   {
     id: "87-banana-office",
@@ -617,6 +630,7 @@ window.WINGS_TSHIRTS = [
     image: "87-banana-office.webp",
     description: "",
     hasBack: false,
+    flag: "Needs real art / check",
   },
   {
     id: "88-love-peace-bacon-grease",
@@ -624,5 +638,6 @@ window.WINGS_TSHIRTS = [
     image: "88-love-peace-bacon-grease.webp",
     description: "",
     hasBack: false,
+    flag: "Tweaks requested - revised version",
   },
 ];

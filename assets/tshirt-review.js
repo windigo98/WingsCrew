@@ -44,6 +44,7 @@
             ? entry.description.replace(/\s+/g, " ").trim()
             : "",
         hasBack: entry.hasBack === true,
+        flag: typeof entry.flag === "string" ? entry.flag.replace(/\s+/g, " ").trim() : "",
       });
     });
 
@@ -182,6 +183,7 @@
       lines.push(designHeading(design));
       lines.push("Id: " + design.id);
       lines.push("Status: " + statusLabel(review.vote));
+      if (design.flag) lines.push("Flag: " + design.flag);
       if (design.hasBack) lines.push("Has a back: yes");
       lines.push("Notes:");
       lines.push(notes || "(none)");
@@ -236,11 +238,11 @@
     var visible = visibleIndexes();
     var pos = visible.indexOf(index);
     var art = src
-      ? '<div class="review-art has-image"><img src="' +
+      ? '<div class="review-art has-image"><button type="button" class="review-zoom" data-zoom><img src="' +
         escapeHtml(src) +
-        '" alt="' +
+        '" width="1000" height="1000" alt="' +
         escapeHtml(design.title) +
-        '"></div>'
+        '"></button><p class="review-zoom-hint">Tap the shirt to enlarge</p></div>'
       : '<div class="review-art" role="img" aria-label="' +
         escapeHtml("No artwork for " + design.title) +
         '"><p>No artwork</p></div>';
@@ -248,6 +250,7 @@
     return (
       '<article class="panel review-card">' +
       art +
+      (design.flag ? '<p class="review-flag">' + escapeHtml(design.flag) + "</p>" : "") +
       '<h2 id="design-title" tabindex="-1">' +
       escapeHtml(design.title) +
       "</h2>" +
@@ -303,7 +306,15 @@
       '<div class="review-fallback" data-fallback hidden>' +
       '<label class="review-label" for="review-plain">Review text</label>' +
       '<textarea class="review-field" id="review-plain" readonly></textarea>' +
-      "</div>"
+      "</div>" +
+      '<dialog class="review-lightbox" data-lightbox aria-label="Enlarged shirt">' +
+      '<div class="review-lightbox-bar">' +
+      '<button type="button" class="review-lightbox-zoom" data-lightbox-zoom>Show all</button>' +
+      '<button type="button" class="review-lightbox-close" data-lightbox-close>Close</button>' +
+      "</div>" +
+      '<p class="review-zoom-hint" data-lightbox-hint>Drag to read the print. Tap the shirt to fit the screen.</p>' +
+      '<div class="review-lightbox-stage is-zoomed" data-lightbox-stage><img alt="" data-lightbox-img width="1000" height="1000"></div>' +
+      "</dialog>"
     );
   }
 
@@ -533,12 +544,25 @@
       });
     });
 
+    var zoom = card.querySelector("[data-zoom]");
+    if (zoom) {
+      zoom.addEventListener("click", function () {
+        var image = zoom.querySelector("img");
+        if (!image) return;
+        openLightbox(image.getAttribute("src"), image.getAttribute("alt") || design.title);
+      });
+    }
+
     var image = card.querySelector("img");
     if (image) {
       image.addEventListener("error", function () {
         var art = image.parentNode;
+        while (art && (!art.classList || !art.classList.contains("review-art"))) {
+          art = art.parentNode;
+        }
         if (!art) return;
         art.className = "review-art";
+        art.removeAttribute("role");
         art.setAttribute("role", "img");
         art.setAttribute("aria-label", "No artwork for " + design.title);
         art.textContent = "";
@@ -547,6 +571,60 @@
         art.appendChild(message);
       });
     }
+  }
+
+  function lightboxEls() {
+    return {
+      dialog: mount.querySelector("[data-lightbox]"),
+      stage: mount.querySelector("[data-lightbox-stage]"),
+      img: mount.querySelector("[data-lightbox-img]"),
+      hint: mount.querySelector("[data-lightbox-hint]"),
+      zoom: mount.querySelector("[data-lightbox-zoom]"),
+    };
+  }
+
+  function setLightboxZoom(zoomed) {
+    var els = lightboxEls();
+    if (!els.stage) return;
+    els.stage.classList.toggle("is-zoomed", zoomed);
+    if (els.zoom) els.zoom.textContent = zoomed ? "Show all" : "Zoom in";
+    if (els.hint) {
+      els.hint.textContent = zoomed
+        ? "Drag to read the print. Tap the shirt to fit the screen."
+        : "Tap the shirt to zoom in.";
+    }
+    window.requestAnimationFrame(function () {
+      if (!els.stage) return;
+      els.stage.scrollLeft = Math.max(0, (els.stage.scrollWidth - els.stage.clientWidth) / 2);
+      els.stage.scrollTop = Math.max(0, (els.stage.scrollHeight - els.stage.clientHeight) / 2);
+    });
+  }
+
+  function openLightbox(src, alt) {
+    var els = lightboxEls();
+    if (!els.dialog || !els.img || !src) return;
+    els.img.alt = alt || "";
+    els.img.onload = function () {
+      setLightboxZoom(true);
+    };
+    els.img.src = src;
+    setLightboxZoom(true);
+    if (typeof els.dialog.showModal === "function") {
+      if (!els.dialog.open) els.dialog.showModal();
+    } else {
+      els.dialog.setAttribute("open", "");
+    }
+    var closeButton = mount.querySelector("[data-lightbox-close]");
+    if (closeButton) closeButton.focus();
+  }
+
+  function closeLightbox() {
+    var dialog = mount.querySelector("[data-lightbox]");
+    if (!dialog) return;
+    if (typeof dialog.close === "function" && dialog.open) dialog.close();
+    else dialog.removeAttribute("open");
+    var zoom = mount.querySelector("[data-zoom]");
+    if (zoom) zoom.focus();
   }
 
   function renderCard(focusTitle) {
@@ -642,6 +720,33 @@
       mail.addEventListener("click", function () {
         flushNotes();
         paintMail();
+      });
+    }
+
+    var dialog = mount.querySelector("[data-lightbox]");
+    var closeButton = mount.querySelector("[data-lightbox-close]");
+    var zoomToggle = mount.querySelector("[data-lightbox-zoom]");
+    var lightboxImage = mount.querySelector("[data-lightbox-img]");
+    if (closeButton) closeButton.addEventListener("click", closeLightbox);
+    if (zoomToggle) {
+      zoomToggle.addEventListener("click", function () {
+        var stage = mount.querySelector("[data-lightbox-stage]");
+        setLightboxZoom(!(stage && stage.classList.contains("is-zoomed")));
+      });
+    }
+    if (lightboxImage) {
+      lightboxImage.addEventListener("click", function () {
+        var stage = mount.querySelector("[data-lightbox-stage]");
+        setLightboxZoom(!(stage && stage.classList.contains("is-zoomed")));
+      });
+    }
+    if (dialog) {
+      dialog.addEventListener("click", function (event) {
+        if (event.target === dialog) closeLightbox();
+      });
+      dialog.addEventListener("cancel", function () {
+        var zoom = mount.querySelector("[data-zoom]");
+        if (zoom) window.setTimeout(function () { zoom.focus(); }, 0);
       });
     }
   }
