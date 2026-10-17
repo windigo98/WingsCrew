@@ -315,7 +315,7 @@ p{margin:.3rem 0 .6rem}
   .gauge-medal{bottom:16px}
   .portal-title{bottom:16px}
   .only-p{display:none!important}
-  .flipgrid{grid-template-columns:repeat(6,1fr);max-width:620px}
+  .flipgrid{grid-template-columns:repeat(4,1fr);max-width:480px;margin:0 auto}
   .bad-day .flipgrid{grid-template-columns:repeat(4,1fr)}
   .fcard{aspect-ratio:1/1}
   .bad-day .fcard{aspect-ratio:1/1}
@@ -339,7 +339,7 @@ p{margin:.3rem 0 .6rem}
   .doors{grid-template-columns:repeat(4,1fr)}
   .gallery{grid-template-columns:repeat(3,1fr)}
   .worlds{grid-template-columns:repeat(4,1fr)}
-  .flipgrid{max-width:620px;margin:0 auto}
+  .flipgrid{max-width:520px;margin:0 auto}
   .bad-day .flipgrid{max-width:520px}
   .guide{margin-left:40px;margin-right:40px}
   .tabs{height:78px}
@@ -374,7 +374,9 @@ p{margin:.3rem 0 .6rem}
   .content-col .stepbar .btn{min-height:52px}
   .statrow{margin-bottom:6px}
   .statrow b{font-size:1.4rem;display:inline;margin-right:6px}
-  .flipgrid{grid-template-columns:repeat(6,minmax(0,70px));justify-content:center;gap:8px}
+  .flipgrid{grid-template-columns:repeat(8,minmax(0,52px));justify-content:center;gap:6px}
+  .flipgrid .fcard{min-height:0;width:100%}
+  .bad-day .flipgrid .fcard{min-height:0}
   .bad-day .flipgrid{grid-template-columns:repeat(4,minmax(0,84px))}
   .card{padding:12px 14px}
 }
