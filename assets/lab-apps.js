@@ -6,6 +6,7 @@
 // status  "live", "not live yet", or "coming soon"
 // url     Where the card goes. Omit it for "coming soon" so the card has no link.
 // group   "progress" (in-progress section) or "live" (live apps for a quick check)
+// mark    Optional extra label, such as "Adult"
 //
 // WingsCrew Looks returned 404, not 200, on 13 Oct 2026, so its status stays
 // "not live yet". Switch that status to "live" when the URL returns 200.
@@ -36,6 +37,15 @@ window.WINGS_LAB = [
     blurb: "Preview build on this site.",
     status: "live",
     url: "/wtb-clarity-preview/",
+  },
+  // Unlisted adult review. Keep this URL off the public hub and out of sitemap.xml.
+  {
+    group: "progress",
+    name: "T-shirt review",
+    blurb: "Adult humor shirts. Yes or no on each design, plus notes. Saved on this phone until you copy or email it.",
+    status: "live",
+    mark: "Adult",
+    url: "/crew-lab/tshirt-review/",
   },
   {
     group: "live",
