@@ -1,0 +1,375 @@
+/* T-shirt review. Phone-first, scoped to this page. Uses the Crew Lab tokens. */
+
+.tshirt-page h1 {
+  font-size: clamp(2.4rem, 12vw, 3.4rem);
+}
+
+.tshirt-page .hero {
+  padding-bottom: 0.85rem;
+}
+
+.tshirt-page .lede {
+  margin-top: 0.85rem;
+}
+
+.review-back {
+  margin: 0 0 0.85rem;
+}
+
+.review-back a {
+  color: var(--gold);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.review-back a:hover,
+.review-back a:focus-visible {
+  color: var(--cream);
+}
+
+.review-count {
+  margin-bottom: 0.7rem;
+  color: var(--gold);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.review-card h2 {
+  margin-top: 0.9rem;
+  font-family: var(--serif);
+  font-weight: 650;
+  font-size: 1.85rem;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+}
+
+.review-card h2:focus {
+  outline: 2px solid var(--gold);
+  outline-offset: 3px;
+}
+
+.review-art {
+  display: grid;
+  place-items: center;
+  min-height: 9.5rem;
+  margin-top: 0.2rem;
+  padding: 1rem;
+  border: 1px dashed rgba(214, 174, 78, 0.55);
+  border-radius: 12px;
+  background: #100e0c;
+  color: var(--muted);
+  text-align: center;
+}
+
+.review-art p {
+  margin: 0;
+  max-width: 16rem;
+  font-weight: 600;
+}
+
+.review-art.has-image {
+  min-height: 0;
+  aspect-ratio: 1;
+  padding: 0;
+  overflow: hidden;
+  border: 0;
+  background: #100e0c;
+}
+
+.review-art.has-image img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.review-status {
+  margin-top: 0.9rem;
+  color: var(--muted);
+  font-size: 0.98rem;
+}
+
+.review-status strong {
+  color: var(--gold);
+  font-weight: 600;
+}
+
+.review-votes {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+  margin-top: 0.85rem;
+}
+
+.review-yes,
+.review-no,
+.review-pending,
+.review-nav button,
+.review-list button,
+.review-copy,
+.review-mail {
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+  touch-action: manipulation;
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+.review-yes,
+.review-no {
+  min-height: 4.75rem;
+  border-radius: 16px;
+  font-size: 1.65rem;
+  letter-spacing: -0.02em;
+}
+
+.review-yes {
+  border: 1px solid var(--gold);
+  background: transparent;
+  color: var(--gold);
+}
+
+.review-yes[aria-pressed="true"],
+.review-yes:active {
+  background: var(--gold);
+  color: var(--gold-ink);
+}
+
+.review-no {
+  border: 1px solid rgba(244, 240, 230, 0.28);
+  background: transparent;
+  color: var(--cream);
+}
+
+.review-no[aria-pressed="true"],
+.review-no:active {
+  border-color: var(--cream);
+  background: var(--cream);
+  color: var(--gold-ink);
+}
+
+.review-pending {
+  grid-column: 1 / -1;
+  min-height: 3rem;
+  border: 1px solid rgba(244, 240, 230, 0.18);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--muted);
+  font-size: 1rem;
+}
+
+.review-pending[aria-pressed="true"] {
+  border-color: rgba(214, 174, 78, 0.75);
+  color: var(--gold);
+}
+
+.review-label {
+  display: block;
+  margin-top: 1.1rem;
+  color: var(--cream);
+  font-weight: 600;
+}
+
+.review-field {
+  display: block;
+  width: 100%;
+  margin-top: 0.4rem;
+  min-height: 7.5rem;
+  padding: 0.85rem 0.9rem;
+  border: 1px solid rgba(244, 240, 230, 0.18);
+  border-radius: 14px;
+  background: #100e0c;
+  color: var(--cream);
+  font: inherit;
+  font-size: 1rem;
+  line-height: 1.45;
+  resize: vertical;
+}
+
+.review-field::placeholder {
+  color: var(--muted);
+}
+
+.review-hint {
+  margin-top: 0.45rem;
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
+.review-nav {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.review-nav button {
+  min-height: 3rem;
+  border: 1px solid rgba(244, 240, 230, 0.28);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--cream);
+}
+
+.review-nav button:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+
+.review-subhead {
+  margin-top: 1.4rem;
+  font-family: var(--serif);
+  font-size: 1.45rem;
+  font-weight: 650;
+  letter-spacing: -0.03em;
+}
+
+.review-list {
+  display: grid;
+  gap: 0.5rem;
+  margin: 0.7rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.review-list button {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  width: 100%;
+  min-height: 3.1rem;
+  padding: 0.7rem 0.9rem;
+  border: 1px solid rgba(244, 240, 230, 0.12);
+  border-radius: 14px;
+  background: var(--card);
+  color: var(--cream);
+  text-align: left;
+}
+
+.review-list button[aria-current="true"] {
+  border-color: rgba(214, 174, 78, 0.75);
+}
+
+.review-item-title {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.review-item-status {
+  flex: 0 0 auto;
+  color: var(--gold);
+  font-size: 0.92rem;
+  font-weight: 600;
+}
+
+.review-actions {
+  display: grid;
+  gap: 0.75rem;
+  margin-top: 1.25rem;
+}
+
+.review-copy,
+.review-mail {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 3.4rem;
+  padding: 0.75rem 1rem;
+  border-radius: 999px;
+  font-size: 1.05rem;
+  line-height: 1.2;
+  text-align: center;
+  text-decoration: none;
+}
+
+.review-copy {
+  border: 0;
+  background: var(--gold);
+  color: var(--gold-ink);
+}
+
+.review-copy.is-copied {
+  background: var(--cream);
+  color: var(--gold-ink);
+}
+
+.review-mail {
+  border: 1px solid rgba(214, 174, 78, 0.72);
+  background: transparent;
+  color: var(--gold);
+}
+
+.review-actions .review-hint {
+  margin-top: 0;
+}
+
+.review-fallback {
+  margin-top: 1rem;
+}
+
+.review-back a:focus-visible,
+.review-yes:focus-visible,
+.review-no:focus-visible,
+.review-pending:focus-visible,
+.review-nav button:focus-visible,
+.review-list button:focus-visible,
+.review-mail:focus-visible,
+.review-field:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 3px;
+}
+
+.review-copy:focus-visible {
+  outline: 2px solid var(--cream);
+  outline-offset: 3px;
+}
+
+@media (max-width: 360px) {
+  .review-yes,
+  .review-no {
+    min-height: 4.25rem;
+    font-size: 1.4rem;
+  }
+}
+
+@media (min-width: 960px) {
+  .tshirt-page h1 {
+    font-size: clamp(3.4rem, 6vw, 4.6rem);
+  }
+}
+
+@media (hover: hover) {
+  .review-yes:hover {
+    background: var(--gold);
+    color: var(--gold-ink);
+  }
+
+  .review-no:hover {
+    border-color: var(--cream);
+    background: var(--cream);
+    color: var(--gold-ink);
+  }
+
+  .review-mail:hover,
+  .review-copy:hover {
+    background: #e3bc63;
+    color: var(--gold-ink);
+  }
+
+  .review-list button:hover {
+    border-color: rgba(214, 174, 78, 0.5);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .review-copy,
+  .review-mail,
+  .review-list button {
+    transition: none;
+  }
+}

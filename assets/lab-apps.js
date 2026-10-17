@@ -37,6 +37,14 @@ window.WINGS_LAB = [
     status: "live",
     url: "/wtb-clarity-preview/",
   },
+  // Unlisted review tool. Keep this URL off the public hub and out of sitemap.xml.
+  {
+    group: "progress",
+    name: "T-shirt review",
+    blurb: "Yes or no on each design, plus notes. Saved on this phone until you copy or email it.",
+    status: "live",
+    url: "/crew-lab/tshirt-review/",
+  },
   {
     group: "live",
     name: "Tipsy Tease & Spilt Tea",
