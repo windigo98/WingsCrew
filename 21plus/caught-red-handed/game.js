@@ -1,4 +1,5 @@
-// Caught Red-Handed. All play happens on this phone. Nothing is uploaded.
+// Caught Red-Handed. Pass-the-phone stays on this device.
+// Multi-phone play lives in multi.js. Nothing is saved on a server.
 (function () {
   var AGE_KEY = "wingscrew-21plus";
   var ANSWER_MS = 45000;
@@ -23,16 +24,16 @@
   ];
 
   var RULES = [
-    "Add 3 to 12 names.",
-    "Pick 5 or 6 categories, hit Random, or play the whole board. 100 is cheeky. 500 is the one you will deny later.",
-    "On your turn, tap a tile. Everyone sees the prompt.",
-    "Pass the phone. Each player types a secret answer. The next person only gets a cover screen, never the previous answer.",
-    "Answers are shuffled and read out with no names attached.",
-    "Guess the author. In Picker mode, the person who chose the tile guesses. In Table vote, every player votes in secret. The host can tap for someone who doesn't want the phone.",
+    "Each phone: one person hosts and gets a 4-letter code, a link, and a QR code. Everyone else joins with a name. If the phones can't link, pass one phone instead.",
+    "3 to 12 players. The host picks 5 or 6 categories, hits Random, or plays the whole board. 100 is cheeky. 500 is the one you will deny later.",
+    "The host taps a tile. The prompt shows on every phone, and on a big screen if you opened that link.",
+    "Each player types a secret answer on their own phone. It goes only to the host. Pass-the-phone hides each answer behind a cover before the next person types.",
+    "Answers are shuffled and shown with no names attached.",
+    "Everyone votes on their own phone. In pass-the-phone, the picker can guess, or the table votes while the phone is handed around.",
     "A correct guess scores that tile's points. Guessing your own answer does not score. You already knew.",
     "The last answer reveals itself. Nobody scores that one.",
     "The author is caught. House rule: an optional sip or bonus dare, or they lose half their score. Drinking is never required.",
-    "The next player picks. Highest score when the board is clear, or when you end the game, wins."
+    "If someone drops, they can rejoin from the same phone. If the host leaves, the room ends. Highest score wins."
   ];
 
   var state = {
@@ -57,7 +58,8 @@
     timerLeft: 0,
     dareIndex: -1,
     nextPlayerId: 1,
-    deckProblems: []
+    deckProblems: [],
+    handedOff: false
   };
 
   function appEl() {
@@ -242,7 +244,7 @@
       el("ol", { class: "crh-steps" }, items),
       el("p", { class: "crh-note" }, [
         el("strong", { text: "21+ only. Drink responsibly." }),
-        " Drinking is always optional. Water counts. Don't drink and drive. Skip any dare. Answers stay on this phone until you leave or refresh. Nothing is saved remotely."
+        " Drinking is always optional. Water counts. Don't drink and drive. Skip any dare. Multi-phone answers go straight to the host and are not saved on a server. Pass-the-phone keeps every answer on this phone."
       ])
     ]);
   }
@@ -278,7 +280,7 @@
         el("p", { class: "tagline", text: "answer in secret" }),
         el("p", {
           class: "lede",
-          text: "A Jeopardy-style board for a pass-the-phone party. Everyone writes a secret answer. The room guesses who. Somebody gets caught."
+          text: "A Jeopardy-style board for phones around the table. Everyone writes a secret answer. The room guesses who. Somebody gets caught."
         })
       ]),
       el("section", { class: "section" }, [
@@ -291,7 +293,9 @@
           ? el("p", { class: "crh-note", text: state.deckProblems.join(" ") })
           : null,
         el("div", { class: "crh-actions" }, [
-          button("Set up a game", "setup", { disabled: state.deckProblems.length > 0 })
+          button("Host a room", "multiHost", { disabled: state.deckProblems.length > 0 }),
+          button("Join with a code", "multiJoin", { className: "crh-btn crh-btn-ghost", disabled: state.deckProblems.length > 0 }),
+          button("Pass the phone", "setup", { className: "crh-btn crh-btn-ghost", disabled: state.deckProblems.length > 0 })
         ])
       ])
     ]);
@@ -814,6 +818,7 @@
   }
 
   function render() {
+    if (state.handedOff) return;
     var root = appEl();
     if (!root) return;
     var y = window.scrollY || 0;
@@ -1067,6 +1072,16 @@
   }
 
   var actions = {
+    multiHost: function () {
+      if (!window.CRH_MULTI) return;
+      state.handedOff = true;
+      window.CRH_MULTI.host();
+    },
+    multiJoin: function () {
+      if (!window.CRH_MULTI) return;
+      state.handedOff = true;
+      window.CRH_MULTI.join();
+    },
     setup: function () {
       state.screen = "setup";
       state.notice = "";
@@ -1340,6 +1355,7 @@
   }
 
   function onClick(event) {
+    if (state.handedOff) return;
     var node = event.target;
     while (node && node !== appEl()) {
       if (node.getAttribute && node.getAttribute("data-action")) break;
@@ -1354,6 +1370,7 @@
   }
 
   function onInput(event) {
+    if (state.handedOff) return;
     var target = event.target;
     if (target && target.getAttribute("data-answer") != null) {
       state.answerDraft = target.value;
@@ -1366,6 +1383,7 @@
   }
 
   function onKey(event) {
+    if (state.handedOff) return;
     if (event.key === "Enter" && event.target && event.target.getAttribute && event.target.getAttribute("data-name-input") != null) {
       event.preventDefault();
       actions.addName();
@@ -1389,6 +1407,10 @@
           /* private mode still unlocks this visit */
         }
         document.documentElement.classList.add("age-ok");
+        if (window.CRH_MULTI && window.CRH_MULTI.takeQuery()) {
+          state.handedOff = true;
+          return;
+        }
         var heading = document.querySelector("#crh-app h1");
         if (heading) {
           heading.setAttribute("tabindex", "-1");
@@ -1493,8 +1515,18 @@
   wireAge();
   wireShare();
   wireUnload();
+  window.CRH_RETURN = function () {
+    state.handedOff = false;
+    state.screen = "intro";
+    state.help = false;
+    state.endConfirm = false;
+    state.autofocus = true;
+    render();
+  };
   render();
-  if (!document.documentElement.classList.contains("age-ok")) {
+  if (document.documentElement.classList.contains("age-ok") && window.CRH_MULTI && window.CRH_MULTI.takeQuery()) {
+    state.handedOff = true;
+  } else if (!document.documentElement.classList.contains("age-ok")) {
     var yesBtn = document.querySelector("[data-age-yes]");
     if (yesBtn) focusNode(yesBtn);
   }

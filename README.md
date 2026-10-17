@@ -26,6 +26,18 @@ Add a card by appending to [`assets/adult-apps.js`](assets/adult-apps.js), or by
 
 The **Tip** button goes to [Cash App $windigo98](https://cash.app/$windigo98). **Feedback** opens an email to [dovewingsbusiness@gmail.com](mailto:dovewingsbusiness@gmail.com). **Shop** is a coming-soon placeholder. Nothing there is for sale.
 
+## Caught Red-Handed, multi-phone
+
+[`/21plus/caught-red-handed/`](21plus/caught-red-handed/index.html) is the 21+ party game. Pass-the-phone works with no network. Each-phone play uses [PeerJS](https://peerjs.com/) 1.5.5, vendored at `21plus/caught-red-handed/vendor/peerjs.min.js`.
+
+The host's phone is the hub. PeerJS's free public broker at `0.peerjs.com` (port 443, path `/`) only introduces the phones. It does not store names, answers, votes, or scores, and there is no account. Those travel on a direct WebRTC connection to the host and disappear when the page closes.
+
+Phones find each other with Google's public STUN servers (`stun.l.google.com:19302` and `stun1.l.google.com:19302`). Those servers are not a place the game saves data. There is no TURN relay, because a relay is often a paid service. On a strict network the phones may not link. Use **Pass the phone** when that happens.
+
+If `0.peerjs.com` goes away, pass-the-phone still works. To bring each-phone play back, run your own open-source [PeerServer](https://github.com/peers/peerjs-server) and change `peerOpts()` in `21plus/caught-red-handed/multi.js` (`host`, `port`, `path`, and `secure`). Keep the vendored PeerJS file. Do not point the game at a paid service.
+
+QR codes are drawn on the phone with vendored qrcode-generator 1.4.4 (`vendor/qrcode.js`). No QR website is called.
+
 ## GitHub Pages
 
 The project site will be [https://windigo98.github.io/WingsCrew/](https://windigo98.github.io/WingsCrew/) after Pages is turned on. Until then, that URL 404s.

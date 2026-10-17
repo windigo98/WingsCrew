@@ -1,0 +1,10 @@
+PeerJS 1.5.5
+Copyright (c) 2015 Michelle Bu and Eric Zhang, http://peerjs.com
+MIT License. https://github.com/peers/peerjs
+Vendored from https://cdn.jsdelivr.net/npm/peerjs@1.5.5/dist/peerjs.min.js
+
+QR Code Generator for JavaScript 1.4.4
+Copyright (c) 2009 Kazuhiko Arase
+MIT License. http://www.d-project.com/
+The word "QR Code" is a registered trademark of DENSO WAVE INCORPORATED.
+Vendored from https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.js
