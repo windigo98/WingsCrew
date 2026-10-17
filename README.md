@@ -24,7 +24,11 @@ Adult humor and games live at [`/21plus/`](21plus/index.html). The first visit a
 
 Add a card by appending to [`assets/adult-apps.js`](assets/adult-apps.js), or by setting `adult: true` on an entry in `apps.js`. Either way it shows on the 21+ page and stays off the homepage. The homepage header links here. The page sends `noindex`.
 
-The **Tip** button goes to [Cash App $windigo98](https://cash.app/$windigo98). **Feedback** opens an email to [dovewingsbusiness@gmail.com](mailto:dovewingsbusiness@gmail.com). **Shop** is a coming-soon placeholder. Nothing there is for sale.
+Adult clothing is a separate Shop section on that page, from [`assets/merch.js`](assets/merch.js). Each entry has an `audience`. `"adult"` renders only into `data-merch="adult"` on `/21plus/`. `"kids"` is unused until a family-friendly section is added on the homepage with `data-merch="kids"` (include `merch.js` there too). Do not list adult merch on the homepage.
+
+WingsCrew Clothing links to the Printify store and opens in a new tab. The store has no products yet, so `status` is `"coming soon"` and the card is labeled **Coming soon**. When products are for sale, set that entry’s `status` to `"live"`. The label switches to **Shop** (or to `badge`, if you set one). The card stays on the 21+ page.
+
+The **Tip** button goes to [Cash App $windigo98](https://cash.app/$windigo98). **Feedback** opens an email to [dovewingsbusiness@gmail.com](mailto:dovewingsbusiness@gmail.com). The homepage **Shop** section is still a coming-soon placeholder. Nothing there is for sale.
 
 ## GitHub Pages
 

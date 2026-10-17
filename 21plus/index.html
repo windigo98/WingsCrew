@@ -119,6 +119,17 @@
             <div class="apps-grid" data-apps="adult"></div>
           </div>
         </section>
+
+        <!-- Adult merch only. A kids line is a separate audience in assets/merch.js
+             and a future data-merch="kids" section on the homepage. -->
+        <section class="section" id="adult-shop" aria-labelledby="adult-shop-title">
+          <div class="wrap">
+            <h2 class="section-title" id="adult-shop-title">
+              <span class="dash" aria-hidden="true">—</span> Shop
+            </h2>
+            <div class="apps-grid" data-merch="adult"></div>
+          </div>
+        </section>
       </div>
     </main>
 
@@ -131,6 +142,7 @@
 
     <script src="../assets/apps.js"></script>
     <script src="../assets/adult-apps.js"></script>
+    <script src="../assets/merch.js"></script>
     <script src="../assets/site.js"></script>
   </body>
 </html>
