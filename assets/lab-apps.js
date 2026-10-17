@@ -48,6 +48,14 @@ window.WINGS_LAB = [
     url: "/crew-lab/tshirt-review/",
   },
   {
+    group: "progress",
+    name: "Caught Red-Handed",
+    blurb: "Jeopardy-style 21+ party game, in development on this site. Answer in secret, get caught.",
+    status: "live",
+    mark: "Adult",
+    url: "/21plus/caught-red-handed/",
+  },
+  {
     group: "live",
     name: "Tipsy Tease & Spilt Tea",
     blurb: "Spicy questions, truths, and dares. Pass the phone, or let a host read the card.",
