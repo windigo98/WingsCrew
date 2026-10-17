@@ -379,7 +379,7 @@ function scr_games(){
     acts:{play:()=>{game=null;go('game/cardflip/1');},soon:el=>toast(el.dataset.n+' is coming soon.')}};
 }
 const CICONS=['crown','key','tower','star','moon','lantern','shield','gem'];
-function newGame(){const pairs=S.badDay?4:6;const icons=(S.badDay?['crown','key','star','moon']:CICONS.slice(0,6));
+function newGame(){const pairs=S.badDay?4:8;const icons=(S.badDay?['crown','key','star','moon']:CICONS.slice(0,8));
   const deck=[...icons,...icons].map((n,i)=>({n,i,up:false,m:false}));for(let i=deck.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[deck[i],deck[j]]=[deck[j],deck[i]];}
   return {deck,first:null,lock:false,tries:0,found:0,pairs,awarded:false,start:Date.now()};}
 function scr_cardflip(step){
@@ -389,7 +389,7 @@ function scr_cardflip(step){
   if(step===1)return Object.assign(base,{guide:'Read how to play, then tap Start.',
     body:`<div class="card"><span class="steptag">How to play</span><h2>Find the matching pairs</h2>
     <div class="choices" style="margin-top:12px">${[['grid','All the cards start face down.'],['eye','Tap two cards to turn them over.'],['sparkle','If they match, they stay up. If not, they turn back.']].map(([i,t],k)=>`<div class="choice" style="min-height:64px;font-weight:500;font-size:1.08rem">${ic(i)}<span><b>${k+1}.</b> ${t}</span></div>`).join('')}</div>
-    <p class="note">${S.badDay?'Bad day mode: 4 pairs with big cards. Take your time.':'Seedling level: 6 pairs. No timer, no rush.'}</p></div>`,
+    <p class="note">${S.badDay?'Bad day mode: 4 pairs with big cards. Take your time.':'Seedling level: 8 pairs on a 4 by 4 board. No timer, no rush.'}</p></div>`,
     nextLabel:'Start',next:()=>{game=newGame();go('game/cardflip/2');}});
   if(step===2){const g=game;return Object.assign(base,{guide:g.first!==null?'Now tap one more card to look for its match.':'Tap any card to turn it over.',
     body:`<div class="card"><div class="statrow"><div><b>${g.found} / ${g.pairs}</b><span class="sub">pairs found</span></div><div><b>${g.tries}</b><span class="sub">tries</span></div></div>
