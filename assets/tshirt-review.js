@@ -1,8 +1,10 @@
 // Crew Lab t-shirt review. Votes and notes stay in localStorage.
 // Copy and the mailto link are the only ways out. Nothing is sent on its own.
+// Images are local files in crew-lab/tshirts/. External image URLs are ignored.
 (function () {
   var STORAGE_KEY = "wingscrew-tshirt-review";
   var INDEX_KEY = "wingscrew-tshirt-review-index";
+  var FILTER_KEY = "wingscrew-tshirt-review-filter";
   var MAIL = "dovewingsbusiness@gmail.com";
   var mount = document.querySelector("[data-tshirt-review]");
   if (!mount) return;
@@ -12,6 +14,7 @@
   var designs = loadDesigns();
   var reviews = loadReviews();
   var index = 0;
+  var filter = "all";
 
   function escapeHtml(value) {
     return String(value)
@@ -40,6 +43,7 @@
           typeof entry.description === "string"
             ? entry.description.replace(/\s+/g, " ").trim()
             : "",
+        hasBack: entry.hasBack === true,
       });
     });
 
@@ -61,19 +65,46 @@
 
   function loadIndex() {
     try {
-      var stored = Number(sessionStorage.getItem(INDEX_KEY));
-      if (!isFinite(stored) || stored < 0 || stored >= designs.length) return 0;
-      return stored;
+      var stored = sessionStorage.getItem(INDEX_KEY);
+      if (!stored) return 0;
+      var i;
+      for (i = 0; i < designs.length; i++) {
+        if (designs[i].id === stored) return i;
+      }
+      var asNumber = Number(stored);
+      if (isFinite(asNumber) && asNumber >= 0 && asNumber < designs.length) return asNumber;
     } catch (error) {
       return 0;
     }
+    return 0;
+  }
+
+  function loadFilter() {
+    try {
+      var stored = sessionStorage.getItem(FILTER_KEY);
+      if (stored === "all" || stored === "pending" || stored === "yes" || stored === "no") {
+        return stored;
+      }
+    } catch (error) {
+      return "all";
+    }
+    return "all";
   }
 
   function saveIndex() {
     try {
-      sessionStorage.setItem(INDEX_KEY, String(index));
+      if (index < 0 || !designs[index]) sessionStorage.removeItem(INDEX_KEY);
+      else sessionStorage.setItem(INDEX_KEY, designs[index].id);
     } catch (error) {
       /* the vote still stays in memory for this visit */
+    }
+  }
+
+  function saveFilter() {
+    try {
+      sessionStorage.setItem(FILTER_KEY, filter);
+    } catch (error) {
+      /* the list still filters for this visit */
     }
   }
 
@@ -108,6 +139,33 @@
     return "Pending";
   }
 
+  function voteOf(design) {
+    var vote = reviewFor(design.id).vote;
+    if (vote === "yes" || vote === "no") return vote;
+    return "pending";
+  }
+
+  function matchesFilter(design) {
+    if (filter === "all") return true;
+    return voteOf(design) === filter;
+  }
+
+  function visibleIndexes() {
+    var list = [];
+    designs.forEach(function (design, designIndex) {
+      if (matchesFilter(design)) list.push(designIndex);
+    });
+    return list;
+  }
+
+  function countVotes(vote) {
+    var total = 0;
+    designs.forEach(function (design) {
+      if (voteOf(design) === vote) total += 1;
+    });
+    return total;
+  }
+
   function designHeading(design) {
     var sameTitle = designs.some(function (other) {
       return other !== design && other.title === design.title;
@@ -116,13 +174,15 @@
   }
 
   function plainText() {
-    var lines = ["T-shirt review", ""];
+    var lines = ["T-shirt review", "Adult", ""];
     designs.forEach(function (design, designIndex) {
       if (designIndex > 0) lines.push("");
       var review = reviewFor(design.id);
       var notes = review.notes.trim();
       lines.push(designHeading(design));
+      lines.push("Id: " + design.id);
       lines.push("Status: " + statusLabel(review.vote));
+      if (design.hasBack) lines.push("Has a back: yes");
       lines.push("Notes:");
       lines.push(notes || "(none)");
     });
@@ -141,18 +201,18 @@
   }
 
   function imageSrc(image) {
-    if (!image || image.indexOf("\\") !== -1 || image.indexOf("//") === 0) return "";
-    if (/^https?:\/\//i.test(image)) {
-      try {
-        var parsed = new URL(image);
-        if (parsed.protocol === "http:" || parsed.protocol === "https:") return parsed.href;
-      } catch (error) {
-        return "";
-      }
+    if (typeof image !== "string") return "";
+    var value = image.trim();
+    if (!value || /[\s\\]/.test(value) || value.indexOf("..") !== -1 || value.indexOf("//") !== -1) {
       return "";
     }
-    if (image.charAt(0) === "/") return image;
-    return "";
+    if (/^[a-z][a-z0-9+.-]*:/i.test(value)) return "";
+    var base = value.split("/").pop();
+    if (!/^[A-Za-z0-9][A-Za-z0-9._-]*\.webp$/.test(base)) return "";
+    if (value !== base && value !== "tshirts/" + base && value.indexOf("/tshirts/" + base) === -1) {
+      return "";
+    }
+    return "../tshirts/" + base;
   }
 
   function voteButton(vote, label, pressed) {
@@ -173,11 +233,13 @@
     var review = reviewFor(design.id);
     var src = imageSrc(design.image);
     var pending = review.vote !== "yes" && review.vote !== "no";
+    var visible = visibleIndexes();
+    var pos = visible.indexOf(index);
     var art = src
       ? '<div class="review-art has-image"><img src="' +
         escapeHtml(src) +
         '" alt="' +
-        escapeHtml("Artwork for " + design.title) +
+        escapeHtml(design.title) +
         '"></div>'
       : '<div class="review-art" role="img" aria-label="' +
         escapeHtml("No artwork for " + design.title) +
@@ -189,6 +251,7 @@
       '<h2 id="design-title" tabindex="-1">' +
       escapeHtml(design.title) +
       "</h2>" +
+      (design.hasBack ? '<p class="review-has-back">Has a back</p>' : "") +
       (design.description
         ? '<p class="blurb">' + escapeHtml(design.description) + "</p>"
         : "") +
@@ -201,16 +264,16 @@
       voteButton("pending", "Pending", pending) +
       "</div>" +
       '<label class="review-label" for="design-notes">Notes</label>' +
-      '<textarea class="review-field" id="design-notes" rows="5" autocomplete="off" placeholder="Add a note for this design">' +
+      '<textarea class="review-field" id="design-notes" rows="4" autocomplete="off" placeholder="Add a note for this design">' +
       escapeHtml(review.notes) +
       "</textarea>" +
       '<p class="review-hint">Saved on this phone for this design.</p>' +
       '<div class="review-nav">' +
       '<button type="button" data-nav="prev"' +
-      (index === 0 ? " disabled" : "") +
+      (pos <= 0 ? " disabled" : "") +
       ">Previous</button>" +
       '<button type="button" data-nav="next"' +
-      (index === designs.length - 1 ? " disabled" : "") +
+      (pos === -1 || pos >= visible.length - 1 ? " disabled" : "") +
       ">Next</button>" +
       "</div>" +
       "</article>"
@@ -220,29 +283,21 @@
   function shellHtml() {
     return (
       '<p class="review-count" data-count></p>' +
+      '<div class="review-filters" role="group" aria-label="Filter designs">' +
+      '<button type="button" data-filter="all">All <span data-filter-count="all"></span></button>' +
+      '<button type="button" data-filter="pending">Pending <span data-filter-count="pending"></span></button>' +
+      '<button type="button" data-filter="yes">Yes <span data-filter-count="yes"></span></button>' +
+      '<button type="button" data-filter="no">No <span data-filter-count="no"></span></button>' +
+      "</div>" +
       '<div data-card></div>' +
-      '<h2 class="review-subhead">All designs</h2>' +
-      '<ul class="review-list" data-list>' +
-      designs
-        .map(function (design, designIndex) {
-          return (
-            "<li><button type=\"button\" data-jump=\"" +
-            designIndex +
-            '"><span class="review-item-title">' +
-            escapeHtml(design.title) +
-            '</span><span class="review-item-status" data-status-for="' +
-            escapeHtml(design.id) +
-            '"></span></button></li>'
-          );
-        })
-        .join("") +
-      "</ul>" +
+      '<h2 class="review-subhead">Jump to a design</h2>' +
+      '<ul class="review-list" data-list></ul>' +
       '<div class="review-actions">' +
       '<button type="button" class="review-copy" data-copy aria-live="polite">Copy my review</button>' +
       '<a class="review-mail" data-mail aria-describedby="review-mail-hint">Email my review</a>' +
       '<p class="review-hint" id="review-mail-hint">Opens a message to ' +
       escapeHtml(MAIL) +
-      ". Nothing is sent until you send it.</p>" +
+      ". Nothing is sent until you send it. If the draft is cut short, paste from Copy my review.</p>" +
       '<p class="review-hint" data-memory hidden>This browser is not storing votes on this phone. Copy or email them before you leave.</p>' +
       "</div>" +
       '<div class="review-fallback" data-fallback hidden>' +
@@ -252,37 +307,100 @@
     );
   }
 
-  function paint() {
+  function paintCount() {
+    var count = mount.querySelector("[data-count]");
+    if (!count) return;
+    if (index < 0 || !designs[index]) {
+      count.textContent = "0 of " + designs.length;
+      return;
+    }
+    count.textContent = index + 1 + " of " + designs.length;
+  }
+
+  function paintFilters() {
+    var counts = {
+      all: designs.length,
+      pending: countVotes("pending"),
+      yes: countVotes("yes"),
+      no: countVotes("no"),
+    };
+    Array.prototype.forEach.call(mount.querySelectorAll("[data-filter-count]"), function (node) {
+      node.textContent = String(counts[node.getAttribute("data-filter-count")] || 0);
+    });
+    Array.prototype.forEach.call(mount.querySelectorAll("[data-filter]"), function (button) {
+      var selected = button.getAttribute("data-filter") === filter;
+      button.setAttribute("aria-pressed", selected ? "true" : "false");
+    });
+  }
+
+  function paintMail() {
+    var mail = mount.querySelector("[data-mail]");
+    if (mail) mail.href = mailtoHref();
+    var memory = mount.querySelector("[data-memory]");
+    if (memory) memory.hidden = !memoryOnly;
+  }
+
+  function paintCard() {
     var design = designs[index];
+    if (!design) return;
     var review = reviewFor(design.id);
     var label = statusLabel(review.vote);
     var badge = mount.querySelector("[data-vote-label]");
     if (badge) badge.textContent = label;
-
     Array.prototype.forEach.call(mount.querySelectorAll("[data-vote]"), function (button) {
       var vote = button.getAttribute("data-vote");
       var pressed = vote === "pending" ? label === "Pending" : vote === review.vote;
       button.setAttribute("aria-pressed", pressed ? "true" : "false");
     });
+    var visible = visibleIndexes();
+    var pos = visible.indexOf(index);
+    var prev = mount.querySelector('[data-nav="prev"]');
+    var next = mount.querySelector('[data-nav="next"]');
+    if (prev) prev.disabled = pos <= 0;
+    if (next) next.disabled = pos === -1 || pos >= visible.length - 1;
+  }
 
-    Array.prototype.forEach.call(mount.querySelectorAll("[data-status-for]"), function (node) {
-      node.textContent = statusLabel(reviewFor(node.getAttribute("data-status-for")).vote);
-    });
+  function renderList() {
+    var list = mount.querySelector("[data-list]");
+    if (!list) return;
+    var scroll = list.scrollTop;
+    var visible = visibleIndexes();
+    if (!visible.length) {
+      list.innerHTML = '<li><p class="empty">No designs in this filter.</p></li>';
+      return;
+    }
+    list.innerHTML = visible
+      .map(function (designIndex) {
+        var design = designs[designIndex];
+        var current = designIndex === index ? ' aria-current="true"' : "";
+        return (
+          '<li><button type="button" data-jump="' +
+          designIndex +
+          '"' +
+          current +
+          '><span class="review-item-title">' +
+          (designIndex + 1) +
+          ". " +
+          escapeHtml(design.title) +
+          '</span><span class="review-item-status" data-status-for="' +
+          escapeHtml(design.id) +
+          '">' +
+          statusLabel(voteOf(design)) +
+          "</span></button></li>"
+        );
+      })
+      .join("");
+    list.scrollTop = scroll;
+  }
 
-    Array.prototype.forEach.call(mount.querySelectorAll("[data-jump]"), function (button) {
-      var selected = Number(button.getAttribute("data-jump")) === index;
-      if (selected) button.setAttribute("aria-current", "true");
-      else button.removeAttribute("aria-current");
-    });
-
-    var mail = mount.querySelector("[data-mail]");
-    if (mail) mail.href = mailtoHref();
-
-    var memory = mount.querySelector("[data-memory]");
-    if (memory) memory.hidden = !memoryOnly;
-
-    var count = mount.querySelector("[data-count]");
-    if (count) count.textContent = "Design " + (index + 1) + " of " + designs.length;
+  function showNoMatch() {
+    var slot = mount.querySelector("[data-card]");
+    if (slot) slot.innerHTML = '<p class="empty">No designs in this filter.</p>';
+    paintCount();
+    paintFilters();
+    paintMail();
+    renderList();
+    saveIndex();
   }
 
   function flushNotes() {
@@ -341,6 +459,47 @@
     field.select();
   }
 
+  function goTo(nextIndex, focusTitle) {
+    index = nextIndex;
+    if (index < 0 || !designs[index]) {
+      showNoMatch();
+      return;
+    }
+    renderCard(focusTitle);
+  }
+
+  function step(direction) {
+    var visible = visibleIndexes();
+    var pos = visible.indexOf(index);
+    var nextPos = pos + direction;
+    if (nextPos < 0 || nextPos >= visible.length) return;
+    flushNotes();
+    goTo(visible[nextPos], true);
+  }
+
+  function afterVote(design) {
+    if (matchesFilter(design)) {
+      paintCard();
+      paintCount();
+      paintFilters();
+      paintMail();
+      renderList();
+      saveIndex();
+      return;
+    }
+    var visible = visibleIndexes();
+    var nextIndex = -1;
+    var i;
+    for (i = 0; i < visible.length; i++) {
+      if (visible[i] > index) {
+        nextIndex = visible[i];
+        break;
+      }
+    }
+    if (nextIndex === -1 && visible.length) nextIndex = visible[visible.length - 1];
+    goTo(nextIndex, false);
+  }
+
   function bindCard() {
     var design = designs[index];
     var card = mount.querySelector("[data-card]");
@@ -354,7 +513,7 @@
           vote: button.getAttribute("data-vote"),
           notes: current.notes,
         });
-        paint();
+        afterVote(design);
       });
     });
 
@@ -363,16 +522,14 @@
       notes.addEventListener("input", function () {
         var current = reviewFor(design.id);
         writeReview(design.id, { vote: current.vote, notes: notes.value });
-        paint();
+        paintMail();
       });
     }
 
     Array.prototype.forEach.call(card.querySelectorAll("[data-nav]"), function (button) {
       button.addEventListener("click", function () {
         if (button.disabled) return;
-        flushNotes();
-        index += button.getAttribute("data-nav") === "next" ? 1 : -1;
-        renderCard(true);
+        step(button.getAttribute("data-nav") === "next" ? 1 : -1);
       });
     });
 
@@ -394,10 +551,14 @@
 
   function renderCard(focusTitle) {
     var slot = mount.querySelector("[data-card]");
-    if (!slot) return;
+    if (!slot || !designs[index]) return;
     slot.innerHTML = cardHtml(designs[index]);
     bindCard();
-    paint();
+    paintCard();
+    paintCount();
+    paintFilters();
+    paintMail();
+    renderList();
     saveIndex();
     if (focusTitle) {
       var title = document.getElementById("design-title");
@@ -405,18 +566,45 @@
     }
   }
 
+  function buttonFrom(list, node) {
+    while (node && node !== list) {
+      if (node.tagName === "BUTTON") return node;
+      node = node.parentNode;
+    }
+    return null;
+  }
+
   function bindShell() {
-    Array.prototype.forEach.call(mount.querySelectorAll("[data-jump]"), function (button) {
-      button.addEventListener("click", function () {
+    var list = mount.querySelector("[data-list]");
+    if (list) {
+      list.addEventListener("click", function (event) {
+        var button = buttonFrom(list, event.target);
+        if (!button) return;
         var next = Number(button.getAttribute("data-jump"));
+        if (!isFinite(next) || !designs[next]) return;
         if (next === index) {
           var title = document.getElementById("design-title");
           if (title) title.focus();
           return;
         }
         flushNotes();
-        index = next;
-        renderCard(true);
+        goTo(next, true);
+      });
+    }
+
+    Array.prototype.forEach.call(mount.querySelectorAll("[data-filter]"), function (button) {
+      button.addEventListener("click", function () {
+        var nextFilter = button.getAttribute("data-filter");
+        if (nextFilter === filter) return;
+        flushNotes();
+        filter = nextFilter;
+        saveFilter();
+        var visible = visibleIndexes();
+        if (visible.indexOf(index) === -1) {
+          goTo(visible.length ? visible[0] : -1, false);
+          return;
+        }
+        renderCard(false);
       });
     });
 
@@ -424,7 +612,7 @@
     if (copyButton) {
       copyButton.addEventListener("click", function () {
         flushNotes();
-        paint();
+        paintMail();
         var text = plainText();
         var write =
           navigator.clipboard && navigator.clipboard.writeText
@@ -453,7 +641,7 @@
     if (mail) {
       mail.addEventListener("click", function () {
         flushNotes();
-        paint();
+        paintMail();
       });
     }
   }
@@ -464,7 +652,13 @@
   }
 
   index = loadIndex();
+  filter = loadFilter();
   mount.innerHTML = shellHtml();
   bindShell();
-  renderCard(false);
+  if (!matchesFilter(designs[index])) {
+    var first = visibleIndexes();
+    index = first.length ? first[0] : -1;
+  }
+  if (index < 0) showNoMatch();
+  else renderCard(false);
 })();

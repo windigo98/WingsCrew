@@ -32,6 +32,9 @@
       '<p class="badge">' +
       escapeHtml(status) +
       "</p>" +
+      (entry.mark
+        ? '<p class="badge">' + escapeHtml(entry.mark) + "</p>"
+        : "") +
       "<h3>" +
       escapeHtml(entry.name) +
       "</h3>" +
