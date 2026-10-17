@@ -13,4 +13,10 @@ window.WINGS_ADULT_APPS = [
     url: "https://windigo98.github.io/Sip-and-Spill/",
     badge: "21+ party game",
   },
+  {
+    name: "Caught Red-Handed",
+    blurb: "Jeopardy-style 21+ party game: answer in secret, get caught red-handed.",
+    url: "/21plus/caught-red-handed/",
+    badge: "21+ party game",
+  },
 ];
