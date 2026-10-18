@@ -67,7 +67,14 @@ const P={
  sun:'<circle cx="12" cy="12" r="4"/><path d="M12 2.5V5M12 19v2.500M2.500 12H5M19 12h2.500M5.300 5.300l1.800 1.800M16.900 16.900l1.800 1.800M5.300 18.700l1.800-1.800M16.900 7.100l1.800-1.800"/>',
  mountain:'<path d="M2 20l7-12 4 6 3-4 6 10z"/><path d="M7 12l2 1.500 1.500-1.500"/>',
  bowl:'<path d="M3 11h18c0 5-3.500 8-9 8s-9-3-9-8zM8 8c-1-1.200 1-2 0-3.500M13 8c-1-1.200 1-2 0-3.500"/>',
- bread:'<path d="M5 20V10c-2-1-3-3-1.500-5C5 3 8 3 12 3s7 0 8.500 2C22 7 21 9 19 10v10z"/>'
+ bread:'<path d="M5 20V10c-2-1-3-3-1.500-5C5 3 8 3 12 3s7 0 8.500 2C22 7 21 9 19 10v10z"/>',
+ mic:'<rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5V21M8.5 21h7"/>',
+ trash:'<path d="M4 7h16M9 7V4.5h6V7M6.5 7l1 13h9l1-13M10 11v6M14 11v6"/>',
+ pencil:'<path d="M4 20l1-4.500L16.500 4a2 2 0 0 1 3 3L8 18.500zM14.500 6l3 3"/>',
+ copy:'<rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V5a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h3"/>',
+ calendar:'<rect x="3.500" y="5" width="17" height="15.500" rx="2"/><path d="M3.500 10h17M8 3v4M16 3v4"/>',
+ undo:'<path d="M9 6L4 11l5 5M4 11h10a5 5 0 0 1 0 10h-4"/>',
+ briefcase:'<rect x="3" y="7" width="18" height="13" rx="2"/><path d="M9 7V5a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2M3 13h18"/>'
 };
 const ic=(n,cls='')=>`<svg class="${cls}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${P[n]||''}</svg>`;
 const cardIc=n=>`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><g fill="currentColor" fill-opacity=".14">${P[n]}</g></svg>`;
@@ -320,18 +327,19 @@ function scr_home(){
       ${S.checklist.map(c=>`<button class="check-row ${c.done?'done':''}" data-act="tick" data-id="${c.id}" aria-pressed="${c.done}"><span class="circle">${ic('check')}</span><span class="lab">${esc(c.label)}</span></button>`).join('')}
       ${allDone?`<p class="note" style="text-align:center;font-size:1.05rem">\u2728 All set. Have a good day!</p>`:''}</div></div>
       <div><div class="tools"><button class="tool toggle toggle-tool only-l" data-act="bad" aria-pressed="${!!S.badDay}"><span>Bad day</span><span class="knob"></span></button>
+        <button class="tool" data-act="nav" data-to="remind">${ic('bell')}Remind me<span class="rm-dot" style="${rmDueList().length?'':'display:none'}">${rmDueList().length}</span></button>
         <button class="tool" data-act="nav" data-to="donecheck">${ic('shieldcheck')}Done-check</button>
         <button class="tool extra" data-act="nav" data-to="where">${ic('search')}Where is it?</button>
         <button class="tool extra" data-act="nav" data-to="whos">${ic('whos')}Who\u2019s that?</button>
         <button class="tool helpbtn" data-act="help" style="display:${S.badDay?'flex':'none'}">${ic('help')}Help</button>
       </div>
-      <div class="card info extra" id="reminder"><span class="ico">${ic('bell')}</span><span class="t"><small>Next reminder</small><strong>Call the dentist \u00b7 2:00 PM</strong></span>
+      <div class="card info extra" id="reminder"><button class="rmcard-go" data-act="nav" data-to="remind"><span class="ico">${ic('bell')}</span><span class="t"><small>Next reminder</small><strong>${(()=>{const n=rmNext();return n?esc(n.text.length>34?n.text.slice(0,33)+'\u2026':n.text)+' \u00b7 '+esc(rmWhen(rmFireAt(n))):'Nothing yet. Tap to add one.';})()}</strong></span></button>
         <button class="iconbtn" data-act="rem" aria-label="Hear this reminder">${ic('play')}</button></div>
       <button class="card info extra" data-act="nav" data-to="whos" style="width:100%;text-align:left;font:inherit"><span class="ico">${ic('star')}</span><span class="t"><small>Weekly challenge</small><strong>Learn 5 names this week</strong><span class="bar"><i style="width:20%"></i></span></span></button>
       </div></div>`,
     acts:{tick:el=>{const c=S.checklist.find(x=>x.id===el.dataset.id);c.done=!c.done;save();if(c.done)addGauge(6,'chk:'+c.id);else render();if(c.done)render();},
       bad:()=>{S.badDay=!S.badDay;save();applyClasses();render();toast(S.badDay?'Bad day mode is on. Just the basics.':'Bad day mode is off.');},
-      rem:()=>speak('Reminder. Call the dentist at 2 PM.'),
+      rem:()=>{const n=rmNext();if(n)speakSeq(['Reminder',n.text]);else go('remind');},
       help:()=>helpModal()}};
 }
 
@@ -691,6 +699,7 @@ function scr_more(){
   return {name:'More',tab:'more',topLeft:'brand',portal:{size:'small',world:S.world,title:'More'},
     guide:'Change how Highkeep helps you. Your choices are saved right away.',
     body:`<div class="tools" style="grid-template-columns:repeat(2,1fr)">
+      <button class="tool" data-act="nav" data-to="remind">${ic('bell')}Remind me</button><button class="tool" data-act="nav" data-to="remind/alerts">${ic('bell')}Phone alerts</button>
       <button class="tool" data-act="nav" data-to="donecheck">${ic('shieldcheck')}Done-check</button><button class="tool" data-act="nav" data-to="where">${ic('search')}Where is it?</button>
       <button class="tool" data-act="nav" data-to="whos">${ic('whos')}Who\u2019s that?</button><button class="tool" data-act="tour">${ic('compass')}Replay the tour</button></div>
     <h2 style="margin:6px 4px 10px">Settings</h2>${settingsRows(['guide','read','voice','size','sensory','bad','world'])}
@@ -699,6 +708,805 @@ function scr_more(){
     acts:Object.assign({},settingActs,{tour:()=>{go('home');setTimeout(startTour,450);},
       reset:()=>modal('<h2>Reset everything?</h2><p>Your lists, notes, photos and keep will be cleared.</p>',[['Cancel',null],['Yes, reset',()=>{localStorage.removeItem(KEY);location.hash='';location.reload();},true]])})};
 }
+
+/*RM-PARSER-START*/
+/* Remind Me time reader. Pure and deterministic: rmParse(text, now, opts) never guesses silently.
+   It returns what it understood plus plain-words notes, and the screen always shows the result for the person to fix. */
+const RM_PARTS_DEF={morning:'08:00',afternoon:'13:00',evening:'18:00',night:'21:00'};
+const RM_DOW=['sunday','monday','tuesday','wednesday','thursday','friday','saturday'];
+const RM_DOW_SHORT={sun:0,mon:1,tue:2,tues:2,wed:3,thu:4,thur:4,thurs:4,fri:5,sat:6};
+const RM_MONTHS=['january','february','march','april','may','june','july','august','september','october','november','december'];
+const RM_MON_SHORT={jan:0,feb:1,mar:2,apr:3,jun:5,jul:6,aug:7,sep:8,sept:8,oct:9,nov:10,dec:11};
+const RM_NUMW={zero:0,one:1,two:2,three:3,four:4,five:5,six:6,seven:7,eight:8,nine:9,ten:10,eleven:11,twelve:12,thirteen:13,fourteen:14,fifteen:15,sixteen:16,seventeen:17,eighteen:18,nineteen:19,twenty:20,thirty:30,forty:40,fifty:50,sixty:60,ninety:90};
+function rmNum(w){if(w==null)return null;if(/^\d+$/.test(w))return parseInt(w,10);if(w==='a'||w==='an')return 1;if(Object.prototype.hasOwnProperty.call(RM_NUMW,w))return RM_NUMW[w];
+  const m=/^(twenty|thirty|forty|fifty)[- ]?(one|two|three|four|five|six|seven|eight|nine)$/.exec(w);if(m)return RM_NUMW[m[1]]+RM_NUMW[m[2]];return null;}
+function rmHM(s){const m=/^(\d{1,2}):(\d{2})$/.exec(s||'');return m?[+m[1],+m[2]]:[8,0];}
+function rmDate(ts){return new Date(ts);}
+function rmAtDay(base,addDays,h,m){const d=new Date(base);d.setHours(0,0,0,0);d.setDate(d.getDate()+addDays);d.setHours(h,m,0,0);return d.getTime();}
+function rmUnit(w){if(!w)return null;if(/^(min|mins|minute|minutes|m)$/.test(w))return 'min';if(/^(hr|hrs|hour|hours|h)$/.test(w))return 'hour';if(/^(day|days)$/.test(w))return 'day';if(/^(week|weeks|wk|wks)$/.test(w))return 'week';if(/^(month|months)$/.test(w))return 'month';return null;}
+function rmTokens(input){
+  const out=[];String(input||'').replace(/\r|\n/g,' ').split(/\s+/).filter(Boolean).forEach(raw=>{
+    let w=raw.toLowerCase().replace(/[\u2018\u2019]/g,"'").replace(/^[("'\u201c]+/,'').replace(/[)"'\u201d,;!?]+$/,'').replace(/\.+$/,'');
+    w=w.replace(/^a\.m$/,'am').replace(/^p\.m$/,'pm').replace(/^(\d{1,2}(?::\d{2})?)a\.m$/,'$1am').replace(/^(\d{1,2}(?::\d{2})?)p\.m$/,'$1pm');
+    if(w==="o'clock"||w==='oclock'){out.push({w:'oclock',raw});return;}
+    out.push({w,raw});});
+  return out;
+}
+/* Which day-of-week index is next, etc. */
+function rmParse(input,nowTs,opts){
+  const R0=rmParse0(input,nowTs,opts);
+  if(R0.due!=null&&(!isFinite(R0.due)||R0.due-nowTs>3660*86400000)){R0.due=null;R0.notes=['That is too far away for me to set. Please pick a nearer time.'];R0.rep={type:'once',total:null};}
+  return R0;
+}
+function rmParse0(input,nowTs,opts){
+  opts=opts||{};const parts=Object.assign({},RM_PARTS_DEF,opts.parts||{});const now=+nowTs;const T=rmTokens(input);const used=new Array(T.length).fill(false);
+  const R={text:'',due:null,rep:{type:'once',total:null},notes:[],assumed:false,found:false,hasTime:false,foundParts:[]};
+  const w=i=>(i>=0&&i<T.length&&!used[i])?T[i].w:null;
+  const take=(i,n)=>{for(let k=0;k<n;k++)used[i+k]=true;};
+  const numAt=i=>{const t=w(i);if(t==null)return null;let n=rmNum(t);if(n==null)return null;let len=1;
+    if(n>=20&&n<=50&&n%10===0&&/^(twenty|thirty|forty|fifty)$/.test(t)){const t2=w(i+1);const n2=t2==null?null:rmNum(t2);if(n2!=null&&n2>=1&&n2<=9&&t2!=='a'&&t2!=='an'){n+=n2;len=2;}}
+    return {n,len};};
+  let dur=null,clock=null,part=null,day=null,rep=null,total=null,startWord=false;
+  const DAYWORDS={today:1,tomorrow:1,tonight:1};
+  const isPart=x=>x==='morning'||x==='afternoon'||x==='evening'||x==='night';
+  /* ---- pass 1: repeats ---- */
+  for(let i=0;i<T.length;i++){const a=w(i);if(!a)continue;
+    if(a==='daily'||a==='everyday'||a==='nightly'){rep={type:'daily'};if(a==='nightly')part=part||'night';take(i,1);continue;}
+    if(a==='weekdays'||(a==='on'&&w(i+1)==='weekdays')){const k=a==='on'?2:1;rep={type:'weekdays'};take(i,k);continue;}
+    if(a==='weekly'){rep={type:'weekly'};take(i,1);continue;}
+    if(a==='every'||a==='each'){const b=w(i+1);
+      if(isPart(b)){rep={type:'daily'};part=b;take(i,2);continue;}
+      if(b==='day'){rep={type:'daily'};take(i,2);continue;}
+      if(b==='weekday'||b==='weekdays'){rep={type:'weekdays'};take(i,2);continue;}
+      if(b==='week'){rep={type:'weekly'};take(i,2);continue;}
+      if(b==='other'||b==='second'){continue;}
+      const di=RM_DOW.indexOf(b);const ds=RM_DOW_SHORT[b];
+      if(di>=0||ds!==undefined){rep={type:'weekly'};day={type:'dow',dow:di>=0?di:ds,mod:null};take(i,2);continue;}
+      if(b==='night'||b==='evening'){continue;}
+    }
+  }
+  /* ---- pass 2: "for N days/weeks", "N times", "starting tomorrow" ---- */
+  let span=null;
+  for(let i=0;i<T.length;i++){const a=w(i);if(!a)continue;
+    if(a==='for'){let j=i+1;let skip=0;if(w(j)==='the'&&w(j+1)==='next'){skip=2;j+=2;}else if(w(j)==='the'&&w(j+1)==='rest'){continue;}else if(w(j)==='next'){skip=1;j+=1;}
+      const na=numAt(j);if(na){const n=na.n;const u=rmUnit(w(j+na.len));
+      if(u&&(u==='day'||u==='week'||u==='month')){span={n,u};take(i,1+skip+na.len+1);continue;}
+      if(w(j+na.len)==='times'||w(j+na.len)==='time'){total=n;take(i,1+skip+na.len+1);continue;}}
+    }
+    if(rmNum(a)!=null&&/^\d+$/.test(a)&&(w(i+1)==='times'||w(i+1)==='time')&&rep){const n=rmNum(a);if(n>0){total=n;take(i,2);continue;}}
+    if((a==='starting'||a==='starts'||a==='beginning'||a==='from')&&(DAYWORDS[w(i+1)]||RM_DOW.indexOf(w(i+1))>=0)){startWord=true;take(i,1);continue;}
+  }
+  /* ---- pass 3: durations ("in 20 minutes") ---- */
+  for(let i=0;i<T.length&&!dur;i++){const a=w(i);if(!a)continue;
+    if(a==='in'||a==='after'){
+      if(w(i+1)==='half'&&((w(i+2)==='an'&&rmUnit(w(i+3))==='hour')||rmUnit(w(i+2))==='hour')){const k=w(i+2)==='an'?4:3;dur={min:30};take(i,k);break;}
+      if((w(i+1)==='an'||w(i+1)==='a'||w(i+1)==='one')&&rmUnit(w(i+2))==='hour'&&w(i+3)==='and'&&w(i+4)==='a'&&w(i+5)==='half'){dur={min:90};take(i,6);break;}
+      if(w(i+1)==='a'&&w(i+2)==='couple'){let k=3;if(w(i+3)==='of')k=4;const u=rmUnit(w(i+k));if(u&&u!=='month'){dur=rmDur(2,u);take(i,k+1);break;}}
+      const na=numAt(i+1);
+      if(na){const k=1+na.len;const u=rmUnit(w(i+k));
+        if(u&&u!=='month'){
+          if(w(i+k+1)==='and'&&w(i+k+2)==='a'&&w(i+k+3)==='half'&&u==='hour'){dur={min:na.n*60+30};take(i,k+4);break;}
+          dur=rmDur(na.n,u);take(i,k+1);if(w(i+k)==='from'&&w(i+k+1)==='now')take(i+k,2);break;}}
+    }
+    const na=numAt(i);
+    if(na&&/^\d+$/.test(a)){const u=rmUnit(w(i+na.len));const j=i+na.len+1;
+      if(u&&u!=='month'&&((w(j)==='from'&&w(j+1)==='now')||w(j)==='later')){dur=rmDur(na.n,u);take(i,na.len+1+(w(j)==='later'?1:2));break;}}
+  }
+  function rmDur(n,u){return u==='min'?{min:n}:u==='hour'?{min:n*60}:u==='day'?{days:n}:{days:n*7};}
+  /* ---- pass 4: day words ---- */
+  for(let i=0;i<T.length;i++){const a=w(i);if(!a)continue;
+    if(a==='day'&&false)continue;
+    if(a==='the'&&w(i+1)==='day'&&w(i+2)==='after'&&w(i+3)==='tomorrow'){day={type:'off',n:2};take(i,4);continue;}
+    if(a==='day'&&w(i+1)==='after'&&w(i+2)==='tomorrow'){day={type:'off',n:2};take(i,3);continue;}
+    if(a==='tomorrow'||a==='tmrw'){day={type:'off',n:1};take(i,1);continue;}
+    if(a==='today'){day={type:'off',n:0};take(i,1);continue;}
+    if(a==='tonight'){day=day||{type:'off',n:0};part='night';take(i,1);continue;}
+    if(a==='next'&&w(i+1)==='week'&&!RM_DOW.includes(w(i+2))){day={type:'off',n:7,week:true};take(i,2);continue;}
+    if((a==='next'||a==='this'||a==='on'||a==='by'||a==='every')&&w(i+1)){const b=w(i+1);let di=RM_DOW.indexOf(b);if(di<0&&RM_DOW_SHORT[b]!==undefined)di=RM_DOW_SHORT[b];
+      if(di>=0){day={type:'dow',dow:di,mod:a==='next'?'next':null};take(i,2);continue;}}
+    {const di=RM_DOW.indexOf(a);if(di>=0){day={type:'dow',dow:di,mod:null};take(i,1);continue;}}
+    /* dates: october 25th, oct 25, 25 october, the 25th, 10/25 */
+    {let mi=RM_MONTHS.indexOf(a);if(mi<0&&RM_MON_SHORT[a]!==undefined)mi=RM_MON_SHORT[a];
+      if(mi>=0){const d=/^(\d{1,2})(st|nd|rd|th)?$/.exec(w(i+1)||'');if(d&&+d[1]>=1&&+d[1]<=31){const pre=w(i-1)==='on'&&!used[i-1]?1:0;day={type:'date',m:mi,d:+d[1]};take(i-pre,2+pre);continue;}}
+      const d2=/^(\d{1,2})(st|nd|rd|th)?$/.exec(a);
+      if(d2&&+d2[1]>=1&&+d2[1]<=31){let mi2=RM_MONTHS.indexOf(w(i+1)||'');if(mi2<0&&RM_MON_SHORT[w(i+1)||'']!==undefined)mi2=RM_MON_SHORT[w(i+1)];
+        if(mi2>=0&&!(w(i-1)==='in')){day={type:'date',m:mi2,d:+d2[1]};take(i,2);continue;}
+        if(d2[2]&&(w(i-1)==='the'||w(i-1)==='on')&&(w(i-1)==='the'?(w(i-2)==='on'?true:true):true)){const pre=w(i-1)==='the'&&w(i-2)==='on'?2:1;day={type:'dom',d:+d2[1]};take(i-pre,pre+1);continue;}}
+      const md=/^(\d{1,2})\/(\d{1,2})$/.exec(a);
+      if(md&&+md[1]>=1&&+md[1]<=12&&+md[2]>=1&&+md[2]<=31){const pre=w(i-1)==='on'?1:0;day={type:'date',m:+md[1]-1,d:+md[2]};take(i-pre,1+pre);continue;}}
+  }
+  /* ---- pass 5: parts of the day (with "in the", "this", "at") ---- */
+  for(let i=0;i<T.length;i++){const a=w(i);if(!a)continue;
+    if(isPart(a)){let s=i,n=1;
+      if(w(i-1)==='the'&&w(i-2)==='in'){s=i-2;n=3;}else if(w(i-1)==='the'&&w(i-2)==='of'){}else if(w(i-1)==='this'||w(i-1)==='at'||w(i-1)==='in'){s=i-1;n=2;}
+      if(w(i-1)==='this'&&!day)day={type:'off',n:0,thisPart:true};
+      if(!part)part=a;take(s,n);continue;}
+    if(a==='noon'||a==='midday'){clock={h:12,m:0,mer:'pm',explicit:true};const s=w(i-1)==='at'?i-1:i;take(s,s===i?1:2);continue;}
+    if(a==='midnight'){clock={h:0,m:0,mer:'am',explicit:true};const s=w(i-1)==='at'?i-1:i;take(s,s===i?1:2);continue;}
+  }
+  /* ---- pass 6: clock times ---- */
+  for(let i=0;i<T.length&&!clock;i++){const a=w(i);if(!a)continue;
+    let m=/^(\d{1,2})(?::(\d{2}))?(am|pm)$/.exec(a);
+    if(m){const pre=w(i-1)==='at'||w(i-1)==='@'?1:0;clock={h:+m[1],m:+(m[2]||0),mer:m[3],explicit:true};take(i-pre,1+pre);if(w(i+1)==='oclock')take(i+1,1);if(clock.h<1||clock.h>12||clock.m>59){clock=null;}continue;}
+    m=/^(\d{1,2}):(\d{2})$/.exec(a);
+    if(m){const pre=w(i-1)==='at'?1:0;let h=+m[1],mi=+m[2];if(mi>59||h>24)continue;const nx=w(i+1);
+      if(nx==='am'||nx==='pm'){if(h<1||h>12)continue;clock={h,m:mi,mer:nx,explicit:true};take(i-pre,2+pre);}
+      else if(h>=13||h===0){clock={h:h%24,m:mi,mer:'24',explicit:true};take(i-pre,1+pre);}
+      else{clock={h,m:mi,mer:null,explicit:false};take(i-pre,1+pre);}
+      continue;}
+    if(a==='at'||a==='@'){const nn=w(i+1);const na=numAt(i+1);if(!na||nn==='a'||nn==='an')continue;let n=na.n;let len=1+na.len;let mins=0;
+      if(/^\d+$/.test(nn)){if(w(i+len)&&/^\d{2}$/.test(w(i+len))&&+w(i+len)<60&&(w(i+len+1)==='am'||w(i+len+1)==='pm')){mins=+w(i+len);len++;}}
+      else{const nb=numAt(i+len);if(nb&&nb.n>=10&&nb.n<60&&n<=12&&!rmUnit(w(i+len+nb.len))){mins=nb.n;len+=nb.len;}}
+      if(n>24||(n===24&&mins>0))continue;
+      let mer=null;const nx=w(i+len);if(nx==='am'||nx==='pm'){mer=nx;len++;}
+      if(n>=13||n===0){clock={h:n%24,m:mins,mer:'24',explicit:true};}
+      else clock={h:n,m:mins,mer,explicit:!!mer};
+      take(i,len);if(w(i+len)==='oclock')take(i+len,1);continue;}
+  }
+  /* ---- build the leftover words as the reminder text ---- */
+  const left=T.filter((t,i)=>!used[i]).map(t=>t.raw);
+  let txt=left.join(' ').trim();
+  txt=txt.replace(/^(?:please\s+)?(?:hey\s+)?remind\s+me\s+(?:to\s+|about\s+|that\s+|of\s+)?/i,'').replace(/^(?:please\s+)?(?:set\s+a\s+reminder\s+(?:to\s+|for\s+|about\s+)?)/i,'').replace(/^(?:to|about|that)\s+/i,'');
+  txt=txt.replace(/\s+(?:at|on|in|for|by|from|starting|every|each|the|this|next|and|after)\s*$/i,'').replace(/^(?:at|on|in|for|by|from|and)\s+(?=\S)/i,'').replace(/\s{2,}/g,' ').replace(/[\s,;.]+$/,'').trim();
+  R.text=txt;
+  /* ---- resolve ---- */
+  const foundTime=!!(dur||clock||part||day||rep);
+  R.found=foundTime;
+  if(!foundTime){return R;}
+  const nowD=new Date(now);
+  /* duration wins */
+  if(dur&&!rep){
+    if(dur.min!=null){R.due=now+dur.min*60000;R.hasTime=true;R.notes.push('relative');return R;}
+    let base=new Date(now);base.setDate(base.getDate()+dur.days);
+    let h=base.getHours(),mm=base.getMinutes();
+    if(clock){const c=rmClock(clock,part,true,null,null);h=c.h;mm=c.m;if(c.assumed){R.assumed=true;R.notes.push(c.note);}}
+    else if(part){const [ph,pm]=rmHM(parts[part]);h=ph;mm=pm;}
+    else R.notes.push('I kept the same time of day as right now. Change it below if you want a different time.');
+    R.due=rmAtDay(now,dur.days,h,mm);R.hasTime=true;return R;
+  }
+  /* time of day */
+  let H=null,M=0,ambiguous=false,partDefaulted=false;
+  const hasDayRef=!!day&&!(day.type==='off'&&day.n===0&&day.thisPart&&!clock);
+  if(clock){
+    const c=rmClock(clock,part,false,(day&&!(day.type==='off'&&day.n===0))?day:null,{now,parts});
+    if(c.ambiguous){ambiguous=true;H=c.h;M=c.m;R._alt=c.alt;if(c.note){R.assumed=true;R.notes.push(c.note);}}
+    else{H=c.h;M=c.m;if(c.assumed){R.assumed=true;R.notes.push(c.note);}}
+  }else if(part){[H,M]=rmHM(parts[part]);}
+  else{
+    /* a day or repeat with no time: use a calm default and say so */
+    if(day&&day.type==='off'&&day.n===0&&!rep){
+      // today with no time: next of the part-of-day defaults that is still ahead
+      const order=['morning','afternoon','evening','night'];let pick=null;
+      for(const p of order){const [ph,pm]=rmHM(parts[p]);if(rmAtDay(now,0,ph,pm)>now){pick=p;break;}}
+      if(!pick)pick='morning';[H,M]=rmHM(parts[pick]);R.assumed=true;partDefaulted=true;
+      R.notes.push('You did not say a time, so I picked '+pick+' ('+rmFmtHM(H,M)+').');
+    }else{[H,M]=rmHM(parts.morning);R.assumed=true;partDefaulted=true;
+      R.notes.push('You did not say a time, so I picked morning ('+rmFmtHM(H,M)+').');}
+  }
+  /* day */
+  let due=null;
+  const todayAt=(h,m)=>rmAtDay(now,0,h,m);
+  if(!day||day.type==='off'&&day.n===0){
+    let cand=todayAt(H,M);
+    if(ambiguous&&R._alt){
+      const opts2=[];[0,1].forEach(dd=>{opts2.push([rmAtDay(now,dd,H,M),H,M]);opts2.push([rmAtDay(now,dd,R._alt.h,R._alt.m),R._alt.h,R._alt.m]);});
+      const best=opts2.filter(o=>o[0]>now).sort((x,y)=>x[0]-y[0])[0];
+      cand=best[0];H=best[1];M=best[2];
+      R.notes[R.notes.length-1]='You did not say AM or PM, so I picked '+rmFmtHM(H,M)+', the next time it is that o\u2019clock.';
+    }else if(cand<=now){cand=rmAtDay(now,1,H,M);R.notes.push('That time has already passed today, so I picked tomorrow.');}
+    due=cand;
+  }else if(day.type==='off'){
+    if(ambiguous)R.notes.push('You did not say AM or PM, so I picked '+rmFmtHM(H,M)+'. Change it below if that is wrong.');
+    due=rmAtDay(now,day.n,H,M);
+    if(day.week&&!clock&&!part){/* next week: same weekday, morning */}
+    if(due<=now){due=rmAtDay(now,day.n+1,H,M);R.notes.push('That time has already passed, so I picked the next day.');}
+  }else if(day.type==='dow'){
+    let delta=(day.dow-nowD.getDay()+7)%7;
+    if(day.mod==='next'&&delta===0)delta=7;
+    if(day.mod==='next'&&delta>0){/* the coming one */}
+    due=rmAtDay(now,delta,H,M);
+    if(due<=now){due=rmAtDay(now,delta+7,H,M);}
+    if(ambiguous)R.notes.push('You did not say AM or PM, so I picked '+rmFmtHM(H,M)+'. Change it below if that is wrong.');
+  }else if(day.type==='date'||day.type==='dom'){
+    let y=nowD.getFullYear();let mo=day.type==='date'?day.m:nowD.getMonth();
+    let d=new Date(y,mo,day.d,H,M,0,0);
+    if(day.type==='dom'){
+      while(d.getDate()!==day.d||d.getTime()<=now){mo++;if(mo>11){mo=0;y++;}d=new Date(y,mo,day.d,H,M,0,0);if(y>nowD.getFullYear()+2)break;}
+    }else{
+      if(d.getDate()!==day.d){/* e.g. Feb 30 */R.notes.push('That date does not exist, so I could not use it.');d=null;}
+      else if(d.getTime()<=now){d=new Date(y+1,mo,day.d,H,M,0,0);R.notes.push('That date has passed this year, so I picked next year.');}
+    }
+    due=d?d.getTime():null;
+    if(ambiguous&&due)R.notes.push('You did not say AM or PM, so I picked '+rmFmtHM(H,M)+'. Change it below if that is wrong.');
+  }
+  R.hasTime=true;
+  /* repeats */
+  if(rep){
+    const r={type:rep.type,total:null};
+    if(rep.type==='weekly'){if(day&&day.type==='dow')r.dow=day.dow;else if(due)r.dow=new Date(due).getDay();}
+    if(rep.type==='weekdays'&&due){let d=new Date(due);while(d.getDay()===0||d.getDay()===6){d.setDate(d.getDate()+1);d.setHours(H,M,0,0);}if(d.getTime()!==due){R.notes.push('Weekdays only, so the first one is on a '+RM_DOW[d.getDay()][0].toUpperCase()+RM_DOW[d.getDay()].slice(1)+'.');due=d.getTime();}}
+    if(rep.type==='daily'&&dur&&dur.days)due=rmAtDay(now,dur.days,H,M);
+    R.rep=r;
+    if(due){
+      if(total!=null)r.total=total;
+      else if(span){const days=span.u==='day'?span.n:span.u==='week'?span.n*7:span.n*30;r.total=rmCountIn(r,due,days,H,M);}
+      if(r.total!=null&&r.total<1)r.total=1;
+    }
+  }
+  R.due=due;
+  return R;
+}
+function rmCountIn(rep,first,days,H,M){/* how many occurrences fall inside "days" days starting at the first one */
+  const end=new Date(first);end.setDate(end.getDate()+days);end.setHours(0,0,0,0);
+  let n=0,t=first;for(let g=0;g<400&&t<end.getTime();g++){n++;t=rmStep({type:rep.type,dow:rep.dow},t,H,M);}return Math.max(1,n);
+}
+function rmFmtHM(h,m){const ap=h>=12?'PM':'AM';const hh=h%12===0?12:h%12;return hh+':'+String(m).padStart(2,'0')+' '+ap;}
+/* Turns a spoken clock like "5" or "7:30 pm" into 24h, and says when it had to pick AM or PM. */
+function rmClock(c,part,noAlt,day,ctx){
+  if(c.mer==='24')return {h:c.h,m:c.m};
+  let h=c.h,m=c.m;
+  if(c.mer==='am'){h=h%12;return {h,m};}
+  if(c.mer==='pm'){h=h%12+12;return {h,m};}
+  /* no AM/PM written */
+  if(part==='morning'){h=h%12;return {h,m};}
+  if(part==='afternoon'||part==='evening'||part==='night'){h=h===12?(part==='night'?0:12):h%12+12;return {h,m};}
+  if(h===12){const r={h:12,m,assumed:true,note:'You did not say AM or PM, so I picked 12:'+String(m).padStart(2,'0')+' PM (midday).'};return r;}
+  const pref=h<=6?h+12:h;const other=h<=6?h:h+12;
+  if(noAlt||day)return {h:pref,m,assumed:true,note:'You did not say AM or PM, so I picked '+rmFmtHM(pref,m)+'. Change it below if that is wrong.'};
+  return {h:pref,m,ambiguous:true,alt:{h:other,m},note:'AMBIG'};
+}
+/* next occurrence for repeats, keeping the same clock time */
+function rmStep(rep,fromTs,H,M){
+  const d=new Date(fromTs);let n=0;
+  do{d.setDate(d.getDate()+(rep.type==='weekly'?7:1));d.setHours(H,M,0,0);n++;}while(rep.type==='weekdays'&&(d.getDay()===0||d.getDay()===6)&&n<10);
+  return d.getTime();
+}
+/*RM-PARSER-END*/
+
+/* ================= Remind Me ================= */
+/* Saved shape: S.rm = {items:[...], read, nudge, nudgeMax, parts, quiet, seen}. Old saves without S.rm are filled in safely by rmNorm(). */
+function RMDEF(){return {items:[],read:true,nudge:5,nudgeMax:3,parts:Object.assign({},RM_PARTS_DEF),quiet:{on:false,from:'22:00',to:'07:00'},seen:null};}
+function rmNorm(){
+  const d=RMDEF();const o=(S.rm&&typeof S.rm==='object')?S.rm:{};
+  const r=Object.assign(d,o);
+  r.parts=Object.assign({},RM_PARTS_DEF,(o.parts&&typeof o.parts==='object')?o.parts:{});
+  Object.keys(r.parts).forEach(k=>{if(!/^\d{1,2}:\d{2}$/.test(r.parts[k]))r.parts[k]=RM_PARTS_DEF[k];});
+  r.quiet=Object.assign({on:false,from:'22:00',to:'07:00'},(o.quiet&&typeof o.quiet==='object')?o.quiet:{});
+  r.items=(Array.isArray(o.items)?o.items:[]).filter(x=>x&&typeof x==='object'&&typeof x.text==='string'&&isFinite(x.due)).map(x=>Object.assign({id:'r'+Math.random().toString(36).slice(2,8),time:null,rep:{type:'once',total:null},left:null,habit:false,status:'active',snooze:null,created:Date.now(),doneAt:null,alerted:'',nudges:0,lastAlert:0,missed:0,doneCount:0,log:[]},x,{rep:Object.assign({type:'once',total:null},x.rep||{})}));
+  r.read=r.read!==false;r.nudge=[0,2,5,10].includes(+r.nudge)?+r.nudge:5;r.nudgeMax=[1,3,5].includes(+r.nudgeMax)?+r.nudgeMax:3;
+  S.rm=r;
+}
+let rmOffset=0;const rmNow=()=>Date.now()+rmOffset;
+const RMDOWN=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+const RMMON=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+const rmTimeStr=ts=>{const d=new Date(ts);return rmFmtHM(d.getHours(),d.getMinutes());};
+function rmDayStr(ts,now){const d=new Date(ts),a=new Date(d);a.setHours(0,0,0,0);const b=new Date(now);b.setHours(0,0,0,0);const diff=Math.round((a-b)/86400000);
+  if(diff===0)return 'Today';if(diff===1)return 'Tomorrow';if(diff===-1)return 'Yesterday';return RMDOWN[d.getDay()]+', '+RMMON[d.getMonth()]+' '+d.getDate();}
+const rmWhen=(ts,now)=>rmDayStr(ts,now==null?rmNow():now)+' at '+rmTimeStr(ts);
+function rmRel(ts,now){now=now==null?rmNow():now;const m=Math.round((ts-now)/60000);const a=Math.abs(m);const pl=(n,u)=>n+' '+u+(n===1?'':'s');
+  let s;if(a<1)return 'right now';if(a<60)s=pl(a,'minute');else if(a<48*60){const h=Math.floor(a/60),mm=a%60;s=pl(h,'hour')+(mm?' '+pl(mm,'minute'):'');}else s=pl(Math.round(a/1440),'day');
+  return m>0?'in '+s:s+' ago';}
+function rmRepText(rep,ts,n,mode){
+  if(!rep||rep.type==='once')return '';const t=rmTimeStr(ts);let b;
+  if(rep.type==='daily')b='Every day at '+t;else if(rep.type==='weekdays')b='Every weekday at '+t;else b='Every '+RMDOWN[rep.dow!=null?rep.dow:new Date(ts).getDay()]+' at '+t;
+  const unit=rep.type==='daily'?'day':rep.type==='weekdays'?'weekday':'week';
+  if(n==null)return b+', until you stop it';
+  return mode==='left'?b+' \u00b7 '+n+' more '+unit+(n===1?'':'s'):b+', for '+n+' '+unit+(n===1?'':'s');
+}
+const rmHMstr=ts=>{const d=new Date(ts);return String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0');};
+function rmQuietAdjust(t){
+  const q=S.rm.quiet;if(!q.on)return t;const [fh,fm]=rmHM(q.from),[th,tm]=rmHM(q.to);const d=new Date(t);const m=d.getHours()*60+d.getMinutes();const f=fh*60+fm,e=th*60+tm;if(f===e)return t;
+  const over=f>e;const inQ=over?(m>=f||m<e):(m>=f&&m<e);if(!inQ)return t;
+  const out=new Date(t);out.setHours(th,tm,0,0);if(over&&m>=f)out.setDate(out.getDate()+1);return out.getTime();
+}
+const rmInQuiet=t=>rmQuietAdjust(t)!==t;
+const rmFireAt=r=>rmQuietAdjust(r.snooze||r.due);
+const rmActive=()=>S.rm.items.filter(r=>r.status==='active');
+const rmDueList=(now)=>{now=now==null?rmNow():now;return rmActive().filter(r=>rmFireAt(r)<=now).sort((a,b)=>rmFireAt(a)-rmFireAt(b));};
+const rmUpcoming=(now)=>{now=now==null?rmNow():now;return rmActive().filter(r=>rmFireAt(r)>now).sort((a,b)=>rmFireAt(a)-rmFireAt(b));};
+const rmNext=()=>{const a=rmActive().sort((x,y)=>rmFireAt(x)-rmFireAt(y));return a[0]||null;};
+function rmAdd(o){
+  const rep=Object.assign({type:'once',total:null},o.rep||{});let due=o.due;
+  if(rep.type==='weekdays'){const d=new Date(due);const H=d.getHours(),M=d.getMinutes();while(d.getDay()===0||d.getDay()===6){d.setDate(d.getDate()+1);d.setHours(H,M,0,0);}due=d.getTime();}
+  if(rep.type==='weekly'&&rep.dow==null)rep.dow=new Date(due).getDay();
+  const r={id:'r'+Date.now().toString(36)+Math.random().toString(36).slice(2,5),text:String(o.text||'').trim().slice(0,300),due,time:rmHMstr(due),rep,left:rep.type==='once'?null:(rep.total==null?null:rep.total),habit:!!o.habit,status:'active',snooze:null,created:rmNow(),doneAt:null,alerted:'',nudges:0,lastAlert:0,missed:0,doneCount:0,log:[]};
+  S.rm.items.push(r);save();rmSyncTriggers();return r;
+}
+/* Move a repeating reminder on to its next time after "now". Skipped times count against "for N days", never against the person. */
+function rmAdvance(r,now){
+  if(r.rep.type==='once'){r.status='done';r.doneAt=now;r.snooze=null;return;}
+  const [H,M]=rmHM(r.time||rmHMstr(r.due));let t=r.due,used=1,missed=0;
+  t=rmStep(r.rep,t,H,M);
+  while(t<=now&&used<500){missed++;used++;t=rmStep(r.rep,t,H,M);}
+  r.missed+=missed;
+  if(r.left!=null){r.left-=used;if(r.left<=0){r.status='done';r.doneAt=now;r.snooze=null;return;}}
+  r.due=t;r.snooze=null;r.alerted='';r.nudges=0;r.lastAlert=0;
+}
+function rmMarkDone(id,opt){
+  const r=S.rm.items.find(x=>x.id===id);if(!r)return;const now=rmNow();
+  const dueWas=r.due;
+  r.doneCount++;r.log.push({at:now,did:true});if(r.log.length>40)r.log.shift();
+  rmAdvance(r,now);save();
+  addGauge(2,'rm:'+r.id+':'+dueWas,false);chime(false);rmSyncTriggers();
+  if(!(opt&&opt.quiet)){const msg=r.status==='active'?'Done. Next one: '+rmWhen(r.due,now)+'.':'Done. Nice work.';toast(msg,2600);}
+  return r;
+}
+function rmNotYet(id){const r=S.rm.items.find(x=>x.id===id);if(!r)return;const now=rmNow();r.log.push({at:now,did:false});if(r.log.length>40)r.log.shift();r.snooze=now+60*60000;r.alerted='';r.nudges=0;r.lastAlert=0;save();rmSyncTriggers();toast('No problem. I will ask again in 1 hour.',2600);}
+function rmSnooze(id,kind){
+  const r=S.rm.items.find(x=>x.id===id);if(!r)return;const now=rmNow();let t;
+  if(kind==='tomorrow'){const [h,m]=rmHM(S.rm.parts.morning);t=rmAtDay(now,1,h,m);}else t=now+(kind==='hour'?60:10)*60000;
+  r.snooze=t;r.alerted='';r.nudges=0;r.lastAlert=0;save();rmSyncTriggers();
+  toast('Snoozed until '+rmWhen(t,now)+'.',2600);
+}
+let rmUndoT=null,rmStash=null;
+function rmDelete(id){
+  const i=S.rm.items.findIndex(x=>x.id===id);if(i<0)return;const [r]=S.rm.items.splice(i,1);rmStash={items:[r],at:[i]};save();rmSyncTriggers();
+  if(rmAlertId===id)rmCloseAlert();
+  rmSnack('Deleted \u201c'+(r.text.length>28?r.text.slice(0,27)+'\u2026':r.text)+'\u201d.');render();
+}
+function rmSnack(msg){
+  let el=$('#rm-snack');if(!el){el=document.createElement('div');el.id='rm-snack';el.setAttribute('role','status');document.body.appendChild(el);
+    el.addEventListener('click',e=>{if(e.target.closest('[data-undo]')){rmUndo();}});}
+  el.innerHTML=`<span>${esc(msg)}</span><button class="btn primary" data-undo>${ic('undo')}Undo</button>`;el.classList.add('show');
+  clearTimeout(rmUndoT);rmUndoT=setTimeout(()=>{el.classList.remove('show');rmStash=null;},9000);
+}
+function rmUndo(){
+  const el=$('#rm-snack');if(el)el.classList.remove('show');clearTimeout(rmUndoT);
+  if(!rmStash)return;rmStash.items.forEach((r,k)=>{const at=Math.min(rmStash.at[k],S.rm.items.length);S.rm.items.splice(at,0,r);});rmStash=null;save();rmSyncTriggers();toast('Brought it back.',2000);render();
+}
+/* ---------- Alerts while the app is open ---------- */
+let rmQueue=[],rmAlertId=null,rmLastTick=null,rmTickT=null,rmCatch=null,rmSeenSaved=0;
+const rmLog=[];
+function rmRoot(){let el=$('#rm-alert-root');if(!el){el=document.createElement('div');el.id='rm-alert-root';document.body.appendChild(el);
+  el.addEventListener('click',rmAlertClick);}return el;}
+function rmCloseAlert(){rmAlertId=null;rmCatch=null;const el=$('#rm-alert-root');if(el)el.innerHTML='';}
+function rmSpeakAlert(r,nudge){
+  if(!S.rm.read)return;
+  const lines=[nudge?'Reminder':'You asked me to remind you',r.text];if(r.habit)lines.push('Did you do it?');
+  try{speakSeq(lines);}catch(e){}
+}
+function rmShowAlert(id,nudge){
+  const r=S.rm.items.find(x=>x.id===id);if(!r||r.status!=='active')return;
+  rmAlertId=id;rmCatch=null;const now=rmNow();
+  const more=rmDueList(now).filter(x=>x.id!==id).length;
+  const sc=cur&&cur.name;
+  rmRoot().innerHTML=`<div class="rm-back"><div class="rm-alert" role="alertdialog" aria-modal="true" aria-labelledby="rm-at" aria-describedby="rm-as">
+    <div class="rm-bell">${ic('bell')}</div>
+    <div class="rm-body"><span class="steptag">${r.habit?'Did you do it?':'Reminder'}</span>
+    <h2 id="rm-at">${esc(r.text)}</h2>
+    <p class="sub" id="rm-as">Set for ${esc(rmWhen(r.due,now))}${more?' \u00b7 '+more+' more waiting':''}</p></div>
+    <div class="rm-acts">
+      <button class="btn primary rm-big" data-ra="done" data-id="${r.id}">${ic('check')}${r.habit?'Yes, done':'Done'}</button>
+      ${r.habit?`<button class="btn rm-big" data-ra="notyet" data-id="${r.id}">${ic('clock')}Not yet</button>`:
+      `<button class="btn" data-ra="s10" data-id="${r.id}">${ic('clock')}10 min</button><button class="btn" data-ra="s60" data-id="${r.id}">${ic('clock')}1 hour</button><button class="btn" data-ra="stm" data-id="${r.id}">${ic('moon')}Tomorrow</button>`}
+    </div>
+    <div class="rm-sub2"><button class="btn" data-ra="read" data-id="${r.id}">${ic('speaker')}Hear it</button><button class="btn" data-ra="later" data-id="${r.id}">${ic('x')}Close for now</button></div>
+  </div></div>`;
+  const b=$('#rm-alert-root [data-ra=done]');if(b&&!window.__rmNoFocus)b.focus({preventScroll:true});
+  rmLog.push({t:now,type:nudge?'nudge':'alert',id});
+  rmSpeakAlert(r,nudge);
+  if(S.sensory==='full'){chime(true);}
+}
+function rmShowCatchUp(list){
+  rmCatch=list.map(r=>r.id);rmAlertId=null;const n=list.length;
+  const names=list.slice(0,3).map(r=>`<li>${esc(r.text)}</li>`).join('')+(n>3?`<li class="more">and ${n-3} more</li>`:'');
+  rmRoot().innerHTML=`<div class="rm-back"><div class="rm-alert" role="alertdialog" aria-modal="true" aria-labelledby="rm-at">
+    <div class="rm-bell">${ic('bell')}</div>
+    <div class="rm-body"><span class="steptag">While you were away</span><h2 id="rm-at">You missed ${n===1?'1 reminder':n+' reminders'} while away</h2>
+    <p class="sub">That is okay. Here ${n===1?'it is':'they are'}:</p><ul class="rm-miss">${names}</ul></div>
+    <div class="rm-acts"><button class="btn primary rm-big" data-ra="see">${ic('list')}See my reminders</button>
+    <button class="btn" data-ra="snoozeall">${ic('clock')}Remind me again in 10 min</button></div>
+    <div class="rm-sub2"><button class="btn" data-ra="read">${ic('speaker')}Hear it</button><button class="btn" data-ra="later">${ic('x')}Close for now</button></div></div></div>`;
+  rmLog.push({t:rmNow(),type:'catchup',n});
+  if(S.rm.read){const l=n<=5?`You missed ${n===1?'1 reminder':n+' reminders'} while away. That is okay.`:'You missed some reminders while away. That is okay.';try{speakSeq([l]);}catch(e){}}
+}
+function rmAlertClick(e){
+  const b=e.target.closest('[data-ra]');if(!b)return;const a=b.dataset.ra,id=b.dataset.id;
+  const next=()=>{rmCloseAlert();setTimeout(()=>{rmTick();render();},60);};
+  if(a==='done'){stopSpeech();rmMarkDone(id);next();}
+  else if(a==='notyet'){stopSpeech();rmNotYet(id);next();}
+  else if(a==='s10'){stopSpeech();rmSnooze(id,'10');speakSeq(['Snoozed']);next();}
+  else if(a==='s60'){stopSpeech();rmSnooze(id,'hour');speakSeq(['Snoozed']);next();}
+  else if(a==='stm'){stopSpeech();rmSnooze(id,'tomorrow');speakSeq(['Snoozed']);next();}
+  else if(a==='read'){const r=S.rm.items.find(x=>x.id===id);if(r){const lines=['You asked me to remind you',r.text];if(r.habit)lines.push('Did you do it?');speakSeq(lines);}else if(rmCatch){speakSeq(['You missed some reminders while away. That is okay.']);}}
+  else if(a==='later'){stopSpeech();const keep=id;rmCloseAlert();}
+  else if(a==='see'){stopSpeech();rmCloseAlert();go('remind');}
+  else if(a==='snoozeall'){stopSpeech();(rmCatch||[]).forEach(i=>{const r=S.rm.items.find(x=>x.id===i);if(r&&r.status==='active'){r.snooze=rmNow()+10*60000;r.alerted='';r.nudges=0;r.lastAlert=0;}});save();rmSyncTriggers();toast('I will remind you again in 10 minutes.',2400);next();}
+}
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&(rmAlertId||rmCatch)){stopSpeech();rmCloseAlert();}});
+function rmTick(){
+  if(!S.rm)return;const now=rmNow();
+  const gap=rmLastTick==null?0:now-rmLastTick;rmLastTick=now;
+  S.rm.seen=now;if(now-rmSeenSaved>10000){rmSeenSaved=now;save();}
+  if(!S.onboarded)return;
+  const due=rmDueList(now);const key=r=>r.id+':'+rmFireAt(r);
+  let changed=false;const fresh=[],again=[],away=[];
+  due.forEach(r=>{const k=key(r);
+    if(r.alerted!==k){r.alerted=k;r.nudges=0;r.lastAlert=now;changed=true;if(gap>90000||(rmFireAt(r)<now-90000))away.push(r);else fresh.push(r);}
+    else if(S.rm.nudge&&r.nudges<S.rm.nudgeMax&&now-r.lastAlert>=S.rm.nudge*60000&&rmAlertId!==r.id){r.nudges++;r.lastAlert=now;changed=true;again.push(r);}});
+  if(changed)save();
+  if(away.length){away.forEach(r=>{r.nudges=S.rm.nudgeMax;});save();if(!rmAlertId&&!rmCatch)rmShowCatchUp(away);else rmCatch=(rmCatch||[]).concat(away.map(r=>r.id));}
+  fresh.forEach(r=>{rmQueue.push({id:r.id,nudge:false});if(document.hidden)rmNotify({title:'Reminder',body:r.text,tag:'hk-'+r.id+'-'+rmFireAt(r),id:r.id});});
+  again.forEach(r=>{if(!rmQueue.some(q=>q.id===r.id))rmQueue.push({id:r.id,nudge:true});if(document.hidden)rmNotify({title:'Reminder',body:r.text,tag:'hk-'+r.id+'-'+rmFireAt(r)+'-n'+r.nudges,id:r.id});});
+  while(!rmAlertId&&!rmCatch&&rmQueue.length){const q=rmQueue.shift();const r=S.rm.items.find(x=>x.id===q.id);if(r&&r.status==='active'&&rmFireAt(r)<=now){rmShowAlert(q.id,q.nudge);break;}}
+  /* keep the Remind Me list fresh when it is on screen */
+  const rc=route()[0];if((fresh.length||again.length||away.length)&&((rc==='remind'&&!route()[1])||rc==='home'))render();
+  rmBadge();
+}
+function rmBadge(){const n=rmDueList().length;document.querySelectorAll('.rm-dot').forEach(el=>{el.textContent=n;el.style.display=n?'':'none';});}
+function rmOnVisible(){if(document.visibilityState==='visible')rmTick();else{S.rm.seen=rmNow();save();}}
+document.addEventListener('visibilitychange',rmOnVisible);
+window.addEventListener('pagehide',()=>{try{S.rm.seen=rmNow();save();}catch(e){}});
+/* ---------- Phone notifications (as far as a web page can go) ---------- */
+function rmCaps(){
+  const ua=navigator.userAgent||'';const ios=/iPad|iPhone|iPod/.test(ua)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);
+  const standalone=navigator.standalone===true||(window.matchMedia&&window.matchMedia('(display-mode: standalone)').matches);
+  const notif='Notification' in window;
+  return {ios,android:/Android/.test(ua),standalone,notif,perm:notif?Notification.permission:'unsupported',sw:'serviceWorker' in navigator,secure:window.isSecureContext!==false,
+    triggers:notif&&('showTrigger' in Notification.prototype)&&typeof window.TimestampTrigger!=='undefined'};
+}
+let rmReg=null;
+function rmRegisterSW(){
+  if(!('serviceWorker' in navigator))return Promise.resolve(null);
+  if(!(location.protocol==='https:'||location.hostname==='localhost'||location.hostname==='127.0.0.1'))return Promise.resolve(null);
+  if(rmReg)return Promise.resolve(rmReg);
+  return navigator.serviceWorker.register('sw.js',{scope:'./',updateViaCache:'none'}).then(r=>{rmReg=r;return r;}).catch(()=>null);
+}
+if('serviceWorker' in navigator){try{navigator.serviceWorker.addEventListener('message',e=>{if(e.data&&e.data.type==='hk-open'){go('remind');setTimeout(rmTick,100);}});}catch(e){}}
+async function rmNotify(o){
+  try{
+    if(!('Notification' in window)||Notification.permission!=='granted')return false;
+    const opt={body:o.body||'',tag:o.tag||'hk',icon:'img/icon-180.png',badge:'img/icon-180.png',data:{id:o.id||null},renotify:true};
+    let reg=rmReg;if(!reg&&'serviceWorker' in navigator){reg=await rmRegisterSW();}
+    rmLog.push({t:rmNow(),type:'notify',title:o.title,tag:opt.tag});
+    if(reg&&reg.showNotification){await reg.showNotification(o.title,opt);return true;}
+    new Notification(o.title,opt);return true;
+  }catch(e){return false;}
+}
+async function rmSyncTriggers(){
+  try{
+    const c=rmCaps();if(!c.triggers||c.perm!=='granted')return;
+    const reg=await rmRegisterSW();if(!reg||!reg.getNotifications)return;
+    const old=await reg.getNotifications({includeTriggered:true});old.filter(n=>/^hk-sched-/.test(n.tag||'')).forEach(n=>n.close());
+    const now=rmNow();let count=0;
+    for(const r of rmActive().sort((a,b)=>rmFireAt(a)-rmFireAt(b)).slice(0,20)){
+      let t=rmFireAt(r);let left=r.left==null?4:Math.min(4,r.left);
+      for(let k=0;k<(r.rep.type==='once'?1:left)&&count<60;k++){
+        if(t>now+3000){await reg.showNotification('Reminder',{tag:'hk-sched-'+r.id+'-'+t,body:r.text,icon:'img/icon-180.png',badge:'img/icon-180.png',showTrigger:new window.TimestampTrigger(t),data:{id:r.id}});count++;}
+        if(r.rep.type==='once')break;const [H,M]=rmHM(r.time||rmHMstr(r.due));t=rmStep(r.rep,t,H,M);}
+    }
+    S.rm.sched=count;
+  }catch(e){}
+}
+async function rmAskPermission(){
+  const c=rmCaps();if(!c.notif){toast('This browser cannot show phone alerts.');return 'unsupported';}
+  let p='default';try{p=await Notification.requestPermission();}catch(e){}
+  if(p==='granted'){await rmRegisterSW();rmSyncTriggers();}
+  render();return p;
+}
+
+/* ---------- Capture by voice (Web Speech API) ---------- */
+let rmDraft=null,rmRec=null;
+const rmMic={on:false,msg:'',kind:''};
+function rmFreshDraft(){rmDraft={id:null,phrase:'',text:'',due:null,rep:{type:'once',total:null},habit:false,habitTouched:false,notes:[],parsedPhrase:null,custom:false,pick:null,assumed:false,editing:false};}
+rmFreshDraft();
+const rmMicOK=()=>!!(window.SpeechRecognition||window.webkitSpeechRecognition);
+const RM_NOMIC='This browser cannot listen to speech. That is okay. Type your reminder below. On a phone, you can also tap the little microphone on your keyboard to talk.';
+function rmCap(t){t=String(t||'').trim();return t?t[0].toUpperCase()+t.slice(1):t;}
+function rmPaintMic(){
+  const b=$('#rmmic'),m=$('#rmmicmsg');if(!b)return;
+  b.classList.toggle('listening',rmMic.on);b.setAttribute('aria-pressed',String(rmMic.on));
+  const l=$('#rmmic .rm-mic-l');if(l)l.textContent=rmMic.on?'Listening\u2026 tap to stop':'Tap and speak';
+  if(m){const nm=!rmMic.msg&&!rmMicOK();m.textContent=nm?RM_NOMIC:rmMic.msg;m.className='rm-micmsg '+(nm?'warn':(rmMic.kind||''));}
+}
+function rmSetPhrase(t){rmDraft.phrase=t;const ta=$('#rmtext');if(ta&&ta.value!==t)ta.value=t;const nx=$('.stepbar .next');if(nx)nx.disabled=!t.trim();}
+function rmStopMic(){if(rmRec){try{rmRec.abort();}catch(e){}rmRec=null;}rmMic.on=false;}
+function rmListen(){
+  if(rmMic.on){try{rmRec&&rmRec.stop();}catch(e){}return;}
+  const R=window.SpeechRecognition||window.webkitSpeechRecognition;
+  if(!R){rmMic.msg=RM_NOMIC;rmMic.kind='warn';rmPaintMic();return;}
+  stopSpeech();
+  let rec;try{rec=new R();}catch(e){rmMic.msg='I could not start the microphone. Please type your reminder instead.';rmMic.kind='warn';rmPaintMic();return;}
+  rmRec=rec;const base=rmDraft.phrase.trim();let got=false,err=null;
+  rec.lang=navigator.language||'en-US';rec.interimResults=true;rec.continuous=false;rec.maxAlternatives=1;
+  rec.onstart=()=>{rmMic.on=true;rmMic.msg='I am listening. Say what you want to remember, and when.';rmMic.kind='';rmPaintMic();};
+  rec.onresult=e=>{let t='';for(let i=0;i<e.results.length;i++)t+=e.results[i][0].transcript;t=t.trim();if(t){got=true;rmSetPhrase((base?base+' ':'')+(base?t:rmCap(t)));}};
+  rec.onerror=e=>{err=e&&e.error||'error';};
+  rec.onend=()=>{rmMic.on=false;rmRec=null;
+    if(err&&err!=='aborted'){
+      rmMic.kind='warn';
+      rmMic.msg=err==='not-allowed'||err==='service-not-allowed'?'The microphone is turned off for this page. Tap the lock icon near the address bar to allow it, or just type below.':
+        err==='no-speech'?'I did not hear anything. Tap the microphone and try again, or type below.':
+        err==='audio-capture'?'I cannot find a microphone on this device. Please type below.':
+        err==='network'?'Listening needs an internet connection in this browser. Please type below.':'Something went wrong with the microphone. Please type below.';
+    }else if(got){rmMic.kind='ok';rmMic.msg='Here is what I heard. Fix anything that is wrong, then tap Next.';}
+    else{rmMic.kind='warn';rmMic.msg='I did not catch that. Tap the microphone and try again.';}
+    rmPaintMic();};
+  try{rec.start();rmMic.on=true;rmMic.msg='Starting the microphone\u2026';rmMic.kind='';rmPaintMic();}catch(e){rmMic.on=false;rmMic.msg='I could not start the microphone. Please type below.';rmMic.kind='warn';rmPaintMic();}
+}
+/* ---------- Reading the phrase and keeping the draft in step ---------- */
+function rmApplyParse(force){
+  const d=rmDraft;if(!force&&d.parsedPhrase===d.phrase)return;
+  const res=rmParse(d.phrase,rmNow(),{parts:S.rm.parts});
+  d.parsedPhrase=d.phrase;d.found=res.found;
+  d.text=res.text||(res.found?'':d.phrase.trim());if(!d.text&&!res.found)d.text=d.phrase.trim();
+  if(res.due!=null){d.due=res.due;d.rep=Object.assign({type:'once',total:null},res.rep);d.notes=res.notes.filter(n=>n!=='relative');d.assumed=res.assumed;d.pick=null;d.custom=false;
+    if(d.rep.type!=='once'&&!d.habitTouched)d.habit=true;}
+  else if(!d.editing){d.due=null;d.rep={type:'once',total:null};d.notes=res.found&&res.notes.length?res.notes:[];}
+  if(d.due!=null&&d.due<=rmNow()&&!d.editing){d.notes.push('That time is in the past. Please pick a new one.');d.due=null;}
+}
+function rmLoadDraft(id){
+  const r=S.rm.items.find(x=>x.id===id);if(!r){rmFreshDraft();return false;}
+  rmDraft={id:r.id,phrase:r.text,text:r.text,due:r.due,rep:Object.assign({},r.rep,{total:r.left!=null?r.left:r.rep.total}),habit:r.habit,habitTouched:true,notes:[],parsedPhrase:r.text,custom:false,pick:null,assumed:false,editing:true};
+  if(r.rep.type==='once')rmDraft.rep.total=null;
+  return true;
+}
+function rmDraftDesc(){const d=rmDraft;return d.due==null?'':rmWhen(d.due);}
+function rmDraftRepText(){const d=rmDraft;if(d.due==null||d.rep.type==='once')return '';return rmRepText(Object.assign({},d.rep,{dow:d.rep.type==='weekly'?new Date(d.due).getDay():undefined}),d.due,d.rep.total,'for');}
+function rmPick(kind){
+  const now=rmNow(),d=rmDraft;const P=S.rm.parts;let due=null,rep={type:'once',total:null};const [mh,mm]=rmHM(P.morning),[eh,em]=rmHM(P.evening);
+  if(kind==='10')due=now+10*60000;
+  else if(kind==='60')due=now+60*60000;
+  else if(kind==='eve'){due=rmAtDay(now,0,eh,em);if(due<=now)due=rmAtDay(now,1,eh,em);}
+  else if(kind==='tmorn')due=rmAtDay(now,1,mh,mm);
+  else if(kind==='week'){due=rmAtDay(now,0,mh,mm);if(due<=now)due=rmAtDay(now,1,mh,mm);rep={type:'daily',total:7};if(!d.habitTouched)d.habit=true;}
+  d.due=due;d.rep=rep;d.pick=kind;d.custom=false;d.notes=[];d.assumed=false;
+  if(kind==='eve'&&new Date(due).getDate()!==new Date(now).getDate())d.notes.push('This evening has already started, so I picked tomorrow evening.');
+}
+function rmSetType(type){
+  const d=rmDraft;if(d.rep.type===type)return;
+  const was=d.rep.type;d.rep={type,total:type==='once'?null:(d.rep.total!=null&&was!=='once'?d.rep.total:(type==='daily'?7:type==='weekdays'?10:4))};
+  if(type==='weekly'&&d.due!=null)d.rep.dow=new Date(d.due).getDay();
+  if(was==='once'&&type!=='once'&&!d.habitTouched)d.habit=true;
+  if(type==='once'&&!d.habitTouched)d.habit=false;
+  if(type==='weekdays'&&d.due!=null){const x=new Date(d.due);const H=x.getHours(),M=x.getMinutes();let moved=false;while(x.getDay()===0||x.getDay()===6){x.setDate(x.getDate()+1);x.setHours(H,M,0,0);moved=true;}if(moved){d.due=x.getTime();d.notes=['Weekdays only, so the first one moves to '+rmWhen(d.due)+'.'];}}
+}
+function rmSaveDraft(){
+  const d=rmDraft;if(!d.due||!d.text.trim())return false;
+  const rep=Object.assign({},d.rep);if(rep.type==='weekly')rep.dow=new Date(d.due).getDay();if(rep.type==='once')rep.total=null;
+  if(d.id){const r=S.rm.items.find(x=>x.id===d.id);if(r){r.text=d.text.trim();r.due=d.due;r.time=rmHMstr(d.due);r.rep=rep;r.left=rep.type==='once'?null:rep.total;r.habit=d.habit;r.status='active';r.snooze=null;r.alerted='';r.nudges=0;r.lastAlert=0;r.doneAt=null;save();rmSyncTriggers();return r;}}
+  return rmAdd({text:d.text,due:d.due,rep,habit:d.habit});
+}
+/* ---------- Siri / link route:  #/remind/new?text=...&when=... ---------- */
+function rmQuery(qs){const o={};String(qs||'').split('&').forEach(p=>{if(!p)return;const i=p.indexOf('=');let k=i<0?p:p.slice(0,i),v=i<0?'':p.slice(i+1);
+  const dec=x=>{try{return decodeURIComponent(x.replace(/\+/g,' '));}catch(e){return x.replace(/\+/g,' ');}};k=dec(k);v=dec(v);if(!(k in o))o[k]=v;});return o;}
+function rmDeepLink(){
+  const m=/^#\/remind(?:\/new)?\/?\?(.*)$/.exec(location.hash||'');if(!m)return false;
+  const q=rmQuery(m[1]);const text=String(q.text||'').trim().slice(0,400),when=String(q.when||'').trim().slice(0,100);
+  rmFreshDraft();rmStopMic();
+  const phrase=(text+(when?' '+when:'')).trim();
+  rmDraft.phrase=phrase;
+  if(phrase){rmApplyParse(true);if(!rmDraft.text&&text)rmDraft.text=text;}
+  try{history.replaceState(null,'',location.pathname+location.search+'#/remind/new/'+(phrase?2:1));}catch(e){location.hash='#/remind/new/'+(phrase?2:1);}
+  return true;
+}
+
+/* ---------- Screens ---------- */
+const rmAbs=()=>location.origin+location.pathname;
+function rmIcs(r){
+  const p2=n=>String(n).padStart(2,'0');const f=ts=>{const d=new Date(ts);return d.getFullYear()+p2(d.getMonth()+1)+p2(d.getDate())+'T'+p2(d.getHours())+p2(d.getMinutes())+'00';};
+  const esc2=t=>String(t).replace(/\\/g,'\\\\').replace(/;/g,'\\;').replace(/,/g,'\\,').replace(/\r?\n/g,'\\n');
+  const t=r.due;let rr='';
+  if(r.rep.type==='daily')rr='RRULE:FREQ=DAILY'+(r.left!=null?';COUNT='+r.left:'');
+  else if(r.rep.type==='weekdays')rr='RRULE:FREQ=WEEKLY;BYDAY=MO,TU,WE,TH,FR'+(r.left!=null?';COUNT='+r.left:'');
+  else if(r.rep.type==='weekly')rr='RRULE:FREQ=WEEKLY'+(r.left!=null?';COUNT='+r.left:'');
+  const L=['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//WingsCrew//Highkeep//EN','CALSCALE:GREGORIAN','BEGIN:VEVENT','UID:'+r.id+'@highkeep','DTSTAMP:'+f(rmNow()),'DTSTART:'+f(t),'DTEND:'+f(t+15*60000),'SUMMARY:'+esc2('Reminder: '+r.text)];
+  if(rr)L.push(rr);L.push('BEGIN:VALARM','ACTION:DISPLAY','DESCRIPTION:'+esc2(r.text),'TRIGGER:PT0M','END:VALARM','END:VEVENT','END:VCALENDAR');
+  return L.join('\r\n');
+}
+function rmDownloadIcs(r){
+  try{const blob=new Blob([rmIcs(r)],{type:'text/calendar'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='highkeep-reminder.ics';document.body.appendChild(a);a.click();setTimeout(()=>{a.remove();URL.revokeObjectURL(url);},1500);toast('Opening your calendar. Tap Add to save it.',3200);}
+  catch(e){toast('Sorry, I could not make a calendar file here.');}
+}
+function rmExportText(){
+  const now=rmNow();const line=r=>'- '+r.text+' \u2014 '+(r.status==='done'?'done':rmWhen(rmFireAt(r),now))+(r.rep.type!=='once'&&r.status==='active'?' ('+rmRepText(r.rep,r.due,r.left,'left')+')':'')+(r.habit?' [asks \u201cDid you do it?\u201d]':'');
+  const a=rmActive().sort((x,y)=>rmFireAt(x)-rmFireAt(y)),d=S.rm.items.filter(r=>r.status==='done');
+  return 'Highkeep reminders, saved '+new Date(now).toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'})+'\n\nComing up ('+a.length+')\n'+(a.map(line).join('\n')||'- none')+'\n\nDone ('+d.length+')\n'+(d.map(line).join('\n')||'- none')+'\n';
+}
+function rmCopy(text){
+  const fallback=()=>{try{const ta=document.createElement('textarea');ta.value=text;ta.style.cssText='position:fixed;opacity:0';document.body.appendChild(ta);ta.select();const ok=document.execCommand('copy');ta.remove();return ok;}catch(e){return false;}};
+  if(navigator.clipboard&&navigator.clipboard.writeText)return navigator.clipboard.writeText(text).then(()=>true).catch(()=>fallback());
+  return Promise.resolve(fallback());
+}
+function rmIcon(r){return r.habit?'repeat':r.rep.type!=='once'?'repeat':'bell';}
+function rmItemHTML(r,mode){
+  const now=rmNow(),fa=rmFireAt(r),isDue=r.status==='active'&&fa<=now;
+  const when=r.status==='done'?('Done '+(r.doneAt?rmDayStr(r.doneAt,now).toLowerCase()+' at '+rmTimeStr(r.doneAt):'')):isDue?('Was due '+rmWhen(fa,now)):rmWhen(fa,now);
+  const q=r.status==='active'&&!r.snooze&&rmInQuiet(r.due)?`<small class="rm-q">${ic('moon')}Quiet hours, so I will hold it until ${rmTimeStr(fa)}.</small>`:'';
+  const sn=r.status==='active'&&r.snooze&&r.snooze>now?`<small class="rm-q">${ic('clock')}Snoozed until ${rmTimeStr(r.snooze)}</small>`:'';
+  const rep=r.status==='active'&&r.rep.type!=='once'?`<small class="rm-rep">${esc(rmRepText(r.rep,r.due,r.left,'left'))}${r.habit?' \u00b7 asks \u201cDid you do it?\u201d':''}</small>`:'';
+  const cnt=r.doneCount&&r.rep.type!=='once'?`<small class="rm-rep">Done ${r.doneCount} time${r.doneCount===1?'':'s'} so far</small>`:'';
+  const btn=(a,i,l,cls)=>`<button class="rm-b ${cls||''}" data-act="${a}" data-id="${r.id}">${ic(i)}<span>${l}</span></button>`;
+  const btns=r.status==='active'?btn('rmdone','check',r.habit?'Did it':'Done','ok')+btn('rmsnooze','clock','Snooze')+btn('rmedit','pencil','Edit')+btn('rmdel','trash','Delete','del'):btn('rmedit','repeat','Again')+btn('rmdel','trash','Delete','del');
+  return `<div class="rm-item ${isDue?'due':''} ${r.status==='done'?'isdone':''}"><button class="rm-main" data-act="rmopen" data-id="${r.id}" aria-label="Open: ${esc(r.text)}"><span class="ico">${ic(r.status==='done'?'check':rmIcon(r))}</span><span class="t"><strong>${esc(r.text)}</strong><small>${esc(when)}</small>${rep}${sn}${q}${r.status==='done'?'':cnt}</span></button><div class="rm-btns">${btns}</div></div>`;
+}
+const rmListActs={
+  rmnew:()=>{rmFreshDraft();rmStopMic();rmMic.msg='';rmMic.kind='';go('remind/new/1');},
+  rmdone:el=>{rmMarkDone(el.dataset.id);render();},
+  rmedit:el=>{go('remind/edit/'+el.dataset.id+'/1');},
+  rmdel:el=>rmDelete(el.dataset.id),
+  rmsnooze:el=>{const id=el.dataset.id;modal(`<h2>Snooze for how long?</h2><p class="muted">I will remind you again then.</p>`,[['10 minutes',()=>{rmSnooze(id,'10');speakSeq(['Snoozed']);render();},true],['1 hour',()=>{rmSnooze(id,'hour');speakSeq(['Snoozed']);render();},true],['Tomorrow morning',()=>{rmSnooze(id,'tomorrow');speakSeq(['Snoozed']);render();},true],['Cancel',null]]);},
+  rmopen:el=>{const r=S.rm.items.find(x=>x.id===el.dataset.id);if(!r)return;const now=rmNow();
+    const btns=[['Close',null],['Hear it',()=>speakSeq(r.status==='active'?['Reminder',r.text]:['Done',r.text]),false,true]];
+    if(r.status==='active')btns.splice(1,0,['Add to my phone calendar',()=>rmDownloadIcs(r),true]);
+    modal(`<div class="rm-modal-ic">${ic(rmIcon(r))}</div><h2>${esc(r.text)}</h2><p style="font-size:1.15rem">${esc(r.status==='active'?rmWhen(rmFireAt(r),now):'Done')}</p>${r.rep.type!=='once'&&r.status==='active'?`<p class="muted">${esc(rmRepText(r.rep,r.due,r.left,'left'))}</p>`:''}${r.status==='active'?`<p class="note" style="text-align:left">A calendar copy can ring your phone even when Highkeep is closed. It is a good backup for things like medicine.</p>`:''}`,btns);},
+  rmundoneall:()=>{S.rm.items=S.rm.items.filter(r=>r.status!=='done');save();toast('Cleared the done list.');render();}
+};
+function scr_remind(sub,p1,p2){
+  if(sub==='new'||sub==='edit')return scr_rmwizard(sub,p1,p2);
+  if(sub==='settings')return scr_rmsettings();
+  if(sub==='alerts')return scr_rmalerts();
+  if(sub==='siri')return scr_rmsiri();
+  const now=rmNow();const due=rmDueList(now),up=rmUpcoming(now),done=S.rm.items.filter(r=>r.status==='done').sort((a,b)=>(b.doneAt||0)-(a.doneAt||0));
+  const grp={};up.forEach(r=>{const k=rmDayStr(rmFireAt(r),now);const d=new Date(rmFireAt(r));const lab=(k==='Today'||k==='Tomorrow')?k:(Math.round((new Date(d).setHours(0,0,0,0)-new Date(now).setHours(0,0,0,0))/86400000)<7?RMDOWN[d.getDay()]:'Later');(grp[lab]=grp[lab]||[]).push(r);});
+  const caps=rmCaps();const alertsHint=(!caps.notif||caps.perm!=='granted')?`<button class="card info rm-hint" data-act="nav" data-to="remind/alerts"><span class="ico">${ic('bell')}</span><span class="t"><strong>Want phone alerts too?</strong><small>Right now I only ring while Highkeep is open. Tap to set up.</small></span>${ic('next')}</button>`:'';
+  return {name:'Remind Me',tab:'home',topLeft:'back',backTo:()=>go('home'),portal:{size:'small',world:S.world,title:'Remind Me'},
+    guide:'Tap the big button to make a reminder, or look at your list below.',
+    body:`<button class="btn primary block rm-new" data-act="rmnew">${ic('mic')}Remind me of something</button>
+    ${due.length?`<section class="rm-sec"><h2 class="rm-h">${ic('bell')}Due now <span class="count">${due.length}</span></h2>${due.map(r=>rmItemHTML(r)).join('')}</section>`:''}
+    <section class="rm-sec"><h2 class="rm-h">${ic('clock')}Coming up <span class="count">${up.length}</span></h2>
+    ${up.length?Object.keys(grp).map(k=>`<h3 class="rm-day">${k}</h3>${grp[k].map(r=>rmItemHTML(r)).join('')}`).join(''):`<div class="card rm-empty"><p style="font-size:1.1rem">Nothing is waiting. Tap the big button and say something like <b>\u201cTake my pills tomorrow morning\u201d</b>.</p></div>`}</section>
+    ${done.length?`<details class="rm-sec rm-done"><summary class="rm-h">${ic('check')}Done <span class="count">${done.length}</span></summary>${done.map(r=>rmItemHTML(r)).join('')}<button class="btn block" data-act="rmundoneall" style="margin-top:8px">${ic('trash')}Clear the done list</button></details>`:''}
+    ${alertsHint}
+    <div class="tools rm-tools"><button class="tool" data-act="nav" data-to="remind/alerts">${ic('bell')}Phone alerts</button><button class="tool" data-act="nav" data-to="remind/siri">${ic('mic')}Siri Shortcut</button><button class="tool" data-act="nav" data-to="remind/settings">${ic('gear')}Settings and backup</button></div>`,
+    acts:rmListActs};
+}
+/* ---------- The four steps ---------- */
+function scr_rmwizard(sub,p1,p2){
+  const edit=sub==='edit';let step;
+  if(edit){if(rmDraft.id!==p1||!rmDraft.editing){if(!rmLoadDraft(p1))return setTimeout(()=>go('remind')),scr_remind();}step=+p2||1;}
+  else{step=+p1||1;if(rmDraft.editing)rmFreshDraft();}
+  const N=4;step=Math.max(1,Math.min(N,step));const d=rmDraft;
+  const here=n=>go('remind/'+(edit?'edit/'+d.id:'new')+'/'+n);
+  if(step>1&&!d.phrase.trim()&&!d.text.trim()){setTimeout(()=>here(1));step=1;}
+  if(step!==1)rmStopMic();
+  const base={name:'Remind Me',tab:'home',step:{x:step,y:N},topLeft:'back',backTo:()=>step>1?here(step-1):go('remind'),portal:{size:'small',world:S.world,title:edit?'Change reminder':'New reminder'}};
+  if(step===1){
+    const ok=rmMicOK();
+    return Object.assign(base,{guide:'Tap the microphone and say what you want to remember. Or type it. Then tap Next.',
+      body:`<div class="card rm-cap"><h2>What should I remind you about?</h2>
+      <div class="rm-micwrap"><button class="rm-mic" id="rmmic" data-act="rmmic" aria-pressed="false" aria-label="Microphone. Tap and speak." ${ok?'':'data-nomic="1"'}><span class="rm-ring"></span>${ic('mic')}<span class="rm-mic-l">Tap and speak</span></button></div>
+      <p class="rm-micmsg ${ok?'':'warn'}" id="rmmicmsg" aria-live="polite">${ok?'':RM_NOMIC}</p>
+      <label class="sub" for="rmtext">Or type it here</label>
+      <textarea id="rmtext" class="input rm-ta" rows="3" placeholder="Like: Take my pills tomorrow morning" aria-label="What should I remind you about">${esc(d.phrase)}</textarea>
+      <div class="rm-tools2"><button class="btn" data-act="rmread">${ic('speaker')}Read it back</button><button class="btn" data-act="rmclear">${ic('x')}Clear</button></div>
+      <div class="chips">${['Take my pills in 20 minutes','Call Mom tomorrow evening','Stretch every morning for a week'].map(x=>`<button class="chip" data-act="rmex" data-v="${esc(x)}">${esc(x)}</button>`).join('')}</div>
+      <p class="note">Say the time too, like <b>\u201cin 20 minutes\u201d</b>, <b>\u201ctomorrow morning\u201d</b> or <b>\u201cevery morning for 7 days\u201d</b>. I will show you what I understood before anything is saved.</p></div>`,
+      nextDisabled:!d.phrase.trim(),next:()=>{rmApplyParse();here(2);},
+      acts:{rmmic:()=>rmListen(),rmread:()=>{if(d.phrase.trim())speak(d.phrase,false);},rmclear:()=>{rmStopMic();rmSetPhrase('');rmMic.msg='';rmMic.kind='';rmPaintMic();const ta=$('#rmtext');ta&&ta.focus();},rmex:el=>{rmSetPhrase(el.dataset.v);}},
+      mount:r=>{const ta=$('#rmtext',r);ta.addEventListener('input',e=>{rmDraft.phrase=e.target.value;const nx=$('.stepbar .next');if(nx)nx.disabled=!e.target.value.trim();});rmPaintMic();}});
+  }
+  if(step===2){
+    const has=d.due!=null;
+    const noteHTML=d.notes.map(n=>`<p class="note">${esc(n)}</p>`).join('');
+    const picks=[['10','clock','10 min'],['60','clock','1 hour'],['eve','moon','This evening'],['tmorn','sun','Tomorrow morning'],['week','repeat','Every morning for a week'],['custom','calendar','Custom date and time']];
+    const nowD=new Date(rmNow());const defD=has?new Date(d.due):new Date(rmNow()+3600000);
+    const dv=`${defD.getFullYear()}-${String(defD.getMonth()+1).padStart(2,'0')}-${String(defD.getDate()).padStart(2,'0')}`;const tv=`${String(defD.getHours()).padStart(2,'0')}:${String(defD.getMinutes()).padStart(2,'0')}`;
+    const q=has&&rmInQuiet(d.due)?`<p class="note"><span class="rm-inl">${ic('moon')}</span> That is during your quiet hours, so I will wait and remind you at ${rmTimeStr(rmQuietAdjust(d.due))}.</p>`:'';
+    return Object.assign(base,{guide:'Check the time I picked. If it is wrong, tap a quick pick or choose your own. Then tap Next.',
+      body:`<div class="card"><label class="sub" for="rmwhat">Remind me to</label><input id="rmwhat" class="input" style="width:100%" value="${esc(d.text)}" placeholder="What should I remind you about?" aria-label="Remind me to"></div>
+      <div class="card rm-interp ${has?'':'empty'}"><span class="steptag">When</span>
+      ${has?`<div class="rm-big" id="rmwhen">${esc(rmDraftDesc())}</div><div class="sub">${esc(rmRel(d.due))}</div>${d.rep.type!=='once'?`<div class="rm-rep2">${ic('repeat')}${esc(rmDraftRepText())}</div>`:''}`:`<div class="rm-big" id="rmwhen">I do not have a time yet</div><div class="sub">Tap one of the quick picks below, or choose your own.</div>`}
+      ${noteHTML}${q}</div>
+      <div class="card"><h3>Quick picks</h3><div class="rm-picks">${picks.map(([k,i,l])=>`<button class="rm-pick" data-act="rmpick" data-v="${k}" aria-pressed="${k==='custom'?d.custom:d.pick===k}">${ic(i)}<span>${l}</span></button>`).join('')}</div>
+      ${d.custom?`<div class="rm-custom"><label>Day<input type="date" id="rmdate" class="input" value="${dv}" min="${nowD.getFullYear()}-${String(nowD.getMonth()+1).padStart(2,'0')}-${String(nowD.getDate()).padStart(2,'0')}"></label><label>Time<input type="time" id="rmtime" class="input" value="${tv}"></label><button class="btn primary" data-act="rmuse">${ic('check')}Use this time</button></div>`:''}</div>`,
+      nextDisabled:!has||!d.text.trim(),next:()=>here(3),
+      acts:{rmpick:el=>{const k=el.dataset.v;if(k==='custom'){d.custom=!d.custom;d.pick=null;render();return;}rmPick(k);render();},
+        rmuse:()=>{const dv2=$('#rmdate').value,tv2=$('#rmtime').value;if(!dv2||!tv2)return toast('Pick a day and a time first.');const [y,m,dd]=dv2.split('-').map(Number),[h,mi]=tv2.split(':').map(Number);const t=new Date(y,m-1,dd,h,mi,0,0).getTime();
+          if(t<=rmNow())return toast('That time has passed. Please pick a later time.',3000);d.due=t;d.pick=null;d.custom=false;d.notes=[];d.assumed=false;if(d.rep.type==='weekdays'||d.rep.type==='weekly'){d.rep.dow=new Date(t).getDay();}render();}},
+      mount:r=>{const w=$('#rmwhat',r);w.addEventListener('input',e=>{d.text=e.target.value;const nx=$('.stepbar .next');if(nx)nx.disabled=d.due==null||!d.text.trim();});
+        w.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();w.blur();}});}});
+  }
+  if(step===3){
+    const types=[['once','bell','Just once'],['daily','repeat','Every day'],['weekdays','briefcase','Weekdays'],['weekly','calendar','Every week']];
+    const t=d.rep.type;const opts=t==='daily'?[3,5,7,14,30]:t==='weekdays'?[5,10,20]:[4,8,12];const unit=t==='daily'?'days':t==='weekdays'?'weekdays':'weeks';
+    return Object.assign(base,{guide:'Choose if this happens once or repeats. Then tap Next.',
+      body:`<div class="card"><h3>How often?</h3><div class="rm-picks rm-types" role="group" aria-label="How often">${types.map(([k,i,l])=>`<button class="rm-pick" data-act="rmtype" data-v="${k}" aria-pressed="${t===k}">${ic(i)}<span>${l}</span></button>`).join('')}</div>
+      ${t!=='once'?`<h3 style="margin-top:16px">For how long?</h3><div class="seg rm-seg" role="group" aria-label="For how long">${opts.map(n=>`<button data-act="rmtotal" data-v="${n}" aria-pressed="${d.rep.total===n}">${n} ${unit}</button>`).join('')}<button data-act="rmtotal" data-v="" aria-pressed="${d.rep.total==null}">Until I stop</button></div>
+      <p class="rm-rep2" style="margin-top:12px">${ic('repeat')}${esc(rmDraftRepText())}</p>`:`<p class="sub" style="margin-top:12px">It will remind you once, ${esc(d.due?rmWhen(d.due).toLowerCase():'at the time you picked')}.</p>`}
+      ${d.notes.map(n=>`<p class="note">${esc(n)}</p>`).join('')}</div>
+      <div class="card"><div class="setrow" style="border:0;padding:0"><div class="lbl">${ic('shieldcheck')}Ask \u201cDid you do it?\u201d</div><div class="seg" role="group">${[[true,'Yes'],[false,'No']].map(([v,l])=>`<button data-act="rmhabit" data-v="${v}" aria-pressed="${d.habit===v}">${l}</button>`).join('')}</div>
+      <p class="sub" style="margin-top:6px">Habit mode. When this is on, I ask if you did it and you tap <b>Done</b> or <b>Not yet</b>. Good for pills and daily habits.</p></div></div>`,
+      next:()=>here(4),
+      acts:{rmtype:el=>{rmSetType(el.dataset.v);render();},rmtotal:el=>{d.rep.total=el.dataset.v===''?null:+el.dataset.v;render();},rmhabit:el=>{d.habit=el.dataset.v==='true';d.habitTouched=true;render();}}});
+  }
+  const caps=rmCaps();
+  const row=(i,l,v)=>`<div class="rm-sumrow"><span class="ico">${ic(i)}</span><span class="t"><small>${l}</small><strong>${v}</strong></span></div>`;
+  return Object.assign(base,{guide:'Check everything, then tap Save reminder.',nextLabel:edit?'Save changes':'Save reminder',
+    body:`<div class="card rm-sum"><span class="steptag">Almost done</span>
+      ${row('bell','Remind me to',esc(d.text))}${row('clock','When',esc(d.due?rmWhen(d.due):'Not set')+(d.due?' ('+esc(rmRel(d.due))+')':''))}
+      ${row('repeat','How often',esc(d.rep.type==='once'?'Just once':rmDraftRepText()))}
+      ${row('shieldcheck','Habit check',d.habit?'I will ask \u201cDid you do it?\u201d':'Off')}
+      ${row('speaker','How I tell you',S.rm.read?'A card on screen, read aloud in your voice':'A card on screen (read aloud is off)')}
+      ${row('bell','Phone alerts',caps.perm==='granted'?'On':'Not on yet. I will only ring while Highkeep is open.')}</div>
+      <button class="btn block" data-act="rmsay">${ic('speaker')}Read this to me</button>`,
+    next:()=>{const r=rmSaveDraft();if(!r)return toast('I need what to remind you about and a time first.');
+      const msg=(edit?'Changed. ':'Saved. ')+'I will remind you '+rmWhen(r.due).toLowerCase()+'.';rmFreshDraft();go('remind');setTimeout(()=>{toast(msg,3200);if(S.readAloud)speak(msg,false);},80);},
+    acts:{rmsay:()=>speak('Remind me to '+d.text+'. '+(d.due?rmWhen(d.due)+'. ':'')+(d.rep.type==='once'?'Just once.':rmDraftRepText()+'.'),false)}});
+}
+/* ---------- Settings, backup ---------- */
+function rmSeg(k,opts,val){return `<div class="seg" role="group">${opts.map(([v,l])=>`<button data-act="rmset" data-k="${k}" data-v="${v}" aria-pressed="${String(val)===String(v)}">${l}</button>`).join('')}</div>`;}
+function scr_rmsettings(){
+  const q=S.rm.quiet,P=S.rm.parts;
+  const tin=(id,v,l)=>`<label class="rm-tin"><span>${l}</span><input type="time" class="input" id="${id}" value="${v}"></label>`;
+  return {name:'Reminder settings',tab:'home',topLeft:'back',backTo:()=>go('remind'),portal:{size:'small',world:S.world,title:'Reminder settings'},
+    guide:'Change how reminders sound and when they come. Your choices are saved right away.',
+    body:`<div class="card"><div class="setrow"><div class="lbl">${ic('speaker')}Read reminders aloud</div>${rmSeg('read',[[true,'On'],[false,'Off']],S.rm.read)}<p class="sub" style="margin-top:6px">Uses the reading voice you picked in More. Your own words are read by the best voice on your device.</p></div>
+      <div class="setrow"><div class="lbl">${ic('repeat')}Gentle repeat until you answer</div>${rmSeg('nudge',[[0,'Off'],[2,'2 min'],[5,'5 min'],[10,'10 min']],S.rm.nudge)}
+      ${S.rm.nudge?`<div class="lbl" style="margin-top:12px">${ic('hash')}Repeat how many times</div>${rmSeg('nudgeMax',[[1,'1'],[3,'3'],[5,'5']],S.rm.nudgeMax)}`:''}
+      <p class="sub" style="margin-top:6px">If you do not tap Done or Snooze, I will gently show it again. I never keep going forever.</p></div></div>
+    <div class="card"><h3>Times of day</h3><p class="sub">When you say \u201cmorning\u201d or \u201cevening\u201d, this is the time I use.</p>
+      <div class="rm-tgrid">${tin('rmp-morning',P.morning,'Morning')}${tin('rmp-afternoon',P.afternoon,'Afternoon')}${tin('rmp-evening',P.evening,'Evening')}${tin('rmp-night',P.night,'Night')}</div>
+      <button class="btn" data-act="rmpartsreset" style="margin-top:8px">${ic('repeat')}Put the times back</button></div>
+    <div class="card"><div class="setrow" style="border:0;padding:0"><div class="lbl">${ic('moon')}Quiet hours</div>${rmSeg('quiet',[[true,'On'],[false,'Off']],q.on)}
+      <p class="sub" style="margin-top:6px">During quiet hours I stay silent and hold reminders until they end.</p>
+      ${q.on?`<div class="rm-tgrid" style="margin-top:8px">${tin('rmq-from',q.from,'Starts')}${tin('rmq-to',q.to,'Ends')}</div>`:''}</div></div>
+    <div class="card"><h3>Back up and clear</h3><p class="sub">Copy all your reminders as plain text. You can paste it into a note or message.</p>
+      <button class="btn block" data-act="rmexport">${ic('copy')}Copy my reminders</button>
+      <button class="btn block" data-act="rmclearall" style="margin-top:10px">${ic('trash')}Delete all my reminders</button></div>`,
+    acts:{rmset:el=>{const k=el.dataset.k;let v=el.dataset.v;if(v==='true')v=true;else if(v==='false')v=false;else if(/^\d+$/.test(v))v=+v;if(k==='quiet')S.rm.quiet.on=v;else S.rm[k]=v;save();rmSyncTriggers();render();},
+      rmpartsreset:()=>{S.rm.parts=Object.assign({},RM_PARTS_DEF);save();render();toast('Times put back.');},
+      rmexport:()=>{const t=rmExportText();rmCopy(t).then(ok=>{modal(`<h2>${ok?'Copied':'Here is your list'}</h2><p class="muted">${ok?'Paste it anywhere you like.':'Your browser would not copy it, so you can select it here.'}</p><textarea class="input rm-ta" rows="8" readonly id="rmexp" style="width:100%;text-align:left">${esc(t)}</textarea>`,[['Close',null,true]]);const ta=$('#rmexp');ta&&ta.addEventListener('focus',()=>ta.select());});},
+      rmclearall:()=>{const n=S.rm.items.length;if(!n)return toast('You have no reminders to delete.');modal(`<h2>Delete all ${n} reminder${n===1?'':'s'}?</h2><p>This clears your whole list. You cannot bring it back after this.</p>`,[['Keep them',null,true],['Yes, delete all',()=>{S.rm.items=[];save();rmCloseAlert();rmSyncTriggers();toast('All reminders deleted.');render();}]]);}},
+    mount:r=>{
+      ['morning','afternoon','evening','night'].forEach(k=>{const i=$('#rmp-'+k,r);i&&i.addEventListener('change',e=>{if(/^\d{2}:\d{2}$/.test(e.target.value)){S.rm.parts[k]=e.target.value;save();}});});
+      const f=$('#rmq-from',r),t=$('#rmq-to',r);f&&f.addEventListener('change',e=>{if(e.target.value){S.rm.quiet.from=e.target.value;save();}});t&&t.addEventListener('change',e=>{if(e.target.value){S.rm.quiet.to=e.target.value;save();}});}};
+}
+/* ---------- Phone alerts and Add to Home Screen ---------- */
+function scr_rmalerts(){
+  const c=rmCaps();
+  const st=(ok,l,v)=>`<div class="rm-stat ${ok===true?'ok':ok===false?'no':'mid'}"><span class="dot"></span><span><b>${l}</b><br><small>${v}</small></span></div>`;
+  const permTxt=c.perm==='granted'?'Allowed':c.perm==='denied'?'Blocked':c.perm==='default'?'Not asked yet':'Not available on this browser';
+  const how=c.ios&&!c.standalone?`<div class="note"><b>iPhone and iPad:</b> alerts only work after you add Highkeep to your Home Screen (iOS 16.4 or newer). Do the steps below first, then open Highkeep from its Home Screen icon and come back here.</div>`:'';
+  const ask=c.perm==='default'&&c.notif?`<div class="rm-explain"><b>What happens when you tap the button:</b> your phone will ask \u201cAllow notifications?\u201d Tap <b>Allow</b>. That lets Highkeep show a banner when a reminder is due. You can turn it off any time in your phone settings.</div><button class="btn primary block" data-act="rmperm">${ic('bell')}Turn on phone alerts</button>`:
+    c.perm==='granted'?`<p style="font-size:1.1rem"><span class="rm-inl ok">${ic('check')}</span> Phone alerts are on.</p><button class="btn primary block" data-act="rmtest">${ic('bell')}Send a test notification</button>`:
+    c.perm==='denied'?`<div class="note">Alerts are blocked for this page. To turn them on: ${c.ios?'open the <b>Settings</b> app, tap <b>Notifications</b>, find <b>Highkeep</b> and turn on <b>Allow Notifications</b>.':c.android?'tap the lock icon next to the web address, tap <b>Permissions</b>, then <b>Notifications</b>, and choose Allow.':'click the lock icon next to the web address, find <b>Notifications</b>, and choose Allow.'} Then come back here.</div>`:
+    `<div class="note">This browser cannot show phone alerts${c.ios?' yet. Add Highkeep to your Home Screen first (steps below)':''}. Highkeep will still show a card and read your reminder aloud while it is open.</div>`;
+  const steps=(a)=>`<ol class="rm-steps">${a.map(s=>`<li>${s}</li>`).join('')}</ol>`;
+  const iosSteps=steps(['Open Highkeep in <b>Safari</b>.','Tap the <b>Share</b> button (a square with an arrow pointing up) at the bottom of the screen.','Scroll down and tap <b>Add to Home Screen</b>.','Tap <b>Add</b> in the top corner.','Close Safari. Open <b>Highkeep from your Home Screen</b> and come back to this page.','Tap <b>Turn on phone alerts</b>.']);
+  const andSteps=steps(['Open Highkeep in <b>Chrome</b>.','Tap the three dots (\u22ee) at the top right.','Tap <b>Add to Home screen</b> or <b>Install app</b>.','Tap <b>Install</b> or <b>Add</b>.','Open Highkeep from your Home screen.','Come back here and tap <b>Turn on phone alerts</b>.']);
+  const deskSteps=steps(['In Chrome or Edge, look for an install icon at the right end of the address bar, or open the menu (\u22ee) and choose <b>Install Highkeep</b>.','Confirm. Highkeep opens in its own window.','Come back here and tap <b>Turn on phone alerts</b>.']);
+  const order=c.ios?['ios','and','desk']:c.android?['and','ios','desk']:['desk','ios','and'];
+  const blocks={ios:['iPhone or iPad',iosSteps],and:['Android phone',andSteps],desk:['Computer',deskSteps]};
+  return {name:'Phone alerts',tab:'home',topLeft:'back',backTo:()=>go('remind'),portal:{size:'small',world:S.world,title:'Phone alerts'},
+    guide:'Turn on phone alerts so Highkeep can show a banner when a reminder is due.',
+    body:`<div class="card"><h3>Alerts on this device</h3>
+      ${st(c.notif?(c.perm==='granted'?true:c.perm==='denied'?false:null):false,'Notifications',permTxt)}
+      ${st(c.standalone?true:null,'Added to Home Screen',c.standalone?'Yes, you are using Highkeep as an app':(c.ios?'Not yet. iPhone needs this before alerts can work.':'Not added. This is optional on this device.'))}
+      ${st(c.triggers?true:false,'Alerts when Highkeep is closed',c.triggers?'This browser can schedule them. It is still not 100% reliable.':'Not available on this browser')}
+      ${how}<div style="margin-top:12px">${ask}</div></div>
+    <div class="card"><h3>The honest part</h3><ul class="rm-honest"><li>A web app like this <b>cannot reliably wake your phone</b> when it is closed. Highkeep always rings and reads aloud while it is open, and it catches up on anything you missed when you open it again.</li>
+      <li>On <b>iPhone</b>, web apps can only show notifications after they are added to the Home Screen. Even then, iPhone may not deliver them on time if Highkeep is closed.</li>
+      <li>For something that really matters, like medicine, tap a reminder and choose <b>Add to my phone calendar</b>. Your phone\u2019s own calendar will ring even when Highkeep is closed.</li></ul></div>
+    <div class="card"><h3>Add Highkeep to your Home Screen</h3>${c.standalone?'<p>You already did. You are using Highkeep as an app.</p>':''}
+      ${order.map((k,i)=>`<details ${i===0&&!c.standalone?'open':''} class="rm-det"><summary>${blocks[k][0]}</summary>${blocks[k][1]}</details>`).join('')}
+      ${c.ios?'<p class="note">On iPhone, Safari and the Home Screen app each keep their own saved reminders. Reminders made in one will not show in the other.</p>':''}</div>`,
+    acts:{rmperm:()=>rmAskPermission(),rmtest:()=>{toast('Test is coming in 3 seconds. You can leave this page to see it.',3200);setTimeout(()=>rmNotify({title:'Highkeep test',body:'This is how a reminder will look. Nothing to do!',tag:'hk-test'}).then(ok=>{if(!ok)toast('I could not show a notification. Check the steps on this page.',4000);}),3000);}}};
+}
+/* ---------- Siri Shortcut helper ---------- */
+function scr_rmsiri(){
+  const base=rmAbs()+'#/remind/new?text=';const ex1=rmAbs()+'#/remind/new?text='+encodeURIComponent('Take my pills')+'&when='+encodeURIComponent('in 20 minutes');const ex2=rmAbs()+'#/remind/new?text='+encodeURIComponent('Call Mom tomorrow evening');
+  return {name:'Siri Shortcut',tab:'home',topLeft:'back',backTo:()=>go('remind'),portal:{size:'small',world:S.world,title:'Siri Shortcut'},
+    guide:'Follow these steps to ask Siri to make a reminder in Highkeep.',
+    body:`<div class="card"><h3>Say \u201cHey Siri, remind me in Highkeep\u201d</h3><p>Siri can listen for you, then open Highkeep with your words already filled in. You still check the time and tap Save. Nothing is saved by surprise.</p>
+      <ol class="rm-steps">
+      <li>Open the <b>Shortcuts</b> app on your iPhone and tap the <b>+</b> button.</li>
+      <li>Tap the name at the top and call it <b>Remind me in Highkeep</b>. Siri uses this name.</li>
+      <li>Tap <b>Add Action</b>, search for <b>Dictate Text</b>, and tap it.</li>
+      <li>Add another action: search for <b>URL Encode</b> and add it. If you cannot find it, skip this step. Highkeep still understands plain spaces.</li>
+      <li>Add another action: <b>Text</b>. Type this link, then tap the blue <b>Encoded Text</b> (or <b>Dictated Text</b>) right after the equals sign:<div class="rm-code" id="rmlink">${esc(base)}</div><button class="btn" data-act="rmcopylink">${ic('copy')}Copy the link start</button></li>
+      <li>Add one last action: <b>Open URLs</b>, and give it that Text.</li>
+      <li>Tap <b>Done</b>. Now say <b>\u201cHey Siri, remind me in Highkeep\u201d</b>, and then say your reminder, like <b>\u201cCall Mom tomorrow evening\u201d</b>.</li></ol></div>
+    <div class="card"><h3>What the link understands</h3><p class="sub">The part after <b>text=</b> can hold the whole sentence, time and all. You can also add <b>&when=</b> for a time phrase on its own.</p>
+      <div class="rm-code">${esc(ex1)}</div><div class="rm-code">${esc(ex2)}</div>
+      <div class="rm-tools2"><button class="btn" data-act="rmtryex" data-v="1">${ic('play')}Try the first one</button><button class="btn" data-act="rmtryex" data-v="2">${ic('play')}Try the second</button></div></div>
+    <div class="card"><h3>Good to know</h3><ul class="rm-honest"><li>On iPhone, the shortcut opens the link in <b>Safari</b>. Safari and a Home Screen copy of Highkeep keep their <b>own separate reminders</b>, and I cannot share them yet.</li>
+      <li>Siri does not make a reminder by itself. You see the screen and confirm. That keeps it safe and honest.</li>
+      <li>If you want a reminder that always rings, even when everything is closed, make the shortcut use the built-in <b>Add New Reminder</b> action instead, or add the reminder to your phone calendar from Highkeep.</li></ul></div>`,
+    acts:{rmcopylink:()=>rmCopy(base).then(ok=>toast(ok?'Copied. Paste it into the Text action.':'I could not copy. Press and hold the link to copy it.',3000)),
+      rmtryex:el=>{location.hash=el.dataset.v==='1'?ex1.slice(ex1.indexOf('#')):ex2.slice(ex2.indexOf('#'));}}};
+}
+
 
 /* ---------------- Shell ---------------- */
 let cur=null,lastKey='';
@@ -714,6 +1522,7 @@ function getScreen(){
     case 'game':return r[1]==='changed'?scr_changed(+r[2]||1):r[1]==='story'?scr_story(+r[2]||1):scr_cardflip(+r[2]||1);
     case 'practice':return scr_practice();
     case 'palace':return scr_palace();
+    case 'remind':{const sc=scr_remind(r[1],r[2],r[3]);sc.body='<i class="rmx" hidden></i>'+sc.body;return sc;}
     case 'more':return scr_more();
     default:return scr_home();
   }
@@ -734,6 +1543,7 @@ function guideText(sc){
 }
 function render(){
   applyClasses();
+  rmDeepLink();if(route()[0]!=='remind')rmStopMic();
   const sc=getScreen();cur=sc;
   const key=location.hash+'|'+sc.name;const same=key===lastKey;
   const cc=$('.content-col');const prevScroll=same?{y:window.scrollY,c:cc?cc.scrollTop:0}:null;
@@ -811,7 +1621,10 @@ function showTour(){
 }
 function endTour(){$('#overlay-root').innerHTML='';S.tourDone=true;save();toast('Tour finished. Tap Where am I? any time.');}
 window.addEventListener('resize',()=>{if($('.tour-spot'))showTour();});
-window.Highkeep={guide:()=>cur&&guideText(cur).speech,TOUR:()=>TOUR,startTour,state:()=>S,flip,reveal,game:()=>game,wc:()=>wc,wcPick,sr:()=>sr,srPick,STORIES:()=>STORIES};
+window.Highkeep={rm:{parse:rmParse,now:rmNow,warp:ms=>{let left=ms;while(left>0){const d=Math.min(30000,left);rmOffset+=d;left-=d;rmTick();}},jump:ms=>{rmOffset+=ms;rmTick();},tick:rmTick,items:()=>S.rm.items,add:rmAdd,due:rmDueList,log:()=>rmLog,caps:rmCaps,draft:()=>rmDraft,ics:rmIcs,exportText:rmExportText,alertId:()=>rmAlertId,catchUp:()=>rmCatch,seenReset:()=>{rmLastTick=null;},fireAt:rmFireAt,load:()=>{rmNorm();}},guide:()=>cur&&guideText(cur).speech,TOUR:()=>TOUR,startTour,state:()=>S,flip,reveal,game:()=>game,wc:()=>wc,wcPick,sr:()=>sr,srPick,STORIES:()=>STORIES};
 
+rmNorm();rmLastTick=S.rm.seen||null;
 render();
+setInterval(rmTick,1000);setTimeout(rmTick,350);
+try{if('Notification' in window&&Notification.permission==='granted')rmRegisterSW();}catch(e){}
 })();
