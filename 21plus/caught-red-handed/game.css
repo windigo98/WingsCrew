@@ -703,14 +703,84 @@ blockquote.crh-prompt {
   text-align: center;
 }
 
+.crh-showtv {
+  margin: 0.8rem 0 1rem;
+}
+
+.crh-join-visual {
+  display: grid;
+  gap: 0.75rem 1.25rem;
+  justify-items: center;
+  align-items: center;
+  padding: 0.85rem;
+  border-radius: 18px;
+  background: #fff;
+  color: #161513;
+}
+
+.crh-join-copy {
+  width: 100%;
+  min-width: 0;
+}
+
+.crh-code-label {
+  margin: 0;
+  color: #3a342c;
+  font-size: 0.95rem;
+  font-weight: 650;
+  letter-spacing: 0.16em;
+  line-height: 1.2;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.crh-join-copy .crh-code {
+  margin: 0.15rem 0 0.35rem;
+  color: #111;
+  font-size: clamp(3.4rem, 12vw, 6.4rem);
+  letter-spacing: 0.18em;
+  text-indent: 0.18em;
+}
+
+.crh-short {
+  margin: 0;
+  color: #1a1814;
+  font-size: clamp(0.95rem, 2.1vw, 1.35rem);
+  font-weight: 650;
+  line-height: 1.35;
+  text-align: center;
+  overflow-wrap: anywhere;
+}
+
+.crh-qr-missing {
+  margin: 0;
+  color: #111;
+  text-align: center;
+}
+
 .crh-qr {
   display: block;
-  width: min(220px, 70vw);
+  width: min(100%, 320px);
   height: auto;
-  margin: 0 auto 0.9rem;
-  padding: 0.65rem;
-  border-radius: 16px;
+  margin: 0;
+  padding: 0;
+  border-radius: 4px;
   background: #fff;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+}
+
+.crh-code-input {
+  font-family: var(--serif);
+  font-size: 2rem;
+  font-weight: 650;
+  letter-spacing: 0.28em;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.crh-tv-names {
+  margin-top: 0.4rem;
 }
 
 .crh-tv-url {
@@ -748,7 +818,8 @@ body.crh-screen {
   color: #fffaf0;
 }
 
-body.crh-screen .site-header {
+body.crh-screen .site-header,
+body.crh-tv .site-header {
   display: none;
 }
 
@@ -768,7 +839,8 @@ body.crh-screen .site-footer p + p {
   margin-top: 0.12rem;
 }
 
-body.crh-screen .wrap {
+body.crh-screen .wrap,
+body.crh-tv .wrap {
   width: min(1480px, calc(100% - 3rem));
 }
 
@@ -892,6 +964,20 @@ body.crh-screen .crh-narrow {
   max-width: 72rem;
 }
 
+.crh-showtv .crh-qr {
+  width: min(70vw, 58vh, 640px);
+}
+
+body.crh-tv .crh-join-copy .crh-code,
+body.crh-screen .crh-join-copy .crh-code {
+  font-size: clamp(4.4rem, 8vw, 8rem);
+}
+
+body.crh-tv .crh-short,
+body.crh-screen .crh-short {
+  font-size: clamp(1.05rem, 2vw, 1.55rem);
+}
+
 .crh-overlay {
   position: fixed;
   inset: 0;
@@ -931,6 +1017,13 @@ body.crh-screen .crh-narrow {
 
 .crh-footer-note {
   margin-bottom: 0.35rem;
+}
+
+@media (min-width: 800px) {
+  .crh-join-visual {
+    grid-template-columns: minmax(240px, 1.05fr) minmax(220px, 0.95fr);
+    padding: 1.1rem 1.25rem;
+  }
 }
 
 @media (min-width: 720px) {
