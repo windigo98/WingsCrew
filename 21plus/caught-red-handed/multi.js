@@ -1,5 +1,6 @@
 // Multi-phone Caught Red-Handed.
-// The host's phone is the hub. PeerJS only introduces the phones.
+// A phone can host, or the TV page can host while a phone claims control.
+// PeerJS only introduces the browsers.
 // Answers travel on the WebRTC link to the host and are not stored on a server.
 (function () {
   var CATS = Array.isArray(window.CRH_CATEGORIES) ? window.CRH_CATEGORIES : [];
@@ -7,7 +8,9 @@
   var MAX_ANSWER = 240;
   var MIN_PLAYERS = 3;
   var MAX_PLAYERS = 12;
-  var LETTERS = "ABCDEFGHJKLMNPQRSTUVWXYZ";
+  // No I, L, or O (and no digits). Those look like 1 and 0 across a room.
+  var LETTERS = "ABCDEFGHJKMNPQRSTUVWXYZ";
+  var PEER_PREFIX = "wingscrew-crh-";
   var SEAT_KEY = "crh-seat";
 
   var DARES = [
@@ -40,6 +43,22 @@
     return String(raw || "").replace(/\s+/g, " ").trim().slice(0, 16);
   }
 
+  function normalizeCode(raw) {
+    return String(raw || "").toUpperCase().replace(/[\s\-–—]+/g, "");
+  }
+
+  function tidyCode(raw) {
+    return normalizeCode(raw).slice(0, 4);
+  }
+
+  function codeValid(code) {
+    if (!code || code.length !== 4) return false;
+    for (var i = 0; i < code.length; i++) {
+      if (LETTERS.indexOf(code.charAt(i)) === -1) return false;
+    }
+    return true;
+  }
+
   function createTable(cats) {
     var table = {
       code: "",
@@ -63,6 +82,29 @@
         if (table.players[i].id === id) return table.players[i];
       }
       return null;
+    }
+
+    function hostPlayer() {
+      for (var i = 0; i < table.players.length; i++) {
+        if (table.players[i].isHost) return table.players[i];
+      }
+      return null;
+    }
+
+    function lobbyStartNotes() {
+      var notes = [];
+      var host = hostPlayer();
+      if (!host || !host.name) {
+        notes.push(table.tvRoom
+          ? "Someone needs to tap Join as host on their phone."
+          : "Add your name. You're playing too.");
+      }
+      if (table.players.length < MIN_PLAYERS) notes.push("Need at least 3 players.");
+      if (table.players.length > MAX_PLAYERS) notes.push("12 players is the max.");
+      var live = connected().length;
+      if (live < MIN_PLAYERS) notes.push("At least 3 players need to be connected.");
+      if (!categoryOk()) notes.push("Choose 5 or 6 categories, or play all.");
+      return notes;
     }
 
     function nameTaken(name, exceptId) {
@@ -329,6 +371,8 @@
         code: table.code,
         notice: table.notice,
         endReason: table.endReason,
+        tvRoom: !!table.tvRoom,
+        startNotes: table.phase === "lobby" ? lobbyStartNotes() : [],
         options: { timer: !!table.options.timer, caughtRule: table.options.caughtRule },
         timerDeadline: table.timerDeadline || 0,
         players: publicPlayers(),
@@ -375,16 +419,18 @@
         return table.round ? table.round.answers : null;
       },
       setCode: function (code) { table.code = code; },
+      markTv: function () { table.tvRoom = true; },
+      markPhoneHost: function () { table.phoneHost = true; },
       setHostName: function (raw) {
         var name = cleanName(raw);
-        var host = playerById("host");
+        var host = hostPlayer();
         if (!name) {
-          if (host && table.phase === "lobby") {
+          if (host && host.id === "host" && table.phase === "lobby") {
             table.players = table.players.filter(function (p) { return p.id !== "host"; });
           }
           return "";
         }
-        if (nameTaken(name, "host")) return "That name is already in the room.";
+        if (nameTaken(name, host ? host.id : "host")) return "That name is already in the room.";
         if (!host) {
           table.players.unshift({ id: "host", name: name, score: 0, connected: true, isHost: true, token: "host" });
         } else if (table.phase === "lobby") {
@@ -393,10 +439,16 @@
         }
         return "";
       },
-      addPlayer: function (id, rawName, token) {
+      addPlayer: function (id, rawName, token, claimHost) {
         var name = cleanName(rawName);
         if (!id) return { ok: false, error: "Missing player." };
         var existing = playerById(id);
+        if (claimHost) {
+          var holder = hostPlayer();
+          if (table.phoneHost || (holder && holder.id !== id)) {
+            return { ok: false, error: "Someone is already hosting. Join as a player." };
+          }
+        }
         if (existing) {
           if (existing.token && token && existing.token !== token) {
             return { ok: false, error: "That seat belongs to someone else." };
@@ -406,22 +458,37 @@
           }
           if (name && !nameTaken(name, id)) existing.name = name;
           existing.connected = true;
+          if (claimHost) existing.isHost = true;
           return { ok: true, player: existing, rejoin: true };
         }
         if (table.phase !== "lobby") return { ok: false, error: "That game already started." };
         if (!name) return { ok: false, error: "Type a name first." };
         if (table.players.length >= MAX_PLAYERS) return { ok: false, error: "This room is full (12)." };
         if (nameTaken(name, id)) return { ok: false, error: "That name is already in the room." };
-        var player = { id: id, name: name, score: 0, connected: true, isHost: false, token: token || "" };
+        var player = { id: id, name: name, score: 0, connected: true, isHost: !!claimHost, token: token || "" };
         table.players.push(player);
         return { ok: true, player: player, rejoin: false };
       },
       disconnect: function (id) {
         var player = playerById(id);
-        if (!player || player.isHost) return false;
+        if (!player || player.id === "host") return false;
         player.connected = false;
+        if (player.isHost && table.phase === "lobby") {
+          table.notice = "The host phone disconnected. It can rejoin, or someone else can take host shortly.";
+          return "release-host";
+        }
+        if (player.isHost) {
+          table.notice = player.name + " disconnected. Rejoin from the same phone to keep hosting.";
+        }
         if (table.phase === "answer" && allConnectedAnswered()) closeAnswers();
         else if (table.phase === "vote" && allConnectedVoted()) settle(false);
+        return true;
+      },
+      releaseHost: function (id) {
+        var player = playerById(id);
+        if (!player || !player.isHost || player.connected || table.phase !== "lobby") return false;
+        table.players = table.players.filter(function (p) { return p.id !== id; });
+        table.notice = "The host seat is open. Join as host from a phone.";
         return true;
       },
       kick: function (id) {
@@ -459,14 +526,7 @@
         if (key === "caughtRule" && (value === "sip" || value === "half")) table.options.caughtRule = value;
       },
       startErrors: function () {
-        var notes = [];
-        if (!playerById("host") || !playerById("host").name) notes.push("Add your name. You're playing too.");
-        if (table.players.length < MIN_PLAYERS) notes.push("Need at least 3 players.");
-        if (table.players.length > MAX_PLAYERS) notes.push("12 players is the max.");
-        var live = connected().length;
-        if (live < MIN_PLAYERS) notes.push("At least 3 players need to be connected.");
-        if (!categoryOk()) notes.push("Choose 5 or 6 categories, or play all.");
-        return notes;
+        return lobbyStartNotes();
       },
       start: function () {
         var errors = this.startErrors();
@@ -571,9 +631,11 @@
       },
       privateFor: function (id) {
         var round = table.round;
+        var player = playerById(id);
         return {
           answered: !!(round && round.answers[id] != null),
-          voted: !!(round && round.votes[id] != null)
+          voted: !!(round && round.votes[id] != null),
+          controller: !!(player && player.isHost)
         };
       },
       publicState: publicState
@@ -599,7 +661,7 @@
   }
 
   function peerId(code) {
-    return "crh-" + code;
+    return PEER_PREFIX + code;
   }
 
   function randomCode() {
@@ -647,21 +709,40 @@
     return match ? decodeURIComponent(match[1]) : "";
   }
 
-  function roomLink(code, screen) {
+  function gamePath() {
     var path = window.location.pathname || "/21plus/caught-red-handed/";
-    var origin = window.location.origin || "";
-    var url = origin + path + "?room=" + code;
-    if (screen) url += "&screen=1";
-    return url;
+    if (/\/index\.html$/.test(path)) path = path.slice(0, -"index.html".length);
+    if (/\/tv\/?$/.test(path)) path = path.replace(/tv\/?$/, "");
+    if (path.slice(-1) !== "/") path += "/";
+    return path;
+  }
+
+  function pageOrigin() {
+    return window.location.origin || "https://wingscrew.com";
+  }
+
+  function joinLink(code) {
+    return pageOrigin() + gamePath() + "?join=" + code;
+  }
+
+  function screenLink(code) {
+    return pageOrigin() + gamePath() + "?room=" + code + "&screen=1";
+  }
+
+  function shortUrl(code) {
+    var host = window.location.host || "wingscrew.com";
+    if (host === "www.wingscrew.com") host = "wingscrew.com";
+    return host + gamePath() + "?join=" + code;
   }
 
   function qrData(text) {
     if (typeof window.qrcode !== "function" || !text) return "";
     try {
-      var qr = window.qrcode(0, "M");
+      var qr = window.qrcode(0, "Q");
       qr.addData(text);
       qr.make();
-      return qr.createDataURL(6, 2);
+      // 8px modules and a 4-module quiet zone. Black on white.
+      return qr.createDataURL(8, 32);
     } catch (error) {
       return "";
     }
@@ -734,7 +815,9 @@
     error: "",
     joinCode: "",
     joinName: "",
+    claimHost: false,
     hostName: "",
+    hostRelease: 0,
     draft: "",
     focus: "",
     suspect: "",
@@ -794,9 +877,26 @@
       return;
     }
     if (conn._crhPid && ui.table) {
-      if (ui.conns[conn._crhPid] === conn) delete ui.conns[conn._crhPid];
-      if (ui.table.disconnect(conn._crhPid)) broadcast();
+      var droppedId = conn._crhPid;
+      if (ui.conns[droppedId] === conn) delete ui.conns[droppedId];
+      var dropped = ui.table.disconnect(droppedId);
+      if (dropped === "release-host") scheduleHostRelease(droppedId);
+      if (dropped) broadcast();
     }
+  }
+
+  function scheduleHostRelease(id) {
+    if (ui.hostRelease) window.clearTimeout(ui.hostRelease);
+    ui.hostRelease = window.setTimeout(function () {
+      ui.hostRelease = 0;
+      if (!ui.table || ui.ended) return;
+      if (ui.table.releaseHost(id)) broadcast();
+    }, 12000);
+  }
+
+  function clearHostRelease() {
+    if (ui.hostRelease) window.clearTimeout(ui.hostRelease);
+    ui.hostRelease = 0;
   }
 
   function onClientMessage(conn, msg) {
@@ -812,7 +912,7 @@
         broadcast();
         return;
       }
-      var result = ui.table.addPlayer(String(msg.pid || ""), msg.name, String(msg.token || ""));
+      var result = ui.table.addPlayer(String(msg.pid || ""), msg.name, String(msg.token || ""), !!msg.claimHost);
       if (!result.ok) {
         send(conn, { t: "reject", error: result.error });
         return;
@@ -823,8 +923,15 @@
         try { old.close(); } catch (error) { /* replaced */ }
       }
       conn._crhPid = result.player.id;
+      conn._crhController = !!result.player.isHost;
       ui.conns[result.player.id] = conn;
+      if (result.player.isHost) clearHostRelease();
       broadcast();
+      return;
+    }
+    if (msg.t === "control") {
+      if (!conn._crhController) return;
+      applyHost(String(msg.action || ""), msg, conn._crhPid);
       return;
     }
     var pid = conn._crhPid;
@@ -907,7 +1014,7 @@
       broadcast();
     });
     peer.on("error", function (err) {
-      if (!opened && err && err.type === "unavailable-id" && attempt < 8) {
+      if (!opened && err && err.type === "unavailable-id" && attempt < 12) {
         try { peer.destroy(); } catch (error) { /* try a new code */ }
         claim(randomCode(), attempt + 1);
         return;
@@ -963,10 +1070,17 @@
         ui.tries = 0;
         ui.status = "live";
         var mine = seat();
-        saveSeat({ pid: mine.pid, token: mine.token, room: code, name: ui.joinName || mine.name || "" });
+        var seatRecord = {
+          pid: mine.pid,
+          token: mine.token,
+          room: code,
+          name: ui.joinName || mine.name || "",
+          host: !!ui.claimHost
+        };
+        saveSeat(seatRecord);
         conn.send(screenMode
           ? { t: "join", screen: true }
-          : { t: "join", pid: mine.pid, token: mine.token, name: ui.joinName });
+          : { t: "join", pid: mine.pid, token: mine.token, name: ui.joinName, claimHost: !!ui.claimHost });
       });
       conn.on("data", function (msg) {
         if (typeof msg === "string") {
@@ -996,6 +1110,10 @@
         if (msg.t === "state") {
           ui.pub = msg.pub;
           ui.you = msg.you || {};
+          if (ui.you.controller && ui.role === "player") {
+            ui.role = "controller";
+            if (!ui.hostName) ui.hostName = ui.joinName;
+          }
           ui.status = "live";
           if (msg.pub && msg.pub.phase === "ended") {
             ui.ended = true;
@@ -1124,6 +1242,113 @@
     ui.timerId = window.setInterval(tick, 200);
   }
 
+  function controlling() {
+    return ui.role === "host" || ui.role === "controller";
+  }
+
+  function displayOnly() {
+    return ui.role === "screen" || ui.role === "tv";
+  }
+
+  function hostPerson(pub) {
+    var players = (pub && pub.players) || [];
+    for (var i = 0; i < players.length; i++) {
+      if (players[i].isHost) return players[i];
+    }
+    return null;
+  }
+
+  function joinShowcase(code) {
+    var link = joinLink(code);
+    var qr = qrData(link);
+    var letters = String(code || "----").split("").join(" ");
+    return el("div", { class: "crh-join-visual" }, [
+      qr ? el("img", {
+        class: "crh-qr",
+        src: qr,
+        alt: "QR code that joins room " + code,
+        "data-join-url": link
+      }) : el("p", { class: "crh-qr-missing", text: "QR code didn't draw. Read the letters instead." }),
+      el("div", { class: "crh-join-copy" }, [
+        el("p", { class: "crh-code-label", text: "Room code" }),
+        el("p", {
+          class: "crh-code",
+          "aria-label": "Room code " + letters,
+          text: code || "----"
+        }),
+        el("p", { class: "crh-short", text: shortUrl(code) })
+      ])
+    ]);
+  }
+
+  function applyHost(action, data, pid) {
+    if (!ui.table) return;
+    data = data || {};
+    if (action === "category") ui.table.toggleCategory(data.category);
+    else if (action === "random") ui.table.randomCategories(Number(data.value) || 5);
+    else if (action === "all") ui.table.playAll();
+    else if (action === "caughtRule") ui.table.setOption("caughtRule", data.value);
+    else if (action === "timer") ui.table.setOption("timer", !ui.table.publicState().options.timer);
+    else if (action === "kick") {
+      var kicked = data.pid;
+      ui.table.kick(kicked);
+      if (ui.conns[kicked]) {
+        send(ui.conns[kicked], { t: "reject", error: "The host removed you from the room." });
+        ui.conns[kicked]._crhReplaced = true;
+        try { ui.conns[kicked].close(); } catch (error) { /* kicked */ }
+        delete ui.conns[kicked];
+      }
+      broadcast();
+      return;
+    } else if (action === "host-name") {
+      var renameError = ui.table.setHostName(data.name);
+      if (renameError) ui.table.notice = renameError;
+    } else if (action === "start") {
+      if (ui.role === "host" || pid === "host") {
+        var nameError = ui.table.setHostName(data.name || "");
+        if (nameError) {
+          ui.table.notice = nameError;
+          broadcast();
+          return;
+        }
+      }
+      var startError = ui.table.start();
+      if (startError) {
+        ui.table.notice = startError;
+        broadcast();
+        return;
+      }
+    } else if (action === "tile") ui.table.pickTile(data.tile);
+    else if (action === "open-answers") ui.table.openAnswers();
+    else if (action === "answer") ui.table.submitAnswer(pid, data.text);
+    else if (action === "close-answers") ui.table.closeAnswers();
+    else if (action === "begin-vote") ui.table.beginVote();
+    else if (action === "vote") ui.table.submitVote(pid, data.suspect);
+    else if (action === "close-votes") ui.table.closeVotes();
+    else if (action === "advance") ui.table.advance();
+    else if (action === "end-game") ui.table.endGame();
+    else if (action === "close-room") {
+      endRoom("The host ended the game.", ui.role === "host" ? "You closed the room." : "The host ended the game.");
+      return;
+    } else return;
+    broadcast();
+  }
+
+  function hostCommand(action, data) {
+    if (ui.role === "controller") {
+      var conn = currentConn();
+      if (!conn) return;
+      var msg = { t: "control", action: action };
+      data = data || {};
+      for (var key in data) {
+        if (Object.prototype.hasOwnProperty.call(data, key)) msg[key] = data[key];
+      }
+      send(conn, msg);
+      return;
+    }
+    applyHost(action, data || {}, "host");
+  }
+
   function viewFailed() {
     return el("article", { class: "panel crh-narrow" }, [
       el("p", { class: "badge", text: "Connection" }),
@@ -1152,16 +1377,19 @@
     return el("article", { class: "panel crh-narrow" }, [
       el("p", { class: "badge", text: "Join a room" }),
       el("h1", { text: "Your phone" }),
-      el("p", { class: "lede", text: "Enter the host's 4-letter code and the name you want on the board." }),
+      el("p", { class: "lede", text: "Enter the 4 letters from the TV and the name you want on the board. Spaces and dashes are ignored." }),
       el("label", { class: "crh-note", for: "crh-code", text: "Room code" }),
       el("input", {
         id: "crh-code",
-        class: "crh-answer",
+        class: "crh-answer crh-code-input",
         "data-join-code": "true",
         "data-keep": "join-code",
-        maxlength: "4",
+        maxlength: "8",
         autocapitalize: "characters",
         autocomplete: "off",
+        autocorrect: "off",
+        spellcheck: "false",
+        "aria-label": "4 letter room code",
         value: ui.joinCode || ""
       }),
       el("label", { class: "crh-note", for: "crh-join-name", text: "Your name" }),
@@ -1179,6 +1407,10 @@
       ui.error ? el("p", { class: "crh-status", role: "status", text: ui.error }) : null,
       el("div", { class: "crh-actions" }, [
         button("Join", "submit-join"),
+        button("Join as host", "submit-host", { className: "crh-btn crh-btn-ghost" })
+      ]),
+      el("p", { class: "crh-note", text: "Join as host only when the room was opened on a TV. If a phone already created the room, tap Join." }),
+      el("div", { class: "crh-actions" }, [
         button("Back", "back", { className: "crh-btn crh-btn-ghost" })
       ])
     ]);
@@ -1202,9 +1434,8 @@
 
   function viewHostLobby(pub) {
     var code = pub.code || "----";
-    var link = roomLink(code, false);
-    var screen = roomLink(code, true);
-    var qr = qrData(link);
+    var link = joinLink(code);
+    var screen = screenLink(code);
     var people = [];
     for (var i = 0; i < pub.players.length; i++) {
       var person = pub.players[i];
@@ -1213,22 +1444,29 @@
         person.isHost ? null : button("Remove", "kick", { className: "crh-x", pid: person.id, label: "Remove " + person.name })
       ]));
     }
-    var errors = ui.table ? ui.table.startErrors() : [];
+    var errors = Array.isArray(pub.startNotes) ? pub.startNotes : (ui.table ? ui.table.startErrors() : []);
+    var showNote = pub.tvRoom
+      ? "This room is on the TV. Other players scan the code and tap Join. You run the game from this phone."
+      : "Everyone else scans the code, or opens the link, and taps Join. Open the big-screen link on a TV to show this board. A TV's own browser can also open the TV page and host the room itself.";
     return fragment([
       el("p", { class: "badge", text: "Host" }),
-      el("h1", { text: "Room " + code }),
-      el("p", { class: "crh-code", "aria-label": "Room code " + code.split("").join(" "), text: code.split("").join(" ") }),
-      qr ? el("img", { class: "crh-qr", src: qr, alt: "QR code that joins room " + code }) : null,
-      el("p", { class: "crh-note", text: "Everyone else opens this page, taps Join, and enters " + code + ". Or they scan the code. The link works too." }),
-      el("div", { class: "crh-actions" }, [
-        button("Copy join link", "copy-link", { value: link }),
-        button("Copy big-screen link", "copy-link", { className: "crh-btn crh-btn-ghost", value: screen })
+      el("h1", { text: pub.tvRoom ? "You're the host" : "Your room" }),
+      el("section", { class: "crh-showtv", "aria-label": "Show on TV" }, [
+        el("h2", { class: "crh-h", text: "Show on TV" }),
+        el("p", { class: "crh-note", text: showNote }),
+        joinShowcase(code),
+        el("div", { class: "crh-actions" }, [
+          button("Copy join link", "copy-link", { value: link }),
+          button("Copy big-screen link", "copy-link", { className: "crh-btn crh-btn-ghost", value: screen })
+        ]),
+        pub.tvRoom ? null : el("p", { class: "crh-note", text: "TV browser, no extra typing: wingscrew.com/21plus/caught-red-handed/tv/" }),
+        pub.screenCount ? el("p", { class: "crh-status", text: pub.screenCount + (pub.screenCount === 1 ? " big screen connected." : " big screens connected.") }) : null
       ]),
-      el("p", { class: "crh-note", text: "Big-screen link: open it on a TV. It shows the board and the reveals. Players still vote on their own phones." }),
-      pub.screenCount ? el("p", { class: "crh-status", text: pub.screenCount + (pub.screenCount === 1 ? " big screen connected." : " big screens connected.") }) : null,
       el("article", { class: "panel" }, [
-        el("h2", { class: "crh-h", text: "Your name" }),
-        el("input", {
+        el("h2", { class: "crh-h", text: ui.role === "controller" ? "Players" : "Your name" }),
+        ui.role === "controller"
+          ? el("p", { class: "crh-note", text: "You're hosting as " + (ui.joinName || "your name") + "." })
+          : el("input", {
           class: "crh-answer",
           "data-host-name": "true",
           "data-keep": "host",
@@ -1291,6 +1529,39 @@
     });
   }
 
+  function viewShowOnTv(pub) {
+    var code = pub.code || "----";
+    var names = [];
+    for (var i = 0; i < (pub.players || []).length; i++) {
+      var person = pub.players[i];
+      names.push(el("li", null, [
+        el("span", { text: person.name + (person.isHost ? " · host" : "") + (person.connected ? "" : " · disconnected") })
+      ]));
+    }
+    var host = hostPerson(pub);
+    var tvRoom = !!pub.tvRoom;
+    return fragment([
+      el("p", { class: "badge", text: tvRoom ? "21+ · TV" : "Show on TV" }),
+      el("h1", { text: "Join on your phone" }),
+      el("p", { class: "lede", text: tvRoom
+        ? "Scan the code. Type your name. Tap Join. One person taps Join as host and runs the game from that phone."
+        : "Scan the code. Type your name. Tap Join. This screen shows the board. The host's phone runs the game." }),
+      el("section", { class: "crh-showtv", "aria-label": "Show on TV" }, [
+        joinShowcase(code)
+      ]),
+      names.length ? el("ul", { class: "crh-names crh-tv-names", "aria-label": "Players" }, names) : null,
+      tvRoom && !host
+        ? el("p", { class: "crh-status", role: "status", text: "Waiting for a phone to join as host." })
+        : host
+          ? el("p", { class: "crh-status", role: "status", text: host.name + " is hosting." + (host.connected ? "" : " Reconnecting…") })
+          : null,
+      el("p", { class: "crh-note" }, [
+        el("strong", { text: "21+ only. Drink responsibly." }),
+        " Drinking is always optional."
+      ])
+    ]);
+  }
+
   function viewWaitLobby(pub) {
     var names = [];
     for (var i = 0; i < pub.players.length; i++) {
@@ -1298,13 +1569,14 @@
         el("span", { text: pub.players[i].name + (pub.players[i].isHost ? " · host" : "") })
       ]));
     }
-    var title = ui.role === "screen" ? "Big screen" : "You're in";
+    var host = hostPerson(pub);
+    var waiting = pub.tvRoom && !host
+      ? "Waiting for someone to tap Join as host. Keep this page open."
+      : "Waiting for the host to pick categories and start. Keep this page open.";
     return el("article", { class: "panel crh-narrow" }, [
       el("p", { class: "badge", text: pub.code || "Room" }),
-      el("h1", { text: title }),
-      el("p", { class: "lede", text: ui.role === "screen"
-        ? "This screen shows the board, the prompts, and the reveals. The host still runs the game."
-        : "Waiting for the host to pick categories and start. Keep this page open." }),
+      el("h1", { text: "You're in" }),
+      el("p", { class: "lede", text: waiting }),
       names.length ? el("ul", { class: "crh-names" }, names) : null,
       el("p", { class: "crh-note" }, [
         el("strong", { text: "21+ only. Drink responsibly." }),
@@ -1330,7 +1602,7 @@
       var tiles = cats[c].tiles.slice().sort(function (a, b) { return a.points - b.points; });
       for (var t = 0; t < tiles.length; t++) {
         var item = tiles[t];
-        if (ui.role === "host") {
+        if (controlling()) {
           kids.push(el("button", {
             type: "button",
             class: "crh-tile",
@@ -1355,14 +1627,14 @@
     for (var n = 0; n < pub.tiles.length; n++) if (!pub.tiles[n].used) left++;
     return fragment([
       scoreboard(pub),
-      el("p", { class: "badge", text: ui.role === "screen" ? "Big screen" : "Board" }),
+      el("p", { class: "badge", text: displayOnly() ? (ui.role === "tv" ? "TV" : "Big screen") : "Board" }),
       el("h1", { text: "The board" }),
-      el("p", { class: "crh-picker-line", text: ui.role === "host" ? "You pick a tile." : "The host picks a tile." }),
+      el("p", { class: "crh-picker-line", text: controlling() ? "You pick a tile." : "The host picks a tile." }),
       el("p", { class: "crh-note", text: left + (left === 1 ? " tile" : " tiles") + " left." }),
       pub.notice ? el("p", { class: "crh-status", text: pub.notice }) : null,
       cats.length > 6 ? el("p", { class: "crh-note", text: "Swipe sideways for every category." }) : null,
       el("div", { class: "crh-board", role: "group", "aria-label": "Category board" }, columns),
-      ui.role === "host" ? el("div", { class: "crh-actions" }, [
+      controlling() ? el("div", { class: "crh-actions" }, [
         button("End game", "ask-end", { className: "crh-btn crh-btn-ghost" })
       ]) : null
     ]);
@@ -1379,7 +1651,7 @@
         el("p", { class: "crh-note", text: active.kind === "dare"
           ? "Bonus dare. If you're caught, you may have to do what you wrote. Skipping is allowed."
           : "Everyone can see the prompt. Answers are typed on each phone and sent only to the host." }),
-        ui.role === "host" ? el("div", { class: "crh-actions" }, [
+        controlling() ? el("div", { class: "crh-actions" }, [
           button("Answer on your phones", "open-answers")
         ]) : el("p", { class: "crh-note", text: "Waiting for the host to open answers." })
       ])
@@ -1395,7 +1667,7 @@
       var status = !person.connected ? "Disconnected" : person.answered ? "Locked in" : "Waiting";
       rows.push(el("li", { text: person.name + " — " + status }));
     }
-    var showForm = ui.role !== "screen" && !you.answered;
+    var showForm = !displayOnly() && !you.answered;
     return fragment([
       scoreboard(pub),
       el("article", { class: "panel crh-narrow" }, [
@@ -1415,12 +1687,12 @@
         showForm ? el("div", { class: "crh-actions" }, [
           button("Lock it in", "lock-answer"),
           button("Pass", "pass-answer", { className: "crh-btn crh-btn-ghost" })
-        ]) : el("p", { class: "crh-note", text: ui.role === "screen"
+        ]) : el("p", { class: "crh-note", text: displayOnly()
           ? "Players are typing on their own phones."
           : "Locked in. Wait for the reveal." }),
         timerBlock(pub),
         el("ul", { class: "crh-award" }, rows),
-        ui.role === "host" ? el("div", { class: "crh-actions" }, [
+        controlling() ? el("div", { class: "crh-actions" }, [
           button("Close answers", "close-answers", { className: "crh-btn crh-btn-ghost" })
         ]) : null
       ])
@@ -1438,7 +1710,7 @@
         el("p", { class: "crh-note", text: active.finale
           ? "No points on this one. It's whoever is left, and they are still caught."
           : "No names yet. Votes happen on each phone." }),
-        ui.role === "host" ? el("div", { class: "crh-actions" }, [
+        controlling() ? el("div", { class: "crh-actions" }, [
           button(active.finale ? "Catch them" : "Vote on your phones", "begin-vote")
         ]) : el("p", { class: "crh-note", text: "Waiting for the host." })
       ])
@@ -1454,7 +1726,7 @@
       ui.suspect = "";
     }
     var choices = [];
-    if (ui.role !== "screen" && !you.voted) {
+    if (!displayOnly() && !you.voted) {
       for (var i = 0; i < pub.players.length; i++) {
         var person = pub.players[i];
         var on = ui.suspect === person.id;
@@ -1479,14 +1751,14 @@
       scoreboard(pub),
       el("article", { class: "panel crh-narrow" }, [
         el("p", { class: "badge", text: "Vote · " + (pub.progress.voting || 0) + " / " + (pub.progress.need || 0) }),
-        el("h1", { text: you.voted || ui.role === "screen" ? "Votes are in progress" : "Who wrote this?" }),
+        el("h1", { text: you.voted || displayOnly() ? "Votes are in progress" : "Who wrote this?" }),
         el("blockquote", { class: "crh-prompt", text: active.answerText || "" }),
         choices.length ? el("div", { class: "crh-guesses" }, choices) : null,
-        ui.role !== "screen" && !you.voted ? el("div", { class: "crh-actions crh-lock" }, [
+        !displayOnly() && !you.voted ? el("div", { class: "crh-actions crh-lock" }, [
           button("Lock vote", "lock-vote", { disabled: !ui.suspect })
-        ]) : el("p", { class: "crh-note", text: ui.role === "screen" ? "Players are voting on their phones." : "Vote locked. Wait for the catch." }),
-        ui.role === "host" ? el("ul", { class: "crh-award" }, waiting) : null,
-        ui.role === "host" ? el("div", { class: "crh-actions" }, [
+        ]) : el("p", { class: "crh-note", text: displayOnly() ? "Players are voting on their phones." : "Vote locked. Wait for the catch." }),
+        controlling() ? el("ul", { class: "crh-award" }, waiting) : null,
+        controlling() ? el("div", { class: "crh-actions" }, [
           button("Close voting", "close-votes", { className: "crh-btn crh-btn-ghost" })
         ]) : null
       ])
@@ -1516,7 +1788,7 @@
         el("blockquote", { class: "crh-prompt", text: result.answerText || "" }),
         lines.length ? el("ul", { class: "crh-award" }, lines) : null,
         el("div", null, penaltyKids),
-        ui.role === "host"
+        controlling()
           ? el("div", { class: "crh-actions" }, [button(result.nextLabel || "Next", "advance")])
           : el("p", { class: "crh-note", text: "Waiting for the host." })
       ])
@@ -1544,7 +1816,7 @@
           el("strong", { text: "21+ only. Drink responsibly." }),
           " If anyone is still sipping, water is a legal closer. Don't drink and drive."
         ]),
-        ui.role === "host" ? el("div", { class: "crh-actions" }, [
+        controlling() ? el("div", { class: "crh-actions" }, [
           button("Close room", "finish")
         ]) : el("p", { class: "crh-note", text: "The host can close the room when you're done." })
       ])
@@ -1555,7 +1827,11 @@
     var pub = ui.pub;
     if (!pub) return el("p", { class: "crh-note", text: "Connecting…" });
     if (pub.phase === "ended" || ui.status === "ended") return viewEnded();
-    if (pub.phase === "lobby") return ui.role === "host" ? viewHostLobby(pub) : viewWaitLobby(pub);
+    if (pub.phase === "lobby") {
+      if (displayOnly()) return viewShowOnTv(pub);
+      if (controlling()) return viewHostLobby(pub);
+      return viewWaitLobby(pub);
+    }
     if (pub.phase === "board") return viewBoard(pub);
     if (pub.phase === "prompt" && pub.active) return viewPrompt(pub);
     if (pub.phase === "answer" && pub.active) return viewAnswer(pub);
@@ -1573,7 +1849,8 @@
     ui.painting = true;
     try {
     ui.root = root;
-    document.body.classList.toggle("crh-screen", ui.role === "screen");
+    document.body.classList.toggle("crh-screen", displayOnly());
+    document.body.classList.toggle("crh-tv", ui.role === "tv");
     capture();
     clear(root);
     var view = ui.status === "failed" ? viewFailed()
@@ -1581,7 +1858,7 @@
       : ui.status === "form" ? viewJoinForm()
       : ui.status === "connecting" ? el("article", { class: "panel crh-narrow" }, [
           el("p", { class: "badge", text: "Connecting" }),
-          el("h1", { text: ui.role === "host" ? "Opening a room" : "Joining" }),
+          el("h1", { text: ui.role === "host" || ui.role === "tv" ? "Opening a room" : "Joining" }),
           el("p", { class: "lede", text: "Finding the free PeerJS intro service. The game itself stays on these phones." })
         ])
       : viewLive();
@@ -1627,25 +1904,29 @@
     });
   }
 
-  function submitJoin() {
+  function submitJoin(claimHost) {
     capture();
-    var code = String(ui.joinCode || "").toUpperCase().replace(/[^A-Z]/g, "");
+    var code = tidyCode(ui.joinCode);
     var name = cleanName(ui.joinName);
-    if (code.length !== 4) {
-      ui.error = "The code is 4 letters.";
+    ui.joinCode = code;
+    if (!codeValid(code)) {
+      ui.error = code.length !== 4
+        ? "The code is 4 letters. Spaces and dashes don't count."
+        : "Use the letters on the TV. I, L, and O aren't in the code.";
       paint();
       return;
     }
     if (!name) {
       ui.error = "Type the name you want on the board.";
+      ui.focus = "join-name";
       paint();
       return;
     }
-    ui.joinCode = code;
     ui.joinName = name;
+    ui.claimHost = !!claimHost;
     ui.error = "";
     var mine = seat();
-    saveSeat({ pid: mine.pid, token: mine.token, room: code, name: name });
+    saveSeat({ pid: mine.pid, token: mine.token, room: code, name: name, host: !!claimHost });
     connectClient(code, false);
   }
 
@@ -1660,19 +1941,25 @@
     var action = node.getAttribute("data-action");
     if ((action === "cancel-end") && event.target !== node) return;
     if (action === "back" || action === "finish") {
-      if (ui.role === "host" && !ui.ended) endRoom("The host ended the game.", "You closed the room.");
+      if ((ui.role === "host" || ui.role === "tv") && !ui.ended) endRoom("The host ended the game.", "You closed the room.");
+      if (ui.role === "controller" && !ui.ended) hostCommand("close-room");
       goBack();
       return;
     }
     if (action === "retry") {
       ui.ended = false;
       ui.tries = 0;
-      if (ui.role === "host") claim(randomCode(), 0);
+      if (ui.role === "host" || ui.role === "tv") claim(randomCode(), 0);
       else if (ui.joinCode) connectClient(ui.joinCode, ui.role === "screen");
       else { ui.status = "form"; paint(); }
       return;
     }
-    if (action === "submit-join") { submitJoin(); return; }
+    if (action === "submit-join") { submitJoin(false); return; }
+    if (action === "submit-host") { submitJoin(true); return; }
+    if (ui.role === "controller") {
+      onControllerClick(action, node);
+      return;
+    }
     if (action === "copy-link") { copyText(node.getAttribute("data-value") || "", node); return; }
     if (!ui.table || ui.role !== "host") {
       if (action === "lock-answer" || action === "pass-answer") {
@@ -1811,11 +2098,15 @@
       ui.hostName = target.value;
       if (ui.table && ui.role === "host" && (!ui.pub || ui.pub.phase === "lobby")) {
         ui.table.setHostName(ui.hostName);
-        publish(false);
+        broadcast();
       }
     }
     if (target.getAttribute("data-join-name") != null) ui.joinName = target.value;
-    if (target.getAttribute("data-join-code") != null) ui.joinCode = target.value.toUpperCase();
+    if (target.getAttribute("data-join-code") != null) {
+      var tidy = tidyCode(target.value);
+      if (target.value !== tidy) target.value = tidy;
+      ui.joinCode = tidy;
+    }
     if (target.getAttribute("data-answer") != null) ui.draft = target.value;
   }
 
@@ -1841,13 +2132,13 @@
     document.addEventListener("keydown", onKey);
     window.addEventListener("pagehide", function (event) {
       if (event && event.persisted) return;
-      if (ui.role === "host" && ui.active && !ui.ended && ui.status === "live") {
-        endRoom("The host left, so this room is over.", "You left the room.");
+      if ((ui.role === "host" || ui.role === "tv") && ui.active && !ui.ended && ui.status === "live") {
+        endRoom(ui.role === "tv" ? "The TV left, so this room is over." : "The host left, so this room is over.", "You left the room.");
       }
     });
     window.addEventListener("beforeunload", function (event) {
       if (!ui.active || ui.ended || ui.status !== "live") return;
-      if (ui.role === "screen") return;
+      if (ui.role === "screen" || ui.role === "tv") return;
       if (ui.pub && ui.pub.phase === "lobby") return;
       event.preventDefault();
       event.returnValue = "";
@@ -1869,8 +2160,51 @@
     ui.screens = [];
     ui.draft = "";
     ui.suspect = "";
+    ui.claimHost = false;
     ui.table = null;
+    clearHostRelease();
     bind();
+  }
+
+  function onControllerClick(action, node) {
+    if (action === "category") hostCommand("category", { category: node.getAttribute("data-category") });
+    else if (action === "random") hostCommand("random", { value: node.getAttribute("data-value") });
+    else if (action === "all") hostCommand("all");
+    else if (action === "option") {
+      var parts = String(node.getAttribute("data-value") || "").split(":");
+      if (parts[0] === "caughtRule") hostCommand("caughtRule", { value: parts[1] });
+    } else if (action === "timer") hostCommand("timer");
+    else if (action === "kick") hostCommand("kick", { pid: node.getAttribute("data-pid") });
+    else if (action === "start") {
+      capture();
+      hostCommand("start", { name: ui.hostName });
+    } else if (action === "tile") hostCommand("tile", { tile: node.getAttribute("data-tile") });
+    else if (action === "open-answers") hostCommand("open-answers");
+    else if (action === "lock-answer" || action === "pass-answer") {
+      capture();
+      sendAnswer(action === "pass-answer" ? "" : ui.draft);
+    } else if (action === "close-answers") hostCommand("close-answers");
+    else if (action === "begin-vote") hostCommand("begin-vote");
+    else if (action === "suspect") {
+      ui.suspect = node.getAttribute("data-suspect");
+      paint();
+    } else if (action === "lock-vote") {
+      if (!ui.suspect) return;
+      sendVote(ui.suspect);
+    } else if (action === "close-votes") hostCommand("close-votes");
+    else if (action === "advance") {
+      ui.suspect = "";
+      hostCommand("advance");
+    } else if (action === "ask-end") {
+      ui.confirmEnd = true;
+      paint();
+    } else if (action === "cancel-end") {
+      ui.confirmEnd = false;
+      paint();
+    } else if (action === "confirm-end") {
+      ui.confirmEnd = false;
+      hostCommand("end-game");
+    } else if (action === "copy-link") copyText(node.getAttribute("data-value") || "", node);
   }
 
   window.CRH_TABLE = createTable;
@@ -1878,6 +2212,7 @@
     host: function () {
       resetUi("host");
       ui.table = createTable(CATS);
+      ui.table.markPhoneHost();
       var saved = seat();
       ui.hostName = saved.name || "";
       claim(randomCode(), 0);
@@ -1885,13 +2220,17 @@
     join: function (code) {
       resetUi("player");
       var saved = seat();
-      ui.joinCode = (code || saved.room || "").toUpperCase();
+      var tidy = tidyCode(code || saved.room || "");
+      ui.joinCode = tidy;
       ui.joinName = saved.name || "";
-      if (code && saved.room === code && saved.name) {
+      ui.focus = codeValid(tidy) ? "join-name" : "join-code";
+      if (code && codeValid(tidy) && saved.room === tidy && saved.name) {
         ui.joinName = saved.name;
-        connectClient(code, false);
+        ui.claimHost = !!saved.host;
+        connectClient(tidy, false);
         return;
       }
+      if (tidy && !codeValid(tidy)) ui.error = "Use the 4 letters on the TV. I, L, and O aren't used.";
       ui.status = "form";
       paint();
     },
@@ -1900,11 +2239,23 @@
       ui.joinCode = code;
       connectClient(code, true);
     },
+    tv: function () {
+      resetUi("tv");
+      ui.table = createTable(CATS);
+      ui.table.markTv();
+      claim(randomCode(), 0);
+    },
     takeQuery: function () {
-      var room = String(queryFlag("room") || "").toUpperCase().replace(/[^A-Z]/g, "");
-      if (room.length !== 4) return false;
-      if (queryFlag("screen") === "1") this.screen(room);
-      else this.join(room);
+      var raw = queryFlag("join") || queryFlag("room") || "";
+      if (!raw) return false;
+      var code = tidyCode(raw);
+      if (queryFlag("screen") === "1") {
+        if (!codeValid(code)) return false;
+        this.screen(code);
+        return true;
+      }
+      if (!normalizeCode(raw)) return false;
+      this.join(code);
       return true;
     }
   };

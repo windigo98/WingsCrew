@@ -24,7 +24,7 @@
   ];
 
   var RULES = [
-    "Each phone: one person hosts and gets a 4-letter code, a link, and a QR code. Everyone else joins with a name. If the phones can't link, pass one phone instead.",
+    "Each phone: one person hosts and gets a 4-letter code, a link, and a QR code. Everyone else joins with a name. A TV can open the TV page and show that code; one phone taps Join as host. If the phones can't link, pass one phone instead.",
     "3 to 12 players. The host picks 5 or 6 categories, hits Random, or plays the whole board. 100 is cheeky. 500 is the one you will deny later.",
     "The host taps a tile. The prompt shows on every phone, and on a big screen if you opened that link.",
     "Each player types a secret answer on their own phone. It goes only to the host. Pass-the-phone hides each answer behind a cover before the next person types.",

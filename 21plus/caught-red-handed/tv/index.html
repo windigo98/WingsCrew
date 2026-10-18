@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>Caught Red-Handed — TV</title>
+    <meta name="robots" content="noindex,nofollow" />
+    <meta
+      name="description"
+      content="Open Caught Red-Handed on a TV. The room code and QR appear on screen. Phones join from there."
+    />
+    <meta name="theme-color" content="#0b0a09" />
+    <link rel="canonical" href="https://wingscrew.com/21plus/caught-red-handed/tv/" />
+    <link rel="icon" href="../../../assets/brand/favicon.ico" sizes="any" />
+    <link rel="icon" type="image/png" sizes="32x32" href="../../../assets/brand/favicon-32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="../../../assets/brand/favicon-16.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="../../../assets/brand/apple-touch-icon.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,560;0,9..144,650;1,9..144,560&family=Outfit:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../../../assets/styles.css" />
+    <link rel="stylesheet" href="../game.css" />
+    <meta property="og:title" content="Caught Red-Handed — TV" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://wingscrew.com/21plus/caught-red-handed/tv/" />
+  </head>
+  <body class="crh-page crh-tv">
+    <main class="crh-main" id="main">
+      <div class="wrap">
+        <div id="crh-app"></div>
+        <noscript>
+          <p class="empty">JavaScript is required to open a room on this TV.</p>
+        </noscript>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <div class="wrap">
+        <p class="crh-footer-note">21+ only. Drink responsibly. Drinking is always optional.</p>
+        <p>WingsCrew · windigo98</p>
+        <p>© 2026 WingsCrew. All rights reserved.</p>
+      </div>
+    </footer>
+
+    <script src="../vendor/peerjs.min.js"></script>
+    <script src="../vendor/qrcode.js"></script>
+    <script src="../prompts.js"></script>
+    <script src="../multi.js"></script>
+    <script>
+      window.CRH_RETURN = function () {
+        window.location.reload();
+      };
+      if (window.CRH_MULTI && typeof window.CRH_MULTI.tv === "function") {
+        window.CRH_MULTI.tv();
+      }
+    </script>
+  </body>
+</html>
