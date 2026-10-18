@@ -655,6 +655,33 @@
     return url;
   }
 
+  function revealedPhase(phase) {
+    return phase === "reveal" || phase === "vote" || phase === "result";
+  }
+
+  // The TV gets the public board only. Answer text stays off that payload
+  // until the host is actually revealing it.
+  function concealEarlyAnswers(pub) {
+    if (!pub || revealedPhase(pub.phase)) return pub;
+    var next = {};
+    var key;
+    for (key in pub) {
+      if (Object.prototype.hasOwnProperty.call(pub, key)) next[key] = pub[key];
+    }
+    if (pub.active) {
+      var active = {};
+      var field;
+      for (field in pub.active) {
+        if (Object.prototype.hasOwnProperty.call(pub.active, field)) active[field] = pub.active[field];
+      }
+      active.answerText = "";
+      active.finale = false;
+      next.active = active;
+    }
+    next.result = null;
+    return next;
+  }
+
   function qrData(text) {
     if (typeof window.qrcode !== "function" || !text) return "";
     try {
@@ -741,6 +768,8 @@
     suspectKey: "",
     caret: null,
     confirmEnd: false,
+    showTv: false,
+    focusTv: false,
     tries: 0,
     ended: false,
     endReason: "",
@@ -776,8 +805,9 @@
       if (!Object.prototype.hasOwnProperty.call(ui.conns, id)) continue;
       send(ui.conns[id], { t: "state", pub: pub, you: ui.table.privateFor(id) });
     }
+    var screenPub = concealEarlyAnswers(pub);
     for (var s = 0; s < ui.screens.length; s++) {
-      send(ui.screens[s], { t: "state", pub: pub, you: { screen: true } });
+      send(ui.screens[s], { t: "state", pub: screenPub, you: { screen: true } });
     }
     if (doPaint !== false) paint();
   }
@@ -808,7 +838,7 @@
       if (msg.screen) {
         conn._crhScreen = true;
         ui.screens.push(conn);
-        send(conn, { t: "state", pub: hostPub(), you: { screen: true } });
+        send(conn, { t: "state", pub: concealEarlyAnswers(hostPub()), you: { screen: true } });
         broadcast();
         return;
       }
@@ -994,7 +1024,7 @@
           return;
         }
         if (msg.t === "state") {
-          ui.pub = msg.pub;
+          ui.pub = ui.role === "screen" ? concealEarlyAnswers(msg.pub) : msg.pub;
           ui.you = msg.you || {};
           ui.status = "live";
           if (msg.pub && msg.pub.phase === "ended") {
@@ -1070,6 +1100,15 @@
       "join-code": "[data-join-code]",
       answer: "[data-answer]"
     };
+    if (ui.focusTv) {
+      ui.focusTv = false;
+      var title = ui.root.querySelector("#crh-tv-title");
+      if (title) {
+        title.setAttribute("tabindex", "-1");
+        try { title.focus({ preventScroll: true }); } catch (error) { title.focus(); }
+      }
+      return;
+    }
     if (!ui.focus || !map[ui.focus]) return;
     var node = ui.root.querySelector(map[ui.focus]);
     if (!node || typeof node.focus !== "function") return;
@@ -1091,7 +1130,8 @@
       ]));
     }
     return el("div", { class: "crh-scoreboard" }, [
-      el("ul", { class: "crh-scores", "aria-label": "Scores" }, items)
+      el("ul", { class: "crh-scores", "aria-label": "Scores" }, items),
+      ui.role === "host" ? el("div", { class: "crh-score-actions" }, [tvButton()]) : null
     ]);
   }
 
@@ -1203,7 +1243,6 @@
   function viewHostLobby(pub) {
     var code = pub.code || "----";
     var link = roomLink(code, false);
-    var screen = roomLink(code, true);
     var qr = qrData(link);
     var people = [];
     for (var i = 0; i < pub.players.length; i++) {
@@ -1222,9 +1261,9 @@
       el("p", { class: "crh-note", text: "Everyone else opens this page, taps Join, and enters " + code + ". Or they scan the code. The link works too." }),
       el("div", { class: "crh-actions" }, [
         button("Copy join link", "copy-link", { value: link }),
-        button("Copy big-screen link", "copy-link", { className: "crh-btn crh-btn-ghost", value: screen })
+        button("Show on TV", "show-tv")
       ]),
-      el("p", { class: "crh-note", text: "Big-screen link: open it on a TV. It shows the board and the reveals. Players still vote on their own phones." }),
+      el("p", { class: "crh-note", text: "Show on TV opens the big-screen link, a QR code, and how to put the board on a television. Players still answer and vote on their own phones." }),
       pub.screenCount ? el("p", { class: "crh-status", text: pub.screenCount + (pub.screenCount === 1 ? " big screen connected." : " big screens connected.") }) : null,
       el("article", { class: "panel" }, [
         el("h2", { class: "crh-h", text: "Your name" }),
@@ -1309,6 +1348,72 @@
       el("p", { class: "crh-note" }, [
         el("strong", { text: "21+ only. Drink responsibly." }),
         " Answers stay on the phones until the host reveals them."
+      ])
+    ]);
+  }
+
+  function tvButton() {
+    return button("Show on TV", "show-tv", { className: "crh-btn crh-btn-ghost" });
+  }
+
+  function viewTvPanel() {
+    var code = (ui.pub && ui.pub.code) || "";
+    var screen = roomLink(code, true);
+    var qr = qrData(screen);
+    var count = ui.screens.length;
+    var steps = [
+      "Open the link in the smart TV's browser. If the TV can scan a code, use the QR code.",
+      "From an iPhone or iPad, open Control Center and mirror the screen with AirPlay.",
+      "From Chrome or Android, cast with Chromecast or Google Cast and pick the TV.",
+      "Plug an HDMI cable from a computer into the TV."
+    ];
+    var items = [];
+    for (var i = 0; i < steps.length; i++) {
+      items.push(el("li", null, [
+        el("span", { class: "crh-step-num", text: String(i + 1) }),
+        el("p", { text: steps[i] })
+      ]));
+    }
+    return el("div", { class: "crh-overlay", "data-action": "close-tv" }, [
+      el("article", {
+        class: "panel crh-dialog",
+        role: "dialog",
+        "aria-modal": "true",
+        "aria-labelledby": "crh-tv-title"
+      }, [
+        el("h2", { class: "crh-h", id: "crh-tv-title", text: "Show on TV" }),
+        el("p", { class: "crh-note", text: "Open this on the television. It shows the board, the prompts, and the reveals. Secret answers stay on the phones until the reveal." }),
+        el("p", { class: "crh-note", id: "crh-tv-link-label" }, [el("strong", { text: "Big-screen link" })]),
+        el("p", {
+          class: "crh-tv-url",
+          id: "crh-tv-link",
+          tabindex: "0",
+          "aria-labelledby": "crh-tv-link-label",
+          text: screen
+        }),
+        el("div", { class: "crh-actions" }, [
+          button("Copy link", "copy-link", { value: screen })
+        ]),
+        qr ? el("img", {
+          class: "crh-qr",
+          src: qr,
+          alt: "QR code that opens the big-screen view for room " + code + " in a TV browser"
+        }) : null,
+        el("ol", { class: "crh-steps" }, items),
+        el("p", { class: "crh-note" }, [
+          el("strong", { text: "Bluetooth generally doesn't carry video." }),
+          " Use the TV browser, AirPlay, Chromecast, or an HDMI cable."
+        ]),
+        el("p", {
+          class: "crh-status",
+          role: "status",
+          text: count
+            ? count + (count === 1 ? " big screen connected." : " big screens connected.")
+            : "No TV connected yet."
+        }),
+        el("div", { class: "crh-actions" }, [
+          button("Close", "close-tv", { className: "crh-btn crh-btn-ghost" })
+        ])
       ])
     ]);
   }
@@ -1416,7 +1521,7 @@
           button("Lock it in", "lock-answer"),
           button("Pass", "pass-answer", { className: "crh-btn crh-btn-ghost" })
         ]) : el("p", { class: "crh-note", text: ui.role === "screen"
-          ? "Players are typing on their own phones."
+          ? "Secret answers stay on the phones. This screen shows them at the reveal."
           : "Locked in. Wait for the reveal." }),
         timerBlock(pub),
         el("ul", { class: "crh-award" }, rows),
@@ -1427,6 +1532,11 @@
     ]);
   }
 
+  function answerQuote(pub, text) {
+    if (ui.role === "screen" && (!pub || !revealedPhase(pub.phase))) return null;
+    return el("blockquote", { class: "crh-prompt", text: text || "" });
+  }
+
   function viewReveal(pub) {
     var active = pub.active;
     return fragment([
@@ -1434,7 +1544,7 @@
       el("article", { class: "panel crh-narrow" }, [
         el("p", { class: "badge", text: "Answer " + ((active.index || 0) + 1) + " of " + (active.total || 0) }),
         el("h1", { text: active.finale ? "Last answer" : "Read it anonymously" }),
-        el("blockquote", { class: "crh-prompt", text: active.answerText || "" }),
+        answerQuote(pub, active.answerText || ""),
         el("p", { class: "crh-note", text: active.finale
           ? "No points on this one. It's whoever is left, and they are still caught."
           : "No names yet. Votes happen on each phone." }),
@@ -1480,7 +1590,7 @@
       el("article", { class: "panel crh-narrow" }, [
         el("p", { class: "badge", text: "Vote · " + (pub.progress.voting || 0) + " / " + (pub.progress.need || 0) }),
         el("h1", { text: you.voted || ui.role === "screen" ? "Votes are in progress" : "Who wrote this?" }),
-        el("blockquote", { class: "crh-prompt", text: active.answerText || "" }),
+        answerQuote(pub, active.answerText || ""),
         choices.length ? el("div", { class: "crh-guesses" }, choices) : null,
         ui.role !== "screen" && !you.voted ? el("div", { class: "crh-actions crh-lock" }, [
           button("Lock vote", "lock-vote", { disabled: !ui.suspect })
@@ -1513,7 +1623,7 @@
       el("article", { class: "panel crh-narrow", "aria-live": "polite" }, [
         el("p", { class: "crh-stamp", text: "Caught" }),
         el("h1", { text: result.authorName || "Caught" }),
-        el("blockquote", { class: "crh-prompt", text: result.answerText || "" }),
+        answerQuote(pub, result.answerText || ""),
         lines.length ? el("ul", { class: "crh-award" }, lines) : null,
         el("div", null, penaltyKids),
         ui.role === "host"
@@ -1598,6 +1708,9 @@
         ])
       ]));
     }
+    if (ui.showTv && ui.role === "host" && !ui.confirmEnd) {
+      root.appendChild(viewTvPanel());
+    }
     restore();
     ensureClock();
     } finally {
@@ -1658,7 +1771,7 @@
     }
     if (!node || node === ui.root || node.disabled) return;
     var action = node.getAttribute("data-action");
-    if ((action === "cancel-end") && event.target !== node) return;
+    if ((action === "cancel-end" || action === "close-tv") && event.target !== node) return;
     if (action === "back" || action === "finish") {
       if (ui.role === "host" && !ui.ended) endRoom("The host ended the game.", "You closed the room.");
       goBack();
@@ -1674,6 +1787,19 @@
     }
     if (action === "submit-join") { submitJoin(); return; }
     if (action === "copy-link") { copyText(node.getAttribute("data-value") || "", node); return; }
+    if (action === "show-tv") {
+      if (ui.role !== "host") return;
+      ui.confirmEnd = false;
+      ui.showTv = true;
+      ui.focusTv = true;
+      paint();
+      return;
+    }
+    if (action === "close-tv") {
+      ui.showTv = false;
+      paint();
+      return;
+    }
     if (!ui.table || ui.role !== "host") {
       if (action === "lock-answer" || action === "pass-answer") {
         capture();
@@ -1773,7 +1899,7 @@
     }
     if (action === "close-votes") { ui.table.closeVotes(); broadcast(); return; }
     if (action === "advance") { ui.suspect = ""; ui.table.advance(); broadcast(); return; }
-    if (action === "ask-end") { ui.confirmEnd = true; paint(); return; }
+    if (action === "ask-end") { ui.showTv = false; ui.confirmEnd = true; paint(); return; }
     if (action === "cancel-end") { ui.confirmEnd = false; paint(); return; }
     if (action === "confirm-end") {
       ui.confirmEnd = false;
@@ -1825,8 +1951,9 @@
       event.preventDefault();
       submitJoin();
     }
-    if (event.key === "Escape" && ui.confirmEnd) {
+    if (event.key === "Escape" && (ui.confirmEnd || ui.showTv)) {
       ui.confirmEnd = false;
+      ui.showTv = false;
       paint();
     }
   }
@@ -1862,6 +1989,8 @@
     ui.ended = false;
     ui.endReason = "";
     ui.confirmEnd = false;
+    ui.showTv = false;
+    ui.focusTv = false;
     ui.tries = 0;
     ui.pub = null;
     ui.you = null;
