@@ -383,7 +383,9 @@ async function main() {
     });
     await phone.goto(origin + "/21plus/caught-red-handed/", { waitUntil: "domcontentloaded" });
     await phone.waitForSelector("[data-action='multiHost']");
-    await phone.click("[data-action='multiHost']");
+    await phone.evaluate(function () {
+      document.querySelector("[data-action='multiHost']").click();
+    });
     await phone.waitForSelector(".crh-showtv h2", { timeout: 10000 });
     var phoneInfo = await phone.evaluate(function () {
       var code = document.querySelector(".crh-code").textContent.trim();
@@ -398,7 +400,19 @@ async function main() {
     assert(/^[ABCDEFGHJKMNPQRSTUVWXYZ]{4}$/.test(phoneInfo.code), "phone code " + phoneInfo.code);
     assert(phoneInfo.link.indexOf("?join=" + phoneInfo.code) !== -1, "phone join " + phoneInfo.link);
     assert(phoneInfo.buttons.some(function (value) { return value.indexOf("screen=1") !== -1 && value.indexOf(phoneInfo.code) !== -1; }), "big screen link");
-    console.log("phone host", phoneInfo.code, "show on TV ok");
+    await phone.evaluate(function () {
+      document.querySelector("[data-action='show-tv']").click();
+    });
+    await phone.waitForSelector("#crh-tv-link", { timeout: 10000 });
+    var panel = await phone.evaluate(function () {
+      return {
+        link: document.querySelector("#crh-tv-link").textContent,
+        text: document.body.innerText
+      };
+    });
+    assert(panel.link.indexOf("screen=1") !== -1 && panel.link.indexOf(phoneInfo.code) !== -1, "panel link " + panel.link);
+    assert(panel.text.indexOf("AirPlay") !== -1 && panel.text.indexOf("Chromecast") !== -1 && panel.text.indexOf("HDMI") !== -1, "cast steps");
+    console.log("phone host", phoneInfo.code, "show on TV panel ok");
 
     var bad = await openPage(context, "bad-code");
     await bad.evaluateOnNewDocument(function () {

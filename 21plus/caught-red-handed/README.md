@@ -38,9 +38,9 @@ Opening that link lands on the join step. The code is already filled. The player
 
 The QR is black modules on a white field, with a quiet zone, and it is sized for a TV. The 4 letters sit beside it in large type. The short URL is printed under the letters.
 
-The same block is on the host lobby (**Show on TV**) and on the big-screen view.
+The same block is on the host lobby and on the big-screen view.
 
-The older big-screen link still works when a phone is the host. Open this on the TV:
+**Show on TV** on the host phone opens the big-screen link, a QR code for that link, and steps for a TV browser, AirPlay, Chromecast, or HDMI. Secret answers stay off that screen until the reveal. The big-screen link is:
 
 `https://wingscrew.com/21plus/caught-red-handed/?room=ABCD&screen=1`
 
