@@ -1176,8 +1176,9 @@
     var answer = ui.root.querySelector("[data-answer]");
     if (answer) ui.draft = answer.value;
     var active = document.activeElement;
-    ui.focus = active && active.getAttribute ? (active.getAttribute("data-keep") || "") : "";
-    ui.caret = active && typeof active.selectionStart === "number" ? active.selectionStart : null;
+    var keep = active && active.getAttribute ? (active.getAttribute("data-keep") || "") : "";
+    if (keep) ui.focus = keep;
+    ui.caret = keep && active && typeof active.selectionStart === "number" ? active.selectionStart : null;
   }
 
   function restore() {
@@ -2160,6 +2161,8 @@
     ui.screens = [];
     ui.draft = "";
     ui.suspect = "";
+    ui.focus = "";
+    ui.caret = null;
     ui.claimHost = false;
     ui.table = null;
     clearHostRelease();

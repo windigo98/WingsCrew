@@ -17,6 +17,7 @@ const mockPeer = `
   window.__CRH_MOCK_PEER = true;
   var peers = [];
   var remoteOpen = {};
+  var msgCount = 0;
   var channel = new BroadcastChannel("crh-mock-peer");
 
   function emit(target, name, arg) {
@@ -29,6 +30,11 @@ const mockPeer = `
   }
 
   function publish(msg) {
+    msgCount += 1;
+    if (msgCount > 400) {
+      console.error("mock flood " + msgCount + " " + msg.t + " " + (msg.data && msg.data.t ? msg.data.t : ""));
+      return;
+    }
     deliver(msg);
     try { channel.postMessage(msg); } catch (error) { /* ignore */ }
   }
@@ -215,20 +221,40 @@ async function main() {
   var browser = await puppeteer.launch({
     executablePath: process.env.CHROME_PATH || "/usr/bin/google-chrome-stable",
     headless: "new",
+    protocolTimeout: 20000,
     args: ["--no-sandbox", "--disable-dev-shm-usage", "--disable-gpu"]
   });
   var failures = [];
   function watch(page, label) {
-    page.on("pageerror", function (err) { failures.push(label + " " + err.message); });
+    page.on("pageerror", function (err) {
+      console.log(label, "pageerror", err.message);
+      failures.push(label + " " + err.message);
+    });
     page.on("console", function (msg) {
+      if (msg.type() === "error" || msg.type() === "warning") console.log(label, msg.type(), msg.text());
       if (msg.type() === "error") failures.push(label + " console " + msg.text());
     });
   }
+  async function openPage(context, label) {
+    var page = await context.newPage();
+    watch(page, label);
+    await page.setRequestInterception(true);
+    page.on("request", function (req) {
+      if (req.url().indexOf("peerjs.min.js") !== -1) {
+        req.respond({
+          status: 200,
+          contentType: "text/javascript; charset=utf-8",
+          body: mockPeer
+        });
+        return;
+      }
+      req.continue();
+    });
+    return page;
+  }
   try {
     var context = await browser.createBrowserContext();
-    await context.addInitScript({ content: mockPeer });
-    var tv = await context.newPage();
-    watch(tv, "tv");
+    var tv = await openPage(context, "tv");
     await tv.setViewport({ width: 1366, height: 768 });
     await tv.evaluateOnNewDocument(function () {
       try { localStorage.setItem("crh-force-reject", "1"); } catch (error) { /* ignore */ }
@@ -283,8 +309,7 @@ async function main() {
     console.log("TV code", info.code, "QR", Math.round(info.width) + "px", info.shortText);
 
     var dashed = info.code.slice(0, 2).toLowerCase() + "-" + info.code.slice(2).toLowerCase();
-    var host = await context.newPage();
-    watch(host, "host");
+    var host = await openPage(context, "host");
     await host.setViewport({ width: 390, height: 844 });
     await host.goto(origin + "/21plus/caught-red-handed/?join=" + encodeURIComponent(dashed), { waitUntil: "domcontentloaded" });
     await host.waitForSelector("[data-age-yes]");
@@ -304,8 +329,7 @@ async function main() {
 
     var spaced = info.code.slice(0, 2) + " " + info.code.slice(2);
     async function joinPlayer(name, query) {
-      var page = await context.newPage();
-      watch(page, name);
+      var page = await openPage(context, name);
       await page.setViewport({ width: 390, height: 844 });
       await page.evaluateOnNewDocument(function () {
         try { localStorage.setItem("wingscrew-21plus", "yes"); } catch (error) { /* ignore */ }
@@ -335,12 +359,16 @@ async function main() {
     await tv.screenshot({ path: shot });
     console.log("screenshot", shot);
 
-    await host.click("[data-action='random'][data-value='5']");
+    await host.evaluate(function () {
+      document.querySelector("[data-action='random'][data-value='5']").click();
+    });
     await host.waitForFunction(function () {
       var btn = document.querySelector("[data-action='start']");
       return btn && !btn.disabled;
     }, { timeout: 10000 });
-    await host.click("[data-action='start']");
+    await host.evaluate(function () {
+      document.querySelector("[data-action='start']").click();
+    });
     await tv.waitForFunction(function () {
       return document.body.innerText.indexOf("The board") !== -1;
     }, { timeout: 10000 });
@@ -348,8 +376,7 @@ async function main() {
       return document.body.innerText.indexOf("You pick a tile") !== -1;
     }, { timeout: 10000 });
 
-    var phone = await context.newPage();
-    watch(phone, "phone-host");
+    var phone = await openPage(context, "phone-host");
     await phone.setViewport({ width: 390, height: 844 });
     await phone.evaluateOnNewDocument(function () {
       try { localStorage.setItem("wingscrew-21plus", "yes"); } catch (error) { /* ignore */ }
@@ -373,8 +400,7 @@ async function main() {
     assert(phoneInfo.buttons.some(function (value) { return value.indexOf("screen=1") !== -1 && value.indexOf(phoneInfo.code) !== -1; }), "big screen link");
     console.log("phone host", phoneInfo.code, "show on TV ok");
 
-    var bad = await context.newPage();
-    watch(bad, "bad-code");
+    var bad = await openPage(context, "bad-code");
     await bad.evaluateOnNewDocument(function () {
       try { localStorage.setItem("wingscrew-21plus", "yes"); } catch (error) { /* ignore */ }
     });
