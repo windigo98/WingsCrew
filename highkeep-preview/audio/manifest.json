@@ -33,7 +33,17 @@
   "You are on You're ready. Step 7 of 7. Tap Show me around for a quick tour of Home, or skip it.": "ba49936ca0db",
   "You are on Your first checklist. Step 5 of 7. Keep the things you need. Tap the X to remove one, or add your own.": "21d3bc5b6144",
   "Your keep is complete! A new painting for your gallery hall.": "a0a7caeaf880",
-  "Your keep. This is your keep. It fills with golden light as you check things off and play. Tap it to see your palace.": "5924e75a3e47"
+  "Your keep. This is your keep. It fills with golden light as you check things off and play. Tap it to see your palace.": "5924e75a3e47",
+  "You are on Games. Tap a doorway to pick a game. Card Flip and What Changed? are ready to play.": "827935487a03",
+  "You are on What Changed?. Step 1 of 3. Read how to play, then tap Start.": "b4182d011d46",
+  "You are on What Changed?. Step 2 of 3. Remember where each thing is. Tap I am ready when you can.": "998ee987edbb",
+  "You are on What Changed?. Step 3 of 3. Great work. Tap Play again, or go back to Games.": "3e3cbe0fd514",
+  "Well spotted! Something swapped.": "f1fe29de0c9b",
+  "Good try. Something swapped. It is glowing now.": "5ad24d3385ef",
+  "Well spotted! Something went missing.": "686e2fd9073f",
+  "Good try. Something went missing. It is glowing now.": "90894d5433c7",
+  "Well spotted! Something moved.": "e8af69776813",
+  "Good try. Something moved. It is glowing now.": "d7632e0c3977"
  },
  "voices": {
   "af_heart": [
@@ -70,7 +80,17 @@
    "ba49936ca0db",
    "21d3bc5b6144",
    "a0a7caeaf880",
-   "5924e75a3e47"
+   "5924e75a3e47",
+   "827935487a03",
+   "b4182d011d46",
+   "998ee987edbb",
+   "3e3cbe0fd514",
+   "f1fe29de0c9b",
+   "5ad24d3385ef",
+   "686e2fd9073f",
+   "90894d5433c7",
+   "e8af69776813",
+   "d7632e0c3977"
   ],
   "am_michael": [
    "1b241909b3cf",
@@ -106,7 +126,17 @@
    "ba49936ca0db",
    "21d3bc5b6144",
    "a0a7caeaf880",
-   "5924e75a3e47"
+   "5924e75a3e47",
+   "827935487a03",
+   "b4182d011d46",
+   "998ee987edbb",
+   "3e3cbe0fd514",
+   "f1fe29de0c9b",
+   "5ad24d3385ef",
+   "686e2fd9073f",
+   "90894d5433c7",
+   "e8af69776813",
+   "d7632e0c3977"
   ],
   "bm_george": [
    "1b241909b3cf",
@@ -142,7 +172,17 @@
    "ba49936ca0db",
    "21d3bc5b6144",
    "a0a7caeaf880",
-   "5924e75a3e47"
+   "5924e75a3e47",
+   "827935487a03",
+   "b4182d011d46",
+   "998ee987edbb",
+   "3e3cbe0fd514",
+   "f1fe29de0c9b",
+   "5ad24d3385ef",
+   "686e2fd9073f",
+   "90894d5433c7",
+   "e8af69776813",
+   "d7632e0c3977"
   ],
   "bf_emma": [
    "1b241909b3cf",
@@ -178,7 +218,17 @@
    "ba49936ca0db",
    "21d3bc5b6144",
    "a0a7caeaf880",
-   "5924e75a3e47"
+   "5924e75a3e47",
+   "827935487a03",
+   "b4182d011d46",
+   "998ee987edbb",
+   "3e3cbe0fd514",
+   "f1fe29de0c9b",
+   "5ad24d3385ef",
+   "686e2fd9073f",
+   "90894d5433c7",
+   "e8af69776813",
+   "d7632e0c3977"
   ],
   "af_bella": [
    "1b241909b3cf",
@@ -214,7 +264,17 @@
    "ba49936ca0db",
    "21d3bc5b6144",
    "a0a7caeaf880",
-   "5924e75a3e47"
+   "5924e75a3e47",
+   "827935487a03",
+   "b4182d011d46",
+   "998ee987edbb",
+   "3e3cbe0fd514",
+   "f1fe29de0c9b",
+   "5ad24d3385ef",
+   "686e2fd9073f",
+   "90894d5433c7",
+   "e8af69776813",
+   "d7632e0c3977"
   ],
   "af_nicole": [
    "1b241909b3cf",
@@ -250,7 +310,17 @@
    "ba49936ca0db",
    "21d3bc5b6144",
    "a0a7caeaf880",
-   "5924e75a3e47"
+   "5924e75a3e47",
+   "827935487a03",
+   "b4182d011d46",
+   "998ee987edbb",
+   "3e3cbe0fd514",
+   "f1fe29de0c9b",
+   "5ad24d3385ef",
+   "686e2fd9073f",
+   "90894d5433c7",
+   "e8af69776813",
+   "d7632e0c3977"
   ],
   "am_fenrir": [
    "1b241909b3cf",
@@ -286,7 +356,17 @@
    "ba49936ca0db",
    "21d3bc5b6144",
    "a0a7caeaf880",
-   "5924e75a3e47"
+   "5924e75a3e47",
+   "827935487a03",
+   "b4182d011d46",
+   "998ee987edbb",
+   "3e3cbe0fd514",
+   "f1fe29de0c9b",
+   "5ad24d3385ef",
+   "686e2fd9073f",
+   "90894d5433c7",
+   "e8af69776813",
+   "d7632e0c3977"
   ],
   "af_sarah": [
    "1b241909b3cf",
@@ -322,7 +402,17 @@
    "ba49936ca0db",
    "21d3bc5b6144",
    "a0a7caeaf880",
-   "5924e75a3e47"
+   "5924e75a3e47",
+   "827935487a03",
+   "b4182d011d46",
+   "998ee987edbb",
+   "3e3cbe0fd514",
+   "f1fe29de0c9b",
+   "5ad24d3385ef",
+   "686e2fd9073f",
+   "90894d5433c7",
+   "e8af69776813",
+   "d7632e0c3977"
   ]
  }
 }

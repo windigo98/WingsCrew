@@ -370,13 +370,14 @@ function scr_whos(){
 
 const GAMES=[['cardflip','Card Flip','grid','Match the pairs','star_citadel'],['pack','Pack the Bag','bag','Remember the list','floating_isles'],['simon','Simon Says','sparkle','Repeat the pattern','crystal_cliff'],
  ['changed','What Changed?','eye','Spot the difference','blossom_tree'],['names','Name Game','tag','Faces and names','floating_isles'],['story','Story Recall','book','Listen, then answer','crystal_cliff'],['routine','Routine Builder','list','Put steps in order','blossom_tree']];
+const PLAYABLE={cardflip:'game/cardflip/1',changed:'game/changed/1'};
 function scr_games(){
   return {name:'Games',tab:'games',topLeft:'brand',portal:{size:'small',world:S.world,title:'Games'},
-    guide:'Tap a doorway to pick a game. Card Flip is ready to play.',
-    body:`<div class="doors">${GAMES.map(([k,n,i,d,img])=>k==='cardflip'?
-      `<button class="door play" data-act="play"><span class="dimg" style="background-image:url(${imgUrl(img,1)})"></span><span class="dic">${ic(i)}</span>${n}<small>${d}</small><span class="badge gold">Play</span></button>`:
+    guide:'Tap a doorway to pick a game. Card Flip and What Changed? are ready to play.',
+    body:`<div class="doors">${GAMES.map(([k,n,i,d,img])=>PLAYABLE[k]?
+      `<button class="door play" data-act="play" data-g="${k}"><span class="dimg" style="background-image:url(${imgUrl(img,1)})"></span><span class="dic">${ic(i)}</span>${n}<small>${d}</small><span class="badge gold">Play</span></button>`:
       `<button class="door soon" data-act="soon" data-n="${n}"><span class="dimg" style="background-image:url(${imgUrl(img,1)})"></span><span class="dic">${ic(i)}</span>${n}<small>${d}</small><span class="badge">Coming soon</span></button>`).join('')}</div>`,
-    acts:{play:()=>{game=null;go('game/cardflip/1');},soon:el=>toast(el.dataset.n+' is coming soon.')}};
+    acts:{play:el=>{game=null;wc=null;wcClear();go(PLAYABLE[el.dataset.g]||PLAYABLE.cardflip);},soon:el=>toast(el.dataset.n+' is coming soon.')}};
 }
 const CICONS=['crown','key','tower','star','moon','lantern','shield','gem'];
 function newGame(){const pairs=S.badDay?4:8;const icons=(S.badDay?['crown','key','star','moon']:CICONS.slice(0,8));
@@ -411,6 +412,94 @@ function flip(k){const g=game,c=g.deck[k];if(g.lock||c.up||c.m)return;c.up=true;
   if(a.n===c.n){a.m=c.m=true;a.up=c.up=false;g.first=null;g.found++;chime(false);render();
     if(g.found===g.pairs)setTimeout(()=>go('game/cardflip/3'),900);}
   else{g.lock=true;render();setTimeout(()=>{a.up=c.up=false;g.first=null;g.lock=false;render();},S.badDay?1500:1100);}
+}
+
+/* ---------------- What Changed? ---------------- */
+const WCI=['crown','key','tower','star','moon','lantern','shield','gem','bell','heart','book','compass'];
+const WCN={crown:'crown',key:'key',tower:'tower',star:'star',moon:'moon',lantern:'lantern',shield:'shield',gem:'gem',bell:'bell',heart:'heart',book:'book',compass:'compass'};
+const WCR=5;
+let wc=null,wcT=null;
+function wcShuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function wcRound(kind,slots,nItems){
+  const icons=wcShuffle(WCI).slice(0,nItems+1),use=icons.slice(0,nItems),spare=icons[nItems];
+  const pos=wcShuffle([...Array(slots).keys()]);const a=Array(slots).fill(null);use.forEach((n,i)=>{a[pos[i]]=n;});
+  const filled=pos.slice(0,nItems),empty=pos.slice(nItems);const b=a.slice();let idx,alt=null,from=null;
+  if(kind==='swap'){idx=filled[Math.floor(Math.random()*filled.length)];b[idx]=spare;from=a[idx];}
+  else if(kind==='missing'){idx=filled[Math.floor(Math.random()*filled.length)];from=a[idx];b[idx]=null;}
+  else{const i=filled[Math.floor(Math.random()*filled.length)],j=empty[Math.floor(Math.random()*empty.length)];from=a[i];b[j]=a[i];b[i]=null;idx=j;alt=i;}
+  return {kind,a,b,idx,alt,from,to:b[idx]};
+}
+function newWC(){
+  const bad=!!S.badDay,slots=bad?4:6,nItems=bad?3:5;
+  const kinds=wcShuffle(['swap','missing','moved',['swap','missing','moved'][Math.floor(Math.random()*3)],['swap','missing','moved'][Math.floor(Math.random()*3)]]);
+  return {rounds:kinds.map(k=>wcRound(k,slots,nItems)),r:0,phase:'study',misses:0,spotted:0,done:false,awarded:false,viewMs:bad?10000:6000,slots,bad,res:[],msg:'',pick:-1,gen:0};
+}
+function wcClear(){clearTimeout(wcT);wcT=null;}
+function wcLive(g,phase){return wc===g&&g.phase===phase&&location.hash.indexOf('#/game/changed/2')===0;}
+function wcStudy(g){wcClear();g.phase='study';g.gen++;render();wcT=setTimeout(()=>{if(wcLive(g,'study'))wcHide(g);},g.viewMs);}
+function wcHide(g){wcClear();g.phase='hidden';render();wcT=setTimeout(()=>{if(wcLive(g,'hidden')){g.phase='choose';g.misses=0;g.msg='';g.pick=-1;render();}},g.bad?1800:1300);}
+const WCK={swap:'swapped for something else',missing:'went missing',moved:'moved to a new spot'};
+const WCKS={swap:'swapped',missing:'went missing',moved:'moved'};
+function wcDesc(rd){const f=WCN[rd.from];
+  return rd.kind==='swap'?`The ${f} changed into a ${WCN[rd.to]}.`:rd.kind==='missing'?`The ${f} went missing.`:`The ${f} moved to a new spot.`;}
+function wcPick(k){
+  const g=wc;if(!g||g.phase!=='choose')return;const rd=g.rounds[g.r];
+  if(k===rd.idx||k===rd.alt){g.phase='fb';g.pick=k;g.ok=true;g.res[g.r]=g.misses===0?1:0;if(g.misses===0)g.spotted++;
+    g.msg=(g.misses===0?'Well spotted! ':'You found it! ')+wcDesc(rd);chime(false);
+    if(S.readAloud)speak(`Well spotted! Something ${WCKS[rd.kind]}.`,false);render();return;}
+  g.misses++;g.pick=k;
+  if(g.misses>=2){g.phase='fb';g.ok=false;g.res[g.r]=0;g.msg='Good try. '+wcDesc(rd);
+    if(S.readAloud)speak(`Good try. Something ${WCKS[rd.kind]}. It is glowing now.`,false);}
+  else{g.msg='Not that one. Take another look and try again.';}
+  render();
+}
+function wcSlot(c,k,cls,attrs,label){
+  if(cls.includes('back'))return `<span class="wslot back ${cls}" ${attrs}><span class="in"><span class="b">${cardIc('castle')}</span></span></span>`;
+  return `<${attrs.includes('data-act')?'button':'span'} class="wslot ${c?'':'empty'} ${cls}" ${attrs} aria-label="${label}">${c?`<span class="f">${cardIc(c)}</span>`:'<span class="f"></span>'}</${attrs.includes('data-act')?'button':'span'}>`;
+}
+function scr_changed(step){
+  const N=3;step=Math.max(1,Math.min(N,step||1));
+  const base={name:'What Changed?',tab:'games',step:{x:step,y:N},topLeft:'back',backTo:()=>{wcClear();step>1?go('game/changed/'+(step-1)):go('games');},portal:{size:'small',world:S.world,title:'What Changed?'}};
+  if(step===1){wcClear();return Object.assign(base,{guide:'Read how to play, then tap Start.',
+    body:`<div class="card"><span class="steptag">How to play</span><h2>Spot the one thing that changed</h2>
+    <div class="choices" style="margin-top:12px">${[['eye','Look at the picture. Remember where each thing is.'],['moon','The picture hides for a moment.'],['search','It comes back with one change. Tap what changed.']].map(([i,t],k)=>`<div class="choice" style="min-height:64px;font-weight:500;font-size:1.08rem">${ic(i)}<span><b>${k+1}.</b> ${t}</span></div>`).join('')}</div>
+    <p class="note">${S.badDay?'Bad day mode: fewer things and more time to look. 5 rounds, no rush.':'Seedling level: 5 things, 5 rounds. No timer, no rush.'}</p></div>`,
+    nextLabel:'Start',next:()=>{wc=newWC();go('game/changed/2');wcStudy(wc);}});}
+  if(step===2){
+    if(!wc){setTimeout(()=>go('game/changed/1'));return Object.assign(base,{guide:'Read how to play, then tap Start.',body:'<div class="card"></div>',nextLabel:'Finish',nextDisabled:true,next:()=>{}});}
+    const g=wc,rd=g.rounds[g.r],ph=g.phase;
+    const guides={study:'Remember where each thing is. Tap I am ready when you can.',hidden:'The picture is hiding. Think about where each thing was.',choose:g.misses?g.msg:'Tap the thing that changed.',fb:g.msg};
+    const scene=ph==='study'?rd.a:rd.b;
+    let cells='';
+    scene.forEach((c,k)=>{
+      if(ph==='hidden')cells+=wcSlot(c,k,'back','','');
+      else if(ph==='study')cells+=wcSlot(c,k,'','',c?WCN[c]:'Empty spot');
+      else{let cls='';if(ph==='fb'&&k===rd.idx)cls='glow';else if(g.pick===k&&ph==='choose')cls='miss';
+        cells+=wcSlot(c,k,cls,ph==='choose'?`data-act="wcpick" data-k="${k}"`:'',(c?WCN[c]:'Empty spot')+(ph==='choose'?'. Tap if this changed.':''));}
+    });
+    const last=g.r===WCR-1;
+    const more=ph==='study'?`<button class="btn wcmore" data-act="wcmore">${ic('clock')}More time</button>`:'';
+    const bar=ph==='study'?`<div class="wcbar" aria-hidden="true"><i style="animation-duration:${g.viewMs}ms" data-gen="${g.gen}"></i></div>`:'<div class="wcbar off" aria-hidden="true"></div>';
+    const nextLabel=ph==='study'?'I am ready':ph==='fb'?(last?'See results':'Next round'):ph==='hidden'?'Wait...':'Tap a spot';
+    return Object.assign(base,{guide:guides[ph],
+      body:`<div class="card wc"><div class="statrow wcstat"><div><b>Round ${g.r+1} / ${WCR}</b></div>${more}<div aria-label="${g.spotted} spotted"><b>${g.spotted}</b><span class="sub">spotted</span></div></div>
+      ${bar}<div class="wcgrid ${g.bad?'bad':''} ph-${ph}" role="group" aria-label="Scene">${cells}</div>
+      <p class="wcsr" aria-live="polite">${esc(ph==='fb'||(ph==='choose'&&g.misses)?g.msg:ph==='hidden'?'Hidden for a moment':'')}</p></div>`,
+      mount:()=>{setTimeout(()=>{if(window.matchMedia('(orientation:landscape) and (max-height:560px)').matches)return;const gd=$('#guide');if(gd)window.scrollTo(0,Math.max(0,gd.getBoundingClientRect().top+window.scrollY-10));},0);},
+      nextLabel,nextDisabled:!(ph==='study'||ph==='fb'),
+      next:()=>{if(ph==='study'){if(wcLive(g,'study'))wcHide(g);}
+        else if(ph==='fb'){if(g.phase!=='fb')return;if(last){g.done=true;go('game/changed/3');}else{g.r++;g.msg='';g.misses=0;g.pick=-1;wcStudy(g);}}},
+      acts:{wcpick:el=>wcPick(+el.dataset.k),wcmore:()=>{if(wcLive(g,'study')){g.viewMs=5000;wcStudy(g);}}}});
+  }
+  const g=wc;if(!g||!g.done){setTimeout(()=>go('game/changed/1'));return Object.assign(base,{guide:'Read how to play, then tap Start.',body:'<div class="card"></div>',nextLabel:'Done',next:()=>go('games')});}
+  if(!g.awarded){g.awarded=true;S.changedBest=Math.max(S.changedBest||0,g.spotted);save();addGauge(20,null,false);chime(true);}
+  return Object.assign(base,{guide:'Great work. Tap Play again, or go back to Games.',
+    body:`<div class="card" style="text-align:center"><span class="steptag">Results</span><h1>Well done!</h1>
+    <p style="font-size:1.2rem">You spotted <b>${g.spotted}</b> of ${WCR} changes on the first look. Every round counts.</p>
+    <div style="width:150px;margin:6px auto" class="gauge-big mini"><div style="width:110px">${gaugeSVG(S.gauge)}</div><span class="pct">${S.gauge}%</span></div>
+    <p>Your keep grew <b>+20%</b> brighter.${S.changedBest?` Best so far: ${S.changedBest} of ${WCR}.`:''}</p>
+    <div class="acts" style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center"><button class="btn primary" data-act="again">${ic('repeat')}Play again</button><button class="btn" data-act="nav" data-to="games">Back to Games</button></div></div>`,
+    nextLabel:'Done',next:()=>go('games'),acts:{again:()=>{wc=newWC();go('game/changed/2');wcStudy(wc);}}});
 }
 
 const DRILLS=[['path','Palace walk','Place things along a path in your palace'],['repeat','Spaced review','Quick reviews right before you\u2019d forget'],['list','Real-life lists','Practice your own lists'],['hash','Number recall','Codes and phone numbers, in chunks'],['search','Where was it?','Put things back where they were'],['whos','Name and face','Remember the people you saved'],['link','Story chain','Link a list into a silly story'],['target','Focus warm-up','One minute to get ready'],['moon','Daily recap','Gentle questions at night']];
@@ -463,7 +552,7 @@ function getScreen(){
     case 'where':return scr_where(r[1],+r[2]);
     case 'whos':return scr_whos();
     case 'games':return scr_games();
-    case 'game':return scr_cardflip(+r[2]||1);
+    case 'game':return r[1]==='changed'?scr_changed(+r[2]||1):scr_cardflip(+r[2]||1);
     case 'practice':return scr_practice();
     case 'palace':return scr_palace();
     case 'more':return scr_more();
@@ -563,7 +652,7 @@ function showTour(){
 }
 function endTour(){$('#overlay-root').innerHTML='';S.tourDone=true;save();toast('Tour finished. Tap Where am I? any time.');}
 window.addEventListener('resize',()=>{if($('.tour-spot'))showTour();});
-window.Highkeep={guide:()=>cur&&guideText(cur).speech,TOUR:()=>TOUR,startTour,state:()=>S,flip,reveal,game:()=>game};
+window.Highkeep={guide:()=>cur&&guideText(cur).speech,TOUR:()=>TOUR,startTour,state:()=>S,flip,reveal,game:()=>game,wc:()=>wc,wcPick};
 
 render();
 })();
