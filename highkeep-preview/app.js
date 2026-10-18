@@ -53,7 +53,21 @@ const P={
  lantern:'<path d="M9 4h6M12 2v2M8.5 6.5h7l1.5 2.5v8l-1.5 2.5h-7L7 17V9zM6.5 21.5h11"/><path d="M12 10v5"/>',
  shield:'<path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M12 7v10M8 11h8"/>',
  gem:'<path d="M6.5 3.5h11L22 9 12 21 2 9z"/><path d="M2 9h20M9 3.5L12 9l3-5.5M12 9v12"/>',
- home:'<path d="M3 11l9-7 9 7M5 9.5V20h14V9.5"/>'
+ home:'<path d="M3 11l9-7 9 7M5 9.5V20h14V9.5"/>',
+ apple:'<path d="M12 7c-3-2-8-1-8 4.5C4 16 7.5 21 10 21c1 0 1.4-.5 2-.5s1 .5 2 .5c2.5 0 6-5 6-9.5C20 6 15 5 12 7z"/><path d="M12 7c0-2 1-3.5 3-4"/>',
+ leaf:'<path d="M5 19C4 10 10 4 20 4c0 10-6 16-14 15z"/><path d="M5 19c3-5 6-8 10-10"/>',
+ flower:'<circle cx="12" cy="12" r="2.4"/><path d="M12 9.6C10.5 7 11 4 12 3c1 1 1.5 4 0 6.6zM14.4 12c2.6-1.5 5.6-1 6.6 0-1 1-4 1.5-6.6 0zM12 14.4c1.5 2.6 1 5.6 0 6.6-1-1-1.5-4 0-6.6zM9.6 12C7 13.5 4 13 3 12c1-1 4-1.5 6.6 0z"/>',
+ cake:'<path d="M4 20h16v-6H4zM5 14c0-3 3-4 7-4s7 1 7 4M12 10V6.5M12 3.2c1 1 1 2.4 0 2.4s-1-1.4 0-2.4z"/>',
+ cup:'<path d="M5 10h11v4a5 5 0 0 1-5 5h-1a5 5 0 0 1-5-5zM16 11h1.5a2.5 2.5 0 0 1 0 5H15.5M8 3.5c-1 1.2 1 2 0 3.5M12 3.5c-1 1.2 1 2 0 3.5"/>',
+ tree:'<path d="M12 21v-6M12 15c-4 0-7-2.5-7-6 0-3 2-4.5 4-4.5C10 2.5 14 2.5 15 4.5c2 0 4 1.5 4 4.5 0 3.5-3 6-7 6z"/>',
+ boat:'<path d="M3 15h18l-2.5 5h-13zM12 3v12M12 4.5l6 9h-6M12 6.5l-5 7h5"/>',
+ fish:'<path d="M3 12c3-5 9-6 14-2l4-3v10l-4-3c-5 4-11 3-14-2zM8 11.5h.01"/>',
+ waves:'<path d="M2 8c2.5-2 4.5-2 7 0s4.5 2 7 0 4-1.5 6-.5M2 13c2.5-2 4.5-2 7 0s4.5 2 7 0 4-1.5 6-.5M2 18c2.5-2 4.5-2 7 0s4.5 2 7 0 4-1.5 6-.5"/>',
+ bird:'<path d="M3 14c0 4 3.5 6 7.500 6 4 0 7.500-2 8.500-6-3 1-5 0-5-3 0-1.500.800-2.500.800-4.500a4 4 0 0 0-8 .5c0 2.500 1.200 3.500 1.200 5.500C5.500 12.500 3 13 3 14zM17 5.500l3 1.200-3 1.200M13 6.200h.01"/>',
+ sun:'<circle cx="12" cy="12" r="4"/><path d="M12 2.5V5M12 19v2.500M2.500 12H5M19 12h2.500M5.300 5.300l1.800 1.800M16.900 16.900l1.800 1.800M5.300 18.700l1.800-1.800M16.900 7.100l1.800-1.800"/>',
+ mountain:'<path d="M2 20l7-12 4 6 3-4 6 10z"/><path d="M7 12l2 1.500 1.500-1.500"/>',
+ bowl:'<path d="M3 11h18c0 5-3.500 8-9 8s-9-3-9-8zM8 8c-1-1.200 1-2 0-3.500M13 8c-1-1.200 1-2 0-3.500"/>',
+ bread:'<path d="M5 20V10c-2-1-3-3-1.500-5C5 3 8 3 12 3s7 0 8.500 2C22 7 21 9 19 10v10z"/>'
 };
 const ic=(n,cls='')=>`<svg class="${cls}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${P[n]||''}</svg>`;
 const cardIc=n=>`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><g fill="currentColor" fill-opacity=".14">${P[n]}</g></svg>`;
@@ -164,8 +178,19 @@ function pickVoice(){const v=speechSynthesis.getVoices().filter(x=>/^en/i.test(x
   const score=x=>(/Natural|Neural|Online/i.test(x.name)?8:0)+(/Google|Samantha|Aria|Jenny|Ava|Serena|Daniel/i.test(x.name)?4:0)+(/en[-_]US/i.test(x.lang)?2:0)+(x.localService?0:1);
   voice=v.sort((a,b)=>score(b)-score(a))[0]||null;}
 if('speechSynthesis' in window){pickVoice();speechSynthesis.onvoiceschanged=pickVoice;}
-function stopSpeech(){if(curAudio){curAudio.pause();curAudio=null;}try{if('speechSynthesis' in window)speechSynthesis.cancel();}catch(e){}}
+let seqId=0;
+function stopSpeech(){seqId++;if(curAudio){curAudio.pause();curAudio=null;}try{if('speechSynthesis' in window)speechSynthesis.cancel();}catch(e){}}
 function speakTTS(text){if(!('speechSynthesis' in window))return;try{const u=new SpeechSynthesisUtterance(text);u.rate=.92;u.pitch=1;if(voice)u.voice=voice;speechSynthesis.speak(u);}catch(e){}}
+function ttsThen(text,done){if(!('speechSynthesis' in window)){setTimeout(done,0);return;}
+  try{const u=new SpeechSynthesisUtterance(text);u.rate=.92;u.pitch=1;if(voice)u.voice=voice;u.onend=done;u.onerror=done;speechSynthesis.speak(u);}catch(e){setTimeout(done,0);}}
+/* Speak several lines one after another (used by Story Recall). Any other speech cancels the rest. */
+function speakSeq(lines){
+  stopSpeech();const my=seqId;let i=0;
+  const next=()=>{if(my!==seqId||i>=lines.length)return;const t=lines[i++];const src=audioFor(t,myVoice());
+    if(src){const a=new Audio(src);curAudio=a;a.onended=next;a.onerror=next;a.play().catch(()=>{if(curAudio===a){curAudio=null;ttsThen(t,next);}});}
+    else ttsThen(t,next);};
+  next();
+}
 function speak(text,show=true,vid){
   if(show)toast(text,Math.max(2600,text.length*70));
   stopSpeech();
@@ -370,14 +395,14 @@ function scr_whos(){
 
 const GAMES=[['cardflip','Card Flip','grid','Match the pairs','star_citadel'],['pack','Pack the Bag','bag','Remember the list','floating_isles'],['simon','Simon Says','sparkle','Repeat the pattern','crystal_cliff'],
  ['changed','What Changed?','eye','Spot the difference','blossom_tree'],['names','Name Game','tag','Faces and names','floating_isles'],['story','Story Recall','book','Listen, then answer','crystal_cliff'],['routine','Routine Builder','list','Put steps in order','blossom_tree']];
-const PLAYABLE={cardflip:'game/cardflip/1',changed:'game/changed/1'};
+const PLAYABLE={cardflip:'game/cardflip/1',changed:'game/changed/1',story:'game/story/1'};
 function scr_games(){
   return {name:'Games',tab:'games',topLeft:'brand',portal:{size:'small',world:S.world,title:'Games'},
-    guide:'Tap a doorway to pick a game. Card Flip and What Changed? are ready to play.',
+    guide:'Tap a doorway to pick a game. Card Flip, What Changed? and Story Recall are ready to play.',
     body:`<div class="doors">${GAMES.map(([k,n,i,d,img])=>PLAYABLE[k]?
       `<button class="door play" data-act="play" data-g="${k}"><span class="dimg" style="background-image:url(${imgUrl(img,1)})"></span><span class="dic">${ic(i)}</span>${n}<small>${d}</small><span class="badge gold">Play</span></button>`:
       `<button class="door soon" data-act="soon" data-n="${n}"><span class="dimg" style="background-image:url(${imgUrl(img,1)})"></span><span class="dic">${ic(i)}</span>${n}<small>${d}</small><span class="badge">Coming soon</span></button>`).join('')}</div>`,
-    acts:{play:el=>{game=null;wc=null;wcClear();go(PLAYABLE[el.dataset.g]||PLAYABLE.cardflip);},soon:el=>toast(el.dataset.n+' is coming soon.')}};
+    acts:{play:el=>{game=null;wc=null;wcClear();sr=null;go(PLAYABLE[el.dataset.g]||PLAYABLE.cardflip);},soon:el=>toast(el.dataset.n+' is coming soon.')}};
 }
 const CICONS=['crown','key','tower','star','moon','lantern','shield','gem'];
 function newGame(){const pairs=S.badDay?4:8;const icons=(S.badDay?['crown','key','star','moon']:CICONS.slice(0,8));
@@ -502,6 +527,140 @@ function scr_changed(step){
     nextLabel:'Done',next:()=>go('games'),acts:{again:()=>{wc=newWC();go('game/changed/2');wcStudy(wc);}}});
 }
 
+/* ---------------- Story Recall ---------------- */
+const srQ=(q,opts,fact)=>({q,opts,fact});
+const STORIES=[
+ {id:'market',title:'A Trip to the Market',
+  full:'Rosa walked to the market on a sunny morning. She bought a basket of red apples. A kind baker gave her a warm roll. Then Rosa carried everything home.',
+  short:'Rosa walked to the market on a sunny morning. She bought a basket of red apples.',
+  who:srQ('Who was the story about?',[['Rosa','person'],['Tom','person'],['Nina','person']],'The story was about Rosa.'),
+  what:srQ('What did Rosa buy?',[['Red apples','apple'],['Sweet pears','leaf'],['Fresh fish','fish']],'Rosa bought red apples.'),
+  where:srQ('Where did Rosa go?',[['The market','bag'],['The library','book'],['The beach','waves']],'Rosa went to the market.')},
+ {id:'garden',title:'In the Garden',
+  full:'Sam went out to the garden after breakfast. He watered the yellow sunflowers with a green can. A little bee buzzed around his hat. Sam smiled and sat down in the shade.',
+  short:'Sam went out to the garden after breakfast. He watered the yellow sunflowers.',
+  who:srQ('Who was the story about?',[['Sam','person'],['Jack','person'],['Paul','person']],'The story was about Sam.'),
+  what:srQ('What did Sam water?',[['Yellow sunflowers','sun'],['Red roses','flower'],['Tall tomatoes','apple']],'Sam watered the yellow sunflowers.'),
+  where:srQ('Where did Sam go?',[['The garden','leaf'],['The shop','bag'],['The train station','clock']],'Sam went out to the garden.')},
+ {id:'lighthouse',title:'The Lighthouse Keeper',
+  full:'Old Henry kept a white lighthouse by the sea. Every evening he climbed the stairs to light the big lamp. Boats far away could see the light and sail home safely. Then he drank a cup of tea and watched the stars.',
+  short:'Old Henry kept a white lighthouse by the sea. Every evening he climbed the stairs to light the big lamp.',
+  who:srQ('Who was the story about?',[['Henry','person'],['Walter','person'],['George','person']],'The story was about Henry.'),
+  what:srQ('What did Henry do every evening?',[['Lit the big lamp','lantern'],['Painted a boat','boat'],['Fed the seagulls','bird']],'Henry lit the big lamp every evening.'),
+  where:srQ('Where was the lighthouse?',[['By the sea','waves'],['On a mountain','mountain'],['In a busy town','home']],'The lighthouse was by the sea.')},
+ {id:'baking',title:'Baking Day',
+  full:'Grandma Ruth put on her blue apron in the kitchen. She mixed flour, eggs and sugar in a big bowl. Soon the whole house smelled of warm cinnamon cake. She shared a slice with her neighbor.',
+  short:'Grandma Ruth put on her blue apron in the kitchen. She baked a warm cinnamon cake.',
+  who:srQ('Who was the story about?',[['Grandma Ruth','person'],['Aunt May','person'],['Uncle Joe','person']],'The story was about Grandma Ruth.'),
+  what:srQ('What did Ruth bake?',[['A cinnamon cake','cake'],['An apple pie','apple'],['Bread rolls','bread']],'Ruth baked a cinnamon cake.'),
+  where:srQ('Where did Ruth bake?',[['In the kitchen','home'],['In the garden','leaf'],['On the porch','key']],'Ruth baked in the kitchen.')},
+ {id:'library',title:'A Rainy Afternoon',
+  full:'Leo walked to the library on a rainy afternoon. He picked a big book about birds. Then he found a cozy chair by the window. He read until the rain stopped.',
+  short:'Leo walked to the library on a rainy afternoon. He picked a big book about birds.',
+  who:srQ('Who was the story about?',[['Leo','person'],['Max','person'],['Owen','person']],'The story was about Leo.'),
+  what:srQ('What kind of book did Leo pick?',[['A book about birds','bird'],['A book about trains','clock'],['A book about cooking','cup']],'Leo picked a book about birds.'),
+  where:srQ('Where did Leo go?',[['The library','book'],['The pool','waves'],['The bakery','bread']],'Leo went to the library.')},
+ {id:'lake',title:'A Walk by the Lake',
+  full:'Maya went for a walk by the lake at sunset. Two white ducks swam close to the shore. She sat on a wooden bench and listened to the water. The sky turned orange and pink.',
+  short:'Maya went for a walk by the lake at sunset. Two white ducks swam close to the shore.',
+  who:srQ('Who was the story about?',[['Maya','person'],['Lily','person'],['Zoe','person']],'The story was about Maya.'),
+  what:srQ('What did Maya see on the water?',[['Two white ducks','bird'],['A red boat','boat'],['A big fish','fish']],'Maya saw two white ducks.'),
+  where:srQ('Where did Maya walk?',[['By the lake','waves'],['In the forest','tree'],['Along a road','path']],'Maya walked by the lake.')},
+ {id:'picnic',title:'A Picnic in the Park',
+  full:'Ben and his sister packed a picnic and went to the park. They spread a red blanket under a tall oak tree. They ate sandwiches and sipped cold lemonade. A friendly dog came to say hello.',
+  short:'Ben and his sister had a picnic in the park. They sipped cold lemonade under a tall oak tree.',
+  who:srQ('Who was the story about?',[['Ben and his sister','child'],['Carl and his dad','person'],['Eli and his friend','person']],'The story was about Ben and his sister.'),
+  what:srQ('What did they drink?',[['Cold lemonade','sun'],['Hot cocoa','cup'],['Warm milk','moon']],'They sipped cold lemonade.'),
+  where:srQ('Where did they have a picnic?',[['The park','tree'],['The beach','waves'],['The school','book']],'They had a picnic in the park.')},
+ {id:'tea',title:'A Cozy Day at Home',
+  full:'Nora stayed home on a rainy day. She made a pot of peppermint tea. Her gray cat curled up on her lap. They watched the raindrops on the window.',
+  short:'Nora stayed home on a rainy day. She made a pot of peppermint tea.',
+  who:srQ('Who was the story about?',[['Nora','person'],['Ella','person'],['Anna','person']],'The story was about Nora.'),
+  what:srQ('What did Nora make?',[['Peppermint tea','cup'],['Chicken soup','bowl'],['Fresh toast','bread']],'Nora made peppermint tea.'),
+  where:srQ('Where did Nora stay?',[['At home','home'],['At school','book'],['At the shop','bag']],'Nora stayed at home.')}
+];
+let sr=null;
+function srShuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function srMakeQ(q){const opts=srShuffle(q.opts.map((o,i)=>({t:o[0],i:o[1],ok:i===0})));return {q:q.q,fact:q.fact,opts};}
+function newSR(){
+  const bad=!!S.badDay,last=Array.isArray(S.storyLast)?S.storyLast:[];
+  let avail=STORIES.filter(x=>!last.includes(x.id));if(avail.length<3)avail=STORIES.slice();
+  const picked=srShuffle(avail).slice(0,3);S.storyLast=picked.map(x=>x.id);save();
+  const kinds=bad?['who','what']:['who','what','where'];
+  const items=picked.map(st=>({id:st.id,title:st.title,text:bad?st.short:st.full,qs:kinds.map(k=>srMakeQ(st[k]))}));
+  return {items,si:0,qi:0,phase:'listen',misses:0,tried:[],right:0,total:items.length*kinds.length,bad,msg:'',ok:false,done:false,awarded:false,played:false,pick:-1};
+}
+function srQCur(g){return g.items[g.si].qs[g.qi];}
+function srReplay(){if(sr)speakSeq([sr.items[sr.si].text]);}
+function srPick(k){
+  const g=sr;if(!g||g.phase!=='ask'||g.tried.includes(k))return;const q=srQCur(g),o=q.opts[k];if(!o)return;
+  g.pick=k;
+  if(o.ok){g.phase='fb';g.ok=true;if(g.misses===0)g.right++;g.msg='Yes, that\u2019s right! '+q.fact;chime(false);
+    if(S.readAloud)speak('Yes, that\u2019s right!',false);render();return;}
+  g.tried.push(k);g.misses++;
+  if(g.misses>=2){g.phase='fb';g.ok=false;g.msg='Good try. '+q.fact+' Here is the story again.';
+    if(S.readAloud)speakSeq(['Good try. Here is the story again.',g.items[g.si].text]);}
+  else{g.msg='Not quite. Listen once more.';if(S.readAloud)speakSeq(['Not quite. Listen once more.',g.items[g.si].text]);}
+  render();
+}
+function srAdvance(){
+  const g=sr;if(!g||g.phase!=='fb')return;const it=g.items[g.si];
+  if(g.qi<it.qs.length-1){g.qi++;g.phase='ask';g.tried=[];g.misses=0;g.pick=-1;g.msg='';render();if(S.readAloud)speak(srQCur(g).q,false);return;}
+  if(g.si<g.items.length-1){g.si++;g.qi=0;g.phase='listen';g.tried=[];g.misses=0;g.pick=-1;g.msg='';g.played=false;render();return;}
+  g.done=true;go('game/story/3');
+}
+function scr_story(step){
+  const N=3;step=Math.max(1,Math.min(N,step||1));
+  const base={name:'Story Recall',tab:'games',step:{x:step,y:N},topLeft:'back',backTo:()=>{stopSpeech();step>1?go('game/story/'+(step-1)):go('games');},portal:{size:'small',world:S.world,title:'Story Recall'}};
+  if(step===1)return Object.assign(base,{guide:'Read how to play, then tap Start.',
+    body:`<div class="card"><span class="steptag">How to play</span><h2>Listen, then remember</h2>
+    <div class="choices" style="margin-top:12px">${[['speaker','Listen to a short, warm story. You can read it too.'],['repeat','Tap Replay to hear it again, as often as you like.'],['search','Answer by tapping a picture. No typing.']].map(([i,t],k)=>`<div class="choice" style="min-height:64px;font-weight:500;font-size:1.08rem">${ic(i)}<span><b>${k+1}.</b> ${t}</span></div>`).join('')}</div>
+    <p class="note">${S.badDay?'Bad day mode: shorter stories and 2 easy questions each. No rush.':'Seedling level: 3 short stories, 3 questions each. No timer, no rush.'}</p></div>`,
+    nextLabel:'Start',next:()=>{sr=newSR();go('game/story/2');}});
+  if(step===2){
+    if(!sr){setTimeout(()=>go('game/story/1'));return Object.assign(base,{guide:'Read how to play, then tap Start.',body:'<div class="card"></div>',nextLabel:'Finish',nextDisabled:true,next:()=>{}});}
+    const g=sr,it=g.items[g.si],ph=g.phase,q=ph==='listen'?null:srQCur(g),nQ=it.qs.length;
+    const guide=ph==='listen'?'Listen to the story, then tap Questions.':
+      ph==='ask'?(g.misses?'Not quite. Listen once more, then try again.':'Tap the answer you remember.'):
+      (g.ok?'Well done. Tap Next when you are ready.':'Good try. The answer is glowing. Tap Next when you are ready.');
+    const stat=`<div class="statrow srstat"><div><b>Story ${g.si+1} / ${g.items.length}</b></div>${q?`<div><b>Question ${g.qi+1} / ${nQ}</b></div>`:''}<div aria-label="${g.right} right on the first try"><b>${g.right}</b><span class="sub">first try</span></div><button class="btn srrep-top" data-act="srreplay" aria-label="Replay story">${ic('speaker')}<span>Replay</span></button></div>`;
+    const rep=`<button class="btn block srrep ${ph==='listen'||g.misses?'primary':''}" data-act="srreplay">${ic('speaker')}Replay story</button>`;
+    let inner;
+    if(ph==='listen')inner=`<span class="steptag">Listen</span><h2 class="srtitle">${esc(it.title)}</h2><p class="srtext">${esc(it.text)}</p>${rep}`;
+    else{
+      const showStory=ph==='fb'&&!g.ok;
+      const opts=q.opts.map((o,k)=>{let cls='';if(ph==='fb'&&o.ok)cls='right';else if(g.tried.includes(k))cls='tried';
+        return `<button class="choice src ${cls}" data-act="srpick" data-k="${k}" ${g.tried.includes(k)?'disabled':''} ${ph==='fb'?'aria-disabled="true"':''} aria-label="${esc(o.t)}${o.ok&&ph==='fb'?'. This is the answer.':''}">${ic(o.i)}<span>${esc(o.t)}</span></button>`;}).join('');
+      inner=`${showStory?`<div class="srreview"><span class="steptag">The story again</span><p class="srtext">${esc(it.text)}</p></div>`:''}
+        <h2 class="srq">${esc(q.q)}</h2><div class="srch">${opts}</div>
+        <p class="srmsg ${ph==='fb'?(g.ok?'ok':'soft'):(g.misses?'soft':'')}" aria-live="polite">${esc(g.msg)}</p>${rep}`;
+    }
+    const last=g.si===g.items.length-1&&(q&&g.qi===nQ-1);
+    const nextLabel=ph==='listen'?'Questions':ph==='ask'?'Pick one':(last?'See results':(g.qi===nQ-1?'Next story':'Next'));
+    return Object.assign(base,{guide,
+      body:`<div class="card srcard">${stat}${inner}</div>`,
+      mount:()=>{
+        if(ph==='listen'&&!g.played){g.played=true;const fresh=(location.hash+'|Story Recall')!==lastKey,text=it.text;
+          setTimeout(()=>{if(sr!==g||g.phase!=='listen'||!S.readAloud)return;const my=seqId;
+            if(fresh&&S.guide&&curAudio){curAudio.addEventListener('ended',()=>{if(my===seqId&&sr===g&&g.phase==='listen')speakSeq([text]);});}
+            else speakSeq([text]);},0);}
+        setTimeout(()=>{if(window.matchMedia('(orientation:landscape) and (max-height:560px)').matches){if(ph==='fb'){const bd=$('.content-col .body'),rt=$('.choice.right');if(bd&&rt)bd.scrollTop+=rt.getBoundingClientRect().top-bd.getBoundingClientRect().top-8;}return;}const gd=$('#guide');if(gd)window.scrollTo(0,Math.max(0,gd.getBoundingClientRect().top+window.scrollY-10));},0);},
+      nextLabel,nextDisabled:ph==='ask',
+      next:()=>{if(ph==='listen'){if(sr!==g||g.phase!=='listen')return;g.phase='ask';g.tried=[];g.misses=0;g.pick=-1;g.msg='';render();if(S.readAloud)speak(srQCur(g).q,false);}else if(ph==='fb')srAdvance();},
+      acts:{srpick:el=>srPick(+el.dataset.k),srreplay:()=>srReplay()}});
+  }
+  const g=sr;if(!g||!g.done){setTimeout(()=>go('game/story/1'));return Object.assign(base,{guide:'Read how to play, then tap Start.',body:'<div class="card"></div>',nextLabel:'Done',next:()=>go('games')});}
+  if(!g.awarded){g.awarded=true;const b=S.storyBest;if(!b||g.right/g.total>b.c/b.n)S.storyBest={c:g.right,n:g.total};save();addGauge(20,null,false);chime(true);}
+  const b=S.storyBest;
+  return Object.assign(base,{guide:'Great work. Tap Play again, or go back to Games.',
+    body:`<div class="card" style="text-align:center"><span class="steptag">Results</span><h1>Well done!</h1>
+    <p style="font-size:1.2rem">You remembered <b>${g.right}</b> of ${g.total} answers on the first try. Every try counts.</p>
+    <div style="width:150px;margin:6px auto" class="gauge-big mini"><div style="width:110px">${gaugeSVG(S.gauge)}</div><span class="pct">${S.gauge}%</span></div>
+    <p>Your keep grew <b>+20%</b> brighter.${b?` Best so far: ${b.c} of ${b.n}.`:''}</p>
+    <div class="acts" style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center"><button class="btn primary" data-act="again">${ic('repeat')}Play again</button><button class="btn" data-act="nav" data-to="games">Back to Games</button></div></div>`,
+    nextLabel:'Done',next:()=>go('games'),acts:{again:()=>{sr=newSR();go('game/story/2');}}});
+}
+
 const DRILLS=[['path','Palace walk','Place things along a path in your palace'],['repeat','Spaced review','Quick reviews right before you\u2019d forget'],['list','Real-life lists','Practice your own lists'],['hash','Number recall','Codes and phone numbers, in chunks'],['search','Where was it?','Put things back where they were'],['whos','Name and face','Remember the people you saved'],['link','Story chain','Link a list into a silly story'],['target','Focus warm-up','One minute to get ready'],['moon','Daily recap','Gentle questions at night']];
 function scr_practice(){
   return {name:'Practice',tab:'practice',topLeft:'brand',portal:{size:'small',world:S.world,title:'Practice'},
@@ -552,7 +711,7 @@ function getScreen(){
     case 'where':return scr_where(r[1],+r[2]);
     case 'whos':return scr_whos();
     case 'games':return scr_games();
-    case 'game':return r[1]==='changed'?scr_changed(+r[2]||1):scr_cardflip(+r[2]||1);
+    case 'game':return r[1]==='changed'?scr_changed(+r[2]||1):r[1]==='story'?scr_story(+r[2]||1):scr_cardflip(+r[2]||1);
     case 'practice':return scr_practice();
     case 'palace':return scr_palace();
     case 'more':return scr_more();
@@ -652,7 +811,7 @@ function showTour(){
 }
 function endTour(){$('#overlay-root').innerHTML='';S.tourDone=true;save();toast('Tour finished. Tap Where am I? any time.');}
 window.addEventListener('resize',()=>{if($('.tour-spot'))showTour();});
-window.Highkeep={guide:()=>cur&&guideText(cur).speech,TOUR:()=>TOUR,startTour,state:()=>S,flip,reveal,game:()=>game,wc:()=>wc,wcPick};
+window.Highkeep={guide:()=>cur&&guideText(cur).speech,TOUR:()=>TOUR,startTour,state:()=>S,flip,reveal,game:()=>game,wc:()=>wc,wcPick,sr:()=>sr,srPick,STORIES:()=>STORIES};
 
 render();
 })();
