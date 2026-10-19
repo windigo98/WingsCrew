@@ -510,7 +510,7 @@ h1 {
   font-size: 0.92rem;
 }
 
-/* Unlisted home-page mark. A 16px dot inside a 44px tap target. */
+/* Faint corner mark. Home opens Crew Lab; Crew Lab goes back. 16px dot, 44px tap. */
 .crew-lab-mark {
   position: fixed;
   z-index: 6;
@@ -539,13 +539,16 @@ h1 {
   outline-offset: 2px;
 }
 
-.home .site-footer {
+.home .site-footer,
+.lab .site-footer {
   padding-bottom: calc(2.2rem + env(safe-area-inset-bottom, 0px));
 }
 
 @media (max-width: 959px) {
   .home main .wrap,
-  .home .site-footer .wrap {
+  .home .site-footer .wrap,
+  .lab main .wrap,
+  .lab .site-footer .wrap {
     padding-left: 2.15rem;
   }
 }
