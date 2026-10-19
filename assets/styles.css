@@ -544,6 +544,7 @@ h1 {
 }
 
 @media (max-width: 959px) {
+  .home main .wrap,
   .home .site-footer .wrap {
     padding-left: 2.15rem;
   }
