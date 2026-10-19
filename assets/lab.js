@@ -69,4 +69,33 @@
   }
 
   Array.prototype.forEach.call(document.querySelectorAll("[data-lab]"), render);
+
+  var back = document.querySelector(".crew-lab-mark");
+  if (!back) return;
+
+  back.addEventListener("click", function (event) {
+    if (!shouldGoBack()) return;
+    event.preventDefault();
+    history.back();
+  });
+
+  function referrerUrl() {
+    if (!document.referrer) return null;
+    try {
+      return new URL(document.referrer);
+    } catch (error) {
+      return null;
+    }
+  }
+
+  function bareHost(hostname) {
+    return String(hostname || "").replace(/^www\./, "");
+  }
+
+  function shouldGoBack() {
+    var ref = referrerUrl();
+    if (!ref || history.length < 2) return false;
+    if (ref.origin === window.location.origin) return true;
+    return bareHost(ref.hostname) === bareHost(window.location.hostname);
+  }
 })();
