@@ -29,9 +29,7 @@
     var status = entry.status || "coming soon";
     var url = status === "coming soon" ? "" : sanitizeUrl(entry.url);
     var inner =
-      '<p class="badge">' +
-      escapeHtml(status) +
-      "</p>" +
+      '<p class="badge">In progress</p>' +
       (entry.mark
         ? '<p class="badge">' + escapeHtml(entry.mark) + "</p>"
         : "") +
