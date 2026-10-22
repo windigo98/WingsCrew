@@ -75,6 +75,28 @@ const P={
  calendar:'<rect x="3.500" y="5" width="17" height="15.500" rx="2"/><path d="M3.500 10h17M8 3v4M16 3v4"/>',
  undo:'<path d="M9 6L4 11l5 5M4 11h10a5 5 0 0 1 0 10h-4"/>',
  briefcase:'<rect x="3" y="7" width="18" height="13" rx="2"/><path d="M9 7V5a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2M3 13h18"/>'
+ ,phone:'<rect x="7" y="2.5" width="10" height="19" rx="2.2"/><path d="M10.5 18.5h3"/>',
+ wallet:'<path d="M4 7.5h14a2 2 0 0 1 2 2V18a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6.5A2 2 0 0 1 5 4.5h11v3"/><path d="M20 12h-4a1.75 1.75 0 0 0 0 3.5h4z"/>',
+ umbrella:'<path d="M3 12a9 9 0 0 1 18 0zM12 12v7a2 2 0 0 1-4 0M12 3V2"/>',
+ glasses:'<circle cx="6.5" cy="14" r="3.5"/><circle cx="17.5" cy="14" r="3.5"/><path d="M10 14c1.2-1 2.8-1 4 0M3 13l1.5-5M21 13l-1.5-5"/>',
+ bottle:'<path d="M10 2.5h4v3l1.5 2.5V20a1.5 1.5 0 0 1-1.5 1.5h-4A1.5 1.5 0 0 1 8.5 20V8L10 5.5z"/><path d="M8.5 12h7"/>',
+ coat:'<path d="M9 3l3 3 3-3 4.5 2.5L21 12l-2.5 1V21h-13v-8L3 12l1.5-6.5zM12 6v15"/>',
+ hat:'<path d="M2.5 16.5c2.5 2 16.5 2 19 0-2-1.2-3.5-1.5-4.5-1.5 0-5-2-8-5-8s-5 3-5 8c-1 0-2.5.3-4.5 1.5z"/><path d="M7 14.5c3 .8 7 .8 10 0"/>',
+ card:'<rect x="3" y="5.5" width="18" height="13" rx="2"/><path d="M3 10h18M6.5 14.5h4"/>',
+ ticket:'<path d="M3 7.5h18v3a1.5 1.5 0 0 0 0 3v3H3v-3a1.5 1.5 0 0 0 0-3z"/><path d="M14.5 8.5v1.5M14.5 11.5v1.5M14.5 14.5v1"/>',
+ plug:'<path d="M9 3v4M15 3v4M6.5 7h11v3.5a5.5 5.5 0 0 1-11 0zM12 16v5"/>',
+ bed:'<path d="M3 19V6M3 15h18v4M21 15v-3.5a2.5 2.5 0 0 0-2.5-2.5H11v6"/><circle cx="7" cy="11.5" r="2"/>',
+ drop:'<path d="M12 3s6.5 7 6.5 11.5a6.5 6.5 0 0 1-13 0C5.5 10 12 3 12 3z"/>',
+ shirt:'<path d="M8.5 3.5L4 6l-1.5 4.5 3 1.2v8.8h13v-8.8l3-1.2L20 6l-4.5-2.5a3.5 3.5 0 0 1-7 0z"/>',
+ door:'<path d="M6 21V4.5A1.5 1.5 0 0 1 7.5 3h9A1.5 1.5 0 0 1 18 4.5V21M3.5 21h17"/><circle cx="14.8" cy="12.5" r=".9" fill="currentColor"/>',
+ bath:'<path d="M3 12h18v2.5a5 5 0 0 1-5 5H8a5 5 0 0 1-5-5zM6 12V5.5a2 2 0 0 1 3.8-.9M7 19.5L6 21.5M17 19.5l1 2M9 7.5h2"/>',
+ towel:'<path d="M5 4h11a3 3 0 0 1 3 3v14H8V7a3 3 0 0 0-3-3zM5 4a3 3 0 0 0-3 3v3h6M11 15h5M11 18h5"/>',
+ tap:'<path d="M4 7v4M4 9h7V6.5M7.5 6.5h7M11 9h6.5a2.5 2.5 0 0 1 2.5 2.5V13h-4M18 16.5s1.3 1.5 1.3 2.5a1.3 1.3 0 0 1-2.6 0c0-1 1.3-2.5 1.3-2.5z"/>',
+ soap:'<rect x="3.5" y="10" width="17" height="10" rx="4"/><circle cx="9" cy="5.5" r="2"/><circle cx="15" cy="4" r="1.3"/><circle cx="14.5" cy="7.5" r="1"/>',
+ tooth:'<path d="M7.5 3.5c-2.5 0-4 2-4 4.5 0 3 1.5 4.5 2 7.5.5 3 1 5.5 2.5 5.5s1.8-4 4-4 2.5 4 4 4 2-2.5 2.5-5.5c.5-3 2-4.5 2-7.5 0-2.5-1.5-4.5-4-4.5-1.8 0-2.8 1-4.5 1s-2.7-1-4.5-1z"/>',
+ kettle:'<path d="M5 20h12l-1-9a5 5 0 0 0-10 0zM8 6.5a3 3 0 0 1 6 0M16.3 11.5l3.7-3v4l-2.7 2.5"/>',
+ brush:'<path d="M3 21L13.5 10.5"/><path d="M12 9l3 3 6-6-3-3z"/><path d="M15 6l3 3"/>',
+ grip:'<circle cx="9" cy="6" r="1.3" fill="currentColor"/><circle cx="15" cy="6" r="1.3" fill="currentColor"/><circle cx="9" cy="12" r="1.3" fill="currentColor"/><circle cx="15" cy="12" r="1.3" fill="currentColor"/><circle cx="9" cy="18" r="1.3" fill="currentColor"/><circle cx="15" cy="18" r="1.3" fill="currentColor"/>'
 };
 const ic=(n,cls='')=>`<svg class="${cls}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${P[n]||''}</svg>`;
 const cardIc=n=>`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><g fill="currentColor" fill-opacity=".14">${P[n]}</g></svg>`;
@@ -403,14 +425,14 @@ function scr_whos(){
 
 const GAMES=[['cardflip','Card Flip','grid','Match the pairs','star_citadel'],['pack','Pack the Bag','bag','Remember the list','floating_isles'],['simon','Simon Says','sparkle','Repeat the pattern','crystal_cliff'],
  ['changed','What Changed?','eye','Spot the difference','blossom_tree'],['names','Name Game','tag','Faces and names','floating_isles'],['story','Story Recall','book','Listen, then answer','crystal_cliff'],['routine','Routine Builder','list','Put steps in order','blossom_tree']];
-const PLAYABLE={cardflip:'game/cardflip/1',changed:'game/changed/1',story:'game/story/1'};
+const PLAYABLE={cardflip:'game/cardflip/1',pack:'game/pack/1',simon:'game/simon/1',changed:'game/changed/1',names:'game/names/1',story:'game/story/1',routine:'game/routine/1'};
 function scr_games(){
   return {name:'Games',tab:'games',topLeft:'brand',portal:{size:'small',world:S.world,title:'Games'},
-    guide:'Tap a doorway to pick a game. Card Flip, What Changed? and Story Recall are ready to play.',
+    guide:'Tap a doorway to pick a game. All seven games are ready to play.',
     body:`<div class="doors">${GAMES.map(([k,n,i,d,img])=>PLAYABLE[k]?
       `<button class="door play" data-act="play" data-g="${k}"><span class="dimg" style="background-image:url(${imgUrl(img,1)})"></span><span class="dic">${ic(i)}</span>${n}<small>${d}</small><span class="badge gold">Play</span></button>`:
       `<button class="door soon" data-act="soon" data-n="${n}"><span class="dimg" style="background-image:url(${imgUrl(img,1)})"></span><span class="dic">${ic(i)}</span>${n}<small>${d}</small><span class="badge">Coming soon</span></button>`).join('')}</div>`,
-    acts:{play:el=>{game=null;wc=null;wcClear();sr=null;go(PLAYABLE[el.dataset.g]||PLAYABLE.cardflip);},soon:el=>toast(el.dataset.n+' is coming soon.')}};
+    acts:{play:el=>{game=null;wc=null;wcClear();sr=null;pk=null;sm=null;smClear();nm=null;rt=null;go(PLAYABLE[el.dataset.g]||PLAYABLE.cardflip);},soon:el=>toast(el.dataset.n+' is coming soon.')}};
 }
 const CICONS=['crown','key','tower','star','moon','lantern','shield','gem'];
 function newGame(){const pairs=S.badDay?4:8;const icons=(S.badDay?['crown','key','star','moon']:CICONS.slice(0,8));
@@ -668,6 +690,337 @@ function scr_story(step){
     <div class="acts" style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center"><button class="btn primary" data-act="again">${ic('repeat')}Play again</button><button class="btn" data-act="nav" data-to="games">Back to Games</button></div></div>`,
     nextLabel:'Done',next:()=>go('games'),acts:{again:()=>{sr=newSR();go('game/story/2');}}});
 }
+
+/* ================= New games: shared helpers ================= */
+/* Same look and flow as Card Flip, What Changed? and Story Recall: step 1 how to play, step 2 play, step 3 results (+20% keep). */
+function gHow(title,steps,note){return `<div class="card"><span class="steptag">How to play</span><h2>${title}</h2>
+    <div class="choices" style="margin-top:12px">${steps.map(([i,t],k)=>`<div class="choice" style="min-height:64px;font-weight:500;font-size:1.08rem">${ic(i)}<span><b>${k+1}.</b> ${t}</span></div>`).join('')}</div>
+    <p class="note">${note}</p></div>`;}
+function gResults(line,best){return `<div class="card" style="text-align:center"><span class="steptag">Results</span><h1>Well done!</h1>
+    <p style="font-size:1.2rem">${line}</p>
+    <div style="width:150px;margin:6px auto" class="gauge-big mini"><div style="width:110px">${gaugeSVG(S.gauge)}</div><span class="pct">${S.gauge}%</span></div>
+    <p>Your keep grew <b>+20%</b> brighter.${best?' '+best:''}</p>
+    <div class="acts" style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center"><button class="btn primary" data-act="again">${ic('repeat')}Play again</button><button class="btn" data-act="nav" data-to="games">Back to Games</button></div></div>`;}
+const G_START='Read how to play, then tap Start.',G_END='Great work. Tap Play again, or go back to Games.';
+function gStub(base,label){return Object.assign(base,{guide:G_START,body:'<div class="card"></div>',nextLabel:label||'Finish',nextDisabled:true,next:()=>{}});}
+function gLive(r){return location.hash.indexOf('#/game/'+r+'/2')===0;}
+function gSay(t){if(S.readAloud)speak(t,false);}
+function gSaySeq(lines){if(S.readAloud)speakSeq(lines);}
+/* Run fn after the spoken "You are on ..." guide finishes (so game speech does not cut it off). */
+function gAfterGuide(fn){setTimeout(()=>{
+  if(!S.readAloud||!S.guide)return fn();const my=seqId;
+  if(curAudio){const a=curAudio;let done=false;const go2=()=>{if(done)return;done=true;if(my===seqId)fn();};a.addEventListener('ended',go2);a.addEventListener('error',go2);setTimeout(()=>{if(a.paused&&!a.ended)go2();},9000);return;}
+  if('speechSynthesis' in window&&(speechSynthesis.speaking||speechSynthesis.pending)){let n=0;const iv=setInterval(()=>{n++;if(my!==seqId){clearInterval(iv);return;}
+    if(!speechSynthesis.speaking&&!speechSynthesis.pending||n>60){clearInterval(iv);fn();}},250);return;}
+  fn();},0);}
+function gScroll(){setTimeout(()=>{if(window.matchMedia('(orientation:landscape) and (max-height:560px)').matches)return;const gd=$('#guide');if(gd)window.scrollTo(0,Math.max(0,gd.getBoundingClientRect().top+window.scrollY-10));},0);}
+const gShuf=srShuffle;
+function gList(a){return a.length<2?a.join(''):a.slice(0,-1).join(', ')+' and '+a[a.length-1];}
+
+/* ================= Pack the Bag ================= */
+const PK_ITEMS={keys:['Keys','key'],wallet:['Wallet','wallet'],meds:['Meds','pill'],phone:['Phone','phone'],umbrella:['Umbrella','umbrella'],glasses:['Glasses','glasses'],
+ water:['Water bottle','bottle'],coat:['Coat','coat'],hat:['Sun hat','hat'],snack:['Snack','apple'],book:['Book','book'],list:['Shopping list','list'],pass:['Bus pass','card'],
+ tickets:['Tickets','ticket'],charger:['Charger','plug'],bag:['Shopping bag','bag'],suncream:['Sun cream','sun'],mug:['Travel mug','cup']};
+/* First items are the most important: Bad day keeps only the first 3. */
+const PK_TRIPS=[
+ {id:'doctor',title:'A visit to the doctor',i:'heart',items:['meds','keys','phone','glasses','wallet']},
+ {id:'rain',title:'A walk in the rain',i:'umbrella',items:['umbrella','coat','keys','phone','pass']},
+ {id:'shop',title:'Going to the shop',i:'bag',items:['wallet','list','bag','keys','phone']},
+ {id:'park',title:'A sunny day at the park',i:'sun',items:['water','hat','snack','suncream','phone']},
+ {id:'train',title:'A train trip',i:'ticket',items:['tickets','phone','wallet','charger','book']},
+ {id:'cafe',title:'Coffee with a friend',i:'cup',items:['wallet','phone','keys','glasses','mug']}];
+const PK_G={study:'Look at what you need. Tap I am ready when you can.',pick:'Tap each thing you need. Then tap Check my bag.',ok:'All packed! Tap Next when you are ready.',soft:'Good try. Tap Next when you are ready.'};
+let pk=null;
+function newPK(){const bad=!!S.badDay,n=bad?3:5,rounds=bad?2:3;
+  const last=Array.isArray(S.packLast)?S.packLast:[];let av=PK_TRIPS.filter(t=>!last.includes(t.id));if(av.length<rounds)av=PK_TRIPS.slice();
+  const trips=gShuf(av).slice(0,rounds).map(t=>{const need=t.items.slice(0,n);const others=gShuf(Object.keys(PK_ITEMS).filter(k=>!t.items.includes(k))).slice(0,n);
+    return {id:t.id,title:t.title,i:t.i,need,opts:gShuf([...need,...others])};});
+  S.packLast=trips.map(t=>t.id);save();
+  return {trips,r:0,phase:'study',sel:[],got:0,total:0,perfect:0,bad,msg:'',ok:false,done:false,awarded:false,said:-1};}
+function pkTile(k,cls,attrs,extra){const [l,i]=PK_ITEMS[k];return `<${attrs?'button':'div'} class="pktile ${cls}" ${attrs||''}><span class="pkic">${cardIc(i)}</span><span class="pkl">${esc(l)}</span>${extra||''}</${attrs?'button':'div'}>`;}
+function pkStudySay(g){const t=g.trips[g.r];gSaySeq([t.title+'. Pack these things.',...t.need.map(k=>PK_ITEMS[k][0]+'.')]);}
+function pkCheck(){const g=pk;if(!g||g.phase!=='pick'||!g.sel.length)return;const t=g.trips[g.r];
+  const right=g.sel.filter(k=>t.need.includes(k)),miss=t.need.filter(k=>!g.sel.includes(k)),extra=g.sel.filter(k=>!t.need.includes(k));
+  g.got+=right.length;g.total+=t.need.length;g.phase='fb';g.ok=!miss.length&&!extra.length;if(g.ok)g.perfect++;
+  if(g.ok){g.msg='All packed! You remembered everything.';chime(false);gSay('All packed! You remembered everything.');}
+  else{g.msg=`You packed ${right.length} of ${t.need.length}.`+(miss.length?` Still needed: ${gList(miss.map(k=>PK_ITEMS[k][0]))}.`:'')+(extra.length?` Not needed this time: ${gList(extra.map(k=>PK_ITEMS[k][0]))}.`:'');
+    gSay('Good try. The things you still need are glowing.');}
+  render();}
+function scr_pack(step){
+  const N=3;step=Math.max(1,Math.min(N,step||1));
+  const base={name:'Pack the Bag',tab:'games',step:{x:step,y:N},topLeft:'back',backTo:()=>{stopSpeech();step>1?go('game/pack/'+(step-1)):go('games');},portal:{size:'small',world:S.world,title:'Pack the Bag'}};
+  if(step===1)return Object.assign(base,{guide:G_START,
+    body:gHow('Remember what to bring',[['eye','Look at the things you need for an outing.'],['moon','They go away for a moment.'],['bag','Tap each one you need to pack it in your bag.']],
+      S.badDay?'Bad day mode: 3 things to pack, 2 outings. No rush.':'Seedling level: 5 things to pack, 3 outings. No timer, no rush.'),
+    nextLabel:'Start',next:()=>{pk=newPK();go('game/pack/2');}});
+  if(step===2){
+    if(!pk){setTimeout(()=>go('game/pack/1'));return gStub(base);}
+    const g=pk,t=g.trips[g.r],ph=g.phase,last=g.r===g.trips.length-1;
+    const stat=`<div class="statrow pkstat"><div><b>Outing ${g.r+1} / ${g.trips.length}</b></div>${ph==='pick'?`<div aria-label="${g.sel.length} of ${t.need.length} picked"><b>${g.sel.length} / ${t.need.length}</b><span class="sub">picked</span></div><button class="btn pklook" data-act="pklook">${ic('eye')}Look again</button>`:''}</div>`;
+    const head=`<div class="pkhead">${ic(t.i)}<h2>${esc(t.title)}</h2></div>`;
+    let inner;
+    if(ph==='study')inner=`${head}<p class="pkp">Pack ${t.need.length===3?'these 3 things':'these '+t.need.length+' things'}:</p><div class="pkgrid need n${t.need.length}">${t.need.map(k=>pkTile(k,'show')).join('')}</div>
+      <button class="btn block pksay" data-act="pksay">${ic('speaker')}Hear the list</button>`;
+    else if(ph==='pick')inner=`${head}<p class="pkp">What do you need? Tap to pack it.</p><div class="pkgrid opts" role="group" aria-label="Things you could pack">${t.opts.map(k=>{const on=g.sel.includes(k);
+      return pkTile(k,on?'on':'',`data-act="pktap" data-k="${k}" aria-pressed="${on}" aria-label="${esc(PK_ITEMS[k][0])}${on?', in your bag':''}"`,`<span class="pkmark">${on?ic('check')+'In bag':''}</span>`);}).join('')}</div>`;
+    else inner=`${head}<p class="srmsg pkmsg ${g.ok?'ok':'soft'}" aria-live="polite">${esc(g.msg)}</p><div class="pkgrid opts">${t.opts.map(k=>{const need=t.need.includes(k),on=g.sel.includes(k);
+      const cls=need&&on?'right':need?'missed':on?'extra':'off';const lab=need&&on?ic('check')+'Packed':need?ic('sparkle')+'Needed':on?'Not needed':'';
+      return pkTile(k,cls,'',`<span class="pkmark">${lab}</span>`);}).join('')}</div>`;
+    const nextLabel=ph==='study'?'I am ready':ph==='pick'?'Check my bag':(last?'See results':'Next outing');
+    return Object.assign(base,{guide:ph==='fb'?(g.ok?PK_G.ok:PK_G.soft):PK_G[ph],body:`<div class="card pkcard">${stat}${inner}</div>`,
+      mount:()=>{if(ph==='study'&&g.said!==g.r){g.said=g.r;gAfterGuide(()=>{if(pk===g&&g.phase==='study'&&gLive('pack'))pkStudySay(g);});}gScroll();},
+      nextLabel,nextDisabled:ph==='pick'&&!g.sel.length,
+      next:()=>{if(pk!==g)return;
+        if(g.phase==='study'){g.phase='pick';stopSpeech();render();gSay(PK_G.pick);}
+        else if(g.phase==='pick')pkCheck();
+        else if(g.phase==='fb'){if(last){g.done=true;go('game/pack/3');}else{g.r++;g.phase='study';g.sel=[];g.msg='';render();}}},
+      acts:{pktap:el=>{if(g.phase!=='pick')return;const k=el.dataset.k;const i=g.sel.indexOf(k);if(i>=0)g.sel.splice(i,1);else{g.sel.push(k);gSay(PK_ITEMS[k][0]+'.');}render();},
+        pklook:()=>{if(g.phase!=='pick')return;g.phase='study';g.said=g.r;render();pkStudySay(g);},pksay:()=>speakSeq([t.title+'. Pack these things.',...t.need.map(k=>PK_ITEMS[k][0]+'.')])}});
+  }
+  const g=pk;if(!g||!g.done){setTimeout(()=>go('game/pack/1'));return Object.assign(gStub(base,'Done'),{nextDisabled:false,next:()=>go('games')});}
+  if(!g.awarded){g.awarded=true;const b=S.packBest;if(!b||g.got/g.total>b.c/b.n)S.packBest={c:g.got,n:g.total};save();addGauge(20,null,false);chime(true);}
+  const b=S.packBest;
+  return Object.assign(base,{guide:G_END,body:gResults(`You packed <b>${g.got}</b> of ${g.total} things${g.perfect?`, with ${g.perfect} perfect bag${g.perfect>1?'s':''}`:''}. Every try helps.`,b?`Best so far: ${b.c} of ${b.n}.`:''),
+    nextLabel:'Done',next:()=>go('games'),acts:{again:()=>{pk=newPK();go('game/pack/2');}}});
+}
+
+/* ================= Simon Says (palace windows) ================= */
+const SM_WIN=[['moon','Moon',262],['star','Star',330],['sun','Sun',392],['leaf','Leaf',494]];
+const SM_G={show:'Watch the windows light up.',input:'Your turn. Tap the windows in the same order.',ok:'Well done! Tap Next when you are ready.',soft:'Good try. Tap Next when you are ready.'};
+let sm=null,smT=null;
+function newSM(){const bad=!!S.badDay,wins=bad?3:4,start=2,maxLen=bad?4:6;
+  const seq=[];for(let i=0;i<maxLen;i++){let k;do{k=Math.floor(Math.random()*wins);}while(i>1&&k===seq[i-1]&&k===seq[i-2]);seq.push(k);}
+  return {wins,seq,len:start,start,maxLen,phase:'show',pos:0,misses:0,best:0,firstTry:0,bad,on:bad?1300:800,off:bad?650:350,msg:'',ok:false,end:false,done:false,awarded:false,started:false,gen:0};}
+function smClear(){clearTimeout(smT);smT=null;}
+function smTone(f,ms){if(S.sensory!=='full')return;try{actx=actx||new (window.AudioContext||window.webkitAudioContext)();const o=actx.createOscillator(),g=actx.createGain(),t=actx.currentTime,d=ms/1000;
+  o.type='sine';o.frequency.value=f;g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(.11,t+.04);g.gain.setValueAtTime(.11,t+Math.max(.05,d-.15));g.gain.linearRampToValueAtTime(0,t+d);o.connect(g).connect(actx.destination);o.start(t);o.stop(t+d+.05);}catch(e){}}
+function smLight(k,ms,say){const el=$(`.smwin[data-k="${k}"]`);const w=SM_WIN[k];if(el){el.classList.add('lit');setTimeout(()=>el.classList.remove('lit'),ms);}
+  const lr=$('#smlive');if(lr)lr.textContent=w[1];smTone(w[2],ms);if(say&&S.readAloud)speak(w[1],false);}
+function smShow(g,delay){smClear();if(sm!==g)return;g.phase='show';g.pos=0;g.gen++;render();const my=g.gen;let i=0;
+  const step=()=>{if(sm!==g||g.gen!==my||!gLive('simon'))return;
+    if(i>=g.len){g.phase='input';render();gSay(SM_G.input);return;}
+    smLight(g.seq[i],g.on,true);i++;smT=setTimeout(step,g.on+g.off);};
+  smT=setTimeout(step,delay==null?700:delay);}
+function smTap(k){const g=sm;if(!g||g.phase!=='input')return;
+  if(k===g.seq[g.pos]){g.pos++;
+    if(g.pos>=g.len){g.best=Math.max(g.best,g.len);if(!g.misses)g.firstTry++;g.phase='fb';g.ok=true;
+      if(g.len>=g.maxLen){g.end=true;g.msg=`You did it! You remembered all ${g.len} lights.`;}else g.msg='Well done! Next time there is one more light.';
+      chime(false);render();smLight(k,350,false);gSay(g.end?'You did it! You remembered the whole pattern.':'Well done! Next time there is one more light.');return;}
+    render();smLight(k,350,false);return;}
+  g.misses++;g.phase='fb';g.ok=false;
+  if(g.misses>=2){g.end=true;g.msg=g.best?`Good try. You remembered ${g.best} lights in a row. That is great memory work.`:'Good try. Patterns take practice. You are doing well.';gSay('Good try. That is great memory work.');}
+  else{g.msg='Not quite. Let\u2019s watch it again.';gSay('Not quite. Let\u2019s watch it again.');}
+  render();}
+function scr_simon(step){
+  const N=3;step=Math.max(1,Math.min(N,step||1));
+  const base={name:'Simon Says',tab:'games',step:{x:step,y:N},topLeft:'back',backTo:()=>{smClear();stopSpeech();step>1?go('game/simon/'+(step-1)):go('games');},portal:{size:'small',world:S.world,title:'Simon Says'}};
+  if(step===1){smClear();const quiet=S.sensory!=='full'&&!S.readAloud;
+    return Object.assign(base,{guide:G_START,
+    body:gHow('Repeat the pattern',[['sparkle','Watch the palace windows light up, one by one.'],['repeat','Tap the same windows in the same order.'],['plus','Each time, the pattern grows by one.']],
+      (S.badDay?'Bad day mode: 3 windows, slower lights, up to 4 in a row.':'Seedling level: 4 windows, up to 6 in a row. No timer, no rush.')+(quiet?' Tip: turn on Read aloud or Full sounds in More to hear each window.':'')),
+    nextLabel:'Start',next:()=>{sm=newSM();go('game/simon/2');}});}
+  if(step===2){
+    if(!sm){setTimeout(()=>go('game/simon/1'));return gStub(base);}
+    const g=sm,ph=g.phase;
+    const dots=`<div class="smdots" aria-label="${ph==='input'?`Tap ${Math.min(g.pos+1,g.len)} of ${g.len}`:`${g.len} lights`}">${Array.from({length:g.len},(_,i)=>`<i class="${ph==='input'&&i<g.pos?'on':''}">${ph==='input'&&i<g.pos?ic('check'):i+1}</i>`).join('')}</div>`;
+    const stat=`<div class="statrow smstat"><div><b>${g.len} lights</b></div>${ph==='input'?`<button class="btn smagain" data-act="smagain">${ic('eye')}Watch again</button>`:''}<div aria-label="Best ${g.best}"><b>${g.best}</b><span class="sub">best</span></div></div>`;
+    const wins=SM_WIN.slice(0,g.wins).map(([i,l],k)=>`<button class="smwin" data-act="smtap" data-k="${k}" ${ph!=='input'?'aria-disabled="true"':''} aria-label="${l} window"><span class="smglass">${cardIc(i)}</span><span class="sml">${l}</span></button>`).join('');
+    const guide=ph==='fb'?(g.ok?SM_G.ok:SM_G.soft):SM_G[ph];
+    const nextLabel=ph==='show'?'Watching\u2026':ph==='input'?'Your turn':(g.end?'See results':g.ok?'Next pattern':'Watch again');
+    return Object.assign(base,{guide,
+      body:`<div class="card smcard">${stat}${dots}<div class="smgrid w${g.wins} ph-${ph}" role="group" aria-label="Palace windows">${wins}</div>
+        <p class="srmsg ${ph==='fb'?(g.ok?'ok':'soft'):''}" aria-live="polite">${esc(ph==='fb'?g.msg:ph==='show'?'Watch\u2026':'Your turn.')}</p><p class="wcsr" id="smlive" aria-live="assertive"></p></div>`,
+      mount:()=>{if(!g.started){g.started=true;gAfterGuide(()=>{if(sm===g&&gLive('simon')&&g.phase==='show')smShow(g,500);});}gScroll();},
+      nextLabel,nextDisabled:ph!=='fb',
+      next:()=>{if(sm!==g||g.phase!=='fb')return;if(g.end){g.done=true;smClear();go('game/simon/3');return;}
+        if(g.ok){g.len++;g.misses=0;}smShow(g,500);},
+      acts:{smtap:el=>smTap(+el.dataset.k),smagain:()=>{if(g.phase==='input')smShow(g,300);}}});
+  }
+  const g=sm;if(!g||!g.done){setTimeout(()=>go('game/simon/1'));return Object.assign(gStub(base,'Done'),{nextDisabled:false,next:()=>go('games')});}
+  if(!g.awarded){g.awarded=true;S.simonBest=Math.max(S.simonBest||0,g.best);save();addGauge(20,null,false);chime(true);}
+  return Object.assign(base,{guide:G_END,body:gResults(g.best>=g.maxLen?`You remembered the whole pattern: <b>${g.best}</b> lights in a row!`:`You remembered <b>${g.best}</b> light${g.best===1?'':'s'} in a row. Every pattern counts.`,S.simonBest?`Best so far: ${S.simonBest} in a row.`:''),
+    nextLabel:'Done',next:()=>go('games'),acts:{again:()=>{sm=newSM();go('game/simon/2');}}});
+}
+
+/* ================= Name Game ================= */
+/* Friendly made-up people drawn as simple SVG avatars (no photos, no real people). */
+const NM_PEOPLE=[
+ {id:'ruby',name:'Ruby',hint:'grows roses',i:'flower',f:{skin:'#f1c7a5',hair:'#a5432a',style:'long',shirt:'#c46d7b',bg:'#f6dfe3'}},
+ {id:'omar',name:'Omar',hint:'bakes bread',i:'bread',f:{skin:'#a8714c',hair:'#2b1d14',style:'short',beard:1,shirt:'#d9a441',bg:'#f7ead0'}},
+ {id:'grace',name:'Grace',hint:'loves books',i:'book',f:{skin:'#7a4a2e',hair:'#1d1410',style:'bun',glasses:1,shirt:'#5f7fb8',bg:'#dfe7f5'}},
+ {id:'theo',name:'Theo',hint:'sails boats',i:'boat',f:{skin:'#f3d2b8',hair:'#d9b25a',style:'curly',shirt:'#3f8a8c',bg:'#d8eef0'}},
+ {id:'priya',name:'Priya',hint:'paints pictures',i:'image',f:{skin:'#c68b62',hair:'#241612',style:'pony',earrings:1,shirt:'#8a5cb0',bg:'#ece0f5'}},
+ {id:'frank',name:'Frank',hint:'goes fishing',i:'fish',f:{skin:'#e9b996',hair:'#cfcfcf',style:'bald',glasses:1,shirt:'#5a8a4e',bg:'#e3f0dc'}},
+ {id:'mae',name:'Mae',hint:'makes tea',i:'cup',f:{skin:'#f0c9a0',hair:'#e8e4df',style:'bob',glasses:1,shirt:'#c9784a',bg:'#f7e3d6'}},
+ {id:'kenji',name:'Kenji',hint:'climbs mountains',i:'mountain',f:{skin:'#e8c39e',hair:'#1a1a1a',style:'spiky',shirt:'#b84a3a',bg:'#f5dcd6'}},
+ {id:'lucy',name:'Lucy',hint:'feeds the birds',i:'bird',f:{skin:'#fbe0cc',hair:'#6b3d1e',style:'long',hat:'#e2c47a',shirt:'#4f9a7a',bg:'#d9f0e6'}},
+ {id:'diego',name:'Diego',hint:'watches the stars',i:'star',f:{skin:'#b97d55',hair:'#3a2418',style:'short',shirt:'#3b3f86',bg:'#e2e3f6'}}];
+function nmFace(p){const f=p.f,h=f.hair;let back='',front='';
+  if(f.style==='long')back=`<path d="M25 52c0-21 11-33 25-33s25 12 25 33v30H25z" fill="${h}"/>`;
+  if(f.style==='bob')back=`<path d="M27 50c0-19 10-29 23-29s23 10 23 29v13c-4 3-9 3-11 1H38c-2 2-7 2-11-1z" fill="${h}"/>`;
+  if(f.style==='pony')back=`<path d="M70 34c9 5 10 20 3 30" stroke="${h}" stroke-width="9" fill="none" stroke-linecap="round"/>`;
+  if(f.style==='bun')back=`<circle cx="50" cy="20" r="9" fill="${h}"/>`;
+  if(f.style==='short'||f.style==='bun'||f.style==='pony')front=`<path d="M31 43c0-14 8-21 19-21s19 7 19 21c-4-6-10-9-19-9s-15 3-19 9z" fill="${h}"/>`;
+  if(f.style==='long'||f.style==='bob')front=`<path d="M31 45c0-15 8-23 19-23s19 8 19 23c-6-2-11-8-13-13-5 7-15 11-25 13z" fill="${h}"/>`;
+  if(f.style==='curly')front=[[33,38],[38,30],[45,26],[53,25],[61,28],[67,35],[69,42],[31,44]].map(([x,y])=>`<circle cx="${x}" cy="${y}" r="7" fill="${h}"/>`).join('');
+  if(f.style==='bald')front=`<path d="M31 50c-1-7 1-11 4-12v13zM69 50c1-7-1-11-4-12v13z" fill="${h}"/>`;
+  if(f.style==='spiky')front=`<path d="M31 43l1-13 6 5 3-10 5 6 4-9 4 9 5-6 3 10 6-5 1 13c-5-5-12-8-19-8s-14 3-19 8z" fill="${h}"/>`;
+  const beard=f.beard?`<path d="M31 50c1 14 9 21 19 21s18-7 19-21c-3 5-7 7-10 7-2-2-5-3-9-3s-7 1-9 3c-3 0-7-2-10-7z" fill="${h}"/>`:'';
+  const glasses=f.glasses?`<g fill="none" stroke="#3a2c12" stroke-width="1.8"><circle cx="42" cy="47" r="6"/><circle cx="58" cy="47" r="6"/><path d="M48 47h4M36 46l-5-2M64 46l5-2"/></g>`:'';
+  const ear=f.earrings?`<circle cx="31" cy="55" r="2.2" fill="#e2b13c"/><circle cx="69" cy="55" r="2.2" fill="#e2b13c"/>`:'';
+  const hat=f.hat?`<path d="M34 30c0-8 7-12 16-12s16 4 16 12z" fill="${f.hat}"/><ellipse cx="50" cy="30" rx="27" ry="5.5" fill="${f.hat}"/><path d="M34 27h32" stroke="#b8913f" stroke-width="2.5"/>`:'';
+  return `<svg class="nmface" viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="50" fill="${f.bg}"/>${back}
+  <path d="M15 100c0-17 15-26 35-26s35 9 35 26z" fill="${f.shirt}"/><rect x="43" y="62" width="14" height="15" rx="6" fill="${f.skin}"/>
+  <circle cx="31" cy="49" r="4.5" fill="${f.skin}"/><circle cx="69" cy="49" r="4.5" fill="${f.skin}"/><ellipse cx="50" cy="47" rx="19" ry="22" fill="${f.skin}"/>${ear}${beard}${front}
+  <circle cx="42" cy="47" r="2.5" fill="#2a2216"/><circle cx="58" cy="47" r="2.5" fill="#2a2216"/><path d="M38 41.5q4-2.5 8 0M54 41.5q4-2.5 8 0" stroke="#3a2c12" stroke-width="1.6" fill="none" stroke-linecap="round" opacity=".7"/>
+  <circle cx="37" cy="55" r="3.5" fill="#e88a8a" opacity=".3"/><circle cx="63" cy="55" r="3.5" fill="#e88a8a" opacity=".3"/>
+  <path d="M43 57c4 4.5 10 4.5 14 0" stroke="${f.beard?'#f5e6d8':'#8a3b2b'}" stroke-width="2.2" fill="none" stroke-linecap="round"/>${glasses}${hat}</svg>`;}
+const nmIntro=p=>`This is ${p.name}. ${p.name} ${p.hint}.`;
+const nmClue=p=>`Here is a clue. This person ${p.hint}.`;
+const NM_G={learn:'Meet each person. Tap a card to hear it again. Tap I am ready when you can.',ask:'Who is this? Tap their name.',askmiss:'Not quite. Here is a clue. Try again.',ok:'Yes! Tap Next when you are ready.',soft:'Good try. Tap Next when you are ready.'};
+let nm=null;
+function newNM(){const bad=!!S.badDay,n=bad?2:4;const last=Array.isArray(S.namesLast)?S.namesLast:[];
+  let av=NM_PEOPLE.filter(p=>!last.includes(p.id));if(av.length<n)av=NM_PEOPLE.slice();
+  const people=gShuf(av).slice(0,n);S.namesLast=people.map(p=>p.id);save();
+  return {people,order:gShuf(people.map((_,i)=>i)),qi:0,phase:'learn',opts:[],misses:0,tried:[],right:0,bad,msg:'',ok:false,done:false,awarded:false,said:false};}
+function nmAsk(g){g.phase='ask';g.misses=0;g.tried=[];g.msg='';g.opts=gShuf(g.people.map((_,i)=>i));render();gSay('Who is this? Tap their name.');}
+function nmPick(k){const g=nm;if(!g||g.phase!=='ask'||g.tried.includes(k))return;const p=g.people[g.order[g.qi]];
+  if(k===g.order[g.qi]){g.phase='fb';g.ok=true;if(!g.misses)g.right++;g.msg=`Yes! This is ${p.name}. ${p.name} ${p.hint}.`;chime(false);gSay(`Yes! This is ${p.name}.`);render();return;}
+  g.tried.push(k);g.misses++;
+  if(g.misses>=2||g.tried.length>=g.people.length-1){g.phase='fb';g.ok=false;g.msg='Good try. '+nmIntro(p);gSay('Good try. '+nmIntro(p));}
+  else{g.msg=nmClue(p);gSay(nmClue(p));}
+  render();}
+function scr_names(step){
+  const N=3;step=Math.max(1,Math.min(N,step||1));
+  const base={name:'Name Game',tab:'games',step:{x:step,y:N},topLeft:'back',backTo:()=>{stopSpeech();step>1?go('game/names/'+(step-1)):go('games');},portal:{size:'small',world:S.world,title:'Name Game'}};
+  if(step===1)return Object.assign(base,{guide:G_START,
+    body:gHow('Faces and names',[['whos','Meet some friendly people and their names.'],['bulb','Each one has a little clue to help you remember.'],['tag','Then see a face and tap the right name.']],
+      S.badDay?'Bad day mode: 2 people to meet. Take your time.':'Seedling level: 4 people to meet. No timer, no rush.'),
+    nextLabel:'Start',next:()=>{nm=newNM();go('game/names/2');}});
+  if(step===2){
+    if(!nm){setTimeout(()=>go('game/names/1'));return gStub(base);}
+    const g=nm,ph=g.phase,n=g.people.length;
+    let inner,guide;
+    if(ph==='learn'){guide=NM_G.learn;
+      inner=`<span class="steptag">Meet</span><div class="nmlearn n${n}">${g.people.map((p,k)=>`<button class="nmcard" data-act="nmhear" data-k="${k}" aria-label="${esc(nmIntro(p))} Tap to hear it.">${nmFace(p)}<span class="nmname">${esc(p.name)}</span><span class="nmhint">${ic(p.i)}${esc(p.hint)}</span></button>`).join('')}</div>`;}
+    else{const p=g.people[g.order[g.qi]];guide=ph==='ask'?(g.misses?NM_G.askmiss:NM_G.ask):(g.ok?NM_G.ok:NM_G.soft);
+      const opts=g.opts.map(k=>{const q=g.people[k];let cls='';if(ph==='fb'&&k===g.order[g.qi])cls='right';else if(g.tried.includes(k))cls='tried';
+        return `<button class="choice src nmopt ${cls}" data-act="nmpick" data-k="${k}" ${g.tried.includes(k)?'disabled':''} ${ph==='fb'?'aria-disabled="true"':''} aria-label="${esc(q.name)}${cls==='right'?'. This is the answer.':''}">${ic(cls==='right'?'check':'tag')}<span>${esc(q.name)}</span></button>`;}).join('');
+      inner=`<div class="statrow nmstat"><div><b>Face ${g.qi+1} / ${n}</b></div><div aria-label="${g.right} right on the first try"><b>${g.right}</b><span class="sub">first try</span></div></div>
+        <div class="nmask"><div class="nmbig">${nmFace(p)}${ph==='fb'?`<span class="nmname">${esc(p.name)}</span>`:''}${(ph==='ask'&&g.misses)||ph==='fb'?`<span class="nmhint">${ic(p.i)}${esc(p.hint)}</span>`:''}</div>
+        <div class="nmside"><h2 class="srq">${ph==='fb'?esc(p.name):'Who is this?'}</h2><div class="srch nmch">${opts}</div></div></div>
+        <p class="srmsg ${ph==='fb'?(g.ok?'ok':'soft'):(g.misses?'soft':'')}" aria-live="polite">${esc(g.msg)}</p>`;}
+    const last=g.qi===n-1;
+    const nextLabel=ph==='learn'?'I am ready':ph==='ask'?'Pick a name':(last?'See results':'Next face');
+    return Object.assign(base,{guide,body:`<div class="card nmcardwrap">${inner}</div>`,
+      mount:()=>{if(ph==='learn'&&!g.said){g.said=true;gAfterGuide(()=>{if(nm===g&&g.phase==='learn'&&gLive('names'))gSaySeq(g.people.map(nmIntro));});}gScroll();},
+      nextLabel,nextDisabled:ph==='ask',
+      next:()=>{if(nm!==g)return;if(g.phase==='learn'){stopSpeech();nmAsk(g);}else if(g.phase==='fb'){if(last){g.done=true;go('game/names/3');}else{g.qi++;nmAsk(g);}}},
+      acts:{nmhear:el=>{const p=g.people[+el.dataset.k];speak(nmIntro(p),false);},nmpick:el=>nmPick(+el.dataset.k)}});
+  }
+  const g=nm;if(!g||!g.done){setTimeout(()=>go('game/names/1'));return Object.assign(gStub(base,'Done'),{nextDisabled:false,next:()=>go('games')});}
+  if(!g.awarded){g.awarded=true;const b=S.namesBest;if(!b||g.right/g.people.length>b.c/b.n)S.namesBest={c:g.right,n:g.people.length};save();addGauge(20,null,false);chime(true);}
+  const b=S.namesBest;
+  return Object.assign(base,{guide:G_END,body:gResults(`You matched <b>${g.right}</b> of ${g.people.length} names on the first try. Every name counts.`,b?`Best so far: ${b.c} of ${b.n}.`:''),
+    nextLabel:'Done',next:()=>go('games'),acts:{again:()=>{nm=newNM();go('game/names/2');}}});
+}
+
+/* ================= Routine Builder ================= */
+/* Steps are in the right order. Bad day keeps the first, middle and last step. */
+const RT_ROUTINES=[
+ {id:'morning',title:'Getting up in the morning',i:'sun',steps:[['Wake up','sun'],['Get out of bed','bed'],['Wash your face','drop'],['Get dressed','shirt'],['Eat breakfast','bowl']]},
+ {id:'leave',title:'Leaving the house',i:'door',steps:[['Pick up your bag','bag'],['Open the front door','door'],['Step outside','path'],['Close the door','home'],['Lock the door with your key','key']]},
+ {id:'bed',title:'Getting ready for bed',i:'moon',steps:[['Have a warm bath','bath'],['Dry off with a towel','towel'],['Put on your pajamas','shirt'],['Get into bed','bed'],['Close your eyes and rest','moon']]},
+ {id:'hands',title:'Washing your hands',i:'drop',steps:[['Turn on the tap','tap'],['Wet your hands','drop'],['Rub on some soap','soap'],['Rinse off the soap','waves'],['Dry your hands','towel']]},
+ {id:'teeth',title:'Brushing your teeth',i:'tooth',steps:[['Pick up your toothbrush','brush'],['Put on some toothpaste','plus'],['Brush all your teeth','tooth'],['Spit and rinse','cup'],['Put your toothbrush away','check']]},
+ {id:'tea',title:'Making a cup of tea',i:'cup',steps:[['Fill the kettle with water','kettle'],['Boil the water','flame'],['Put a tea bag in a cup','cup'],['Pour in the hot water','drop'],['Wait, then sip slowly','clock']]}];
+const RT_G={place:'Tap the steps in order, first step first. Tap a placed step to take it back.',full:'All the steps are placed. Tap Check order.',retry:'Some steps are back below. Tap them in order again.',ok:'Well done! Tap Next when you are ready.',soft:'Here is the right order. Tap Next when you are ready.'};
+let rt=null;
+function newRT(){const bad=!!S.badDay,rounds=bad?2:3;const last=Array.isArray(S.routineLast)?S.routineLast:[];
+  let av=RT_ROUTINES.filter(r=>!last.includes(r.id));if(av.length<rounds)av=RT_ROUTINES.slice();
+  const list=gShuf(av).slice(0,rounds).map(r=>{const steps=bad?[r.steps[0],r.steps[2],r.steps[4]]:r.steps.slice();
+    let pool;do{pool=gShuf(steps.map((_,i)=>i));}while(pool.every((v,i)=>v===i));return {id:r.id,title:r.title,i:r.i,steps,pool};});
+  S.routineLast=list.map(r=>r.id);save();
+  return {list,r:0,phase:'place',slots:Array(list[0].steps.length).fill(null),lock:[],checks:0,firstTry:0,bad,msg:'',ok:false,done:false,awarded:false,said:-1};}
+function rtCur(g){return g.list[g.r];}
+function rtStart(g){const c=rtCur(g);g.phase='place';g.slots=Array(c.steps.length).fill(null);g.lock=[];g.checks=0;g.msg='';}
+function rtPlace(si,slot){const g=rt;if(!g||g.phase!=='place')return;const c=rtCur(g);
+  if(slot!=null&&slot>=0&&g.lock[slot])return render();
+  const at=g.slots.indexOf(si);if(at>=0)g.slots[at]=null;
+  if(slot==null||slot<0)slot=g.slots.indexOf(null);if(slot<0)return render();
+  const prev=g.slots[slot];g.slots[slot]=si;if(prev!=null&&at>=0)g.slots[at]=prev;/* otherwise prev goes back to the pool */
+  if(at<0)gSay(c.steps[si][0]+'.');render();}
+function rtUnplace(slot){const g=rt;if(!g||g.phase!=='place'||g.lock[slot])return;g.slots[slot]=null;render();}
+function rtCheck(){const g=rt;if(!g||g.phase!=='place'||g.slots.includes(null))return;const c=rtCur(g);g.checks++;
+  let right=0;g.slots.forEach((si,k)=>{if(si===k){g.lock[k]=true;right++;}});
+  if(right===g.slots.length){g.phase='fb';g.ok=true;if(g.checks===1)g.firstTry++;g.msg=g.checks===1?'Perfect! Every step is in the right order.':'Well done! Every step is in the right order now.';chime(false);gSay('Well done! Every step is in the right order.');return render();}
+  if(g.checks>=3){g.slots=c.steps.map((_,i)=>i);g.lock=g.slots.map(()=>true);g.phase='fb';g.ok=false;g.msg='Good try. Here is the right order. Read it through once more.';gSay('Good try. Here is the right order.');return render();}
+  g.slots=g.slots.map((si,k)=>g.lock[k]?si:null);
+  g.msg=`${right} of ${c.steps.length} ${right===1?'step is':'steps are'} in the right spot. The others are back below. Try again.`;gSay('Some steps are in the right spot. Try the others again.');render();}
+function rtCard(c,si,attrs,cls){const [l,i]=c.steps[si];return `<button class="rtstep ${cls||''}" ${attrs} data-si="${si}"><span class="rtgrip" aria-hidden="true">${ic('grip')}</span>${ic(i)}<span class="rtl">${esc(l)}</span></button>`;}
+let rtDrag=null,rtNoClick=0;
+function rtAutoScroll(y){/* While dragging near the top or bottom edge, gently scroll so every slot can be reached. */
+  const bd=$('.content-col .body');const sc=bd&&bd.scrollHeight>bd.clientHeight+2&&getComputedStyle(bd).overflowY!=='visible'?bd:null;
+  const top=sc?sc.getBoundingClientRect().top:0,bot=sc?sc.getBoundingClientRect().bottom:innerHeight,edge=48,sp=14;
+  const dy=y<top+edge?-sp:y>bot-edge?sp:0;if(!dy)return;if(sc)sc.scrollTop+=dy;else window.scrollBy(0,dy);}
+function rtDragInit(){if(window.__rtDrag)return;window.__rtDrag=1;
+  document.addEventListener('pointerdown',e=>{const gr=e.target.closest('.rtstep');if(!gr||!rt||rt.phase!=='place'||gr.disabled)return;
+    rtDrag={el:gr,si:+gr.dataset.si,x:e.clientX,y:e.clientY,on:false,ghost:null,fromGrip:!!e.target.closest('.rtgrip'),type:e.pointerType};});
+  document.addEventListener('pointermove',e=>{const d=rtDrag;if(!d)return;const dist=Math.hypot(e.clientX-d.x,e.clientY-d.y);
+    if(!d.on){if(dist<10)return;if(d.type!=='mouse'&&!d.fromGrip){rtDrag=null;return;}
+      d.on=true;const r=d.el.getBoundingClientRect();d.ghost=d.el.cloneNode(true);d.ghost.classList.add('rtghost');d.ghost.style.width=r.width+'px';d.ox=e.clientX-r.left;d.oy=e.clientY-r.top;document.body.appendChild(d.ghost);d.el.classList.add('dragging');}
+    e.preventDefault();rtAutoScroll(e.clientY);d.ghost.style.left=(e.clientX-d.ox)+'px';d.ghost.style.top=(e.clientY-d.oy)+'px';
+    document.querySelectorAll('.rtslot.over').forEach(x=>x.classList.remove('over'));const t=document.elementFromPoint(e.clientX,e.clientY);const sl=t&&t.closest('.rtslot');if(sl&&!sl.classList.contains('locked'))sl.classList.add('over');},{passive:false});
+  const end=e=>{const d=rtDrag;rtDrag=null;if(!d||!d.on)return;if(d.ghost)d.ghost.remove();d.el.classList.remove('dragging');rtNoClick=Date.now();
+    const t=document.elementFromPoint(e.clientX,e.clientY);const sl=t&&t.closest('.rtslot');const pool=t&&t.closest('.rtpool');
+    if(sl&&!sl.classList.contains('locked'))rtPlace(d.si,+sl.dataset.slot);else if(pool){const a=rt.slots.indexOf(d.si);if(a>=0)rtUnplace(a);else render();}else render();};
+  document.addEventListener('pointerup',end);document.addEventListener('pointercancel',e=>{const d=rtDrag;rtDrag=null;if(d&&d.ghost){d.ghost.remove();d.el.classList.remove('dragging');}});}
+function scr_routine(step){
+  const N=3;step=Math.max(1,Math.min(N,step||1));
+  const base={name:'Routine Builder',tab:'games',step:{x:step,y:N},topLeft:'back',backTo:()=>{stopSpeech();step>1?go('game/routine/'+(step-1)):go('games');},portal:{size:'small',world:S.world,title:'Routine Builder'}};
+  if(step===1)return Object.assign(base,{guide:G_START,
+    body:gHow('Put the steps in order',[['list','You will see the steps of an everyday routine, all mixed up.'],['next','Tap the first step, then the next, and so on. You can also drag them.'],['check','Tap Check order. Steps in the right spot stay put.']],
+      S.badDay?'Bad day mode: 3 steps in each routine, 2 routines. No rush.':'Seedling level: 5 steps in each routine, 3 routines. No timer, no rush.'),
+    nextLabel:'Start',next:()=>{rt=newRT();go('game/routine/2');}});
+  if(step===2){
+    if(!rt){setTimeout(()=>go('game/routine/1'));return gStub(base);}
+    const g=rt,c=rtCur(g),ph=g.phase,n=c.steps.length,full=!g.slots.includes(null),last=g.r===g.list.length-1;
+    const slots=g.slots.map((si,k)=>{const lk=!!g.lock[k];
+      return `<li class="rtslot ${si==null?'empty':''} ${lk?'locked':''}" data-slot="${k}"><span class="rtn" aria-hidden="true">${k+1}</span>${si==null?`<span class="rtempty">${k===g.slots.indexOf(null)?'Next step goes here':'Empty'}</span>`:
+        rtCard(c,si,`data-act="rtun" data-k="${k}" ${lk||ph!=='place'?'aria-disabled="true"':''} aria-label="Step ${k+1}: ${esc(c.steps[si][0])}${lk?'. Right spot.':'. Tap to take it back.'}"`,lk?'placed lockd':'placed')}${lk?`<span class="rtok">${ic('check')}<span>Right</span></span>`:''}</li>`;}).join('');
+    const pool=c.pool.filter(si=>!g.slots.includes(si));
+    const poolH=ph==='place'?`<div class="rtpool" aria-label="Steps to place">${pool.length?pool.map(si=>rtCard(c,si,`data-act="rtpick" aria-label="${esc(c.steps[si][0])}. Tap to place it as step ${g.slots.indexOf(null)+1}."`)).join(''):`<p class="rtdone">${ic('check')}All steps placed.</p>`}</div>`:'';
+    const guide=ph==='fb'?(g.ok?RT_G.ok:RT_G.soft):full?RT_G.full:(g.checks?RT_G.retry:RT_G.place);
+    return Object.assign(base,{guide,
+      body:`<div class="card rtcard"><div class="statrow rtstat"><div><b>Routine ${g.r+1} / ${g.list.length}</b></div><button class="btn rtsay" data-act="rtsay" aria-label="Hear the routine name">${ic('speaker')}<span>Hear</span></button></div>
+        <div class="pkhead">${ic(c.i)}<h2>${esc(c.title)}</h2></div>
+        ${g.msg?`<p class="srmsg rtmsg ${ph==='fb'?(g.ok?'ok':'soft'):'soft'}" aria-live="polite">${esc(g.msg)}</p>`:''}<div class="rtwrap ph-${ph} ${pool.length?'':'allin'}"><div class="rtcol"><span class="steptag">Your order</span><ol class="rtslots">${slots}</ol></div>${ph==='place'?`<div class="rtcol"><span class="steptag">Steps to place</span>${poolH}</div>`:''}</div>
+</div>`,
+      mount:()=>{rtDragInit();if(g.said!==g.r){g.said=g.r;gAfterGuide(()=>{if(rt===g&&gLive('routine'))gSaySeq([c.title+'.','Tap the first step.']);});}gScroll();},
+      nextLabel:ph==='place'?'Check order':(last?'See results':'Next routine'),nextDisabled:ph==='place'&&!full,
+      next:()=>{if(rt!==g)return;if(g.phase==='place')rtCheck();else if(g.phase==='fb'){if(last){g.done=true;go('game/routine/3');}else{g.r++;rtStart(g);render();}}},
+      acts:{rtpick:el=>{if(Date.now()-rtNoClick<400)return;rtPlace(+el.dataset.si,-1);},rtun:el=>{if(Date.now()-rtNoClick<400)return;rtUnplace(+el.dataset.k);},
+        rtsay:()=>speakSeq([c.title+'.',...g.slots.filter(x=>x!=null).map(si=>c.steps[si][0]+'.')])}});
+  }
+  const g=rt;if(!g||!g.done){setTimeout(()=>go('game/routine/1'));return Object.assign(gStub(base,'Done'),{nextDisabled:false,next:()=>go('games')});}
+  if(!g.awarded){g.awarded=true;const b=S.routineBest;if(!b||g.firstTry/g.list.length>b.c/b.n)S.routineBest={c:g.firstTry,n:g.list.length};save();addGauge(20,null,false);chime(true);}
+  const b=S.routineBest;
+  return Object.assign(base,{guide:G_END,body:gResults(`You put <b>${g.list.length}</b> routines in order${g.firstTry?`, ${g.firstTry} on the first try`:''}. Steady steps, well done.`,b?`Best so far: ${b.c} of ${b.n} on the first try.`:''),
+    nextLabel:'Done',next:()=>go('games'),acts:{again:()=>{rt=newRT();go('game/routine/2');}}});
+}
+
+/* Every fixed line the new games can speak (for pre-recording MP3s). */
+function newGameLines(){const L=new Set();const gl=(name,n,txt)=>L.add(`You are on ${name}. Step ${n} of 3. ${txt}`);
+  [['Pack the Bag',PK_G],['Simon Says',SM_G],['Name Game',NM_G],['Routine Builder',RT_G]].forEach(([nm2,G])=>{gl(nm2,1,G_START);gl(nm2,3,G_END);Object.values(G).forEach(t=>{gl(nm2,2,t);});});
+  L.add('You are on Games. Tap a doorway to pick a game. All seven games are ready to play.');
+  Object.values(PK_G).forEach(t=>L.add(t));Object.values(SM_G).forEach(t=>L.add(t));Object.values(NM_G).forEach(t=>L.add(t));
+  PK_TRIPS.forEach(t=>L.add(t.title+'. Pack these things.'));Object.values(PK_ITEMS).forEach(([l])=>L.add(l+'.'));
+  ['All packed! You remembered everything.','Good try. The things you still need are glowing.'].forEach(t=>L.add(t));
+  SM_WIN.forEach(w=>L.add(w[1]));['You did it! You remembered the whole pattern.','Well done! Next time there is one more light.','Good try. That is great memory work.','Not quite. Let\u2019s watch it again.'].forEach(t=>L.add(t));
+  L.add('Who is this? Tap their name.');NM_PEOPLE.forEach(p=>{L.add(nmIntro(p));L.add(nmClue(p));L.add(`Yes! This is ${p.name}.`);L.add('Good try. '+nmIntro(p));});
+  RT_ROUTINES.forEach(r=>{L.add(r.title+'.');r.steps.forEach(s=>L.add(s[0]+'.'));});
+  ['Tap the first step.','Well done! Every step is in the right order.','Good try. Here is the right order.','Some steps are in the right spot. Try the others again.'].forEach(t=>L.add(t));
+  return [...L].map(normT);}
 
 const DRILLS=[['path','Palace walk','Place things along a path in your palace'],['repeat','Spaced review','Quick reviews right before you\u2019d forget'],['list','Real-life lists','Practice your own lists'],['hash','Number recall','Codes and phone numbers, in chunks'],['search','Where was it?','Put things back where they were'],['whos','Name and face','Remember the people you saved'],['link','Story chain','Link a list into a silly story'],['target','Focus warm-up','One minute to get ready'],['moon','Daily recap','Gentle questions at night']];
 function scr_practice(){
@@ -1519,7 +1872,7 @@ function getScreen(){
     case 'where':return scr_where(r[1],+r[2]);
     case 'whos':return scr_whos();
     case 'games':return scr_games();
-    case 'game':return r[1]==='changed'?scr_changed(+r[2]||1):r[1]==='story'?scr_story(+r[2]||1):scr_cardflip(+r[2]||1);
+    case 'game':{const GS={changed:scr_changed,story:scr_story,pack:scr_pack,simon:scr_simon,names:scr_names,routine:scr_routine};return (GS[r[1]]||scr_cardflip)(+r[2]||1);}
     case 'practice':return scr_practice();
     case 'palace':return scr_palace();
     case 'remind':{const sc=scr_remind(r[1],r[2],r[3]);sc.body='<i class="rmx" hidden></i>'+sc.body;return sc;}
@@ -1621,7 +1974,7 @@ function showTour(){
 }
 function endTour(){$('#overlay-root').innerHTML='';S.tourDone=true;save();toast('Tour finished. Tap Where am I? any time.');}
 window.addEventListener('resize',()=>{if($('.tour-spot'))showTour();});
-window.Highkeep={rm:{parse:rmParse,now:rmNow,warp:ms=>{let left=ms;while(left>0){const d=Math.min(30000,left);rmOffset+=d;left-=d;rmTick();}},jump:ms=>{rmOffset+=ms;rmTick();},tick:rmTick,items:()=>S.rm.items,add:rmAdd,due:rmDueList,log:()=>rmLog,caps:rmCaps,draft:()=>rmDraft,ics:rmIcs,exportText:rmExportText,alertId:()=>rmAlertId,catchUp:()=>rmCatch,seenReset:()=>{rmLastTick=null;},fireAt:rmFireAt,load:()=>{rmNorm();}},guide:()=>cur&&guideText(cur).speech,TOUR:()=>TOUR,startTour,state:()=>S,flip,reveal,game:()=>game,wc:()=>wc,wcPick,sr:()=>sr,srPick,STORIES:()=>STORIES};
+window.Highkeep={rm:{parse:rmParse,now:rmNow,warp:ms=>{let left=ms;while(left>0){const d=Math.min(30000,left);rmOffset+=d;left-=d;rmTick();}},jump:ms=>{rmOffset+=ms;rmTick();},tick:rmTick,items:()=>S.rm.items,add:rmAdd,due:rmDueList,log:()=>rmLog,caps:rmCaps,draft:()=>rmDraft,ics:rmIcs,exportText:rmExportText,alertId:()=>rmAlertId,catchUp:()=>rmCatch,seenReset:()=>{rmLastTick=null;},fireAt:rmFireAt,load:()=>{rmNorm();}},guide:()=>cur&&guideText(cur).speech,TOUR:()=>TOUR,startTour,state:()=>S,flip,reveal,game:()=>game,wc:()=>wc,wcPick,sr:()=>sr,srPick,STORIES:()=>STORIES,pk:()=>pk,sm:()=>sm,smTap,nm:()=>nm,nmPick,rt:()=>rt,rtPlace,newGameLines};
 
 rmNorm();rmLastTick=S.rm.seen||null;
 render();
