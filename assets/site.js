@@ -48,6 +48,56 @@
     return "#";
   }
 
+  function merchList(audience) {
+    var all = Array.isArray(window.WINGS_MERCH) ? window.WINGS_MERCH : [];
+    return all.filter(function (item) {
+      return item && item.name && item.url && item.audience === audience;
+    });
+  }
+
+  function merchLabel(item) {
+    if (item.status === "live") return item.badge || "Shop";
+    return "Coming soon";
+  }
+
+  function renderMerch() {
+    var mounts = document.querySelectorAll("[data-merch]");
+    if (!mounts.length) return;
+
+    Array.prototype.forEach.call(mounts, function (node) {
+      var audience = node.getAttribute("data-merch");
+      var cards = merchList(audience);
+
+      if (!cards.length) {
+        node.innerHTML = '<p class="empty">Nothing in this shop yet.</p>';
+        return;
+      }
+
+      node.innerHTML = cards
+        .map(function (item) {
+          var url = sanitizeUrl(item.url);
+          return (
+            '<a class="panel app-card" href="' +
+            escapeHtml(url) +
+            '" target="_blank" rel="noopener">' +
+            '<p class="badge">' +
+            escapeHtml(merchLabel(item)) +
+            "</p>" +
+            "<h3>" +
+            escapeHtml(item.name) +
+            "</h3>" +
+            '<p class="blurb">' +
+            escapeHtml(item.blurb || "") +
+            "</p>" +
+            '<span class="open">Open shop <span aria-hidden="true">↗</span>' +
+            '<span class="sr-only"> (opens in a new tab)</span></span>' +
+            "</a>"
+          );
+        })
+        .join("");
+    });
+  }
+
   function renderApps() {
     if (!mount) return;
 
@@ -256,6 +306,7 @@
   }
 
   renderApps();
+  renderMerch();
   watchNav();
   wireShare();
   wireAgeGate();
