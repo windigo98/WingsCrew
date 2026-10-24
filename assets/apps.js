@@ -21,4 +21,10 @@ window.WINGS_APPS = [
     url: "https://windigo98.github.io/Litter-Crusaders-Maps/",
     badge: "Play",
   },
+  {
+    name: "WingsCrew Looks",
+    blurb: "Plan outfits from your own closet, keep a gift wishlist, and get votes with Fit or Miss?",
+    url: "https://windigo98.github.io/WingsCrew-Looks/",
+    badge: "New",
+  },
 ];
