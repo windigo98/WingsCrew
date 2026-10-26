@@ -455,18 +455,20 @@
     return P.buildList(state.recipes, state.picked, state.pantry, state.picks);
   }
 
+  function brandBits(view) {
+    var bits = [];
+    if (view.product) bits.push(view.product);
+    if (view.size && (!view.product || view.product.toLowerCase().indexOf(view.size.toLowerCase()) === -1)) {
+      bits.push(view.size);
+    }
+    if (view.price) bits.push(view.price);
+    return bits;
+  }
+
   function brandLine(item) {
     var view = P.brandView(item.brand);
     if (!view) return "";
-    var bits = [];
-    if (view.product) bits.push(view.product);
-    if (view.size) bits.push(view.size);
-    if (view.price) bits.push(view.price);
-    var name = bits.join(", ");
-    var linked = view.url
-      ? '<a href="' + escapeHtml(view.url) + '" target="_blank" rel="noopener noreferrer">' + escapeHtml(name || view.product) + "</a>"
-      : escapeHtml(name);
-    var where = view.store ? " at " + escapeHtml(view.store) : "";
+    var name = brandBits(view).join(", ");
     return "Best buy: " + (name || view.store) + (view.store ? " at " + view.store : "");
   }
 
@@ -486,11 +488,7 @@
         var view = P.brandView(item.brand);
         var brand = "";
         if (view) {
-          var bits = [];
-          if (view.product) bits.push(view.product);
-          if (view.size) bits.push(view.size);
-          if (view.price) bits.push(view.price);
-          var name = bits.join(", ");
+          var name = brandBits(view).join(", ");
           var linked = view.url && name
             ? '<a href="' + escapeHtml(view.url) + '" target="_blank" rel="noopener noreferrer">' + escapeHtml(name) + "</a>"
             : escapeHtml(name);
@@ -540,7 +538,10 @@
       body += '<p class="empty">Nothing to buy. The pantry covers this list.</p>';
     } else {
       body += '<p class="lede">Grouped for the store. Checked items stay until you take the recipe off.</p>';
-      if (note) body += '<p class="price-note">' + escapeHtml(note) + "</p>";
+      if (note) {
+        body += '<p class="price-note">' + escapeHtml(note) + "</p>";
+        body += '<p class="note">H-E-B shows online prices for store 582. Walmart prices are walmart.com defaults. In-store prices may differ.</p>';
+      }
       body += '<div class="chosen" aria-label="Recipes on this list">' + chosen + "</div>";
       body += groups;
       body += '<div class="store-row">' +

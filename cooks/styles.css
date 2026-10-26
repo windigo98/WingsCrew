@@ -199,6 +199,13 @@ h1:focus {
   color: var(--muted);
 }
 
+.why {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
 .lede {
   margin-top: 0.45rem;
   max-width: 36rem;

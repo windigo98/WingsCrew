@@ -55,4 +55,4 @@ When the file is there, it is a JSON array. One object per ingredient:
 | `bestBuy` | `store`, `product`, `why` |
 | `checkedAt` | Day the prices were checked, `YYYY-MM-DD` |
 
-The list shows the best-buy product and store under the item, and a "Prices as of …" note from `checkedAt`. Product links are the `url` on that store's object only. No affiliate parameters are added.
+The list shows the best-buy product, store, and price under the item, and a "Prices as of …" note from `checkedAt`. Names do not have to match the recipe wording exactly. H-E-B shows online prices for store 582. Walmart prices are walmart.com defaults. In-store prices may differ. Product links are the `url` on that store's object only. No affiliate parameters are added.

@@ -567,6 +567,7 @@
             aisle: part.aisle,
             parts: [],
             recipes: [],
+            raws: [],
           };
         }
         buckets[part.id].parts.push({
@@ -574,6 +575,9 @@
           unit: part.unit,
           recipeTitle: recipe.title,
         });
+        if (part.raw && buckets[part.id].raws.indexOf(part.raw) === -1) {
+          buckets[part.id].raws.push(part.raw);
+        }
         if (buckets[part.id].recipes.indexOf(recipe.title) === -1) {
           buckets[part.id].recipes.push(recipe.title);
         }
@@ -599,16 +603,198 @@
     return { groups: groups, items: Object.keys(buckets).map(function (id) { return buckets[id]; }) };
   }
 
+  /* Brand picks were named from an earlier recipe list, so the match is fuzzy.
+     Same pantry chip wins. Otherwise the pick's own name (or a parenthetical
+     alias such as "skirt steak") has to show up in the item. Canned, dried,
+     frozen, and Ro-Tel stay apart, and salt, pepper, and oil never get a line. */
+  var BRAND_SKIP = {
+    a: 1, an: 1, the: 1, and: 1, or: 1, with: 1, for: 1, of: 1, to: 1, in: 1, on: 1,
+    into: 1, all: 1, purpose: 1, old: 1, fashioned: 1, plain: 1,
+    large: 1, small: 1, medium: 1, whole: 1, fresh: 1, boneless: 1, skinless: 1,
+    chopped: 1, diced: 1, sliced: 1, minced: 1, shredded: 1, grated: 1, ground: 1,
+    extra: 1, virgin: 1, low: 1, sodium: 1, reduced: 1, lean: 1, light: 1,
+    chunk: 1, style: 1, blend: 1, mixed: 1, flavor: 1, flavored: 1, packet: 1,
+    jarred: 1, inch: 1, avg: 1, ct: 1, oz: 1, lb: 1, lbs: 1, long: 1, grain: 1,
+    frozen: 1, canned: 1, can: 1, dried: 1, dry: 1, cooked: 1,
+  };
+
+  var BRAND_COLORS = { yellow: 1, red: 1, green: 1, white: 1, purple: 1, brown: 1 };
+
+  /* A chip named "garlic salt" must not inherit the fresh-garlic pick. */
+  var BRAND_UNSAFE = {
+    salt: 1, powder: 1, pepper: 1, flake: 1, flakes: 1, juice: 1, vinegar: 1,
+    oil: 1, paste: 1, syrup: 1, seed: 1, seeds: 1, sauce: 1,
+  };
+
+  function brandWords(text) {
+    var raw = String(text || "")
+      .toLowerCase()
+      .replace(/ro-?\s*tel/g, " rotel ")
+      .replace(/&/g, " and ")
+      .replace(/[^a-z0-9]+/g, " ");
+    var out = [];
+    var seen = {};
+    raw.split(/\s+/).forEach(function (word) {
+      if (!word || word.length < 3 || BRAND_SKIP[word] || /^\d$/.test(word)) return;
+      if (word.length > 4 && /oes$/.test(word)) word = word.slice(0, -2);
+      else if (word.length > 3 && word.charAt(word.length - 1) === "s" && word.slice(-2) !== "ss") {
+        word = word.slice(0, -1);
+      }
+      if (word === "veggie" || word === "veggies" || word === "vegetable") word = "vegetable";
+      if (!word || seen[word]) return;
+      seen[word] = true;
+      out.push(word);
+    });
+    return out;
+  }
+
+  function brandFlags(text) {
+    var raw = String(text || "").toLowerCase().replace(/ro-?\s*tel/g, " rotel ");
+    return {
+      frozen: /\bfrozen\b/.test(raw),
+      canned: /\b(canned|cans?)\b/.test(raw),
+      dried: /\b(dried|dry)\b/.test(raw),
+      cooked: /\bcooked\b/.test(raw),
+      rotel: /\brotel\b/.test(raw),
+      santafe: /\bsanta\b/.test(raw) && /\bfe\b/.test(raw),
+    };
+  }
+
+  function flagsForItem(item) {
+    var head = [item.label, String(item.id || "").replace(/-/g, " ")].join(" ");
+    var flags = brandFlags(head);
+    var raws = item.raws || [];
+    var keys = ["frozen", "canned", "dried", "rotel", "santafe"];
+    var k;
+    for (k = 0; k < keys.length; k++) {
+      var key = keys[k];
+      if (flags[key] || !raws.length) continue;
+      var all = true;
+      var r;
+      for (r = 0; r < raws.length; r++) {
+        if (!brandFlags(raws[r])[key]) {
+          all = false;
+          break;
+        }
+      }
+      if (all) flags[key] = true;
+    }
+    return flags;
+  }
+
+  function brandConflict(itemFlags, pickFlags, item) {
+    if (itemFlags.frozen !== pickFlags.frozen) return true;
+    if (itemFlags.canned !== pickFlags.canned) return true;
+    if (itemFlags.canned && pickFlags.dried) return true;
+    if (itemFlags.dried && pickFlags.canned) return true;
+    if (itemFlags.rotel !== pickFlags.rotel) return true;
+    if (itemFlags.santafe !== pickFlags.santafe) return true;
+    if (item && item.id === "cooked-rice" && !pickFlags.cooked) return true;
+    return false;
+  }
+
+  function splitBrandName(text) {
+    var inside = [];
+    var outside = String(text || "").replace(/\(([^)]*)\)/g, function (_, group) {
+      inside.push(group);
+      return " ";
+    });
+    return {
+      outside: brandWords(outside),
+      inside: brandWords(inside.join(" ")),
+    };
+  }
+
+  function wordsOverlap(left, right) {
+    var n = 0;
+    var i;
+    for (i = 0; i < left.length; i++) {
+      if (right.indexOf(left[i]) !== -1) n += 1;
+    }
+    return n;
+  }
+
   function matchBrand(item, picks) {
+    var itemText = [item.label, String(item.id || "").replace(/-/g, " "), (item.raws || []).join(" ")].join(" ");
+    var itemFlags = flagsForItem(item);
+    var itemWords = brandWords(itemText);
+    var best = null;
+    var bestScore = 0;
     var i;
     for (i = 0; i < picks.length; i++) {
       var pick = picks[i];
       if (!pick || !pick.ingredient) continue;
-      var info = classify(pick.ingredient);
-      if (info.id === item.id) return pick;
-      if (String(pick.ingredient).trim().toLowerCase() === item.label.toLowerCase()) return pick;
+      var pickText = String(pick.ingredient);
+      var info = classify(pickText);
+      if (info.staple) continue;
+      var pickFlags = brandFlags(pickText);
+      if (pickFlags.rotel) pickFlags.canned = true;
+      if (brandConflict(itemFlags, pickFlags, item)) continue;
+      var parts = splitBrandName(pickText);
+      var pickWords = brandWords(pickText);
+      var shared = wordsOverlap(itemWords, pickWords);
+      var score = 0;
+      var headWords = brandWords([item.label, String(item.id || "").replace(/-/g, " ")].join(" "));
+      var insideHit = [];
+      var n;
+      for (n = 0; n < parts.inside.length; n++) {
+        if (itemWords.indexOf(parts.inside[n]) !== -1) insideHit.push(parts.inside[n]);
+      }
+      if (info.id === item.id) {
+        score = 100 + shared * 4;
+      } else {
+        var unsafe = false;
+        var u;
+        for (u = 0; u < headWords.length; u++) {
+          if (BRAND_UNSAFE[headWords[u]] && pickWords.indexOf(headWords[u]) === -1) unsafe = true;
+        }
+        var pickColors = [];
+        var itemColors = [];
+        var c;
+        for (c = 0; c < parts.outside.length; c++) if (BRAND_COLORS[parts.outside[c]]) pickColors.push(parts.outside[c]);
+        for (c = 0; c < parts.inside.length; c++) if (BRAND_COLORS[parts.inside[c]]) pickColors.push(parts.inside[c]);
+        for (c = 0; c < headWords.length; c++) if (BRAND_COLORS[headWords[c]]) itemColors.push(headWords[c]);
+        var colorClash = false;
+        if (pickColors.length && itemColors.length) {
+          colorClash = true;
+          for (c = 0; c < pickColors.length; c++) {
+            if (itemColors.indexOf(pickColors[c]) !== -1) colorClash = false;
+          }
+        }
+        var covered = parts.outside.length > 0;
+        var o;
+        for (o = 0; o < parts.outside.length; o++) {
+          if (itemWords.indexOf(parts.outside[o]) === -1) covered = false;
+        }
+        /* "Ham or bacon" is either food, so a pick for only one of them stays off. */
+        var splitLabel = /\bor\b/i.test(item.label || "");
+        var labelCovered = true;
+        if (splitLabel) {
+          for (o = 0; o < headWords.length; o++) {
+            if (pickWords.indexOf(headWords[o]) === -1) labelCovered = false;
+          }
+        }
+        var alias = insideHit.length >= 2;
+        if (!unsafe && !colorClash && covered && (!splitLabel || labelCovered || alias)) score = 70 + shared * 4;
+        if (!unsafe && !colorClash && alias && (!splitLabel || labelCovered || alias)) {
+          score = Math.max(score, 70 + insideHit.length * 8 + shared);
+        }
+      }
+      if (!score) continue;
+      var hits = 0;
+      var raws = item.raws || [];
+      var r;
+      for (r = 0; r < raws.length; r++) {
+        if (wordsOverlap(parts.outside, brandWords(raws[r])) > 0) hits += 1;
+      }
+      score += hits;
+      if (score > bestScore) {
+        bestScore = score;
+        best = pick;
+      }
     }
-    return null;
+    if (bestScore < 60) return null;
+    return best;
   }
 
   function normalizePicks(data) {
@@ -635,7 +821,7 @@
       ? new Date(Number(match[1]), Number(match[2]) - 1, Number(match[3]))
       : new Date(text);
     if (isNaN(date.getTime())) return text;
-    return date.toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" });
+    return date.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
   }
 
   function priceNote(items) {
@@ -662,8 +848,12 @@
   }
 
   function money(value) {
-    var n = Number(value);
-    if (!isFinite(n)) return "";
+    if (value == null || value === "") return "";
+    var text = String(value).trim().replace(/\s+/g, " ");
+    if (/\$\s?\d/.test(text)) return text;
+    var numeric = text.replace(/[^0-9.]/g, "");
+    var n = Number(numeric);
+    if (!isFinite(n) || numeric === "") return "";
     return "$" + n.toFixed(2);
   }
 

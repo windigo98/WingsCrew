@@ -1,7 +1,7 @@
 /* WingsCrew Cooks service worker.
    Scope is /cooks/ only. It does not cache the rest of wingscrew.com.
-   brand_picks.json is not precached: the file may not exist yet. */
-var CACHE = "wingscrew-cooks-v1";
+   brand_picks.json is precached with the rest of /cooks/. */
+var CACHE = "wingscrew-cooks-v2";
 var ROOT = new URL("./", self.location);
 
 var PRECACHE = [
@@ -13,6 +13,7 @@ var PRECACHE = [
   "./stores.js",
   "./manifest.webmanifest",
   "./data/recipes.json",
+  "./data/brand_picks.json",
   "./fonts/fraunces-latin.woff2",
   "./fonts/outfit-latin.woff2",
   "./icons/icon-192.png",
