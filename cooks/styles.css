@@ -163,6 +163,12 @@ button:disabled {
   object-fit: contain;
 }
 
+.bar-links {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
 .home-link {
   color: var(--gold);
   font-weight: 600;
@@ -170,6 +176,139 @@ button:disabled {
   min-height: 2.75rem;
   display: inline-flex;
   align-items: center;
+}
+
+.help-link {
+  width: 2.75rem;
+  height: 2.75rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  color: var(--gold);
+  text-decoration: none;
+  font-family: var(--serif);
+  font-weight: 650;
+  font-size: 1.25rem;
+}
+
+.help-link[aria-current="page"] {
+  background: var(--gold);
+  color: var(--gold-ink);
+  border-color: var(--gold);
+}
+
+.lede a,
+.guide a {
+  color: var(--gold);
+  font-weight: 600;
+}
+
+.welcome {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 0.95rem 1rem 1rem;
+  margin-bottom: 1rem;
+}
+
+.welcome p + .actions,
+.share-form .actions {
+  margin-top: 0.8rem;
+}
+
+.guide {
+  display: grid;
+  gap: 0.75rem;
+  margin-top: 1.1rem;
+}
+
+.guide h2 {
+  font-family: var(--serif);
+  font-weight: 650;
+  font-size: 1.35rem;
+  letter-spacing: -0.03em;
+  margin-top: 0.4rem;
+}
+
+.guide ul,
+.guide ol {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.guide li::marker {
+  color: var(--gold);
+  font-weight: 600;
+}
+
+.share-form {
+  margin-top: 0.4rem;
+}
+
+.field {
+  display: grid;
+  gap: 0.3rem;
+  margin-top: 0.85rem;
+}
+
+.field span {
+  color: var(--muted);
+  font-size: 0.86rem;
+}
+
+.field input,
+.field textarea,
+.field select {
+  width: 100%;
+  min-height: 2.75rem;
+  padding: 0.65rem 0.8rem;
+  border-radius: 12px;
+  border: 1px solid var(--line);
+  background: var(--card);
+  font-size: 1rem;
+}
+
+.field textarea {
+  min-height: 6.5rem;
+  resize: vertical;
+  line-height: 1.4;
+}
+
+.confirm {
+  display: flex;
+  gap: 0.75rem;
+  align-items: flex-start;
+  margin-top: 1rem;
+}
+
+.confirm input {
+  width: 1.35rem;
+  height: 1.35rem;
+  margin-top: 0.15rem;
+  accent-color: var(--gold);
+  flex: 0 0 auto;
+}
+
+.foot-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 1rem;
+  margin-top: 1.4rem;
+}
+
+.foot-links a {
+  color: var(--gold);
+  font-weight: 600;
+  text-decoration: none;
+  min-height: 2.75rem;
+  display: inline-flex;
+  align-items: center;
+}
+
+.foot-links + .legal {
+  margin-top: 0.15rem;
 }
 
 main {
