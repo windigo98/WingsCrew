@@ -150,15 +150,28 @@
     );
   }
 
-  function ratingRow(recipe) {
+  function ratingRow(recipe, includeSite) {
     var stars = starsHtml(recipe.rating);
-    var site = P.siteLabel(recipe);
+    var site = includeSite === false ? "" : P.siteLabel(recipe);
     if (!stars && !site) return "";
     return (
       '<div class="rating-row">' +
       stars +
       (site ? '<span class="site-name">' + escapeHtml(site) + "</span>" : "") +
       "</div>"
+    );
+  }
+
+  function creditLine(recipe) {
+    var label = recipe && recipe.creditLabel ? String(recipe.creditLabel).trim() : "";
+    if (!label) return "";
+    var site = P.siteLabel(recipe);
+    var text = site ? label + " · " + site : label;
+    var url = safeUrl(P.sourceUrl(recipe));
+    if (!url) return '<p class="credit">' + escapeHtml(text) + "</p>";
+    return (
+      '<p class="credit"><a href="' + escapeHtml(url) + '" target="_blank" rel="noopener noreferrer">' +
+      escapeHtml(text) + "</a></p>"
     );
   }
 
@@ -385,11 +398,8 @@
         "</li>"
       );
     }).join("");
-    var url = safeUrl(P.sourceUrl(recipe));
-    var site = P.siteLabel(recipe);
-    var original = P.isOriginal(recipe);
     var steps = "";
-    if (original && Array.isArray(recipe.steps) && recipe.steps.length) {
+    if (Array.isArray(recipe.steps) && recipe.steps.length) {
       steps =
         '<section class="block"><h2>Steps</h2><ol class="steps">' +
         recipe.steps.map(function (step) { return "<li>" + escapeHtml(step) + "</li>"; }).join("") +
@@ -402,23 +412,20 @@
     var cook = Array.isArray(recipe.steps) && recipe.steps.length
       ? '<a class="primary" href="#/cook/' + encodeURIComponent(recipe.id) + '/1">Cook</a>'
       : "";
-    var source = !original && url
-      ? '<p class="source"><a href="' + escapeHtml(url) + '" target="_blank" rel="noopener noreferrer">Full recipe at ' +
-        escapeHtml(site || "the source") + "</a></p>"
-      : "";
+    var credit = creditLine(recipe);
     return shell(
       '<a class="back" href="#/">Back</a>' +
       '<article class="detail">' +
       badges(recipe) +
       allergenChip(recipe) +
       "<h1>" + escapeHtml(recipe.title) + "</h1>" +
-      ratingRow(recipe) +
+      ratingRow(recipe, !credit) +
+      credit +
       (metaLine(recipe) ? '<p class="meta">' + escapeHtml(metaLine(recipe)) + "</p>" : "") +
       '<p class="summary">' + escapeHtml(P.summary(recipe)) + "</p>" +
       seasoningHtml(recipe) +
       notes +
       '<div class="actions">' + cook + pickButton(recipe.id) + "</div>" +
-      source +
       '<section class="block"><h2>Ingredients</h2><ul class="ingredients">' + ingredients + "</ul></section>" +
       steps +
       "</article>"
