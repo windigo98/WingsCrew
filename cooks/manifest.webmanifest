@@ -1,0 +1,32 @@
+{
+  "name": "WingsCrew Cooks",
+  "short_name": "Cooks",
+  "description": "Budget cookbook for home in Bastrop, Texas.",
+  "id": "/cooks/",
+  "start_url": "/cooks/",
+  "scope": "/cooks/",
+  "display": "standalone",
+  "background_color": "#0b0a09",
+  "theme_color": "#0b0a09",
+  "lang": "en-US",
+  "icons": [
+    {
+      "src": "/cooks/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/cooks/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/cooks/icons/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}
