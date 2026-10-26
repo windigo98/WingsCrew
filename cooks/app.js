@@ -446,8 +446,8 @@
       (state.pantry.length
         ? '<p class="actions"><button type="button" class="ghost" data-action="clear-pantry">Clear</button></p>'
         : "") +
-      aisles +
-      results
+      results +
+      aisles
     );
   }
 
