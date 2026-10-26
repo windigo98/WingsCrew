@@ -1,0 +1,3065 @@
+[
+ {
+  "ingredient": "fajita meat (beef skirt/fajita steak)",
+  "aisle": "Meat",
+  "heb": {
+   "product": "Hill Country Fare Seasoned Beef for Fajitas - Texas-Size Pack, Avg. 3.8 lbs",
+   "size": "Avg. 3.8 lbs",
+   "price": "$22.00",
+   "unitPrice": "$5.79 / lb",
+   "stars": null,
+   "ratingCount": null,
+   "url": "https://www.heb.com/product-detail/hill-country-fare-seasoned-beef-for-fajitas-texas-size-pack-avg-3-8-lbs/372332",
+   "note": "heb.com shows no customer star ratings; curbside price shown $23.10; sold by weight, so the price is for the average pack weight"
+  },
+  "walmart": {
+   "product": "Buena Mesa Refrigerated Beef for Fajitas, Authentically Seasoned, Ready to Cook, 1.5 - 2.5 lb",
+   "size": "1.5 - 2.5 lb",
+   "price": "$12.20",
+   "unitPrice": "$6.32/lb",
+   "stars": 4.4,
+   "ratingCount": 1049,
+   "url": "https://www.walmart.com/ip/Buena-Mesa-Refrigerated-Beef-for-Fajitas-Authentically-Seasoned-Ready-to-Cook-1-5-2-5-lb/16893658696",
+   "note": null
+  },
+  "bestBuy": {
+   "store": "H-E-B",
+   "product": "Hill Country Fare Seasoned Beef for Fajitas - Texas-Size Pack, Avg. 3.8 lbs",
+   "why": "Cheaper on unit price: H-E-B 36.2¢/oz vs Walmart 39.5¢/oz. Both picks are pre-seasoned 'beef for fajitas'. For plain skirt steak: H-E-B Beef Inside Skirt Steaks Value Pack is $10.89/lb, Walmart Beef Inside Skirt Steak (4-6.6 lb) is $9.38/lb. H-E-B's smaller 2.15 lb pack is $13.31 ($6.19/lb)."
+  },
+  "checkedAt": "2026-10-26",
+  "sources": {
+   "heb": "https://www.heb.com/search?q=beef+fajita",
+   "walmart": "https://www.walmart.com/search?q=beef+skirt+steak+fajita"
+  }
+ },
+ {
+  "ingredient": "chicken thighs (boneless skinless)",
+  "aisle": "Meat",
+  "heb": {
+   "product": "Hill Country Fare Boneless Skinless Chicken Thighs, Avg. 3.11 lbs",
+   "size": "Avg. 3.11 lbs",
+   "price": "$10.01",
+   "unitPrice": "$3.22 / lb",
+   "stars": null,
+   "ratingCount": null,
+   "url": "https://www.heb.com/product-detail/hill-country-fare-boneless-skinless-chicken-thighs-avg-3-11-lbs/313259",
+   "note": "heb.com shows no customer star ratings; curbside price shown $10.51; sold by weight, so the price is for the average pack weight"
+  },
+  "walmart": {
+   "product": "Freshness Guaranteed Boneless Skinless Chicken Thighs Family Pack, 2.6 - 6.9 lb Tray",
+   "size": "2.6 - 6.9 lb",
+   "price": "$13.97",
+   "unitPrice": "$3.22/lb",
+   "stars": 4.4,
+   "ratingCount": 31848,
+   "url": "https://www.walmart.com/ip/Boneless-Skinless-Chicken-Thighs-Family-Pack-4-7-6-lb-Tray/124782654",
+   "note": null
+  },
+  "bestBuy": {
+   "store": "Walmart",
+   "product": "Freshness Guaranteed Boneless Skinless Chicken Thighs Family Pack, 2.6 - 6.9 lb Tray",
+   "why": "Tie on unit price (20.1¢/oz at both); Walmart's pick is rated 4.4 stars (31,848 ratings). Same $3.22/lb at both stores.",
+   "nameBrandCompare": {
+    "product": "Perdue Harvestland, Free Range, Fresh Boneless Chicken Thigh, 1.7-4 lb. Tray",
+    "price": "$12.02",
+    "unitPrice": "$3.94/lb",
+    "url": "https://www.walmart.com/ip/Perdue-Harvestland-Free-Range-Fresh-Boneless-Chicken-Thigh-2-5-3-45-lb-Tray/42294616",
+    "estSavingVsNameBrand": 3.12
+   }
+  },
+  "checkedAt": "2026-10-26",
+  "sources": {
+   "heb": "https://www.heb.com/search?q=boneless+skinless+chicken+thighs",
+   "walmart": "https://www.walmart.com/search?q=boneless+skinless+chicken+thighs"
+  }
+ },
+ {
+  "ingredient": "ribeye steak",
+  "aisle": "Meat",
+  "heb": {
+   "product": "H-E-B Boneless Beef Ribeye Steaks - USDA Select - Value Pack, Avg. 2.15 lbs",
+   "size": "Avg. 2.15 lbs",
+   "price": "$31.15",
+   "unitPrice": "$14.49 / lb",
+   "stars": null,
+   "ratingCount": null,
+   "url": "https://www.heb.com/product-detail/h-e-b-boneless-beef-ribeye-steaks-usda-select-value-pack-avg-2-15-lbs/371747",
+   "note": "heb.com shows no customer star ratings; curbside price shown $32.70; sold by weight, so the price is for the average pack weight"
+  },
+  "walmart": {
+   "product": "Ribeye Steak, Choice Angus Beef, 1 per Package, Fresh, 0.9 - 1.6 lb",
+   "size": "0.9 - 1.6 lb",
+   "price": "$17.46",
+   "unitPrice": "$15.87/lb",
+   "stars": 4.4,
+   "ratingCount": 14287,
+   "url": "https://www.walmart.com/ip/Ribeye-Steak-Choice-Angus-Beef-1-per-Package-Fresh-0-9-1-6-lb/5001801215",
+   "note": null
+  },
+  "bestBuy": {
+   "store": "H-E-B",
+   "product": "H-E-B Boneless Beef Ribeye Steaks - USDA Select - Value Pack, Avg. 2.15 lbs",
+   "why": "Cheaper on unit price: H-E-B 90.6¢/oz vs Walmart 99.2¢/oz. H-E-B's ribeye is USDA Select; Walmart's is Choice Angus. Choice is better marbled for about $1.38/lb more, worth it for the grill."
+  },
+  "checkedAt": "2026-10-26",
+  "sources": {
+   "heb": "https://www.heb.com/search?q=ribeye+steak",
+   "walmart": "https://www.walmart.com/search?q=beef+ribeye+steak"
+  }
+ },
+ {
+  "ingredient": "eggs (large)",
+  "aisle": "Dairy & Eggs",
+  "heb": {
+   "product": "Hill Country Fare Grade A Large White Eggs, 12 ct",
+   "size": "12 ct",
+   "price": "$1.67",
+   "unitPrice": "$0.14 / ct",
+   "stars": null,
+   "ratingCount": null,
+   "url": "https://www.heb.com/product-detail/hill-country-fare-grade-a-large-white-eggs-12-ct/313762",
+   "note": "heb.com shows no customer star ratings; curbside price shown $1.75"
+  },
+  "walmart": {
+   "product": "Great Value Large White Eggs, 12 Count",
+   "size": "12 Count",
+   "price": "$1.67",
+   "unitPrice": "7.0 ¢/oz",
+   "stars": 4.5,
+   "ratingCount": 127975,
+   "url": "https://www.walmart.com/ip/Great-Value-Large-White-Eggs-12-Count/145051970",
+   "note": null
+  },
+  "bestBuy": {
+   "store": "Walmart",
+   "product": "Great Value Large White Eggs, 12 Count",
+   "why": "Tie on price ($1.67 at both); Walmart's pick is rated 4.5 stars (127,975 ratings). Same $1.67 a dozen at both. 18-count is $2.47 at both.",
+   "nameBrandCompare": {
+    "product": "Eggland's Best Large White Eggs, 12 Count",
+    "price": "$3.87",
+    "unitPrice": "16.1 ¢/oz",
+    "url": "https://www.walmart.com/ip/Eggland-s-Best-Large-White-Eggs-12-Count/10324125",
+    "estSavingVsNameBrand": 2.17
+   }
+  },
+  "checkedAt": "2026-10-26",
+  "sources": {
+   "heb": "https://www.heb.com/search?q=large+eggs",
+   "walmart": "https://www.walmart.com/search?q=large+white+eggs"
+  }
+ },
+ {
+  "ingredient": "bacon",
+  "aisle": "Meat",
+  "heb": {
+   "product": "Hill Country Fare Hickory Smoked Sliced Bacon, 16 oz",
+   "size": "16 oz",
+   "price": "$3.95",
+   "unitPrice": "$0.25 / oz",
+   "stars": null,
+   "ratingCount": null,
+   "url": "https://www.heb.com/product-detail/hill-country-fare-hickory-smoked-sliced-bacon-16-oz/1498315",
+   "note": "heb.com shows no customer star ratings; curbside price shown $4.15"
+  },
+  "walmart": {
+   "product": "Great Value Naturally Hickory Smoked Sliced Bacon, 16 oz",
+   "size": "16 oz",
+   "price": "$4.24",
+   "unitPrice": "$4.24/lb",
+   "stars": 4.6,
+   "ratingCount": 27809,
+   "url": "https://www.walmart.com/ip/Great-Value-Hickory-Smoked-Bacon-16-oz/10293911",
+   "note": null
+  },
+  "bestBuy": {
+   "store": "H-E-B",
+   "product": "Hill Country Fare Hickory Smoked Sliced Bacon, 16 oz",
+   "why": "Cheaper on unit price: H-E-B 24.7¢/oz vs Walmart 26.5¢/oz",
+   "nameBrandCompare": {
+    "product": "Hormel Black Label Original Bacon, 16 oz",
+    "price": "$5.97",
+    "unitPrice": "$0.37 / oz",
+    "url": "https://www.heb.com/product-detail/hormel-black-label-original-bacon-16-oz/118078",
+    "estSavingVsNameBrand": 2.02
+   }
+  },
+  "checkedAt": "2026-10-26",
+  "sources": {
+   "heb": "https://www.heb.com/search?q=bacon",
+   "walmart": "https://www.walmart.com/search?q=bacon"
+  }
+ },
+ {
+  "ingredient": "ham (cooked/diced)",
+  "aisle": "Deli & Meat",
+  "heb": {
+   "product": "Frick's Fully Cooked Diced Ham, 12 oz",
+   "size": "12 oz",
+   "price": "$4.49",
+   "unitPrice": "$0.37 / oz",
+   "stars": null,
+   "ratingCount": null,
+   "url": "https://www.heb.com/product-detail/frick-s-fully-cooked-diced-ham-12-oz/6246507",
+   "note": "heb.com shows no customer star ratings; curbside price shown $4.71"
+  },
+  "walmart": {
+   "product": "Farmland Diced Ham 16oz",
+   "size": "16oz",
+   "price": "$4.96",
+   "unitPrice": "$4.96/lb",
+   "stars": 4.7,
+   "ratingCount": 6776,
+   "url": "https://www.walmart.com/ip/Farmland-Diced-Ham-16oz/10403374",
+   "note": null
+  },
+  "bestBuy": {
+   "store": "Walmart",
+   "product": "Farmland Diced Ham 16oz",
+   "why": "Cheaper on unit price: Walmart 31.0¢/oz vs H-E-B 37.4¢/oz; Walmart's pick is rated 4.7 stars (6,776 ratings). For J D's ham tacos, a ham steak works too: H-E-B boneless ham steak is $5.49/lb, and Great Value Cooked Ham (16 oz, $4.47) is cheaper at Walmart."
+  },
+  "checkedAt": "2026-10-26",
+  "sources": {
+   "heb": "https://www.heb.com/search?q=diced+ham",
+   "walmart": "https://www.walmart.com/search?q=diced+ham"
+  }
+ },
+ {
+  "ingredient": "potatoes (russet)",
+  "aisle": "Produce",
+  "heb": {
+   "product": "H-E-B Texas Roots Fresh Russet Potatoes, 5 lb bag",
+   "size": "5 lb bag",
+   "price": "$2.47",
+   "unitPrice": "$0.03 / oz",
+   "stars": null,
+   "ratingCount": null,
+   "url": "https://www.heb.com/product-detail/h-e-b-texas-roots-fresh-russet-potatoes-5-lb-bag/318997",
+   "note": "heb.com shows no customer star ratings; current sale or price cut; regular price $3.26; curbside price shown $2.59"
+  },
+  "walmart": {
+   "product": "Fresh Whole Russet Potatoes , 5 lb Bag",
+   "size": "5 lb",
+   "price": "$2.47",
+   "unitPrice": "49.4 ¢/lb",
+   "stars": 4.5,
+   "ratingCount": 151721,
+   "url": "https://www.walmart.com/ip/Fresh-Whole-Russet-Potatoes-5lb-bag/10447837",
+   "note": "Rollback (temporary lower price)"
+  },
+  "bestBuy": {
+   "store": "Walmart",
+   "product": "Fresh Whole Russet Potatoes , 5 lb Bag",
+   "why": "Tie on unit price (3.1¢/oz at both); Walmart's pick is rated 4.5 stars (151,721 ratings). Same $2.47 for 5 lb at both."
+  },
+  "checkedAt": "2026-10-26",
+  "sources": {
+   "heb": "https://www.heb.com/search?q=russet+potatoes",
+   "walmart": "https://www.walmart.com/search?q=russet+potatoes"
+  }
+ },
+ {
+  "ingredient": "butter (salted)",
+  "aisle": "Dairy & Eggs",
+  "heb": {
+   "product": "Hill Country Fare Salted Butter Sticks, 4 ct",
+   "size": "4 ct",
+   "price": "$2.58",
+   "unitPrice": "$0.16 / oz",
+   "stars": null,
+   "ratingCount": null,
+   "url": "https://www.heb.com/product-detail/hill-country-fare-salted-butter-sticks-4-ct/3539033",
+   "note": "heb.com shows no customer star ratings; current sale or price cut; regular price $2.78; curbside price shown $2.71"
+  },
+  "walmart": {
+   "product": "Great Value Sweet Cream Salted Butter, 16 oz Box, 4 Sticks, Refrigerated",
+   "size": "16 oz",
+   "price": "$3.06",
+   "unitPrice": "19.1 ¢/oz",
+   "stars": 4.8,
+   "ratingCount": 115310,
+   "url": "https://www.walmart.com/ip/Great-Value-Sweet-Cream-Salted-Butter-16-oz-Box-4-Sticks-Refrigerated/132893363",
+   "note": null
+  },
+  "bestBuy": {
+   "store": "H-E-B",
+   "product": "Hill Country Fare Salted Butter Sticks, 4 ct",
+   "why": "Cheaper on unit price: H-E-B 16.0¢/oz vs Walmart 19.1¢/oz",
+   "nameBrandCompare": {
+    "product": "Land O Lakes Salted Butter Half Sticks, 8 ct",
+    "price": "$4.46",
+    "unitPrice": "$0.28 / oz",
+    "url": "https://www.heb.com/product-detail/land-o-lakes-salted-butter-half-sticks-8-ct/1288738",
+    "estSavingVsNameBrand": 1.94
+   }
+  },
+  "checkedAt": "2026-10-26",
+  "sources": {
+   "heb": "https://www.heb.com/search?q=salted+butter",
+   "walmart": "https://www.walmart.com/search?q=salted+butter"
+  }
+ },
+ {
+  "ingredient": "cream cheese",
+  "aisle": "Dairy & Eggs",
+  "heb": {
+   "product": "Hill Country Fare Cream Cheese, 8 oz",
+   "size": "8 oz",
+   "price": "$1.45",
+   "unitPrice": "$0.18 / oz",
+   "stars": null,
+   "ratingCount": null,
+   "url": "https://www.heb.com/product-detail/hill-country-fare-cream-cheese-8-oz/3168007",
+   "note": "heb.com shows no customer star ratings; curbside price shown $1.52"
+  },
+  "walmart": {
+   "product": "Great Value Cream Cheese Brick, 8 oz (Refrigerated)",
+   "size": "8 oz",
+   "price": "$0.97",
+   "unitPrice": "12.1 ¢/oz",
+   "stars": 4.7,
+   "ratingCount": 30687,
+   "url": "https://www.walmart.com/ip/Great-Value-Cream-Cheese-Brick-8-oz-Refrigerated/10452429",
+   "note": null
+  },
+  "bestBuy": {
+   "store": "Walmart",
+   "product": "Great Value Cream Cheese Brick, 8 oz (Refrigerated)",
+   "why": "Cheaper on unit price: Walmart 12.1¢/oz vs H-E-B 18.1¢/oz; Walmart's pick is rated 4.7 stars (30,687 ratings)",
+   "nameBrandCompare": {
+    "product": "Philadelphia Cream Cheese, 1 Block, for Recipes and Baking, Original Style, No Artificial Preservatives, Flavors or Dye, 8 oz",
+    "price": "$2.98",
+    "unitPrice": "37.3 ¢/oz",
+    "url": "https://www.walmart.com/ip/Philadelphia-Cream-Cheese-1-Block-for-Recipes-and-Baking-Original-Style-No-Artificial-Preservatives-Flavors-or-Dye-8-oz/10295545",
+    "estSavingVsNameBrand": 2.01
+   }
+  },
+  "checkedAt": "2026-10-26",
+  "sources": {
+   "heb": "https://www.heb.com/search?q=cream+cheese",
+   "walmart": "https://www.walmart.com/search?q=cream+cheese"
+  }
+ },
+ {
+  "ingredient": "garlic (fresh)",
+  "aisle": "Produce",
+  "heb": {
+   "product": "Fresh Garlic",
+   "size": "Each",
+   "price": "2 for $1.00",
+   "unitPrice": "$0.50 / ea",
+   "stars": null,
+   "ratingCount": null,
+   "url": "https://www.heb.com/product-detail/fresh-garlic/325168",
+   "note": "heb.com shows no customer star ratings; curbside price shown 2 for $1.05"
+  },
+  "walmart": {
+   "product": "Garlic Bulb Fresh Whole, Each",
+   "size": null,
+   "price": "$0.72",
+   "unitPrice": null,
+   "stars": 4.3,
+   "ratingCount": 20449,
+   "url": "https://www.walmart.com/ip/Garlic-Bulb-Fresh-Whole-Each/44391100",
+   "note": null
+  },
+  "bestBuy": {
+   "store": "H-E-B",
+   "product": "Fresh Garlic",
+   "why": "Cheaper on price: H-E-B $0.50 vs Walmart $0.72. H-E-B price is 2 for $1.00."
+  },
+  "checkedAt": "2026-10-26",
+  "sources": {
+   "heb": "https://www.heb.com/search?q=fresh+garlic",
+   "walmart": "https://www.walmart.com/search?q=fresh+garlic"
+  }
+ },
+ {
+  "ingredient": "shredded sharp cheddar",
+  "aisle": "Dairy & Eggs",
+  "heb": {
+   "product": "Hill Country Fare Sharp Cheddar Shredded Cheese, 12 oz",
+   "size": "12 oz",
+   "price": "$2.65",
+   "unitPrice": "$0.22 / oz",
+   "stars": null,
+   "ratingCount": null,
+   "url": "https://www.heb.com/product-detail/hill-country-fare-sharp-cheddar-shredded-cheese-12-oz/2120720",
+   "note": "heb.com shows no customer star ratings; curbside price shown $2.78"
+  },
+  "walmart": {
+   "product": "Great Value Sharp Cheddar Finely Shredded Cheese, 16 oz Bag",
+   "size": "16 oz",
+   "price": "$3.48",
+   "unitPrice": "21.8 ¢/oz",
+   "stars": 4.7,
+   "ratingCount": 24824,
+   "url": "https://www.walmart.com/ip/Great-Value-Finely-Shredded-Sharp-Cheddar-Cheese-16-oz/10452477",
+   "note": null
+  },
+  "bestBuy": {
+   "store": "Walmart",
+   "product": "Great Value Sharp Cheddar Finely Shredded Cheese, 16 oz Bag",
+   "why": "Cheaper on unit price: Walmart 21.8¢/oz vs H-E-B 22.1¢/oz; Walmart's pick is rated 4.7 stars (24,824 ratings). Close to a tie per ounce (22¢ vs 21.8¢).",
+   "nameBrandCompare": {
+    "product": "Kraft Natural Sharp Cheddar Shredded Cheese, 8 oz Bag",
+    "price": "$2.98",
+    "unitPrice": "37.3 ¢/oz",
+    "url": "https://www.walmart.com/ip/Kraft-Sharp-Cheddar-Shredded-Cheese-8-oz-Bag/46921294",
+    "estSavingVsNameBrand": 2.48
+   }
+  },
+  "checkedAt": "2026-10-26",
+  "sources": {
+   "heb": "https://www.heb.com/search?q=shredded+sharp+cheddar+cheese",
+   "walmart": "https://www.walmart.com/search?q=shredded+sharp+cheddar+cheese"
+  }
+ },
+ {
+  "ingredient": "Nature's Seasoning",
+  "aisle": "Spices",
+  "heb": {
+   "product": "Morton Nature's Seasons Seasoning Blend, 7.5 oz",
+   "size": "7.5 oz",
+   "price": "$3.88",
+   "unitPrice": "$0.52 / oz",
+   "stars": null,
+   "ratingCount": null,
+   "url": "https://www.heb.com/product-detail/morton-nature-s-seasons-seasoning-blend-7-5-oz/88958",
+   "note": "heb.com shows no customer star ratings; curbside price shown $4.07"
+  },
+  "walmart": {
+   "product": "Morton Nature’s Seasons Seasoning Blend, 7.5 oz",
+   "size": "7.5 oz",
+   "price": "$4.53",
+   "unitPrice": "60.4 ¢/oz",
+   "stars": 4.8,
+   "ratingCount": 2705,
+   "url": "https://www.walmart.com/ip/Morton-Salt-Nature-s-Seasons-Seasoning-Blend-Savory-7-5-oz-Canister/10318922",
+   "note": null
+  },
+  "bestBuy": {
+   "store": "H-E-B",
+   "product": "Morton Nature's Seasons Seasoning Blend, 7.5 oz",
+   "why": "Cheaper on unit price: H-E-B 51.7¢/oz vs Walmart 60.4¢/oz. No store-brand version at either store."
+  },
+  "checkedAt": "2026-10-26",
+  "sources": {
+   "heb": "https://www.heb.com/search?q=nature's+seasoning",
+   "walmart": "https://www.walmart.com/search?q=morton+nature's+seasons"
+  }
+ },
+ {
+  "ingredient": "corn tortillas",
+  "aisle": "Tortillas & Bakery",
+  "heb": {
+   "product": "H-E-B Yellow Corn Tortillas, 50 ct",
+   "size": "50 ct",
+   "price": "$1.98",
+   "unitPrice": "$0.05 / oz",
+   "stars": null,
+   "ratingCount": null,
+   "url": "https://www.heb.com/product-detail/h-e-b-yellow-corn-tortillas-50-ct/324993",
+   "note": "heb.com shows no customer star ratings; current sale or price cut; regular price $2.48; curbside price shown $2.08"
+  },
+  "walmart": {
+   "product": "Guerrero White Corn Tortillas, 80 Count",
+   "size": "80 Count",
+   "price": "$3.98",
+   "unitPrice": "6.0 ¢/oz",
+   "stars": 4.7,
+   "ratingCount": 9086,
+   "url": "https://www.walmart.com/ip/Guerrero-White-Corn-Tortillas-80-Count/12166719",
+   "note": null
+  },
+  "bestBuy": {
+   "store": "H-E-B",
+   "product": "H-E-B Yellow Corn Tortillas, 50 ct",
+   "why": "Cheaper on unit price: H-E-B 5.0¢/oz vs Walmart 6.0¢/oz. Walmart showed no Great Value corn tortillas."
+  },
+  "checkedAt": "2026-10-26",
+  "sources": {
+   "heb": "https://www.heb.com/search?q=corn+tortillas",
+   "walmart": "https://www.walmart.com/search?q=corn+tortillas"
+  }
+ },
+ {
+  "ingredient": "corn oil",
+  "aisle": "Oils",
+  "heb": {
+   "product": "Hill Country Fare Corn Oil, 48 oz",
+   "size": "48 oz",
+   "price": "$4.69",
+   "unitPrice": "$0.10 / oz",
+   "stars": null,
+   "ratingCount": null,
+   "url": "https://www.heb.com/product-detail/hill-country-fare-corn-oil-48-oz/127883",
+   "note": "heb.com shows no customer star ratings; curbside price shown $4.92"
+  },
+  "walmart": {
+   "product": "Great Value Corn Oil, Heart Healthy, Great for Frying, 48 fl oz Bottle",
+   "size": "48 fl oz",
+   "price": "$4.98",
+   "unitPrice": "10.4 ¢/fl oz",
+   "stars": 4.7,
+   "ratingCount": 1394,
+   "url": "https://www.walmart.com/ip/Great-Value-Corn-Oil-Heart-Healthy-Great-for-Frying-48-fl-oz-Bottle/10451543",
+   "note": null
+  },
+  "bestBuy": {
+   "store": "H-E-B",
+   "product": "Hill Country Fare Corn Oil, 48 oz",
+   "why": "Cheaper on unit price: H-E-B 9.8¢/oz vs Walmart 10.4¢/oz",
+   "nameBrandCompare": {
+    "product": "Mazola 100% Pure Corn Oil, 40 oz",
+    "price": "$5.32",
+    "unitPrice": "$0.13 / oz",
+    "url": "https://www.heb.com/product-detail/mazola-100-pure-corn-oil-40-oz/1181148",
+    "estSavingVsNameBrand": 1.69
+   }
+  },
+  "checkedAt": "2026-10-26",
+  "sources": {
+   "heb": "https://www.heb.com/search?q=corn+oil",
+   "walmart": "https://www.walmart.com/search?q=corn+oil"
+  }
+ },
+ {
+  "ingredient": "lettuce (iceberg)",
+  "aisle": "Produce",
+  "heb": {
+   "product": "Fresh Iceberg Lettuce",
+   "size": "Each",
+   "price": "$1.89",
+   "unitPrice": "$1.89 / ea",
+   "stars": null,
+   "ratingCount": null,
+   "url": "https://www.heb.com/product-detail/fresh-iceberg-lettuce/319375",
+   "note": "heb.com shows no customer star ratings; curbside price shown $1.98"
+  },
+  "walmart": {
+   "product": "Fresh Iceberg Lettuce, Each",
+   "size": null,
+   "price": "$2.57",
+   "unitPrice": null,
+   "stars": 4.1,
+   "ratingCount": 142669,
+   "url": "https://www.walmart.com/ip/Fresh-Iceberg-Lettuce-Each/10402650",
+   "note": null
+  },
+  "bestBuy": {
+   "store": "H-E-B",
+   "product": "Fresh Iceberg Lettuce",
+   "why": "Cheaper on price: H-E-B $1.89 vs Walmart $2.57"
+  },
+  "checkedAt": "2026-10-26",
+  "sources": {
+   "heb": "https://www.heb.com/search?q=iceberg+lettuce",
+   "walmart": "https://www.walmart.com/search?q=iceberg+lettuce"
+  }
+ },
+ {
+  "ingredient": "tomatoes (roma)",
+  "aisle": "Produce",
+  "heb": {
+   "product": "Fresh Roma Tomato, Avg. 0.29 lb",
+   "size": "Avg. 0.29 lb",
+   "price": "$0.21",
+   "unitPrice": "$0.72 / lb",
+   "stars": null,
+   "ratingCount": null,
+   "url": "https://www.heb.com/product-detail/fresh-roma-tomato-avg-0-29-lb/318578",
+   "note": "heb.com shows no customer star ratings; curbside price shown $0.22; sold by weight, so the price is for the average pack weight"
+  },
+  "walmart": {
+   "product": "Fresh Roma Tomato, Each",
+   "size": null,
+   "price": "$0.29",
+   "unitPrice": "$1.26/lb",
+   "stars": 4.3,
+   "ratingCount": 145812,
+   "url": "https://www.walmart.com/ip/Fresh-Roma-Tomato-Each/44390944",
+   "note": null
+  },
+  "bestBuy": {
+   "store": "H-E-B",
+   "product": "Fresh Roma Tomato, Avg. 0.29 lb",
+   "why": "Cheaper on unit price: H-E-B 4.5¢/oz vs Walmart 7.9¢/oz. Priced by weight at both stores."
+  },
+  "checkedAt": "2026-10-26",
+  "sources": {
+   "heb": "https://www.heb.com/search?q=roma+tomatoes",
+   "walmart": "https://www.walmart.com/search?q=roma+tomatoes"
+  }
+ },
+ {
+  "ingredient": "salt",
+  "aisle": "Spices",
+  "heb": {
+   "product": "H-E-B Iodized Salt, 26 oz",
+   "size": "26 oz",
+   "price": "$0.64",
+   "unitPrice": "$0.02 / oz",
+   "stars": null,
+   "ratingCount": null,
+   "url": "https://www.heb.com/product-detail/h-e-b-iodized-salt-26-oz/125674",
+   "note": "heb.com shows no customer star ratings; curbside price shown $0.67"
+  },
+  "walmart": {
+   "product": "Great Value Iodized Salt, 26 oz",
+   "size": "26 oz",
+   "price": "$0.94",
+   "unitPrice": "3.6 ¢/oz",
+   "stars": 4.8,
+   "ratingCount": 22251,
+   "url": "https://www.walmart.com/ip/Great-Value-Iodized-Salt-26-oz/10448316",
+   "note": null
+  },
+  "bestBuy": {
+   "store": "H-E-B",
+   "product": "H-E-B Iodized Salt, 26 oz",
+   "why": "Cheaper on unit price: H-E-B 2.5¢/oz vs Walmart 3.6¢/oz",
+   "nameBrandCompare": {
+    "product": "Morton Iodized Table Salt, 1.625 lb",
+    "price": "$1.74",
+    "unitPrice": "$0.07 / oz",
+    "url": "https://www.heb.com/product-detail/morton-iodized-table-salt-1-625-lb/88956",
+    "estSavingVsNameBrand": 1.1
+   }
+  },
+  "checkedAt": "2026-10-26",
+  "sources": {
+   "heb": "https://www.heb.com/search?q=iodized+salt",
+   "walmart": "https://www.walmart.com/search?q=iodized+salt"
+  }
+ },
+ {
+  "ingredient": "black pepper (ground)",
+  "aisle": "Spices",
+  "heb": {
+   "product": "Hill Country Fare Ground Black Pepper, 6.5 oz",
+   "size": "6.5 oz",
+   "price": "$5.98",
+   "unitPrice": "$0.92 / oz",
+   "stars": null,
+   "ratingCount": null,
+   "url": "https://www.heb.com/product-detail/hill-country-fare-ground-black-pepper-6-5-oz/607753",
+   "note": "heb.com shows no customer star ratings; curbside price shown $6.28"
+  },
+  "walmart": {
+   "product": "Great Value Ground Black Pepper, 6 oz",
+   "size": "6 oz",
+   "price": "$6.82",
+   "unitPrice": "$1.14/oz",
+   "stars": 4.8,
+   "ratingCount": 6944,
+   "url": "https://www.walmart.com/ip/Great-Value-Ground-Black-Pepper-6-oz/44662571",
+   "note": null
+  },
+  "bestBuy": {
+   "store": "H-E-B",
+   "product": "Hill Country Fare Ground Black Pepper, 6.5 oz",
+   "why": "Cheaper on unit price: H-E-B 92.0¢/oz vs Walmart $1.14/oz",
+   "nameBrandCompare": {
+    "product": "McCormick Pure Ground Black Pepper, 6 oz",
+    "price": "$6.98",
+    "unitPrice": "$1.16 / oz",
+    "url": "https://www.heb.com/product-detail/mccormick-pure-ground-black-pepper-6-oz/150161",
+    "estSavingVsNameBrand": 1.58
+   }
+  },
+  "checkedAt": "2026-10-26",
+  "sources": {
+   "heb": "https://www.heb.com/search?q=ground+black+pepper",
+   "walmart": "https://www.walmart.com/search?q=ground+black+pepper"
+  }
+ },
+ {
+  "ingredient": "vegetable/canola oil",
+  "aisle": "Oils",
+  "heb": {
+   "product": "Hill Country Fare Vegetable Oil, 48 oz",
+   "size": "48 oz",
+   "price": "$3.20",
+   "unitPrice": "$0.07 / oz",
+   "stars": null,
+   "ratingCount": null,
+   "url": "https://www.heb.com/product-detail/hill-country-fare-vegetable-oil-48-oz/126234",
+   "note": "heb.com shows no customer star ratings; current sale or price cut; regular price $3.55; curbside price shown $3.36"
+  },
+  "walmart": {
+   "product": "Great Value Vegetable Oil, Heart Healthy and Versatile, 48 fl oz Bottle",
+   "size": "48 fl oz",
+   "price": "$3.82",
+   "unitPrice": "8.0 ¢/fl oz",
+   "stars": 4.7,
+   "ratingCount": 66435,
+   "url": "https://www.walmart.com/ip/Great-Value-Vegetable-Oil-48-fl-oz/10451002",
+   "note": null
+  },
+  "bestBuy": {
+   "store": "H-E-B",
+   "product": "Hill Country Fare Vegetable Oil, 48 oz",
+   "why": "Cheaper on unit price: H-E-B 6.7¢/oz vs Walmart 8.0¢/oz",
+   "nameBrandCompare": {
+    "product": "LouAna Pure Vegetable Oil, 48 oz",
+    "price": "$4.48",
+    "unitPrice": "$0.09 / oz",
+    "url": "https://www.heb.com/product-detail/louana-pure-vegetable-oil-48-oz/178165",
+    "estSavingVsNameBrand": 1.28
+   }
+  },
+  "checkedAt": "2026-10-26",
+  "sources": {
+   "heb": "https://www.heb.com/search?q=vegetable+oil",
+   "walmart": "https://www.walmart.com/search?q=vegetable+oil"
+  }
+ },
+ {
+  "ingredient": "olive oil (extra virgin)",
+  "aisle": "Oils",
+  "heb": {
+   "product": "Hill Country Fare Extra Virgin Olive Oil, 17 oz",
+   "size": "17 oz",
+   "price": "$5.28",
+   "unitPrice": "$0.31 / fl oz",
+   "stars": null,
+   "ratingCount": null,
+   "url": "https://www.heb.com/product-detail/hill-country-fare-extra-virgin-olive-oil-17-oz/2193229",
+   "note": "heb.com shows no customer star ratings; current sale or price cut; regular price $5.65; curbside price shown $5.54"
+  },
+  "walmart": {
+   "product": "Great Value Extra Virgin Olive Oil, 17 fl oz",
+   "size": "17 fl oz",
+   "price": "$6.12",
+   "unitPrice": "36.0 ¢/fl oz",
+   "stars": 4.7,
+   "ratingCount": 14882,
+   "url": "https://www.walmart.com/ip/Great-Value-Extra-Virgin-Olive-Oil-17-fl-oz/10315102",
+   "note": null
+  },
+  "bestBuy": {
+   "store": "H-E-B",
+   "product": "Hill Country Fare Extra Virgin Olive Oil, 17 oz",
+   "why": "Cheaper on unit price: H-E-B 31.1¢/oz vs Walmart 36.0¢/oz",
+   "nameBrandCompare": {
+    "product": "Bertolli Rich-Tasting Cold Pressed Extra Virgin Olive Oil, 16.9 oz",
+    "price": "$7.52",
+    "unitPrice": "$0.44 / fl oz",
+    "url": "https://www.heb.com/product-detail/bertolli-rich-tasting-cold-pressed-extra-virgin-olive-oil-16-9-oz/133681",
+    "estSavingVsNameBrand": 2.28
+   }
+  },
+  "checkedAt": "2026-10-26",
+  "sources": {
+   "heb": "https://www.heb.com/search?q=extra+virgin+olive+oil",
+   "walmart": "https://www.walmart.com/search?q=extra+virgin+olive+oil"
+  }
+ },
+ {
+  "ingredient": "chicken broth",
+  "aisle": "Canned & Dry",
+  "heb": {
+   "product": "H-E-B Chicken Broth, 32 oz",
+   "size": "32 oz",
+   "price": "$1.98",
+   "unitPrice": "$0.06 / oz",
+   "stars": null,
+   "ratingCount": null,
+   "url": "https://www.heb.com/product-detail/h-e-b-chicken-broth-32-oz/2229625",
+   "note": "heb.com shows no customer star ratings; curbside price shown $2.08"
+  },
+  "walmart": {
+   "product": "Great Value Gluten-Free Chicken Broth, 32 oz Carton (Shelf-Stable)",
+   "size": "32 oz",
+   "price": "$1.50",
+   "unitPrice": "4.7 ¢/oz",
+   "stars": 4.7,
+   "ratingCount": 27393,
+   "url": "https://www.walmart.com/ip/Great-Value-Chicken-Broth-32-oz-Carton-Shelf-Stable-Ambient-Gluten-Free/10899013",
+   "note": null
+  },
+  "bestBuy": {
+   "store": "Walmart",
+   "product": "Great Value Gluten-Free Chicken Broth, 32 oz Carton (Shelf-Stable)",
+   "why": "Cheaper on unit price: Walmart 4.7¢/oz vs H-E-B 6.2¢/oz; Walmart's pick is rated 4.7 stars (27,393 ratings)",
+   "nameBrandCompare": {
+    "product": "Progresso Chicken Broth, Reduced Sodium, Gluten Free, 32 oz",
+    "price": "$1.76",
+    "unitPrice": "5.5 ¢/oz",
+    "url": "https://www.walmart.com/ip/Progresso-Chicken-Broth-Reduced-Sodium-Gluten-Free-32-oz/46212492",
+    "estSavingVsNameBrand": 0.26
+   }
+  },
+  "checkedAt": "2026-10-26",
+  "sources": {
+   "heb": "https://www.heb.com/search?q=chicken+broth",
+   "walmart": "https://www.walmart.com/search?q=chicken+broth"
+  }
+ },
+ {
+  "ingredient": "vegetable broth",
+  "aisle": "Canned & Dry",
+  "heb": {
+   "product": "H-E-B Vegetable Broth, 32 oz",
+   "size": "32 oz",
+   "price": "$1.98",
+   "unitPrice": "$0.06 / oz",
+   "stars": null,
+   "ratingCount": null,
+   "url": "https://www.heb.com/product-detail/h-e-b-vegetable-broth-32-oz/2229651",
+   "note": "heb.com shows no customer star ratings; curbside price shown $2.08"
+  },
+  "walmart": {
+   "product": "Great Value Gluten-Free Vegetable Broth, 32 oz Carton, Shelf-Stable, No Allergens",
+   "size": "32 oz",
+   "price": "$1.50",
+   "unitPrice": "4.7 ¢/oz",
+   "stars": 4.7,
+   "ratingCount": 30132,
+   "url": "https://www.walmart.com/ip/Great-Value-Vegetable-Broth-32-oz-Carton-Shelf-Stable-Ambient-Gluten-Free/54258473",
+   "note": null
+  },
+  "bestBuy": {
+   "store": "Walmart",
+   "product": "Great Value Gluten-Free Vegetable Broth, 32 oz Carton, Shelf-Stable, No Allergens",
+   "why": "Cheaper on unit price: Walmart 4.7¢/oz vs H-E-B 6.2¢/oz; Walmart's pick is rated 4.7 stars (30,132 ratings)",
+   "nameBrandCompare": {
+    "product": "Swanson Vegetable Broth, 32 oz Carton",
+    "price": "$1.98",
+    "unitPrice": "6.2 ¢/oz",
+    "url": "https://www.walmart.com/ip/Swanson-Vegetable-Broth-32-oz/21296165",
+    "estSavingVsNameBrand": 0.48
+   }
+  },
+  "checkedAt": "2026-10-26",
+  "sources": {
+   "heb": "https://www.heb.com/search?q=vegetable+broth",
+   "walmart": "https://www.walmart.com/search?q=vegetable+broth"
+  }
+ },
+ {
+  "ingredient": "milk (whole)",
+  "aisle": "Dairy & Eggs",
+  "heb": {
+   "product": "Park Manor Whole Milk, 1 gal",
+   "size": "1 gal",
+   "price": "$4.34",
+   "unitPrice": "$0.03 / oz",
+   "stars": null,
+   "ratingCount": null,
+   "url": "https://www.heb.com/product-detail/park-manor-whole-milk-1-gal/1073487",
+   "note": "heb.com shows no customer star ratings; curbside price shown $4.56"
+  },
+  "walmart": {
+   "product": "Great Value Whole Vitamin D Milk, Gallon",
+   "size": null,
+   "price": "$4.42",
+   "unitPrice": "3.5 ¢/fl oz",
+   "stars": 4.6,
+   "ratingCount": 427244,
+   "url": "https://www.walmart.com/ip/Great-Value-Whole-Vitamin-D-Milk-Gallon-Plastic-Jug-128-Fl-Oz/10450114",
+   "note": null
+  },
+  "bestBuy": {
+   "store": "H-E-B",
+   "product": "Park Manor Whole Milk, 1 gal",
+   "why": "Cheaper on unit price: H-E-B 3.4¢/oz vs Walmart 3.5¢/oz",
+   "nameBrandCompare": {
+    "product": "Borden Whole Milk, 1 gal",
+    "price": "$5.98",
+    "unitPrice": "$0.05 / oz",
+    "url": "https://www.heb.com/product-detail/borden-whole-milk-1-gal/1720548",
+    "estSavingVsNameBrand": 1.64
+   }
+  },
+  "checkedAt": "2026-10-26",
+  "sources": {
+   "heb": "https://www.heb.com/search?q=whole+milk+gallon",
+   "walmart": "https://www.walmart.com/search?q=whole+milk+gallon"
+  }
+ },
+ {
+  "ingredient": "sour cream",
+  "aisle": "Dairy & Eggs",
+  "heb": {
+   "product": "Hill Country Fare Regular Sour Cream, 16 oz",
+   "size": "16 oz",
+   "price": "$1.75",
+   "unitPrice": "$0.11 / oz",
+   "stars": null,
+   "ratingCount": null,
+   "url": "https://www.heb.com/product-detail/hill-country-fare-regular-sour-cream-16-oz/3418548",
+   "note": "heb.com shows no customer star ratings; curbside price shown $1.84"
+  },
+  "walmart": {
+   "product": "Great Value Original Sour Cream, 16 oz Tub",
+   "size": "16 oz",
+   "price": "$1.84",
+   "unitPrice": "11.5 ¢/oz",
+   "stars": 4.7,
+   "ratingCount": 46825,
+   "url": "https://www.walmart.com/ip/Great-Value-Original-Sour-Cream-16-oz-Tub/12335111",
+   "note": null
+  },
+  "bestBuy": {
+   "store": "H-E-B",
+   "product": "Hill Country Fare Regular Sour Cream, 16 oz",
+   "why": "Cheaper on unit price: H-E-B 10.9¢/oz vs Walmart 11.5¢/oz",
+   "nameBrandCompare": {
+    "product": "Daisy Sour Cream, 16 oz",
+    "price": "$2.64",
+    "unitPrice": "$0.16 / oz",
+    "url": "https://www.heb.com/product-detail/daisy-sour-cream-16-oz/314037",
+    "estSavingVsNameBrand": 0.89
+   }
+  },
+  "checkedAt": "2026-10-26",
+  "sources": {
+   "heb": "https://www.heb.com/search?q=sour+cream",
+   "walmart": "https://www.walmart.com/search?q=sour+cream"
+  }
+ },
+ {
+  "ingredient": "plain Greek yogurt",
+  "aisle": "Dairy & Eggs",
+  "heb": {
+   "product": "Hill Country Fare 17g Protein Blended Nonfat Greek Yogurt - Plain, 32 oz",
+   "size": "32 oz",
+   "price": "$2.79",
+   "unitPrice": "$0.09 / oz",
+   "stars": null,
+   "ratingCount": null,
+   "url": "https://www.heb.com/product-detail/hill-country-fare-17g-protein-blended-nonfat-greek-yogurt-plain-32-oz/2262571",
+   "note": "heb.com shows no customer star ratings; curbside price shown $2.93"
+  },
+  "walmart": {
+   "product": "Great Value Greek Plain Nonfat Yogurt, 32 oz Tub",
+   "size": "32 oz",
+   "price": "$3.28",
+   "unitPrice": "10.3 ¢/oz",
+   "stars": 4.6,
+   "ratingCount": 30502,
+   "url": "https://www.walmart.com/ip/Great-Value-Greek-Plain-Nonfat-Yogurt-32-oz-Tub/26559565",
+   "note": null
+  },
+  "bestBuy": {
+   "store": "H-E-B",
+   "product": "Hill Country Fare 17g Protein Blended Nonfat Greek Yogurt - Plain, 32 oz",
+   "why": "Cheaper on unit price: H-E-B 8.7¢/oz vs Walmart 10.2¢/oz",
+   "nameBrandCompare": {
+    "product": "Chobani 16g Protein Non Fat Plain Greek Yogurt, 32 oz",
+    "price": "$5.97",
+    "unitPrice": "$0.19 / oz",
+    "url": "https://www.heb.com/product-detail/chobani-16g-protein-non-fat-plain-greek-yogurt-32-oz/1502146",
+    "estSavingVsNameBrand": 3.18
+   }
+  },
+  "checkedAt": "2026-10-26",
+  "sources": {
+   "heb": "https://www.heb.com/search?q=plain+nonfat+greek+yogurt",
+   "walmart": "https://www.walmart.com/search?q=plain+nonfat+greek+yogurt"
+  }
+ },
+ {
+  "ingredient": "onions (yellow)",
+  "aisle": "Produce",
+  "heb": {
+   "product": "Fresh Yellow Onions, 3 lb bag",
+   "size": "3 lb bag",
+   "price": "$2.39",
+   "unitPrice": "$0.05 / oz",
+   "stars": null,
+   "ratingCount": null,
+   "url": "https://www.heb.com/product-detail/fresh-yellow-onions-3-lb-bag/449732",
+   "note": "heb.com shows no customer star ratings; curbside price shown $2.51"
+  },
+  "walmart": {
+   "product": "Fresh Yellow Onions, 3 lb Bag",
+   "size": "3 lb",
+   "price": "$2.96",
+   "unitPrice": "6.2 ¢/oz",
+   "stars": 4.6,
+   "ratingCount": 91422,
+   "url": "https://www.walmart.com/ip/Fresh-Yellow-Onions-3-lb-Bag/10447842",
+   "note": null
+  },
+  "bestBuy": {
+   "store": "H-E-B",
+   "product": "Fresh Yellow Onions, 3 lb bag",
+   "why": "Cheaper on unit price: H-E-B 5.0¢/oz vs Walmart 6.2¢/oz"
+  },
+  "checkedAt": "2026-10-26",
+  "sources": {
+   "heb": "https://www.heb.com/search?q=yellow+onions",
+   "walmart": "https://www.walmart.com/search?q=yellow+onions"
+  }
+ },
+ {
+  "ingredient": "green onions",
+  "aisle": "Produce",
+  "heb": {
+   "product": "Fresh Green Onions",
+   "size": "Each",
+   "price": "$0.65",
+   "unitPrice": "$0.65 / ea",
+   "stars": null,
+   "ratingCount": null,
+   "url": "https://www.heb.com/product-detail/fresh-green-onions/374854",
+   "note": "heb.com shows no customer star ratings; curbside price shown $0.68"
+  },
+  "walmart": {
+   "product": "Fresh Whole Green Onion 1 Bunch, Fresh Produce",
+   "size": null,
+   "price": "$0.73",
+   "unitPrice": null,
+   "stars": 4.3,
+   "ratingCount": 79554,
+   "url": "https://www.walmart.com/ip/Fresh-Whole-Green-Onion-1-Bunch-Fresh-Produce/51259361",
+   "note": null
+  },
+  "bestBuy": {
+   "store": "H-E-B",
+   "product": "Fresh Green Onions",
+   "why": "Cheaper on price: H-E-B $0.65 vs Walmart $0.73"
+  },
+  "checkedAt": "2026-10-26",
+  "sources": {
+   "heb": "https://www.heb.com/search?q=green+onions",
+   "walmart": "https://www.walmart.com/search?q=green+onions"
+  }
+ },
+ {
+  "ingredient": "bell peppers (green)",
+  "aisle": "Produce",
+  "heb": {
+   "product": "Fresh Green Bell Pepper",
+   "size": "Each",
+   "price": "$0.62",
+   "unitPrice": "$0.62 / ea",
+   "stars": null,
+   "ratingCount": null,
+   "url": "https://www.heb.com/product-detail/fresh-green-bell-pepper/374700",
+   "note": "heb.com shows no customer star ratings; curbside price shown $0.65"
+  },
+  "walmart": {
+   "product": "Fresh Green Bell Pepper, Each",
+   "size": null,
+   "price": "$0.86",
+   "unitPrice": null,
+   "stars": 4.3,
+   "ratingCount": 116489,
+   "url": "https://www.walmart.com/ip/Fresh-Green-Bell-Pepper-Each/44390945",
+   "note": null
+  },
+  "bestBuy": {
+   "store": "H-E-B",
+   "product": "Fresh Green Bell Pepper",
+   "why": "Cheaper on price: H-E-B $0.62 vs Walmart $0.86. The H-E-B 3-pack ($1.65) works out to 55¢ a pepper."
+  },
+  "checkedAt": "2026-10-26",
+  "sources": {
+   "heb": "https://www.heb.com/search?q=green+bell+pepper",
+   "walmart": "https://www.walmart.com/search?q=green+bell+pepper"
+  }
+ },
+ {
+  "ingredient": "jalapeños (fresh)",
+  "aisle": "Produce",
+  "heb": {
+   "product": "Fresh Jalapeño Pepper, Avg. 0.165 lb",
+   "size": "Avg. 0.165 lb",
+   "price": "$0.19",
+   "unitPrice": "$1.18 / lb",
+   "stars": null,
+   "ratingCount": null,
+   "url": "https://www.heb.com/product-detail/fresh-jalape-o-pepper-avg-0-165-lb/374686",
+   "note": "heb.com shows no customer star ratings; curbside price shown $0.20; sold by weight, so the price is for the average pack weight"
+  },
+  "walmart": {
+   "product": "Fresh Jalapenos, Each",
+   "size": null,
+   "price": "$0.25",
+   "unitPrice": "$1.76/lb",
+   "stars": 4.1,
+   "ratingCount": 28288,
+   "url": "https://www.walmart.com/ip/Fresh-Jalapenos-Each/44391018",
+   "note": "showed as out of stock online when checked; Rollback (temporary lower price)"
+  },
+  "bestBuy": {
+   "store": "H-E-B",
+   "product": "Fresh Jalapeño Pepper, Avg. 0.165 lb",
+   "why": "Only store with a usable pick ($0.19, $1.18 / lb); Walmart pick was out of stock online or poorly rated. Walmart's fresh jalapeños showed as out of stock online when checked."
+  },
+  "checkedAt": "2026-10-26",
+  "sources": {
+   "heb": "https://www.heb.com/search?q=jalapeno+peppers",
+   "walmart": "https://www.walmart.com/search?q=fresh+jalapeno+peppers"
+  }
+ },
+ {
+  "ingredient": "carrots",
+  "aisle": "Produce",
+  "heb": {
+   "product": "H-E-B Fresh Whole Carrots, 2 lb bag",
+   "size": "2 lb bag",
+   "price": "$1.95",
+   "unitPrice": "$0.06 / oz",
+   "stars": null,
+   "ratingCount": null,
+   "url": "https://www.heb.com/product-detail/h-e-b-fresh-whole-carrots-2-lb-bag/4833553",
+   "note": "heb.com shows no customer star ratings; curbside price shown $2.05"
+  },
+  "walmart": {
+   "product": "Fresh Whole Carrots, 2 lb Bag",
+   "size": "2 lb",
+   "price": "$2.26",
+   "unitPrice": "$1.13/lb",
+   "stars": 4.6,
+   "ratingCount": 9413,
+   "url": "https://www.walmart.com/ip/Fresh-Carrots-2-lb-Bag/10535757",
+   "note": null
+  },
+  "bestBuy": {
+   "store": "H-E-B",
+   "product": "H-E-B Fresh Whole Carrots, 2 lb bag",
+   "why": "Cheaper on unit price: H-E-B 6.1¢/oz vs Walmart 7.1¢/oz"
+  },
+  "checkedAt": "2026-10-26",
+  "sources": {
+   "heb": "https://www.heb.com/search?q=carrots",
+   "walmart": "https://www.walmart.com/search?q=whole+carrots"
+  }
+ },
+ {
+  "ingredient": "celery",
+  "aisle": "Produce",
+  "heb": {
+   "product": "Fresh Celery Stalk",
+   "size": "Each",
+   "price": "$0.95",
+   "unitPrice": "$0.95 / ea",
+   "stars": null,
+   "ratingCount": null,
+   "url": "https://www.heb.com/product-detail/fresh-celery-stalk/325173",
+   "note": "heb.com shows no customer star ratings; curbside price shown $1.00"
+  },
+  "walmart": {
+   "product": "Fresh  Whole Celery, 1ea Premium Quality, Rich in antioxidants",
+   "size": "1ea",
+   "price": "$2.04",
+   "unitPrice": null,
+   "stars": 4.3,
+   "ratingCount": 78663,
+   "url": "https://www.walmart.com/ip/Fresh-Whole-Celery-1ea-Premium-Quality-Rich-in-antioxidants/51259411",
+   "note": null
+  },
+  "bestBuy": {
+   "store": "H-E-B",
+   "product": "Fresh Celery Stalk",
+   "why": "Cheaper on price: H-E-B $0.95 vs Walmart $2.04"
+  },
+  "checkedAt": "2026-10-26",
+  "sources": {
+   "heb": "https://www.heb.com/search?q=celery",
+   "walmart": "https://www.walmart.com/search?q=celery"
+  }
+ },
+ {
+  "ingredient": "cabbage (green)",
+  "aisle": "Produce",
+  "heb": {
+   "product": "Fresh Green Cabbage, Avg. 2.75 lbs",
+   "size": "Avg. 2.75 lbs",
+   "price": "$2.06",
+   "unitPrice": "$0.75 / lb",
+   "stars": null,
+   "ratingCount": null,
+   "url": "https://www.heb.com/product-detail/fresh-green-cabbage-avg-2-75-lbs/374791",
+   "note": "heb.com shows no customer star ratings; curbside price shown $2.17; sold by weight, so the price is for the average pack weight"
+  },
+  "walmart": {
+   "product": "Fresh Green Cabbage, Each",
+   "size": null,
+   "price": "$2.68",
+   "unitPrice": "88.0 ¢/lb",
+   "stars": 4.3,
+   "ratingCount": 65039,
+   "url": "https://www.walmart.com/ip/Fresh-Green-Cabbage-Each/44391042",
+   "note": null
+  },
+  "bestBuy": {
+   "store": "H-E-B",
+   "product": "Fresh Green Cabbage, Avg. 2.75 lbs",
+   "why": "Cheaper on unit price: H-E-B 4.7¢/oz vs Walmart 5.5¢/oz. Priced by weight (H-E-B 75¢/lb vs Walmart 88¢/lb)."
+  },
+  "checkedAt": "2026-10-26",
+  "sources": {
+   "heb": "https://www.heb.com/search?q=green+cabbage",
+   "walmart": "https://www.walmart.com/search?q=green+cabbage"
+  }
+ },
+ {
+  "ingredient": "spinach (fresh)",
+  "aisle": "Produce",
+  "heb": {
+   "product": "H-E-B Fresh Spinach, 9 oz",
+   "size": "9 oz",
+   "price": "$1.89",
+   "unitPrice": "$0.21 / oz",
+   "stars": null,
+   "ratingCount": null,
+   "url": "https://www.heb.com/product-detail/h-e-b-fresh-spinach-9-oz/1119798",
+   "note": "heb.com shows no customer star ratings; curbside price shown $1.98"
+  },
+  "walmart": {
+   "product": "Marketside Fresh Spinach, 10 oz Bag (Fresh)",
+   "size": "10 oz",
+   "price": "$2.00",
+   "unitPrice": "20.0 ¢/oz",
+   "stars": 4.4,
+   "ratingCount": 44132,
+   "url": "https://www.walmart.com/ip/Marketside-Fresh-Spinach-10-oz-Bag-Fresh/13893738",
+   "note": null
+  },
+  "bestBuy": {
+   "store": "Walmart",
+   "product": "Marketside Fresh Spinach, 10 oz Bag (Fresh)",
+   "why": "Cheaper on unit price: Walmart 20.0¢/oz vs H-E-B 21.0¢/oz; Walmart's pick is rated 4.4 stars (44,132 ratings). Close to a tie (21¢ vs 20¢ per oz). H-E-B's bag is cheaper at $1.89."
+  },
+  "checkedAt": "2026-10-26",
+  "sources": {
+   "heb": "https://www.heb.com/search?q=fresh+spinach",
+   "walmart": "https://www.walmart.com/search?q=fresh+spinach"
+  }
+ },
+ {
+  "ingredient": "limes",
+  "aisle": "Produce",
+  "heb": {
+   "product": "Fresh Lime",
+   "size": "Each",
+   "price": "$0.20",
+   "unitPrice": "$0.20 / ea",
+   "stars": null,
+   "ratingCount": null,
+   "url": "https://www.heb.com/product-detail/fresh-lime/442356",
+   "note": "heb.com shows no customer star ratings; curbside price shown $0.21"
+  },
+  "walmart": {
+   "product": "Fresh Lime, Each",
+   "size": null,
+   "price": "$0.25",
+   "unitPrice": null,
+   "stars": 4.3,
+   "ratingCount": 56968,
+   "url": "https://www.walmart.com/ip/Fresh-Lime-Each/44391008",
+   "note": null
+  },
+  "bestBuy": {
+   "store": "H-E-B",
+   "product": "Fresh Lime",
+   "why": "Cheaper on price: H-E-B $0.20 vs Walmart $0.25"
+  },
+  "checkedAt": "2026-10-26",
+  "sources": {
+   "heb": "https://www.heb.com/search?q=limes",
+   "walmart": "https://www.walmart.com/search?q=fresh+limes"
+  }
+ },
+ {
+  "ingredient": "cilantro (fresh)",
+  "aisle": "Produce",
+  "heb": {
+   "product": "Fresh Cilantro, 1 Bunch",
+   "size": "1 Bunch",
+   "price": "$0.45",
+   "unitPrice": "$0.45 / ea",
+   "stars": null,
+   "ratingCount": null,
+   "url": "https://www.heb.com/product-detail/fresh-cilantro-1-bunch/325175",
+   "note": "heb.com shows no customer star ratings; curbside price shown $0.47"
+  },
+  "walmart": {
+   "product": "Fresh Whole Green Cilantro Bunch, 1 Bunch, Fresh Produce",
+   "size": null,
+   "price": "$0.97",
+   "unitPrice": null,
+   "stars": 4.2,
+   "ratingCount": 43907,
+   "url": "https://www.walmart.com/ip/Fresh-Whole-Green-Cilantro-Bunch-1-Bunch-Fresh-Produce/160597260",
+   "note": null
+  },
+  "bestBuy": {
+   "store": "H-E-B",
+   "product": "Fresh Cilantro, 1 Bunch",
+   "why": "Cheaper on price: H-E-B $0.45 vs Walmart $0.97"
+  },
+  "checkedAt": "2026-10-26",
+  "sources": {
+   "heb": "https://www.heb.com/search?q=fresh+cilantro",
+   "walmart": "https://www.walmart.com/search?q=fresh+cilantro"
+  }
+ },
+ {
+  "ingredient": "avocados",
+  "aisle": "Produce",
+  "heb": {
+   "product": "Fresh Small Hass Avocado",
+   "size": "Each",
+   "price": "$0.56",
+   "unitPrice": "$0.56 / ea",
+   "stars": null,
+   "ratingCount": null,
+   "url": "https://www.heb.com/product-detail/fresh-small-hass-avocado/377478",
+   "note": "heb.com shows no customer star ratings; curbside price shown $0.59"
+  },
+  "walmart": {
+   "product": "Fresh Hass Avocados, Each",
+   "size": null,
+   "price": "$0.73",
+   "unitPrice": null,
+   "stars": 4.1,
+   "ratingCount": 145992,
+   "url": "https://www.walmart.com/ip/Fresh-Hass-Avocados-Each/44390949",
+   "note": "Rollback (temporary lower price)"
+  },
+  "bestBuy": {
+   "store": "H-E-B",
+   "product": "Fresh Small Hass Avocado",
+   "why": "Cheaper on price: H-E-B $0.56 vs Walmart $0.73. The H-E-B price is for a small avocado; a large one is $1.78."
+  },
+  "checkedAt": "2026-10-26",
+  "sources": {
+   "heb": "https://www.heb.com/search?q=hass+avocado",
+   "walmart": "https://www.walmart.com/search?q=hass+avocado"
+  }
+ },
+ {
+  "ingredient": "bananas",
+  "aisle": "Produce",
+  "heb": {
+   "product": "Fresh Bunch of Bananas, 4-7 Bananas, Avg. 2.4 lbs",
+   "size": "Avg. 2.4 lbs",
+   "price": "$1.20",
+   "unitPrice": "$0.50 / lb",
+   "stars": null,
+   "ratingCount": null,
+   "url": "https://www.heb.com/product-detail/fresh-bunch-of-bananas-4-7-bananas-avg-2-4-lbs/377497",
+   "note": "heb.com shows no customer star ratings; curbside price shown $1.27; sold by weight, so the price is for the average pack weight"
+  },
+  "walmart": {
+   "product": "Fresh Banana, Each",
+   "size": null,
+   "price": "$0.20",
+   "unitPrice": "50.0 ¢/lb",
+   "stars": 4.2,
+   "ratingCount": 508982,
+   "url": "https://www.walmart.com/ip/Fresh-Banana-Each/44390948",
+   "note": null
+  },
+  "bestBuy": {
+   "store": "Walmart",
+   "product": "Fresh Banana, Each",
+   "why": "Tie on unit price (3.1¢/oz at both); Walmart's pick is rated 4.2 stars (508,982 ratings). Same 50¢/lb at both stores."
+  },
+  "checkedAt": "2026-10-26",
+  "sources": {
+   "heb": "https://www.heb.com/search?q=bananas",
+   "walmart": "https://www.walmart.com/search?q=bananas"
+  }
+ },
+ {
+  "ingredient": "ears of corn (fresh)",
+  "aisle": "Produce",
+  "heb": {
+   "product": "Fresh Corn",
+   "size": "Each",
+   "price": "$0.25",
+   "unitPrice": "$0.25 / ea",
+   "stars": null,
+   "ratingCount": null,
+   "url": "https://www.heb.com/product-detail/fresh-corn/374788",
+   "note": "heb.com shows no customer star ratings; curbside price shown $0.26"
+  },
+  "walmart": {
+   "product": "Fresh Sweet Corn on the Cob, Each",
+   "size": null,
+   "price": "$0.68",
+   "unitPrice": null,
+   "stars": 4,
+   "ratingCount": 37629,
+   "url": "https://www.walmart.com/ip/Fresh-Sweet-Corn-on-the-Cob-1-each/44391430",
+   "note": null
+  },
+  "bestBuy": {
+   "store": "H-E-B",
+   "product": "Fresh Corn",
+   "why": "Cheaper on price: H-E-B $0.25 vs Walmart $0.68"
+  },
+  "checkedAt": "2026-10-26",
+  "sources": {
+   "heb": "https://www.heb.com/search?q=corn+on+the+cob",
+   "walmart": "https://www.walmart.com/search?q=fresh+sweet+corn+on+the+cob"
+  }
+ },
+ {
+  "ingredient": "frozen peas",
+  "aisle": "Frozen",
+  "heb": {
+   "product": "H-E-B Frozen Green Peas, 16 oz",
+   "size": "16 oz",
+   "price": "$1.38",
+   "unitPrice": "$0.09 / oz",
+   "stars": null,
+   "ratingCount": null,
+   "url": "https://www.heb.com/product-detail/h-e-b-frozen-green-peas-16-oz/125656",
+   "note": "heb.com shows no customer star ratings; curbside price shown $1.45"
+  },
+  "walmart": {
+   "product": "Great Value Sweet Peas, 32 oz Bag, No Added Sugars (Frozen)",
+   "size": "32 oz",
+   "price": "$2.48",
+   "unitPrice": "7.8 ¢/oz",
+   "stars": 4.7,
+   "ratingCount": 4709,
+   "url": "https://www.walmart.com/ip/Great-Value-Sweet-Peas-32-oz-Bag-Frozen/712949094",
+   "note": null
+  },
+  "bestBuy": {
+   "store": "Walmart",
+   "product": "Great Value Sweet Peas, 32 oz Bag, No Added Sugars (Frozen)",
+   "why": "Cheaper on unit price: Walmart 7.8¢/oz vs H-E-B 8.6¢/oz; Walmart's pick is rated 4.7 stars (4,709 ratings). The H-E-B 40 oz bag is $3.38 (8¢/oz).",
+   "nameBrandCompare": {
+    "product": "Birds Eye Steamfresh Sweet Peas, Frozen Vegetables, 10 oz. Bag",
+    "price": "$1.00",
+    "unitPrice": "10.0 ¢/oz",
+    "url": "https://www.walmart.com/ip/Birds-Eye-Steamfresh-Sweet-Peas-Frozen-Vegetables-10-oz-Bag/46879777",
+    "estSavingVsNameBrand": 0.72
+   }
+  },
+  "checkedAt": "2026-10-26",
+  "sources": {
+   "heb": "https://www.heb.com/search?q=frozen+sweet+peas",
+   "walmart": "https://www.walmart.com/search?q=frozen+sweet+peas"
+  }
+ },
+ {
+  "ingredient": "frozen corn",
+  "aisle": "Frozen",
+  "heb": {
+   "product": "H-E-B Frozen Super Sweet Corn, 16 oz",
+   "size": "16 oz",
+   "price": "$1.34",
+   "unitPrice": "$0.08 / oz",
+   "stars": null,
+   "ratingCount": null,
+   "url": "https://www.heb.com/product-detail/h-e-b-frozen-super-sweet-corn-16-oz/126276",
+   "note": "heb.com shows no customer star ratings; current sale or price cut; regular price $1.48; curbside price shown $1.41"
+  },
+  "walmart": {
+   "product": "Great Value Whole Kernel Corn, 12 oz Steamable Bag (Frozen)",
+   "size": "12 oz",
+   "price": "$0.98",
+   "unitPrice": "8.2 ¢/oz",
+   "stars": 4.7,
+   "ratingCount": 16877,
+   "url": "https://www.walmart.com/ip/Great-Value-Frozen-Whole-Kernel-Corn-12-oz-Steamable-Bag/659879040",
+   "note": null
+  },
+  "bestBuy": {
+   "store": "Walmart",
+   "product": "Great Value Whole Kernel Corn, 12 oz Steamable Bag (Frozen)",
+   "why": "Cheaper on unit price: Walmart 8.2¢/oz vs H-E-B 8.4¢/oz; Walmart's pick is rated 4.7 stars (16,877 ratings). Bigger bags are cheaper per ounce: H-E-B 40 oz is $2.78 (about 7¢/oz, the lowest), Walmart 32 oz is $2.48 (7.8¢/oz).",
+   "nameBrandCompare": {
+    "product": "Birds Eye Steamfresh Super Sweet Corn, Frozen Vegetables, 10 oz. Bag",
+    "price": "$1.00",
+    "unitPrice": "10.0 ¢/oz",
+    "url": "https://www.walmart.com/ip/Birds-Eye-Steamfresh-Frozen-Super-Sweet-Corn-10-oz/46908368",
+    "estSavingVsNameBrand": 0.22
+   }
+  },
+  "checkedAt": "2026-10-26",
+  "sources": {
+   "heb": "https://www.heb.com/search?q=frozen+sweet+corn",
+   "walmart": "https://www.walmart.com/search?q=frozen+whole+kernel+corn"
+  }
+ },
+ {
+  "ingredient": "green beans (frozen)",
+  "aisle": "Frozen",
+  "heb": {
+   "product": "H-E-B Frozen Steamable Cut Green Beans, 12 oz",
+   "size": "12 oz",
+   "price": "$0.96",
+   "unitPrice": "$0.08 / oz",
+   "stars": null,
+   "ratingCount": null,
+   "url": "https://www.heb.com/product-detail/h-e-b-frozen-steamable-cut-green-beans-12-oz/1431729",
+   "note": "heb.com shows no customer star ratings; curbside price shown $1.01"
+  },
+  "walmart": {
+   "product": "Great Value Cut Green Beans, 12 oz Bag (Frozen)",
+   "size": "12 oz",
+   "price": "$0.98",
+   "unitPrice": "8.2 ¢/oz",
+   "stars": 4.7,
+   "ratingCount": 14189,
+   "url": "https://www.walmart.com/ip/Great-Value-Cut-Green-Beans-12-oz-Bag-Frozen/576704015",
+   "note": null
+  },
+  "bestBuy": {
+   "store": "H-E-B",
+   "product": "H-E-B Frozen Steamable Cut Green Beans, 12 oz",
+   "why": "Cheaper on unit price: H-E-B 8.0¢/oz vs Walmart 8.2¢/oz. The H-E-B 16 oz bag is $1.28. Canned is cheapest: Hill Country Fare 14.5 oz is 48¢, Great Value is 50¢.",
+   "nameBrandCompare": {
+    "product": "Birds Eye Steamfresh Frozen Whole Green Beans, 10.8 oz",
+    "price": "$1.92",
+    "unitPrice": "$0.18 / oz",
+    "url": "https://www.heb.com/product-detail/birds-eye-steamfresh-frozen-whole-green-beans-10-8-oz/1017077",
+    "estSavingVsNameBrand": 1.17
+   }
+  },
+  "checkedAt": "2026-10-26",
+  "sources": {
+   "heb": "https://www.heb.com/search?q=frozen+cut+green+beans",
+   "walmart": "https://www.walmart.com/search?q=frozen+cut+green+beans"
+  }
+ },
+ {
+  "ingredient": "long-grain white rice",
+  "aisle": "Canned & Dry",
+  "heb": {
+   "product": "H-E-B Enriched Long Grain White Rice, 5 lbs",
+   "size": "5 lbs",
+   "price": "$3.12",
+   "unitPrice": "$0.04 / oz",
+   "stars": null,
+   "ratingCount": null,
+   "url": "https://www.heb.com/product-detail/h-e-b-enriched-long-grain-white-rice-5-lbs/125348",
+   "note": "heb.com shows no customer star ratings; curbside price shown $3.28"
+  },
+  "walmart": {
+   "product": "Supreme Rice White Long Grain, 5.0 LB",
+   "size": "5.0 LB",
+   "price": "$2.98",
+   "unitPrice": "3.7 ¢/oz",
+   "stars": 4.7,
+   "ratingCount": 508,
+   "url": "https://www.walmart.com/ip/Supreme-Rice-White-Long-Grain-5-0-LB/113887128",
+   "note": null
+  },
+  "bestBuy": {
+   "store": "Walmart",
+   "product": "Supreme Rice White Long Grain, 5.0 LB",
+   "why": "Cheaper on unit price: Walmart 3.7¢/oz vs H-E-B 3.9¢/oz; Walmart's pick is rated 4.7 stars (508 ratings). Great Value 5 lb is $3.52 at Walmart."
+  },
+  "checkedAt": "2026-10-26",
+  "sources": {
+   "heb": "https://www.heb.com/search?q=long+grain+white+rice",
+   "walmart": "https://www.walmart.com/search?q=long+grain+white+rice"
+  }
+ },
+ {
+  "ingredient": "old-fashioned oats",
+  "aisle": "Breakfast & Cereal",
+  "heb": {
+   "product": "H-E-B Old Fashioned Oats, 42 oz",
+   "size": "42 oz",
+   "price": "$3.99",
+   "unitPrice": "$0.10 / oz",
+   "stars": null,
+   "ratingCount": null,
+   "url": "https://www.heb.com/product-detail/h-e-b-old-fashioned-oats-42-oz/1527031",
+   "note": "heb.com shows no customer star ratings; curbside price shown $4.19"
+  },
+  "walmart": {
+   "product": "Great Value 100% Whole Grain Old Fashioned Oats, 42 oz",
+   "size": "42 oz",
+   "price": "$4.18",
+   "unitPrice": "10.0 ¢/oz",
+   "stars": 4.7,
+   "ratingCount": 8732,
+   "url": "https://www.walmart.com/ip/Great-Value-Instant-100-Whole-Grain-Old-Fashioned-Oats-Cup-42-oz/10314925",
+   "note": null
+  },
+  "bestBuy": {
+   "store": "H-E-B",
+   "product": "H-E-B Old Fashioned Oats, 42 oz",
+   "why": "Cheaper on unit price: H-E-B 9.5¢/oz vs Walmart 10.0¢/oz",
+   "nameBrandCompare": {
+    "product": "Quaker Old Fashioned Oats, 42 oz",
+    "price": "$5.24",
+    "unitPrice": "$0.12 / oz",
+    "url": "https://www.heb.com/product-detail/quaker-old-fashioned-oats-42-oz/103480",
+    "estSavingVsNameBrand": 1.25
+   }
+  },
+  "checkedAt": "2026-10-26",
+  "sources": {
+   "heb": "https://www.heb.com/search?q=old+fashioned+oats",
+   "walmart": "https://www.walmart.com/search?q=old+fashioned+oats"
+  }
+ },
+ {
+  "ingredient": "lentils (dry)",
+  "aisle": "Canned & Dry",
+  "heb": {
+   "product": "Goya Lentils, 16 oz",
+   "size": "16 oz",
+   "price": "$1.78",
+   "unitPrice": "$0.11 / oz",
+   "stars": null,
+   "ratingCount": null,
+   "url": "https://www.heb.com/product-detail/goya-lentils-16-oz/128885",
+   "note": "heb.com shows no customer star ratings; curbside price shown $1.87"
+  },
+  "walmart": {
+   "product": "Great Value Lentils, 1 lb",
+   "size": "1 lb",
+   "price": "$1.92",
+   "unitPrice": "12.0 ¢/oz",
+   "stars": 4.7,
+   "ratingCount": 2479,
+   "url": "https://www.walmart.com/ip/Great-Value-Lentils-1-lb/545884744",
+   "note": null
+  },
+  "bestBuy": {
+   "store": "H-E-B",
+   "product": "Goya Lentils, 16 oz",
+   "why": "Cheaper on unit price: H-E-B 11.1¢/oz vs Walmart 12.0¢/oz. For red lentils: H-E-B $2.02, Great Value $2.18."
+  },
+  "checkedAt": "2026-10-26",
+  "sources": {
+   "heb": "https://www.heb.com/search?q=dry+lentils",
+   "walmart": "https://www.walmart.com/search?q=dry+lentils"
+  }
+ },
+ {
+  "ingredient": "black beans (dry)",
+  "aisle": "Canned & Dry",
+  "heb": {
+   "product": "H-E-B Black Beans, 16 oz",
+   "size": "16 oz",
+   "price": "$1.54",
+   "unitPrice": "$0.10 / oz",
+   "stars": null,
+   "ratingCount": null,
+   "url": "https://www.heb.com/product-detail/h-e-b-black-beans-16-oz/127071",
+   "note": "heb.com shows no customer star ratings; curbside price shown $1.62"
+  },
+  "walmart": {
+   "product": "Great Value Black Beans, 1 lb",
+   "size": "1 lb",
+   "price": "$1.54",
+   "unitPrice": "9.6 ¢/oz",
+   "stars": 4.7,
+   "ratingCount": 2043,
+   "url": "https://www.walmart.com/ip/Great-Value-Black-Beans-1-lb/284432452",
+   "note": null
+  },
+  "bestBuy": {
+   "store": "Walmart",
+   "product": "Great Value Black Beans, 1 lb",
+   "why": "Tie on unit price (9.6¢/oz at both); Walmart's pick is rated 4.7 stars (2,043 ratings). Dry bags, same $1.54 a pound at both stores."
+  },
+  "checkedAt": "2026-10-26",
+  "sources": {
+   "heb": "https://www.heb.com/search?q=dry+black+beans",
+   "walmart": "https://www.walmart.com/search?q=dried+black+beans"
+  }
+ },
+ {
+  "ingredient": "black beans (canned)",
+  "aisle": "Canned & Dry",
+  "heb": {
+   "product": "H-E-B Black Beans, 15 oz",
+   "size": "15 oz",
+   "price": "$0.85",
+   "unitPrice": "$0.06 / oz",
+   "stars": null,
+   "ratingCount": null,
+   "url": "https://www.heb.com/product-detail/h-e-b-black-beans-15-oz/921748",
+   "note": "heb.com shows no customer star ratings; curbside price shown $0.89"
+  },
+  "walmart": {
+   "product": "Great Value Black Beans, 15 oz",
+   "size": "15 oz",
+   "price": "$0.92",
+   "unitPrice": "6.1 ¢/oz",
+   "stars": 4.7,
+   "ratingCount": 16492,
+   "url": "https://www.walmart.com/ip/Great-Value-Black-Beans-15-oz-Can/10534038",
+   "note": null
+  },
+  "bestBuy": {
+   "store": "H-E-B",
+   "product": "H-E-B Black Beans, 15 oz",
+   "why": "Cheaper on unit price: H-E-B 5.7¢/oz vs Walmart 6.1¢/oz",
+   "nameBrandCompare": {
+    "product": "Bush's Best Black Beans, 15 oz",
+    "price": "$1.53",
+    "unitPrice": "$0.10 / oz",
+    "url": "https://www.heb.com/product-detail/bush-s-best-black-beans-15-oz/444184",
+    "estSavingVsNameBrand": 0.68
+   }
+  },
+  "checkedAt": "2026-10-26",
+  "sources": {
+   "heb": "https://www.heb.com/search?q=canned+black+beans",
+   "walmart": "https://www.walmart.com/search?q=canned+black+beans"
+  }
+ },
+ {
+  "ingredient": "pinto beans (canned)",
+  "aisle": "Canned & Dry",
+  "heb": {
+   "product": "H-E-B Pinto Beans, 15.5 oz",
+   "size": "15.5 oz",
+   "price": "$0.92",
+   "unitPrice": "$0.06 / oz",
+   "stars": null,
+   "ratingCount": null,
+   "url": "https://www.heb.com/product-detail/h-e-b-pinto-beans-15-5-oz/125682",
+   "note": "heb.com shows no customer star ratings; curbside price shown $0.97"
+  },
+  "walmart": {
+   "product": "Great Value Pinto Beans, 15.5 oz",
+   "size": "15.5 oz",
+   "price": "$0.92",
+   "unitPrice": "5.9 ¢/oz",
+   "stars": 4.7,
+   "ratingCount": 11769,
+   "url": "https://www.walmart.com/ip/Great-Value-Pinto-Beans-15-5-oz-Can/10534043",
+   "note": null
+  },
+  "bestBuy": {
+   "store": "Walmart",
+   "product": "Great Value Pinto Beans, 15.5 oz",
+   "why": "Tie on unit price (5.9¢/oz at both); Walmart's pick is rated 4.7 stars (11,769 ratings). Same 92¢ at both stores. The H-E-B 27 oz can is $1.43, the cheapest per ounce.",
+   "nameBrandCompare": {
+    "product": "Bush's Pinto Beans Canned Beans with Pop-Top Lid, 15.5 oz Can",
+    "price": "$1.53",
+    "unitPrice": "9.9 ¢/oz",
+    "url": "https://www.walmart.com/ip/Bush-s-Pinto-Beans-Canned-Beans-with-Pop-Top-Lid-15-5-oz-Can/3006977474",
+    "estSavingVsNameBrand": 0.61
+   }
+  },
+  "checkedAt": "2026-10-26",
+  "sources": {
+   "heb": "https://www.heb.com/search?q=canned+pinto+beans",
+   "walmart": "https://www.walmart.com/search?q=canned+pinto+beans"
+  }
+ },
+ {
+  "ingredient": "canned diced tomatoes",
+  "aisle": "Canned & Dry",
+  "heb": {
+   "product": "Hill Country Fare Diced Tomatoes, 14.5 oz",
+   "size": "14.5 oz",
+   "price": "$0.96",
+   "unitPrice": "$0.07 / oz",
+   "stars": null,
+   "ratingCount": null,
+   "url": "https://www.heb.com/product-detail/hill-country-fare-diced-tomatoes-14-5-oz/15749043",
+   "note": "heb.com shows no customer star ratings; curbside price shown $1.01"
+  },
+  "walmart": {
+   "product": "Great Value Diced Tomatoes in Tomato Juice, 14.5 oz Can",
+   "size": "14.5 oz",
+   "price": "$0.96",
+   "unitPrice": "6.6 ¢/oz",
+   "stars": 4.7,
+   "ratingCount": 8358,
+   "url": "https://www.walmart.com/ip/Great-Value-Diced-Tomatoes-in-Tomato-Juice-14-5-oz-Can/10450990",
+   "note": null
+  },
+  "bestBuy": {
+   "store": "Walmart",
+   "product": "Great Value Diced Tomatoes in Tomato Juice, 14.5 oz Can",
+   "why": "Tie on unit price (6.6¢/oz at both); Walmart's pick is rated 4.7 stars (8,358 ratings). Same 96¢ at both stores. The 28 oz can is $1.67 at both.",
+   "nameBrandCompare": {
+    "product": "Hunts Diced Tomatoes, Canned Tomatoes, Perfect for Chili & Soups, 14.5 oz. Can",
+    "price": "$1.48",
+    "unitPrice": "10.2 ¢/oz",
+    "url": "https://www.walmart.com/ip/Hunt-s-Diced-Tomatoes-Canned-Tomatoes-Perfect-for-Chili-Soups-14-5-oz-Can/10295073",
+    "estSavingVsNameBrand": 0.52
+   }
+  },
+  "checkedAt": "2026-10-26",
+  "sources": {
+   "heb": "https://www.heb.com/search?q=diced+tomatoes+can",
+   "walmart": "https://www.walmart.com/search?q=canned+diced+tomatoes"
+  }
+ },
+ {
+  "ingredient": "Ro-Tel diced tomatoes & green chiles",
+  "aisle": "Canned & Dry",
+  "heb": {
+   "product": "H-E-B Diced Tomatoes with Green Chiles - Original, 10 oz",
+   "size": "10 oz",
+   "price": "$0.88",
+   "unitPrice": "$0.09 / oz",
+   "stars": null,
+   "ratingCount": null,
+   "url": "https://www.heb.com/product-detail/h-e-b-diced-tomatoes-with-green-chiles-original-10-oz/4876516",
+   "note": "heb.com shows no customer star ratings; current sale or price cut; regular price $0.95; curbside price shown $0.92"
+  },
+  "walmart": {
+   "product": "Great Value Original Diced Tomatoes with Green Chilies, 10 oz",
+   "size": "10 oz",
+   "price": "$0.96",
+   "unitPrice": "9.6 ¢/oz",
+   "stars": 4.7,
+   "ratingCount": 5449,
+   "url": "https://www.walmart.com/ip/Great-Value-Original-Diced-Tomatoes-with-Green-Chilies-10-oz/10315170",
+   "note": null
+  },
+  "bestBuy": {
+   "store": "H-E-B",
+   "product": "H-E-B Diced Tomatoes with Green Chiles - Original, 10 oz",
+   "why": "Cheaper on unit price: H-E-B 8.8¢/oz vs Walmart 9.6¢/oz. Store brand saves about 60¢ per can over Ro-Tel ($1.53).",
+   "nameBrandCompare": {
+    "product": "Ro-Tel Original Diced Tomatoes & Green Chilies, 10 oz",
+    "price": "$1.53",
+    "unitPrice": "$0.15 / oz",
+    "url": "https://www.heb.com/product-detail/ro-tel-original-diced-tomatoes-green-chilies-10-oz/153137",
+    "estSavingVsNameBrand": 0.65
+   }
+  },
+  "checkedAt": "2026-10-26",
+  "sources": {
+   "heb": "https://www.heb.com/search?q=diced+tomatoes+green+chilies",
+   "walmart": "https://www.walmart.com/search?q=diced+tomatoes+and+green+chilies"
+  }
+ },
+ {
+  "ingredient": "tomato sauce (canned)",
+  "aisle": "Canned & Dry",
+  "heb": {
+   "product": "Hill Country Fare Tomato Sauce, 8 oz",
+   "size": "8 oz",
+   "price": "$0.47",
+   "unitPrice": "$0.06 / oz",
+   "stars": null,
+   "ratingCount": null,
+   "url": "https://www.heb.com/product-detail/hill-country-fare-tomato-sauce-8-oz/15750538",
+   "note": "heb.com shows no customer star ratings; curbside price shown $0.49"
+  },
+  "walmart": {
+   "product": "Great Value Tomato Sauce, 8 oz Can",
+   "size": "8 oz",
+   "price": "$0.53",
+   "unitPrice": "6.6 ¢/oz",
+   "stars": 4.8,
+   "ratingCount": 15676,
+   "url": "https://www.walmart.com/ip/Great-Value-Tomato-Sauce-8-oz-Can/10415487",
+   "note": null
+  },
+  "bestBuy": {
+   "store": "H-E-B",
+   "product": "Hill Country Fare Tomato Sauce, 8 oz",
+   "why": "Cheaper on unit price: H-E-B 5.9¢/oz vs Walmart 6.6¢/oz",
+   "nameBrandCompare": {
+    "product": "Contadina Tomato Sauce, 8 oz",
+    "price": "$0.83",
+    "unitPrice": "$0.10 / oz",
+    "url": "https://www.heb.com/product-detail/contadina-tomato-sauce-8-oz/146759",
+    "estSavingVsNameBrand": 0.36
+   }
+  },
+  "checkedAt": "2026-10-26",
+  "sources": {
+   "heb": "https://www.heb.com/search?q=tomato+sauce+can",
+   "walmart": "https://www.walmart.com/search?q=tomato+sauce"
+  }
+ },
+ {
+  "ingredient": "salsa (jarred)",
+  "aisle": "Canned & Dry",
+  "heb": {
+   "product": "H-E-B Mi Tienda Fire-Roasted Salsa Roja - Medium, 16 oz",
+   "size": "16 oz",
+   "price": "$3.20",
+   "unitPrice": "$0.20 / oz",
+   "stars": null,
+   "ratingCount": null,
+   "url": "https://www.heb.com/product-detail/h-e-b-mi-tienda-fire-roasted-salsa-roja-medium-16-oz/12017015",
+   "note": "heb.com shows no customer star ratings; curbside price shown $3.36"
+  },
+  "walmart": {
+   "product": "Great Value Thick and Chunky Salsa Mild, 16 oz",
+   "size": "16 oz",
+   "price": "$1.97",
+   "unitPrice": "12.3 ¢/oz",
+   "stars": 4.7,
+   "ratingCount": 13248,
+   "url": "https://www.walmart.com/ip/Great-Value-Thick-and-Chunky-Salsa-Mild-16-oz/1959652540",
+   "note": null
+  },
+  "bestBuy": {
+   "store": "Walmart",
+   "product": "Great Value Thick and Chunky Salsa Mild, 16 oz",
+   "why": "Cheaper on unit price: Walmart 12.3¢/oz vs H-E-B 20.0¢/oz; Walmart's pick is rated 4.7 stars (13,248 ratings). Pace Chunky 24 oz is $3.76 at H-E-B (16¢/oz). The H-E-B search showed no H-E-B or Hill Country Fare chunky jar salsa.",
+   "nameBrandCompare": {
+    "product": "Pace Chunky Mild Salsa, 16 oz Jar",
+    "price": "$3.17",
+    "unitPrice": "19.8 ¢/oz",
+    "url": "https://www.walmart.com/ip/Pace-Chunky-Mild-Salsa-16-oz-Jar/10320079",
+    "estSavingVsNameBrand": 1.2
+   }
+  },
+  "checkedAt": "2026-10-26",
+  "sources": {
+   "heb": "https://www.heb.com/search?q=salsa+jar",
+   "walmart": "https://www.walmart.com/search?q=salsa+jar"
+  }
+ },
+ {
+  "ingredient": "15-bean soup mix (with ham flavor)",
+  "aisle": "Canned & Dry",
+  "heb": {
+   "product": "Hurst's HamBeens 15 Bean Soup, 20 oz",
+   "size": "20 oz",
+   "price": "$2.87",
+   "unitPrice": "$0.14 / oz",
+   "stars": null,
+   "ratingCount": null,
+   "url": "https://www.heb.com/product-detail/hurst-s-hambeens-15-bean-soup-20-oz/90855",
+   "note": "heb.com shows no customer star ratings; curbside price shown $3.01"
+  },
+  "walmart": {
+   "product": "Hurst's HamBeens 15 Bean Dry Soup Mix with Seasoning, 20 oz",
+   "size": "20 oz",
+   "price": "$2.87",
+   "unitPrice": "14.4 ¢/oz",
+   "stars": 4.8,
+   "ratingCount": 3450,
+   "url": "https://www.walmart.com/ip/Hurst-s-HamBeens-15-Bean-Soup-20-oz/10295039",
+   "note": null
+  },
+  "bestBuy": {
+   "store": "Walmart",
+   "product": "Hurst's HamBeens 15 Bean Dry Soup Mix with Seasoning, 20 oz",
+   "why": "Tie on unit price (14.3¢/oz at both); Walmart's pick is rated 4.8 stars (3,450 ratings). Same $2.87 at both stores; no store brand."
+  },
+  "checkedAt": "2026-10-26",
+  "sources": {
+   "heb": "https://www.heb.com/search?q=15+bean+soup",
+   "walmart": "https://www.walmart.com/search?q=hurst's+15+bean+soup"
+  }
+ },
+ {
+  "ingredient": "canned tuna (chunk light)",
+  "aisle": "Canned & Dry",
+  "heb": {
+   "product": "Hill Country Fare Chunk Light Tuna in Water, 5 oz",
+   "size": "5 oz",
+   "price": "$0.86",
+   "unitPrice": "$0.17 / oz",
+   "stars": null,
+   "ratingCount": null,
+   "url": "https://www.heb.com/product-detail/hill-country-fare-chunk-light-tuna-in-water-5-oz/126061",
+   "note": "heb.com shows no customer star ratings; curbside price shown $0.90"
+  },
+  "walmart": {
+   "product": "Great Value Chunk Light Tuna in Water, 5 oz",
+   "size": "5 oz",
+   "price": "$0.96",
+   "unitPrice": "19.2 ¢/oz",
+   "stars": 4.7,
+   "ratingCount": 22438,
+   "url": "https://www.walmart.com/ip/Great-Value-Chunk-Light-Tuna-in-Water-5-oz/11965048",
+   "note": null
+  },
+  "bestBuy": {
+   "store": "H-E-B",
+   "product": "Hill Country Fare Chunk Light Tuna in Water, 5 oz",
+   "why": "Cheaper on unit price: H-E-B 17.2¢/oz vs Walmart 19.2¢/oz",
+   "nameBrandCompare": {
+    "product": "Chicken of the Sea Chunk Light Tuna in Water, 5 oz",
+    "price": "$1.00",
+    "unitPrice": "$0.20 / oz",
+    "url": "https://www.heb.com/product-detail/chicken-of-the-sea-chunk-light-tuna-in-water-5-oz/143773",
+    "estSavingVsNameBrand": 0.14
+   }
+  },
+  "checkedAt": "2026-10-26",
+  "sources": {
+   "heb": "https://www.heb.com/search?q=chunk+light+tuna+in+water",
+   "walmart": "https://www.walmart.com/search?q=chunk+light+tuna+in+water"
+  }
+ },
+ {
+  "ingredient": "ground turkey (93% lean)",
+  "aisle": "Meat",
+  "heb": {
+   "product": "H-E-B Ground Turkey, 93% Lean, 16 oz",
+   "size": "16 oz",
+   "price": "$4.89",
+   "unitPrice": "$0.31 / oz",
+   "stars": null,
+   "ratingCount": null,
+   "url": "https://www.heb.com/product-detail/h-e-b-ground-turkey-93-lean-16-oz/529848",
+   "note": "heb.com shows no customer star ratings; curbside price shown $5.13"
+  },
+  "walmart": {
+   "product": "Butterball All Natural Fresh Ground Turkey, 93/7%, Roll, 1 Pound, 22 Grams per Serving",
+   "size": null,
+   "price": "$5.54",
+   "unitPrice": "$5.54/lb",
+   "stars": 4.5,
+   "ratingCount": 423,
+   "url": "https://www.walmart.com/ip/Butterball-All-Natural-Fresh-Ground-Turkey-93-7-16oz-1-Roll/748763533",
+   "note": null
+  },
+  "bestBuy": {
+   "store": "H-E-B",
+   "product": "H-E-B Ground Turkey, 93% Lean, 16 oz",
+   "why": "Cheaper on unit price: H-E-B 30.6¢/oz vs Walmart 34.6¢/oz. Walmart's Marketside 93/7 is $5.27 but has only 2 ratings.",
+   "nameBrandCompare": {
+    "product": "Butterball All Natural Ground Turkey 93% Lean 7% Fat, 16 oz",
+    "price": "$4.99",
+    "unitPrice": "$0.31 / oz",
+    "url": "https://www.heb.com/product-detail/butterball-all-natural-ground-turkey-93-lean-7-fat-16-oz/15356042",
+    "estSavingVsNameBrand": 0.1
+   }
+  },
+  "checkedAt": "2026-10-26",
+  "sources": {
+   "heb": "https://www.heb.com/search?q=93%+lean+ground+turkey",
+   "walmart": "https://www.walmart.com/search?q=93%+lean+ground+turkey"
+  }
+ },
+ {
+  "ingredient": "chicken breasts (boneless skinless)",
+  "aisle": "Meat",
+  "heb": {
+   "product": "Fresh Boneless Skinless Chicken Breasts - Value Pack, Avg. 4.85 lbs",
+   "size": "Avg. 4.85 lbs",
+   "price": "$9.65",
+   "unitPrice": "$1.99 / lb",
+   "stars": null,
+   "ratingCount": null,
+   "url": "https://www.heb.com/product-detail/fresh-boneless-skinless-chicken-breasts-value-pack-avg-4-85-lbs/372565",
+   "note": "heb.com shows no customer star ratings; curbside price shown $10.14; sold by weight, so the price is for the average pack weight"
+  },
+  "walmart": {
+   "product": "Freshness Guaranteed Boneless, Skinless Chicken Breasts, 3.0 - 7.3 lb Tray",
+   "size": "3.0 - 7.3 lb",
+   "price": "$11.15",
+   "unitPrice": "$2.23/lb",
+   "stars": 4.4,
+   "ratingCount": 183511,
+   "url": "https://www.walmart.com/ip/Freshness-Guaranteed-Boneless-Skinless-Chicken-Breasts-2-75-7-0-lb-Tray/27935840",
+   "note": "Rollback (temporary lower price)"
+  },
+  "bestBuy": {
+   "store": "H-E-B",
+   "product": "Fresh Boneless Skinless Chicken Breasts - Value Pack, Avg. 4.85 lbs",
+   "why": "Cheaper on unit price: H-E-B 12.4¢/oz vs Walmart 13.9¢/oz"
+  },
+  "checkedAt": "2026-10-26",
+  "sources": {
+   "heb": "https://www.heb.com/search?q=boneless+skinless+chicken+breasts",
+   "walmart": "https://www.walmart.com/search?q=boneless+skinless+chicken+breasts"
+  }
+ },
+ {
+  "ingredient": "breakfast sausage (sage)",
+  "aisle": "Meat",
+  "heb": {
+   "product": "H-E-B Premium Pork Breakfast Sausage - Sage, 16 oz",
+   "size": "16 oz",
+   "price": "$3.99",
+   "unitPrice": "$0.25 / oz",
+   "stars": null,
+   "ratingCount": null,
+   "url": "https://www.heb.com/product-detail/h-e-b-premium-pork-breakfast-sausage-sage-16-oz/127053",
+   "note": "heb.com shows no customer star ratings; curbside price shown $4.19"
+  },
+  "walmart": {
+   "product": "Great Value Original Premium Sausage Roll, 16 oz, Plastic Wrapped (Refrigerated)",
+   "size": "16 oz",
+   "price": "$3.12",
+   "unitPrice": "$3.12/lb",
+   "stars": 4.5,
+   "ratingCount": 18782,
+   "url": "https://www.walmart.com/ip/Great-Value-Original-Premium-Sausage-Roll-16-oz-Plastic-Wrapped-Refrigerated/46575468",
+   "note": null
+  },
+  "bestBuy": {
+   "store": "Walmart",
+   "product": "Great Value Original Premium Sausage Roll, 16 oz, Plastic Wrapped (Refrigerated)",
+   "why": "Cheaper on unit price: Walmart 19.5¢/oz vs H-E-B 24.9¢/oz; Walmart's pick is rated 4.5 stars (18,782 ratings). The Walmart pick isn't sage-flavored. Jimmy Dean Sage 16 oz ($3.48) showed as out of stock online.",
+   "nameBrandCompare": {
+    "product": "Jimmy Dean Refrigerated Fresh Premium Pork Regular Sausage Roll, 16 oz, 9g protein per serving",
+    "price": "$4.97",
+    "unitPrice": "31.1 ¢/oz",
+    "url": "https://www.walmart.com/ip/Jimmy-Dean-Refrigerated-Fresh-Premium-Pork-Regular-Sausage-Roll-16-oz-9g-protein-per-serving/10533854",
+    "estSavingVsNameBrand": 1.85
+   }
+  },
+  "checkedAt": "2026-10-26",
+  "sources": {
+   "heb": "https://www.heb.com/search?q=sage+breakfast+sausage+roll",
+   "walmart": "https://www.walmart.com/search?q=sage+breakfast+sausage+roll"
+  }
+ },
+ {
+  "ingredient": "all-purpose flour",
+  "aisle": "Baking",
+  "heb": {
+   "product": "Hill Country Fare Enriched Bleached All-Purpose Flour, 5 lbs",
+   "size": "5 lbs",
+   "price": "$1.84",
+   "unitPrice": "$0.02 / oz",
+   "stars": null,
+   "ratingCount": null,
+   "url": "https://www.heb.com/product-detail/hill-country-fare-enriched-bleached-all-purpose-flour-5-lbs/126280",
+   "note": "heb.com shows no customer star ratings; current sale or price cut; regular price $1.95; curbside price shown $1.93"
+  },
+  "walmart": {
+   "product": "Great Value All-Purpose Enriched Bleached Wheat Flour, 5 lb Bag",
+   "size": "5 lb",
+   "price": "$1.97",
+   "unitPrice": "2.5 ¢/oz",
+   "stars": 4.7,
+   "ratingCount": 22161,
+   "url": "https://www.walmart.com/ip/Great-Value-All-Purpose-Enriched-Flour-5LB-Bag/10403017",
+   "note": "Rollback (temporary lower price)"
+  },
+  "bestBuy": {
+   "store": "H-E-B",
+   "product": "Hill Country Fare Enriched Bleached All-Purpose Flour, 5 lbs",
+   "why": "Cheaper on unit price: H-E-B 2.3¢/oz vs Walmart 2.5¢/oz",
+   "nameBrandCompare": {
+    "product": "Gold Medal Enriched Bleached Pre-Sifted All-Purpose Flour, 5 lbs",
+    "price": "$3.97",
+    "unitPrice": "$0.05 / oz",
+    "url": "https://www.heb.com/product-detail/gold-medal-enriched-bleached-pre-sifted-all-purpose-flour-5-lbs/31723",
+    "estSavingVsNameBrand": 2.13
+   }
+  },
+  "checkedAt": "2026-10-26",
+  "sources": {
+   "heb": "https://www.heb.com/search?q=all+purpose+flour",
+   "walmart": "https://www.walmart.com/search?q=all+purpose+flour"
+  }
+ },
+ {
+  "ingredient": "granulated sugar",
+  "aisle": "Baking",
+  "heb": {
+   "product": "Hill Country Fare Granulated Sugar, 4 lbs",
+   "size": "4 lbs",
+   "price": "$2.54",
+   "unitPrice": "$0.04 / oz",
+   "stars": null,
+   "ratingCount": null,
+   "url": "https://www.heb.com/product-detail/hill-country-fare-granulated-sugar-4-lbs/125057",
+   "note": "heb.com shows no customer star ratings; curbside price shown $2.67"
+  },
+  "walmart": {
+   "product": "Great Value Pure Granulated Sugar, 4 lbs",
+   "size": "4 lbs",
+   "price": "$2.97",
+   "unitPrice": "4.6 ¢/oz",
+   "stars": 4.7,
+   "ratingCount": 159951,
+   "url": "https://www.walmart.com/ip/Great-Value-Pure-Granulated-Sugar-4-lb/10315162",
+   "note": null
+  },
+  "bestBuy": {
+   "store": "H-E-B",
+   "product": "Hill Country Fare Granulated Sugar, 4 lbs",
+   "why": "Cheaper on unit price: H-E-B 4.0¢/oz vs Walmart 4.6¢/oz",
+   "nameBrandCompare": {
+    "product": "Imperial Sugar Pure Cane Extra Fine Granulated Sugar, 4 lbs",
+    "price": "$3.62",
+    "unitPrice": "$0.06 / oz",
+    "url": "https://www.heb.com/product-detail/imperial-sugar-pure-cane-extra-fine-granulated-sugar-4-lbs/172831",
+    "estSavingVsNameBrand": 1.08
+   }
+  },
+  "checkedAt": "2026-10-26",
+  "sources": {
+   "heb": "https://www.heb.com/search?q=granulated+sugar",
+   "walmart": "https://www.walmart.com/search?q=granulated+sugar"
+  }
+ },
+ {
+  "ingredient": "brown sugar (light)",
+  "aisle": "Baking",
+  "heb": {
+   "product": "C&H Premium Pure Cane Light Brown Sugar, 2 lbs",
+   "size": "2 lbs",
+   "price": "$2.62",
+   "unitPrice": "$0.08 / oz",
+   "stars": null,
+   "ratingCount": null,
+   "url": "https://www.heb.com/product-detail/c-h-premium-pure-cane-light-brown-sugar-2-lbs/9028012",
+   "note": "heb.com shows no customer star ratings; curbside price shown $2.75"
+  },
+  "walmart": {
+   "product": "Domino Premium Pure Cane Light Brown Sugar 2 lb. Zipper-Pak",
+   "size": "2 lb.",
+   "price": "$3.78",
+   "unitPrice": "11.8 ¢/oz",
+   "stars": 4.7,
+   "ratingCount": 1907,
+   "url": "https://www.walmart.com/ip/Domino-Premium-Pure-Cane-Light-Brown-Sugar-2-lb-Zipper-Pak/1600519430",
+   "note": null
+  },
+  "bestBuy": {
+   "store": "H-E-B",
+   "product": "C&H Premium Pure Cane Light Brown Sugar, 2 lbs",
+   "why": "Cheaper on unit price: H-E-B 8.2¢/oz vs Walmart 11.8¢/oz. Neither store showed a store-brand regular light brown sugar in search (H-E-B had only an organic one, $3.09 for 24 oz)."
+  },
+  "checkedAt": "2026-10-26",
+  "sources": {
+   "heb": "https://www.heb.com/search?q=light+brown+sugar",
+   "walmart": "https://www.walmart.com/search?q=light+brown+sugar"
+  }
+ },
+ {
+  "ingredient": "baking powder",
+  "aisle": "Baking",
+  "heb": {
+   "product": "Hill Country Fare Double Acting Baking Powder, 8.1 oz",
+   "size": "8.1 oz",
+   "price": "$1.87",
+   "unitPrice": "$0.23 / oz",
+   "stars": null,
+   "ratingCount": null,
+   "url": "https://www.heb.com/product-detail/hill-country-fare-double-acting-baking-powder-8-1-oz/2657518",
+   "note": "heb.com shows no customer star ratings; current sale or price cut; regular price $2.08; curbside price shown $1.96"
+  },
+  "walmart": {
+   "product": "Great Value Double Acting Baking Powder, 8.1 oz",
+   "size": "8.1 oz",
+   "price": "$2.08",
+   "unitPrice": "25.7 ¢/oz",
+   "stars": 4.8,
+   "ratingCount": 6984,
+   "url": "https://www.walmart.com/ip/Great-Value-Double-Acting-Baking-Powder-8-1-oz/16627955",
+   "note": null
+  },
+  "bestBuy": {
+   "store": "H-E-B",
+   "product": "Hill Country Fare Double Acting Baking Powder, 8.1 oz",
+   "why": "Cheaper on unit price: H-E-B 23.1¢/oz vs Walmart 25.7¢/oz",
+   "nameBrandCompare": {
+    "product": "Clabber Girl Double Acting Baking Powder, 8.1 oz",
+    "price": "$2.88",
+    "unitPrice": "$0.36 / oz",
+    "url": "https://www.heb.com/product-detail/clabber-girl-double-acting-baking-powder-8-1-oz/78837",
+    "estSavingVsNameBrand": 1.01
+   }
+  },
+  "checkedAt": "2026-10-26",
+  "sources": {
+   "heb": "https://www.heb.com/search?q=baking+powder",
+   "walmart": "https://www.walmart.com/search?q=baking+powder"
+  }
+ },
+ {
+  "ingredient": "baking soda",
+  "aisle": "Baking",
+  "heb": {
+   "product": "Hill Country Fare Pure Baking Soda, 16 oz",
+   "size": "16 oz",
+   "price": "$0.77",
+   "unitPrice": "$0.05 / oz",
+   "stars": null,
+   "ratingCount": null,
+   "url": "https://www.heb.com/product-detail/hill-country-fare-pure-baking-soda-16-oz/125520",
+   "note": "heb.com shows no customer star ratings; current sale or price cut; regular price $0.89; curbside price shown $0.81"
+  },
+  "walmart": {
+   "product": "Great Value Baking Soda, 1 lb",
+   "size": "1 lb",
+   "price": "$0.97",
+   "unitPrice": "6.1 ¢/oz",
+   "stars": 4.7,
+   "ratingCount": 13273,
+   "url": "https://www.walmart.com/ip/Great-Value-Baking-Soda-1-Lb/10315486",
+   "note": null
+  },
+  "bestBuy": {
+   "store": "H-E-B",
+   "product": "Hill Country Fare Pure Baking Soda, 16 oz",
+   "why": "Cheaper on unit price: H-E-B 4.8¢/oz vs Walmart 6.1¢/oz",
+   "nameBrandCompare": {
+    "product": "Arm & Hammer Pure Baking Soda, 1 lb",
+    "price": "$1.52",
+    "unitPrice": "$0.10 / oz",
+    "url": "https://www.heb.com/product-detail/arm-hammer-pure-baking-soda-1-lb/110105",
+    "estSavingVsNameBrand": 0.75
+   }
+  },
+  "checkedAt": "2026-10-26",
+  "sources": {
+   "heb": "https://www.heb.com/search?q=baking+soda",
+   "walmart": "https://www.walmart.com/search?q=baking+soda"
+  }
+ },
+ {
+  "ingredient": "vanilla extract",
+  "aisle": "Baking",
+  "heb": {
+   "product": "Alcirelli Pure Vanilla Extract, 8.8 oz",
+   "size": "8.8 oz",
+   "price": "$6.48",
+   "unitPrice": "$0.74 / oz",
+   "stars": null,
+   "ratingCount": null,
+   "url": "https://www.heb.com/product-detail/alcirelli-pure-vanilla-extract-8-8-oz/558306",
+   "note": "heb.com shows no customer star ratings; curbside price shown $6.80"
+  },
+  "walmart": {
+   "product": "Great Value Pure Vanilla Extract, 4 fl oz (Liquid, Ambient, Plastic Container)",
+   "size": "4 fl oz",
+   "price": "$9.76",
+   "unitPrice": "$2.44/fl oz",
+   "stars": 4.5,
+   "ratingCount": 897,
+   "url": "https://www.walmart.com/ip/Great-Value-Pure-Vanilla-Extract-4-fl-oz-Liquid-Ambient-Plastic-Container/585133649",
+   "note": null
+  },
+  "bestBuy": {
+   "store": "H-E-B",
+   "product": "Alcirelli Pure Vanilla Extract, 8.8 oz",
+   "why": "Cheaper on unit price: H-E-B 73.6¢/oz vs Walmart $2.44/oz. Alcirelli is much cheaper per ounce than McCormick ($2.69/oz)."
+  },
+  "checkedAt": "2026-10-26",
+  "sources": {
+   "heb": "https://www.heb.com/search?q=pure+vanilla+extract",
+   "walmart": "https://www.walmart.com/search?q=pure+vanilla+extract"
+  }
+ },
+ {
+  "ingredient": "honey",
+  "aisle": "Baking",
+  "heb": {
+   "product": "Hill Country Fare Clover Honey, 16 oz",
+   "size": "16 oz",
+   "price": "$3.33",
+   "unitPrice": "$0.21 / oz",
+   "stars": null,
+   "ratingCount": null,
+   "url": "https://www.heb.com/product-detail/hill-country-fare-clover-honey-16-oz/123682",
+   "note": "heb.com shows no customer star ratings; curbside price shown $3.50"
+  },
+  "walmart": {
+   "product": "Sue Bee Honey, Premium Clover Honey, 24 oz",
+   "size": "24 oz",
+   "price": "$6.40",
+   "unitPrice": "26.7 ¢/oz",
+   "stars": 4.7,
+   "ratingCount": 597,
+   "url": "https://www.walmart.com/ip/Sue-Bee-Honey-Premium-Clover-Honey-24-oz/10304301",
+   "note": null
+  },
+  "bestBuy": {
+   "store": "H-E-B",
+   "product": "Hill Country Fare Clover Honey, 16 oz",
+   "why": "Cheaper on unit price: H-E-B 20.8¢/oz vs Walmart 26.7¢/oz",
+   "nameBrandCompare": {
+    "product": "Burleson's Clover Honey, 8 oz",
+    "price": "$3.48",
+    "unitPrice": "$0.44 / oz",
+    "url": "https://www.heb.com/product-detail/burleson-s-clover-honey-8-oz/173277",
+    "estSavingVsNameBrand": 3.63
+   }
+  },
+  "checkedAt": "2026-10-26",
+  "sources": {
+   "heb": "https://www.heb.com/search?q=honey",
+   "walmart": "https://www.walmart.com/search?q=honey"
+  }
+ },
+ {
+  "ingredient": "peanut butter",
+  "aisle": "Pantry",
+  "heb": {
+   "product": "Hill Country Fare Creamy Peanut Butter, 18 oz",
+   "size": "18 oz",
+   "price": "$1.59",
+   "unitPrice": "$0.09 / oz",
+   "stars": null,
+   "ratingCount": null,
+   "url": "https://www.heb.com/product-detail/hill-country-fare-creamy-peanut-butter-18-oz/125055",
+   "note": "heb.com shows no customer star ratings; curbside price shown $1.67"
+  },
+  "walmart": {
+   "product": "Great Value Creamy Peanut Butter 16oz",
+   "size": "16oz",
+   "price": "$2.24",
+   "unitPrice": "14.0 ¢/oz",
+   "stars": 4.7,
+   "ratingCount": 14683,
+   "url": "https://www.walmart.com/ip/Great-Value-Creamy-Peanut-Butter-16-oz/3716446909",
+   "note": null
+  },
+  "bestBuy": {
+   "store": "H-E-B",
+   "product": "Hill Country Fare Creamy Peanut Butter, 18 oz",
+   "why": "Cheaper on unit price: H-E-B 8.8¢/oz vs Walmart 14.0¢/oz",
+   "nameBrandCompare": {
+    "product": "Skippy Creamy Peanut Butter, 16.3 oz",
+    "price": "$2.98",
+    "unitPrice": "$0.18 / oz",
+    "url": "https://www.heb.com/product-detail/skippy-creamy-peanut-butter-16-3-oz/6014515",
+    "estSavingVsNameBrand": 1.7
+   }
+  },
+  "checkedAt": "2026-10-26",
+  "sources": {
+   "heb": "https://www.heb.com/search?q=creamy+peanut+butter",
+   "walmart": "https://www.walmart.com/search?q=creamy+peanut+butter"
+  }
+ },
+ {
+  "ingredient": "walnuts (chopped)",
+  "aisle": "Baking",
+  "heb": {
+   "product": "Hill Country Fare Walnut Chips, 6 oz",
+   "size": "6 oz",
+   "price": "$2.25",
+   "unitPrice": "$0.38 / oz",
+   "stars": null,
+   "ratingCount": null,
+   "url": "https://www.heb.com/product-detail/hill-country-fare-walnut-chips-6-oz/978121",
+   "note": "heb.com shows no customer star ratings; curbside price shown $2.36"
+  },
+  "walmart": {
+   "product": "Great Value Chopped Walnuts, 8 oz",
+   "size": "8 oz",
+   "price": "$5.28",
+   "unitPrice": "66.0 ¢/oz",
+   "stars": 4.7,
+   "ratingCount": 5854,
+   "url": "https://www.walmart.com/ip/Great-Value-Chopped-Walnuts-8-oz/620060802",
+   "note": null
+  },
+  "bestBuy": {
+   "store": "H-E-B",
+   "product": "Hill Country Fare Walnut Chips, 6 oz",
+   "why": "Cheaper on unit price: H-E-B 37.5¢/oz vs Walmart 66.0¢/oz",
+   "nameBrandCompare": {
+    "product": "Diamond of California Chopped Walnuts, 8 oz",
+    "price": "$4.24",
+    "unitPrice": "$0.53 / oz",
+    "url": "https://www.heb.com/product-detail/diamond-of-california-chopped-walnuts-8-oz/1810881",
+    "estSavingVsNameBrand": 0.93
+   }
+  },
+  "checkedAt": "2026-10-26",
+  "sources": {
+   "heb": "https://www.heb.com/search?q=chopped+walnuts",
+   "walmart": "https://www.walmart.com/search?q=chopped+walnuts"
+  }
+ },
+ {
+  "ingredient": "flour tortillas",
+  "aisle": "Tortillas & Bakery",
+  "heb": {
+   "product": "H-E-B Mi Tienda Ready to Cook Flour Tortillas, 20 ct",
+   "size": "20 ct",
+   "price": "$2.38",
+   "unitPrice": "$0.12 / ct",
+   "stars": null,
+   "ratingCount": null,
+   "url": "https://www.heb.com/product-detail/h-e-b-mi-tienda-ready-to-cook-flour-tortillas-20-ct/2188483",
+   "note": "heb.com shows no customer star ratings; current sale or price cut; regular price $2.88; curbside price shown $2.50"
+  },
+  "walmart": {
+   "product": "Great Value Small Fajita Flour Tortillas, 26 oz, 20 Count",
+   "size": "20 Count",
+   "price": "$2.12",
+   "unitPrice": "8.2 ¢/oz",
+   "stars": 4.7,
+   "ratingCount": 7626,
+   "url": "https://www.walmart.com/ip/Great-Value-Small-Fajita-Flour-Tortillas-26-oz-20-Count/478147915",
+   "note": null
+  },
+  "bestBuy": {
+   "store": "Walmart",
+   "product": "Great Value Small Fajita Flour Tortillas, 26 oz, 20 Count",
+   "why": "Cheaper on price: Walmart $2.12 vs H-E-B $2.38; Walmart's pick is rated 4.7 stars (7,626 ratings). H-E-B's pick is uncooked (you cook them on a griddle). Mission Fajita Size 20 ct is $3.48 at both stores.",
+   "nameBrandCompare": {
+    "product": "Mission Super Soft Flour Tortillas, Fajita Size, 20 Count",
+    "price": "$3.48",
+    "unitPrice": "15.1 ¢/oz",
+    "url": "https://www.walmart.com/ip/Mission-Super-Soft-Flour-Tortillas-Fajita-Size-20-Count/14123550",
+    "estSavingVsNameBrand": 1.78
+   }
+  },
+  "checkedAt": "2026-10-26",
+  "sources": {
+   "heb": "https://www.heb.com/search?q=flour+tortillas",
+   "walmart": "https://www.walmart.com/search?q=flour+tortillas"
+  }
+ },
+ {
+  "ingredient": "soy sauce (low sodium)",
+  "aisle": "Asian & International",
+  "heb": {
+   "product": "Hill Country Fare Less Sodium Soy Sauce, 15 oz",
+   "size": "15 oz",
+   "price": "$1.58",
+   "unitPrice": "$0.11 / oz",
+   "stars": null,
+   "ratingCount": null,
+   "url": "https://www.heb.com/product-detail/hill-country-fare-less-sodium-soy-sauce-15-oz/15766549",
+   "note": "heb.com shows no customer star ratings; curbside price shown $1.66"
+  },
+  "walmart": {
+   "product": "Great Value Less Sodium Soy Sauce, 15 fl oz",
+   "size": "15 fl oz",
+   "price": "$1.73",
+   "unitPrice": "11.5 ¢/fl oz",
+   "stars": 4.7,
+   "ratingCount": 10123,
+   "url": "https://www.walmart.com/ip/Great-Value-Less-Sodium-Soy-Sauce-15-fl-oz/15056122",
+   "note": null
+  },
+  "bestBuy": {
+   "store": "H-E-B",
+   "product": "Hill Country Fare Less Sodium Soy Sauce, 15 oz",
+   "why": "Cheaper on unit price: H-E-B 10.5¢/oz vs Walmart 11.5¢/oz",
+   "nameBrandCompare": {
+    "product": "Kikkoman Less Sodium Soy Sauce, 10 oz",
+    "price": "$3.38",
+    "unitPrice": "$0.34 / oz",
+    "url": "https://www.heb.com/product-detail/kikkoman-less-sodium-soy-sauce-10-oz/129456",
+    "estSavingVsNameBrand": 3.49
+   }
+  },
+  "checkedAt": "2026-10-26",
+  "sources": {
+   "heb": "https://www.heb.com/search?q=low+sodium+soy+sauce",
+   "walmart": "https://www.walmart.com/search?q=less+sodium+soy+sauce"
+  }
+ },
+ {
+  "ingredient": "Dijon mustard",
+  "aisle": "Condiments",
+  "heb": {
+   "product": "H-E-B Dijon Mustard, 12 oz",
+   "size": "12 oz",
+   "price": "$1.49",
+   "unitPrice": "$0.12 / oz",
+   "stars": null,
+   "ratingCount": null,
+   "url": "https://www.heb.com/product-detail/h-e-b-dijon-mustard-12-oz/909592",
+   "note": "heb.com shows no customer star ratings; curbside price shown $1.56"
+  },
+  "walmart": {
+   "product": "Great Value Dijon Mustard, 12 oz",
+   "size": "12 oz",
+   "price": "$1.77",
+   "unitPrice": "14.8 ¢/oz",
+   "stars": 4.7,
+   "ratingCount": 4260,
+   "url": "https://www.walmart.com/ip/Great-Value-Dijon-Mustard-12-oz-Squeeze-Bottle/10315545",
+   "note": null
+  },
+  "bestBuy": {
+   "store": "H-E-B",
+   "product": "H-E-B Dijon Mustard, 12 oz",
+   "why": "Cheaper on unit price: H-E-B 12.4¢/oz vs Walmart 14.8¢/oz",
+   "nameBrandCompare": {
+    "product": "Grey Poupon Dijon Mustard, 10 oz",
+    "price": "$4.32",
+    "unitPrice": "$0.43 / oz",
+    "url": "https://www.heb.com/product-detail/grey-poupon-dijon-mustard-10-oz/151677",
+    "estSavingVsNameBrand": 3.69
+   }
+  },
+  "checkedAt": "2026-10-26",
+  "sources": {
+   "heb": "https://www.heb.com/search?q=dijon+mustard",
+   "walmart": "https://www.walmart.com/search?q=dijon+mustard"
+  }
+ },
+ {
+  "ingredient": "mayonnaise",
+  "aisle": "Condiments",
+  "heb": {
+   "product": "Hill Country Fare Mayonnaise, 30 oz",
+   "size": "30 oz",
+   "price": "$2.97",
+   "unitPrice": "$0.10 / oz",
+   "stars": null,
+   "ratingCount": null,
+   "url": "https://www.heb.com/product-detail/hill-country-fare-mayonnaise-30-oz/3857609",
+   "note": "heb.com shows no customer star ratings; curbside price shown $3.12"
+  },
+  "walmart": {
+   "product": "Great Value Mayonnaise, 30 fl oz",
+   "size": "30 fl oz",
+   "price": "$2.97",
+   "unitPrice": "9.9 ¢/fl oz",
+   "stars": 4.7,
+   "ratingCount": 39038,
+   "url": "https://www.walmart.com/ip/Great-Value-Mayonnaise-30-fl-oz/17056888",
+   "note": null
+  },
+  "bestBuy": {
+   "store": "Walmart",
+   "product": "Great Value Mayonnaise, 30 fl oz",
+   "why": "Tie on unit price (9.9¢/oz at both); Walmart's pick is rated 4.7 stars (39,038 ratings)",
+   "nameBrandCompare": {
+    "product": "Kraft Real Mayo Creamy & Smooth Mayonnaise, for a Keto and Low Carb Lifestyle, 30 fl oz Jar",
+    "price": "$4.98",
+    "unitPrice": null,
+    "url": "https://www.walmart.com/ip/Kraft-Real-Mayo-Creamy-Smooth-Mayonnaise-for-a-Keto-and-Low-Carb-Lifestyle-30-fl-oz-Jar/14651650",
+    "estSavingVsNameBrand": 2.01
+   }
+  },
+  "checkedAt": "2026-10-26",
+  "sources": {
+   "heb": "https://www.heb.com/search?q=mayonnaise",
+   "walmart": "https://www.walmart.com/search?q=mayonnaise"
+  }
+ },
+ {
+  "ingredient": "hot sauce",
+  "aisle": "Condiments",
+  "heb": {
+   "product": "Hill Country Fare Louisiana Hot Sauce, 17 oz",
+   "size": "17 oz",
+   "price": "$1.35",
+   "unitPrice": "$0.08 / oz",
+   "stars": null,
+   "ratingCount": null,
+   "url": "https://www.heb.com/product-detail/hill-country-fare-louisiana-hot-sauce-17-oz/706441",
+   "note": "heb.com shows no customer star ratings; curbside price shown $1.42"
+  },
+  "walmart": {
+   "product": "Trappey's Red Devil Cayenne Pepper Hot Sauce, 32 fl oz",
+   "size": "32 fl oz",
+   "price": "$2.63",
+   "unitPrice": "8.2 ¢/fl oz",
+   "stars": 4.7,
+   "ratingCount": 288,
+   "url": "https://www.walmart.com/ip/Trappey-s-Red-Devil-Cayenne-Pepper-Hot-Sauce-32-fl-oz-Glass-Bottle/10309588",
+   "note": null
+  },
+  "bestBuy": {
+   "store": "H-E-B",
+   "product": "Hill Country Fare Louisiana Hot Sauce, 17 oz",
+   "why": "Cheaper on unit price: H-E-B 7.9¢/oz vs Walmart 8.2¢/oz. Great Value Louisiana Hot Sauce only showed as an 8-pack at Walmart.",
+   "nameBrandCompare": {
+    "product": "Crystal Louisiana's Pure Hot Sauce, 12 oz",
+    "price": "$1.97",
+    "unitPrice": "$0.16 / oz",
+    "url": "https://www.heb.com/product-detail/crystal-louisiana-s-pure-hot-sauce-12-oz/491992",
+    "estSavingVsNameBrand": 1.44
+   }
+  },
+  "checkedAt": "2026-10-26",
+  "sources": {
+   "heb": "https://www.heb.com/search?q=hot+sauce",
+   "walmart": "https://www.walmart.com/search?q=hot+sauce"
+  }
+ },
+ {
+  "ingredient": "chili powder",
+  "aisle": "Spices",
+  "heb": {
+   "product": "Hill Country Fare Chili Powder, 2 oz",
+   "size": "2 oz",
+   "price": "$0.72",
+   "unitPrice": "$0.36 / oz",
+   "stars": null,
+   "ratingCount": null,
+   "url": "https://www.heb.com/product-detail/hill-country-fare-chili-powder-2-oz/607751",
+   "note": "heb.com shows no customer star ratings; curbside price shown $0.76"
+  },
+  "walmart": {
+   "product": "Great Value Chili Powder, 3 oz",
+   "size": "3 oz",
+   "price": "$1.00",
+   "unitPrice": "33.3 ¢/oz",
+   "stars": 4.7,
+   "ratingCount": 6211,
+   "url": "https://www.walmart.com/ip/Great-Value-Chili-Powder-3-oz/157643393",
+   "note": null
+  },
+  "bestBuy": {
+   "store": "Walmart",
+   "product": "Great Value Chili Powder, 3 oz",
+   "why": "Cheaper on unit price: Walmart 33.3¢/oz vs H-E-B 36.0¢/oz; Walmart's pick is rated 4.7 stars (6,211 ratings). The 8 oz jar is $3.28 (41¢/oz).",
+   "nameBrandCompare": {
+    "product": "McCormick Kosher Chili Powder, 2.5 oz Bottle",
+    "price": "$2.38",
+    "unitPrice": "95.2 ¢/oz",
+    "url": "https://www.walmart.com/ip/McCormick-Kosher-Chili-Powder-2-5-oz-Bottle/10308078",
+    "estSavingVsNameBrand": 1.86
+   }
+  },
+  "checkedAt": "2026-10-26",
+  "sources": {
+   "heb": "https://www.heb.com/search?q=chili+powder",
+   "walmart": "https://www.walmart.com/search?q=chili+powder"
+  }
+ },
+ {
+  "ingredient": "ground cumin",
+  "aisle": "Spices",
+  "heb": {
+   "product": "H-E-B Ground Cumin Spice, 1.8 oz",
+   "size": "1.8 oz",
+   "price": "$2.48",
+   "unitPrice": "$1.38 / oz",
+   "stars": null,
+   "ratingCount": null,
+   "url": "https://www.heb.com/product-detail/h-e-b-ground-cumin-spice-1-8-oz/1627063",
+   "note": "heb.com shows no customer star ratings; curbside price shown $2.60"
+  },
+  "walmart": {
+   "product": "Great Value Ground Cumin, 4.5 oz",
+   "size": "4.5 oz",
+   "price": "$4.37",
+   "unitPrice": "97.1 ¢/oz",
+   "stars": 4.8,
+   "ratingCount": 469,
+   "url": "https://www.walmart.com/ip/Great-Value-Ground-Cumin-4-5-oz/564519710",
+   "note": null
+  },
+  "bestBuy": {
+   "store": "Walmart",
+   "product": "Great Value Ground Cumin, 4.5 oz",
+   "why": "Cheaper on unit price: Walmart 97.1¢/oz vs H-E-B $1.38/oz; Walmart's pick is rated 4.8 stars (469 ratings)",
+   "nameBrandCompare": {
+    "product": "McCormick Kosher Ground Cumin, 1.5 oz Bottle",
+    "price": "$2.83",
+    "unitPrice": "$1.89/oz",
+    "url": "https://www.walmart.com/ip/McCormick-Kosher-Ground-Cumin-1-5-oz-Bottle/39340099",
+    "estSavingVsNameBrand": 4.12
+   }
+  },
+  "checkedAt": "2026-10-26",
+  "sources": {
+   "heb": "https://www.heb.com/search?q=ground+cumin",
+   "walmart": "https://www.walmart.com/search?q=ground+cumin"
+  }
+ },
+ {
+  "ingredient": "garlic powder",
+  "aisle": "Spices",
+  "heb": {
+   "product": "Hill Country Fare Garlic Powder, 2 oz",
+   "size": "2 oz",
+   "price": "$0.63",
+   "unitPrice": "$0.32 / oz",
+   "stars": null,
+   "ratingCount": null,
+   "url": "https://www.heb.com/product-detail/hill-country-fare-garlic-powder-2-oz/607758",
+   "note": "heb.com shows no customer star ratings; curbside price shown $0.66"
+  },
+  "walmart": {
+   "product": "Great Value Garlic Powder, 3.4 oz",
+   "size": "3.4 oz",
+   "price": "$1.00",
+   "unitPrice": "29.4 ¢/oz",
+   "stars": 4.8,
+   "ratingCount": 39986,
+   "url": "https://www.walmart.com/ip/Great-Value-Garlic-Powder-3-4-oz/676979470",
+   "note": null
+  },
+  "bestBuy": {
+   "store": "Walmart",
+   "product": "Great Value Garlic Powder, 3.4 oz",
+   "why": "Cheaper on unit price: Walmart 29.4¢/oz vs H-E-B 31.5¢/oz; Walmart's pick is rated 4.8 stars (39,986 ratings)",
+   "nameBrandCompare": {
+    "product": "McCormick Kosher Garlic Powder, 3.12 oz Bottle",
+    "price": "$3.23",
+    "unitPrice": "$1.04/oz",
+    "url": "https://www.walmart.com/ip/McCormick-Kosher-Garlic-Powder-3-12-oz-Bottle/10535033",
+    "estSavingVsNameBrand": 2.52
+   }
+  },
+  "checkedAt": "2026-10-26",
+  "sources": {
+   "heb": "https://www.heb.com/search?q=garlic+powder",
+   "walmart": "https://www.walmart.com/search?q=garlic+powder"
+  }
+ },
+ {
+  "ingredient": "onion powder",
+  "aisle": "Spices",
+  "heb": {
+   "product": "Hill Country Fare Onion Powder, 1.75 oz",
+   "size": "1.75 oz",
+   "price": "$0.58",
+   "unitPrice": "$0.33 / oz",
+   "stars": null,
+   "ratingCount": null,
+   "url": "https://www.heb.com/product-detail/hill-country-fare-onion-powder-1-75-oz/607766",
+   "note": "heb.com shows no customer star ratings; curbside price shown $0.61"
+  },
+  "walmart": {
+   "product": "Great Value Onion Powder, 3.25 oz",
+   "size": "3.25 oz",
+   "price": "$1.00",
+   "unitPrice": "30.8 ¢/oz",
+   "stars": 4.8,
+   "ratingCount": 29530,
+   "url": "https://www.walmart.com/ip/Great-Value-Onion-Powder-3-25-oz/705601418",
+   "note": null
+  },
+  "bestBuy": {
+   "store": "Walmart",
+   "product": "Great Value Onion Powder, 3.25 oz",
+   "why": "Cheaper on unit price: Walmart 30.8¢/oz vs H-E-B 33.1¢/oz; Walmart's pick is rated 4.8 stars (29,530 ratings)",
+   "nameBrandCompare": {
+    "product": "McCormick Kosher Onion Powder, 2.62 oz Bottle",
+    "price": "$3.52",
+    "unitPrice": "$1.34/oz",
+    "url": "https://www.walmart.com/ip/McCormick-Kosher-Onion-Powder-2-62-oz-Bottle/10535034",
+    "estSavingVsNameBrand": 3.37
+   }
+  },
+  "checkedAt": "2026-10-26",
+  "sources": {
+   "heb": "https://www.heb.com/search?q=onion+powder",
+   "walmart": "https://www.walmart.com/search?q=onion+powder"
+  }
+ },
+ {
+  "ingredient": "paprika",
+  "aisle": "Spices",
+  "heb": {
+   "product": "McCormick Paprika, 2.12 oz",
+   "size": "2.12 oz",
+   "price": "$2.50",
+   "unitPrice": "$1.18 / oz",
+   "stars": null,
+   "ratingCount": null,
+   "url": "https://www.heb.com/product-detail/mccormick-paprika-2-12-oz/150058",
+   "note": "heb.com shows no customer star ratings; curbside price shown $2.63"
+  },
+  "walmart": {
+   "product": "Great Value Paprika, 2.5 oz",
+   "size": "2.5 oz",
+   "price": "$1.00",
+   "unitPrice": "40.0 ¢/oz",
+   "stars": 4.7,
+   "ratingCount": 9044,
+   "url": "https://www.walmart.com/ip/Great-Value-Paprika-2-5-oz/559839182",
+   "note": null
+  },
+  "bestBuy": {
+   "store": "Walmart",
+   "product": "Great Value Paprika, 2.5 oz",
+   "why": "Cheaper on unit price: Walmart 40.0¢/oz vs H-E-B $1.18/oz; Walmart's pick is rated 4.7 stars (9,044 ratings). H-E-B showed no store-brand plain paprika (H-E-B Smoked Paprika 1.9 oz is $3.48).",
+   "nameBrandCompare": {
+    "product": "McCormick Kosher Paprika, 2.12 oz Bottle",
+    "price": "$2.62",
+    "unitPrice": null,
+    "url": "https://www.walmart.com/ip/McCormick-Kosher-Paprika-2-12-oz-Bottle/10535031",
+    "estSavingVsNameBrand": 2.09
+   }
+  },
+  "checkedAt": "2026-10-26",
+  "sources": {
+   "heb": "https://www.heb.com/search?q=paprika",
+   "walmart": "https://www.walmart.com/search?q=paprika"
+  }
+ },
+ {
+  "ingredient": "dried oregano",
+  "aisle": "Spices",
+  "heb": {
+   "product": "McCormick Oregano Leaves, 0.75 oz",
+   "size": "0.75 oz",
+   "price": "$1.98",
+   "unitPrice": "$2.64 / oz",
+   "stars": null,
+   "ratingCount": null,
+   "url": "https://www.heb.com/product-detail/mccormick-oregano-leaves-0-75-oz/150089",
+   "note": "heb.com shows no customer star ratings; curbside price shown $2.08"
+  },
+  "walmart": {
+   "product": "Great Value Oregano Leaves, 0.87 oz",
+   "size": "0.87 oz",
+   "price": "$1.00",
+   "unitPrice": "$1.15/oz",
+   "stars": 4.7,
+   "ratingCount": 6057,
+   "url": "https://www.walmart.com/ip/Great-Value-Oregano-Leaves-0-87-oz/631368530",
+   "note": null
+  },
+  "bestBuy": {
+   "store": "Walmart",
+   "product": "Great Value Oregano Leaves, 0.87 oz",
+   "why": "Cheaper on unit price: Walmart $1.15/oz vs H-E-B $2.64/oz; Walmart's pick is rated 4.7 stars (6,057 ratings). H-E-B Oregano Leaves 0.5 oz is $2.18, which costs more per ounce.",
+   "nameBrandCompare": {
+    "product": "McCormick Kosher Oregano Leaves, 0.75 oz Bottle",
+    "price": "$2.53",
+    "unitPrice": "$3.37/oz",
+    "url": "https://www.walmart.com/ip/McCormick-Kosher-Oregano-Leaves-0-75-oz-Bottle/10535040",
+    "estSavingVsNameBrand": 1.93
+   }
+  },
+  "checkedAt": "2026-10-26",
+  "sources": {
+   "heb": "https://www.heb.com/search?q=dried+oregano+leaves",
+   "walmart": "https://www.walmart.com/search?q=dried+oregano+leaves"
+  }
+ },
+ {
+  "ingredient": "ground cinnamon",
+  "aisle": "Spices",
+  "heb": {
+   "product": "Hill Country Fare Ground Cinnamon, 1 oz",
+   "size": "1 oz",
+   "price": "$0.53",
+   "unitPrice": "$0.53 / oz",
+   "stars": null,
+   "ratingCount": null,
+   "url": "https://www.heb.com/product-detail/hill-country-fare-ground-cinnamon-1-oz/607760",
+   "note": "heb.com shows no customer star ratings; curbside price shown $0.56"
+  },
+  "walmart": {
+   "product": "Great Value Kosher Ground Cinnamon, 2.5 oz",
+   "size": "2.5 oz",
+   "price": "$1.27",
+   "unitPrice": "50.8 ¢/oz",
+   "stars": 4.7,
+   "ratingCount": 10970,
+   "url": "https://www.walmart.com/ip/Great-Value-Kosher-Ground-Cinnamon-2-5-oz/533272737",
+   "note": null
+  },
+  "bestBuy": {
+   "store": "Walmart",
+   "product": "Great Value Kosher Ground Cinnamon, 2.5 oz",
+   "why": "Cheaper on unit price: Walmart 50.8¢/oz vs H-E-B 53.0¢/oz; Walmart's pick is rated 4.7 stars (10,970 ratings)",
+   "nameBrandCompare": {
+    "product": "McCormick Kosher Ground Cinnamon, 2.37 oz Bottle",
+    "price": "$2.82",
+    "unitPrice": null,
+    "url": "https://www.walmart.com/ip/McCormick-Kosher-Ground-Cinnamon-2-37-oz-Bottle/10535029",
+    "estSavingVsNameBrand": 1.7
+   }
+  },
+  "checkedAt": "2026-10-26",
+  "sources": {
+   "heb": "https://www.heb.com/search?q=ground+cinnamon",
+   "walmart": "https://www.walmart.com/search?q=ground+cinnamon"
+  }
+ },
+ {
+  "ingredient": "cornstarch",
+  "aisle": "Baking",
+  "heb": {
+   "product": "Hill Country Fare Corn Starch, 1 lb",
+   "size": "1 lb",
+   "price": "$1.62",
+   "unitPrice": "$0.10 / oz",
+   "stars": null,
+   "ratingCount": null,
+   "url": "https://www.heb.com/product-detail/hill-country-fare-corn-starch-1-lb/125981",
+   "note": "heb.com shows no customer star ratings; current sale or price cut; regular price $1.69; curbside price shown $1.70"
+  },
+  "walmart": {
+   "product": "Great Value Corn Starch, 16 oz",
+   "size": "16 oz",
+   "price": "$1.97",
+   "unitPrice": "12.3 ¢/oz",
+   "stars": 4.7,
+   "ratingCount": 6115,
+   "url": "https://www.walmart.com/ip/Great-Value-Corn-Starch-16-oz/664106906",
+   "note": null
+  },
+  "bestBuy": {
+   "store": "H-E-B",
+   "product": "Hill Country Fare Corn Starch, 1 lb",
+   "why": "Cheaper on unit price: H-E-B 10.1¢/oz vs Walmart 12.3¢/oz",
+   "nameBrandCompare": {
+    "product": "Argo Corn Starch, 1 lb",
+    "price": "$2.44",
+    "unitPrice": "$0.15 / oz",
+    "url": "https://www.heb.com/product-detail/argo-corn-starch-1-lb/143797",
+    "estSavingVsNameBrand": 0.82
+   }
+  },
+  "checkedAt": "2026-10-26",
+  "sources": {
+   "heb": "https://www.heb.com/search?q=cornstarch",
+   "walmart": "https://www.walmart.com/search?q=corn+starch"
+  }
+ },
+ {
+  "ingredient": "pie crust (9-inch)",
+  "aisle": "Baking",
+  "heb": {
+   "product": "Hill Country Fare Pie Crusts, 2 ct",
+   "size": "2 ct",
+   "price": "$1.70",
+   "unitPrice": "$0.85 / ct",
+   "stars": null,
+   "ratingCount": null,
+   "url": "https://www.heb.com/product-detail/hill-country-fare-pie-crusts-2-ct/4137008",
+   "note": "heb.com shows no customer star ratings; current sale or price cut; regular price $1.94; curbside price shown $1.79"
+  },
+  "walmart": {
+   "product": "Great Value Frozen Traditional Pie Crusts, Two 9-inch Pie Crust & Pans, 15 oz",
+   "size": "15 oz",
+   "price": "$1.24",
+   "unitPrice": "8.3 ¢/oz",
+   "stars": 4.4,
+   "ratingCount": 3320,
+   "url": "https://www.walmart.com/ip/Great-Value-Frozen-Traditional-Pie-Crusts-Two-9-inch-Pie-Crust-Pans-15oz/706911935",
+   "note": "Rollback (temporary lower price)"
+  },
+  "bestBuy": {
+   "store": "Walmart",
+   "product": "Great Value Frozen Traditional Pie Crusts, Two 9-inch Pie Crust & Pans, 15 oz",
+   "why": "Cheaper on price: Walmart $1.24 vs H-E-B $1.70; Walmart's pick is rated 4.4 stars (3,320 ratings). Walmart's pick is frozen crusts in pans (good for quiche). For refrigerated roll-out dough: Great Value is $2.87 (35 ratings), Pillsbury $3.47."
+  },
+  "checkedAt": "2026-10-26",
+  "sources": {
+   "heb": "https://www.heb.com/search?q=refrigerated+pie+crust",
+   "walmart": "https://www.walmart.com/search?q=refrigerated+pie+crust"
+  }
+ },
+ {
+  "ingredient": "frozen mixed veggies (Santa Fe blend)",
+  "aisle": "Frozen",
+  "heb": {
+   "product": "H-E-B Frozen Fajita Vegetables Blend, 16 oz",
+   "size": "16 oz",
+   "price": "$2.27",
+   "unitPrice": "$0.14 / oz",
+   "stars": null,
+   "ratingCount": null,
+   "url": "https://www.heb.com/product-detail/h-e-b-frozen-fajita-vegetables-blend-16-oz/490890",
+   "note": "heb.com shows no customer star ratings; curbside price shown $2.38"
+  },
+  "walmart": {
+   "product": "Great Value Santa Fe Blend, 16 oz",
+   "size": "16 oz",
+   "price": "$2.42",
+   "unitPrice": "15.1 ¢/oz",
+   "stars": 4.8,
+   "ratingCount": 22,
+   "url": "https://www.walmart.com/ip/GV-Santa-Fe-Blend-16oz/19967969754",
+   "note": null
+  },
+  "bestBuy": {
+   "store": "H-E-B",
+   "product": "H-E-B Frozen Fajita Vegetables Blend, 16 oz",
+   "why": "Cheaper on unit price: H-E-B 14.2¢/oz vs Walmart 15.1¢/oz. H-E-B showed no Santa Fe blend, so its pick is fajita vegetables (peppers and onions). Walmart's Great Value Santa Fe Blend is the true match, but it has only 22 ratings."
+  },
+  "checkedAt": "2026-10-26",
+  "sources": {
+   "heb": "https://www.heb.com/search?q=santa+fe+blend+frozen+vegetables",
+   "walmart": "https://www.walmart.com/search?q=frozen+southwest+blend+vegetables"
+  }
+ }
+]

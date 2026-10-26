@@ -27,4 +27,10 @@ window.WINGS_APPS = [
     url: "https://windigo98.github.io/WingsCrew-Looks/",
     badge: "New",
   },
+  {
+    name: "WingsCrew Cooks",
+    blurb: "Budget recipes for the Bastrop kitchen, plus a pantry check and a shopping list.",
+    url: "https://wingscrew.com/cooks/",
+    badge: "Cookbook",
+  },
 ];
