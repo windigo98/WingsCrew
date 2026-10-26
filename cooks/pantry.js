@@ -258,6 +258,8 @@
     return String(tag || "").toLowerCase().replace(/[^a-z]/g, "") === "jdoriginal";
   }
 
+  /* J D Original is a tag, not "we wrote the steps." WingsCrew versions
+     also have an empty sourceUrl and must not pick up that mark. */
   function isOriginal(recipe) {
     if (!recipe) return false;
     var tags = recipe.tags || [];
@@ -265,7 +267,7 @@
     for (i = 0; i < tags.length; i++) {
       if (isJdTag(tags[i])) return true;
     }
-    return !sourceUrl(recipe);
+    return false;
   }
 
   function isAssumed(raw) {

@@ -442,9 +442,15 @@ h1:focus {
   margin-top: 0.4rem;
 }
 
-.source a {
+.source a,
+.credit a {
   color: var(--gold);
   font-weight: 600;
+}
+
+.credit {
+  margin-top: 0.35rem;
+  font-size: 0.92rem;
 }
 
 .seasoning {
