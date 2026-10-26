@@ -336,6 +336,17 @@ h1:focus {
   text-transform: uppercase;
 }
 
+.allergen {
+  display: inline-block;
+  margin: 0.15rem 0 0.45rem;
+  padding: 0.18rem 0.6rem;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  color: var(--cream);
+  font-size: 0.78rem;
+  line-height: 1.35;
+}
+
 .card h2,
 .detail h2,
 .group h2,

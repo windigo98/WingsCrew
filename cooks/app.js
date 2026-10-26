@@ -182,6 +182,29 @@
     return html + "</section>";
   }
 
+  var ALLERGEN_ORDER = ["dairy", "gluten", "egg", "peanut"];
+
+  function allergenNames(recipe) {
+    var found = {};
+    (recipe && recipe.tags || []).forEach(function (tag) {
+      var match = String(tag || "").toLowerCase().trim().match(/^contains-([a-z0-9-]+)$/);
+      if (match) found[match[1]] = true;
+    });
+    var names = ALLERGEN_ORDER.filter(function (name) { return found[name]; });
+    Object.keys(found).sort().forEach(function (name) {
+      if (ALLERGEN_ORDER.indexOf(name) === -1) names.push(name);
+    });
+    return names;
+  }
+
+  function allergenChip(recipe) {
+    var names = allergenNames(recipe);
+    if (!names.length) return "";
+    return '<p class="allergen">Contains: ' + escapeHtml(names.map(function (name) {
+      return name.replace(/-/g, " ");
+    }).join(", ")) + "</p>";
+  }
+
   function badges(recipe) {
     var home = recipe.sections && recipe.sections[0] ? recipe.sections[0] : "";
     var html = '<div class="badges">';
@@ -387,6 +410,7 @@
       '<a class="back" href="#/">Back</a>' +
       '<article class="detail">' +
       badges(recipe) +
+      allergenChip(recipe) +
       "<h1>" + escapeHtml(recipe.title) + "</h1>" +
       ratingRow(recipe) +
       (metaLine(recipe) ? '<p class="meta">' + escapeHtml(metaLine(recipe)) + "</p>" : "") +
