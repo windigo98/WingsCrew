@@ -112,14 +112,26 @@
     return { name: "home" };
   }
 
+  function hideStatus(el) {
+    el.hidden = true;
+    el.classList.remove("show");
+    el.textContent = "";
+  }
+
   function say(message) {
     var el = document.getElementById("status");
     if (!el) return;
-    el.textContent = message;
-    el.classList.add("show");
+    var text = String(message == null ? "" : message).trim();
     clearTimeout(statusTimer);
+    if (!text) {
+      hideStatus(el);
+      return;
+    }
+    el.hidden = false;
+    el.classList.add("show");
+    el.textContent = text;
     statusTimer = setTimeout(function () {
-      el.classList.remove("show");
+      hideStatus(el);
     }, 3200);
   }
 
