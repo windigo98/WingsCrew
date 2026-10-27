@@ -347,7 +347,7 @@
       '<header class="topbar"><div class="wrap bar">' +
       '<div class="mast">' +
       '<a class="app-title" href="#/">Cooks</a>' +
-      '<a class="byline" href="' + SITE + '">' +
+      '<a class="byline" href="' + SITE + '" aria-label="WingsCrew home">' +
       "<picture>" +
       '<source srcset="/assets/brand/logo.webp" type="image/webp" />' +
       '<img src="/assets/brand/logo.png" alt="WingsCrew" width="15" height="20" />' +
