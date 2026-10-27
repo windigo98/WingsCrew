@@ -11,6 +11,7 @@
     draft: "wingscrew-cooks-draft",
   };
   var MAIL_TO = "jdove@wingscrew.com";
+  var SITE = "https://wingscrew.com/";
 
   var state = {
     recipes: [],
@@ -329,14 +330,30 @@
     return '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 7h12l-1 13H7z"/><path d="M9 7a3 3 0 0 1 6 0"/></svg>';
   }
 
+  function siteWord() {
+    return '<a href="' + SITE + '">WingsCrew</a>';
+  }
+
+  function moreFrom() {
+    return '<p class="more-row"><a class="primary" href="' + SITE + '">More from WingsCrew</a></p>';
+  }
+
+  function legalLine() {
+    return '<p class="legal">© 2026 ' + siteWord() + ". All rights reserved.</p>";
+  }
+
   function topbar() {
     return (
       '<header class="topbar"><div class="wrap bar">' +
-      '<a class="brand" href="https://wingscrew.com/">' +
-      '<img src="icons/logo.webp" width="532" height="720" alt="" />' +
-      "<span>WingsCrew</span></a>" +
+      '<div class="mast">' +
+      '<a class="app-title" href="#/">Cooks</a>' +
+      '<a class="byline" href="' + SITE + '" aria-label="WingsCrew home">' +
+      "<picture>" +
+      '<source srcset="/assets/brand/logo.webp" type="image/webp" />' +
+      '<img src="/assets/brand/logo.png" alt="WingsCrew" width="15" height="20" />' +
+      "</picture>" +
+      "<span>by WingsCrew</span></a></div>" +
       '<nav class="bar-links" aria-label="Pages">' +
-      '<a class="home-link" href="#/">Cooks</a>' +
       '<a class="help-link" href="#/help"' + (route().name === "help" ? ' aria-current="page"' : "") +
       ' aria-label="How it works">?</a>' +
       "</nav></div></header>"
@@ -379,7 +396,8 @@
     return (
       '<footer class="wrap">' +
       '<p class="foot-links"><a href="#/help">How it works</a><a href="#/share">Share a recipe</a></p>' +
-      '<p class="legal">© 2026 WingsCrew. All rights reserved.</p></footer>'
+      moreFrom() +
+      legalLine() + "</footer>"
     );
   }
 
@@ -407,8 +425,8 @@
     var welcome = state.welcomed
       ? ""
       : '<aside class="welcome" role="note">' +
-        "<p>WingsCrew Cooks is for cheap, healthy, well-seasoned meals at home. " +
-        "It holds J D's originals, our WingsCrew versions, and a few Shared favorites.</p>" +
+        "<p>" + siteWord() + " Cooks is for cheap, healthy, well-seasoned meals at home. " +
+        "It holds J D's originals, our " + siteWord() + " versions, and a few Shared favorites.</p>" +
         '<p class="actions"><a class="primary" href="#/help">How it works</a>' +
         '<button type="button" class="ghost" data-action="dismiss-welcome">Got it</button></p>' +
         "</aside>";
@@ -668,7 +686,7 @@
       (index === steps.length ? " disabled" : "") + ">Next</button>" +
       "</div>" +
       wake +
-      '<p class="legal">© 2026 WingsCrew. All rights reserved.</p>' +
+      legalLine() +
       "</div>",
       true
     );
@@ -678,12 +696,13 @@
     return shell(
       '<a class="back" href="#/">Back</a>' +
       "<h1>How it works</h1>" +
-      '<p class="lede">A short guide to WingsCrew Cooks. Cheap, healthy, well-seasoned food for a home kitchen.</p>' +
+      '<p class="lede">A short guide to ' + siteWord() + " Cooks. Cheap, healthy, well-seasoned food for a home kitchen.</p>" +
+      moreFrom() +
       '<section class="guide">' +
       "<h2>What the marks mean</h2>" +
       "<ul>" +
       "<li><strong>J D Original</strong> is one of J D's own recipes. You get the full steps, and there is no link out.</li>" +
-      "<li><strong>WingsCrew</strong> versions are our house recipes. Full steps, no outside link, and no star rating.</li>" +
+      "<li><strong>" + siteWord() + "</strong> versions are our house recipes. Full steps, no outside link, and no star rating.</li>" +
       "<li><strong>Shared favorites</strong> are recipes we rewrote. A line like Shared favorites · Allrecipes opens the page we started from. Stars show only when that page had a rating.</li>" +
       "</ul>" +
       "<h2>Using the book</h2>" +
@@ -798,7 +817,7 @@
       field("notes", "Notes", draft.notes, "textarea") +
       '<label class="confirm"><input id="confirm" name="confirm" type="checkbox"' +
       (draft.confirm ? " checked" : "") + " />" +
-      "<span>This is my own recipe or family recipe and WingsCrew may edit and publish it with credit.</span></label>" +
+      "<span>This is my own recipe or family recipe and " + siteWord() + " may edit and publish it with credit.</span></label>" +
       '<div class="actions">' +
       '<button type="submit" class="primary">Email this recipe</button>' +
       '<button type="button" class="ghost" data-action="copy-recipe">Copy recipe</button>' +
