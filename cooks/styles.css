@@ -143,23 +143,51 @@ button:disabled {
   justify-content: space-between;
   gap: 0.75rem;
   min-height: 3.6rem;
+  padding-block: 0.45rem;
 }
 
-.brand {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.45rem;
+.mast {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.12rem;
+  min-width: 0;
+}
+
+.app-title {
   color: var(--cream);
-  text-decoration: none;
   font-family: var(--serif);
   font-weight: 650;
+  font-size: 1.35rem;
   letter-spacing: -0.02em;
+  line-height: 1.05;
+  text-decoration: none;
 }
 
-.brand img {
+.byline {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  min-height: 1.75rem;
+  color: var(--nav);
+  font-size: 0.84rem;
+  font-weight: 600;
+  line-height: 1;
+  text-decoration: none;
+}
+
+.byline picture {
+  display: block;
+  line-height: 0;
+  flex: 0 0 auto;
+}
+
+.byline img {
+  display: block;
   width: auto;
-  height: 2.4rem;
-  max-width: 2.6rem;
+  height: 20px;
+  max-width: 22px;
+  max-height: 22px;
   object-fit: contain;
 }
 
@@ -167,15 +195,6 @@ button:disabled {
   display: flex;
   align-items: center;
   gap: 0.35rem;
-}
-
-.home-link {
-  color: var(--gold);
-  font-weight: 600;
-  text-decoration: none;
-  min-height: 2.75rem;
-  display: inline-flex;
-  align-items: center;
 }
 
 .help-link {
@@ -200,9 +219,21 @@ button:disabled {
 }
 
 .lede a,
-.guide a {
+.guide a,
+.welcome a,
+.confirm a,
+.legal a,
+.noscript a {
   color: var(--gold);
   font-weight: 600;
+}
+
+.more-row {
+  margin: 0.85rem 0 0.15rem;
+}
+
+.more-row .primary {
+  text-decoration: none;
 }
 
 .welcome {
@@ -307,8 +338,12 @@ button:disabled {
   align-items: center;
 }
 
-.foot-links + .legal {
-  margin-top: 0.15rem;
+.foot-links + .more-row {
+  margin-top: 0.35rem;
+}
+
+.more-row + .legal {
+  margin-top: 0.85rem;
 }
 
 main {
