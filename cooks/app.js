@@ -7,7 +7,10 @@
     picked: "wingscrew-cooks-picked",
     checked: "wingscrew-cooks-checked",
     sort: "wingscrew-cooks-sort",
+    welcome: "wingscrew-cooks-welcome",
+    draft: "wingscrew-cooks-draft",
   };
+  var MAIL_TO = "jdove@wingscrew.com";
 
   var state = {
     recipes: [],
@@ -21,10 +24,27 @@
     ready: false,
     error: "",
     wakeOn: false,
+    welcomed: false,
+    draft: emptyDraft(),
   };
 
   var wakeLock = null;
   var statusTimer = 0;
+
+  function emptyDraft() {
+    return {
+      name: "",
+      author: "",
+      servings: "",
+      time: "",
+      ingredients: "",
+      steps: "",
+      seasoning: "",
+      section: "Dinner",
+      notes: "",
+      confirm: false,
+    };
+  }
 
   function loadJson(key, fallback) {
     try {
@@ -87,17 +107,31 @@
         step: Math.max(1, parseInt(parts[2] || "1", 10) || 1),
       };
     }
+    if (name === "help") return { name: "help" };
+    if (name === "share") return { name: "share" };
     return { name: "home" };
+  }
+
+  function hideStatus(el) {
+    el.hidden = true;
+    el.classList.remove("show");
+    el.textContent = "";
   }
 
   function say(message) {
     var el = document.getElementById("status");
     if (!el) return;
-    el.textContent = message;
-    el.classList.add("show");
+    var text = String(message == null ? "" : message).trim();
     clearTimeout(statusTimer);
+    if (!text) {
+      hideStatus(el);
+      return;
+    }
+    el.hidden = false;
+    el.classList.add("show");
+    el.textContent = text;
     statusTimer = setTimeout(function () {
-      el.classList.remove("show");
+      hideStatus(el);
     }, 3200);
   }
 
@@ -301,8 +335,11 @@
       '<a class="brand" href="https://wingscrew.com/">' +
       '<img src="icons/logo.webp" width="532" height="720" alt="" />' +
       "<span>WingsCrew</span></a>" +
+      '<nav class="bar-links" aria-label="Pages">' +
       '<a class="home-link" href="#/">Cooks</a>' +
-      "</div></header>"
+      '<a class="help-link" href="#/help"' + (route().name === "help" ? ' aria-current="page"' : "") +
+      ' aria-label="How it works">?</a>' +
+      "</nav></div></header>"
     );
   }
 
@@ -339,7 +376,11 @@
   }
 
   function footer() {
-    return '<footer class="wrap"><p class="legal">© 2026 WingsCrew. All rights reserved.</p></footer>';
+    return (
+      '<footer class="wrap">' +
+      '<p class="foot-links"><a href="#/help">How it works</a><a href="#/share">Share a recipe</a></p>' +
+      '<p class="legal">© 2026 WingsCrew. All rights reserved.</p></footer>'
+    );
   }
 
   function shell(body, cook) {
@@ -363,9 +404,18 @@
     var empty = state.query.trim()
       ? "Nothing matches that search."
       : "No recipes in " + state.section + " yet.";
+    var welcome = state.welcomed
+      ? ""
+      : '<aside class="welcome" role="note">' +
+        "<p>WingsCrew Cooks is for cheap, healthy, well-seasoned meals at home. " +
+        "It holds J D's originals, our WingsCrew versions, and a few Shared favorites.</p>" +
+        '<p class="actions"><a class="primary" href="#/help">How it works</a>' +
+        '<button type="button" class="ghost" data-action="dismiss-welcome">Got it</button></p>' +
+        "</aside>";
     return shell(
+      welcome +
       "<h1>" + escapeHtml(heading) + "</h1>" +
-      '<p class="lede">Budget recipes for home in Bastrop.</p>' +
+      '<p class="lede">Budget recipes for home in Bastrop. <a href="#/share">Share a recipe</a></p>' +
       '<div class="sections" role="toolbar" aria-label="Sections">' + chips + "</div>" +
       '<div class="tools">' +
       '<input class="search" id="search" type="search" enterkeyhint="search" placeholder="Search recipes" value="' +
@@ -624,6 +674,141 @@
     );
   }
 
+  function helpView() {
+    return shell(
+      '<a class="back" href="#/">Back</a>' +
+      "<h1>How it works</h1>" +
+      '<p class="lede">A short guide to WingsCrew Cooks. Cheap, healthy, well-seasoned food for a home kitchen.</p>' +
+      '<section class="guide">' +
+      "<h2>What the marks mean</h2>" +
+      "<ul>" +
+      "<li><strong>J D Original</strong> is one of J D's own recipes. You get the full steps, and there is no link out.</li>" +
+      "<li><strong>WingsCrew</strong> versions are our house recipes. Full steps, no outside link, and no star rating.</li>" +
+      "<li><strong>Shared favorites</strong> are recipes we rewrote. A line like Shared favorites · Allrecipes opens the page we started from. Stars show only when that page had a rating.</li>" +
+      "</ul>" +
+      "<h2>Using the book</h2>" +
+      "<ol>" +
+      "<li><strong>Sections.</strong> Tap Breakfast, Lunch, Dinner, Grill, Baking, Instant Pot, Bachelor Meals, or Bachelor Sweets. The book opens on the first one.</li>" +
+      "<li><strong>Search and sort.</strong> Search looks through the name, ingredients, and notes. Sort by Cookbook order, Top rated, or A to Z. Recipes with no stars go last in Top rated.</li>" +
+      "<li><strong>Open a recipe.</strong> Tap the card, not the Add to list button. You get the ingredients, the steps, any notes, and seasoning when the recipe has it.</li>" +
+      "<li><strong>Seasoning.</strong> Near the top: a base mix, a Try this list, and a tip when there is one. In cook mode the base stays on screen. If the base is none, that reminder is hidden.</li>" +
+      "<li><strong>Contains notes.</strong> Dairy, gluten, egg, or peanut shows up as a small line, such as Contains: dairy, egg. It is a heads-up, not a medical label.</li>" +
+      "<li><strong>What I've got.</strong> Tap foods already in the kitchen. Salt, pepper, cooking oil, and water count as on hand, so they are not chips. Recipes you can cook show first, then recipes one or two items short. A line marked optional does not block a match. Clear wipes the chips. The taps stay on this phone.</li>" +
+      "<li><strong>Shopping list.</strong> Add to list on a recipe. The List tab skips what you already have and groups the rest by aisle. Check items off as you shop. When we know a best buy, the line shows the brand, the store, and the price, plus a Prices as of date. H-E-B prices are the online price for store 582. Walmart prices are walmart.com defaults. In-store prices may differ. The × on a recipe takes it off the list.</li>" +
+      "<li><strong>Copy, Share, H-E-B, and Walmart.</strong> Copy list puts the unchecked items on your clipboard, including a best buy when we have one. Share appears when your phone can share text. H-E-B and Walmart each open a search for every item still to buy. The browser may ask before it allows more than one tab. Nothing is dropped into a cart for you.</li>" +
+      "<li><strong>Cook mode.</strong> Tap Cook. One step, big type, Back and Next, and Step 1 of 6 (or however many). Keep screen on shows up when the phone allows it, and hides when it does not. Done goes back to the recipe.</li>" +
+      "<li><strong>Home screen.</strong> On an iPhone, open this page in Safari, tap Share, then Add to Home Screen. On Android, open it in Chrome, tap the menu, then Install app or Add to Home screen.</li>" +
+      "<li><strong>Offline.</strong> After the cookbook loads once, it still opens with the network off. The saved copy is just this Cooks page.</li>" +
+      "<li><strong>Stays on your phone.</strong> Pantry taps, picked recipes, check marks, and sort live in this browser. There is no account and no tracking. A recipe you share leaves the phone only when you email it yourself.</li>" +
+      "</ol>" +
+      '<p class="lede">Have a family recipe? <a href="#/share">Share a recipe</a>. We read every one before it goes in the book.</p>' +
+      "</section>"
+    );
+  }
+
+  function draftLines(value) {
+    return String(value || "").split(/\r?\n/).map(function (line) {
+      return line.trim();
+    }).filter(Boolean);
+  }
+
+  function recipePlain(draft) {
+    var ingredients = draftLines(draft.ingredients);
+    var steps = draftLines(draft.steps);
+    var lines = [
+      "Recipe: " + String(draft.name || "").trim(),
+      "From: " + (String(draft.author || "").trim() || "Name not given"),
+      "Servings: " + (String(draft.servings || "").trim() || "Not given"),
+      "Time: " + (String(draft.time || "").trim() || "Not given"),
+      "Section: " + (String(draft.section || "").trim() || "Not given"),
+      "",
+      "Ingredients:",
+    ];
+    ingredients.forEach(function (line) { lines.push("- " + line); });
+    if (!ingredients.length) lines.push("- (none)");
+    lines.push("", "Steps:");
+    steps.forEach(function (line, index) { lines.push((index + 1) + ". " + line); });
+    if (!steps.length) lines.push("1. (none)");
+    lines.push("", "Seasoning:", String(draft.seasoning || "").trim() || "None given");
+    lines.push("", "Notes:", String(draft.notes || "").trim() || "None");
+    lines.push(
+      "",
+      "The cook confirms this is their own recipe or a family recipe, and that WingsCrew may edit and publish it with credit."
+    );
+    return lines.join("\n");
+  }
+
+  function recipeMailto(draft) {
+    var subject = "WingsCrew Cooks recipe: " + String(draft.name || "").trim();
+    return "mailto:" + MAIL_TO + "?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(recipePlain(draft));
+  }
+
+  function saveDraft(draft) {
+    state.draft = draft;
+    try { localStorage.setItem(KEYS.draft, JSON.stringify(draft)); } catch (error) { /* private mode */ }
+  }
+
+  function readShareForm() {
+    var form = document.getElementById("share-form");
+    if (!form) return state.draft;
+    var draft = {
+      name: form.name.value,
+      author: form.author.value,
+      servings: form.servings.value,
+      time: form.time.value,
+      ingredients: form.ingredients.value,
+      steps: form.steps.value,
+      seasoning: form.seasoning.value,
+      section: form.section.value,
+      notes: form.notes.value,
+      confirm: !!form.confirm.checked,
+    };
+    saveDraft(draft);
+    return draft;
+  }
+
+  function field(id, label, value, extra) {
+    extra = extra || "";
+    var control = extra.indexOf("textarea") === 0
+      ? '<textarea id="' + id + '" name="' + id + '" rows="5">' + escapeHtml(value) + "</textarea>"
+      : '<input id="' + id + '" name="' + id + '" type="text" value="' + escapeHtml(value) + '"' + extra + " />";
+    return '<label class="field" for="' + id + '"><span>' + label + "</span>" + control + "</label>";
+  }
+
+  function shareView() {
+    var draft = state.draft || emptyDraft();
+    var sections = (P.PREFERRED_SECTIONS || []).map(function (name) {
+      return '<option value="' + escapeHtml(name) + '"' + (draft.section === name ? " selected" : "") + ">" +
+        escapeHtml(name) + "</option>";
+    }).join("");
+    return shell(
+      '<a class="back" href="#/">Back</a>' +
+      "<h1>Share a recipe</h1>" +
+      '<p class="lede">Send a family recipe or one you made up. We review every recipe before it goes in the book, and we credit you if you leave your name.</p>' +
+      '<form id="share-form" class="share-form" novalidate>' +
+      field("name", "Recipe name", draft.name, ' required autocomplete="off"') +
+      field("author", "Your name (optional, so we can credit you)", draft.author, ' autocomplete="name"') +
+      field("servings", "Servings", draft.servings, ' inputmode="numeric"') +
+      field("time", "Time", draft.time, ' placeholder="45 minutes"') +
+      field("ingredients", "Ingredients, one per line", draft.ingredients, "textarea") +
+      field("steps", "Steps, one per line", draft.steps, "textarea") +
+      field("seasoning", "Seasoning tips (optional)", draft.seasoning, "textarea") +
+      '<label class="field" for="section"><span>Section</span>' +
+      '<select id="section" name="section">' + sections + "</select></label>" +
+      field("notes", "Notes", draft.notes, "textarea") +
+      '<label class="confirm"><input id="confirm" name="confirm" type="checkbox"' +
+      (draft.confirm ? " checked" : "") + " />" +
+      "<span>This is my own recipe or family recipe and WingsCrew may edit and publish it with credit.</span></label>" +
+      '<div class="actions">' +
+      '<button type="submit" class="primary">Email this recipe</button>' +
+      '<button type="button" class="ghost" data-action="copy-recipe">Copy recipe</button>' +
+      '<button type="button" class="ghost" data-action="clear-draft">Clear draft</button>' +
+      "</div></form>" +
+      '<p class="note">Email opens in your mail app to ' + escapeHtml(MAIL_TO) +
+      ". This page does not send it. If the mail app does not open, use Copy recipe and paste it into a message. The draft stays on this phone until you clear it.</p>"
+    );
+  }
+
   function view() {
     if (!state.ready) {
       return shell("<h1>Cooks</h1><p class=\"lede\">Loading the cookbook…</p>");
@@ -636,6 +821,8 @@
     if (here.name === "got") return gotView();
     if (here.name === "list") return listView();
     if (here.name === "cook") return cookView(here.id, here.step);
+    if (here.name === "help") return helpView();
+    if (here.name === "share") return shareView();
     return homeView();
   }
 
@@ -660,6 +847,8 @@
       if (here.name === "got") return "What I've got · WingsCrew Cooks";
       if (here.name === "list") return "Shopping list · WingsCrew Cooks";
       if (here.name === "cook") return "Cook · WingsCrew Cooks";
+      if (here.name === "help") return "How it works · WingsCrew Cooks";
+      if (here.name === "share") return "Share a recipe · WingsCrew Cooks";
       return "WingsCrew Cooks";
     })();
     if (focusId) {
@@ -794,7 +983,63 @@
     }
     if (action === "wake") {
       toggleWake();
+      return;
     }
+    if (action === "dismiss-welcome") {
+      state.welcomed = true;
+      try { localStorage.setItem(KEYS.welcome, "1"); } catch (error) { /* still hide it this visit */ }
+      render({ nav: true });
+      return;
+    }
+    if (action === "copy-recipe") {
+      var copied = recipePlain(readShareForm());
+      S.copyText(copied).then(function () {
+        say("Recipe copied. Paste it into an email to " + MAIL_TO + ".");
+      }).catch(function () {
+        say("Couldn't copy the recipe.");
+      });
+      return;
+    }
+    if (action === "clear-draft") {
+      saveDraft(emptyDraft());
+      render({ nav: true });
+      say("Draft cleared.");
+    }
+  }
+
+  function onSubmit(event) {
+    var form = event.target;
+    if (!form || form.id !== "share-form") return;
+    event.preventDefault();
+    var draft = readShareForm();
+    var name = String(draft.name || "").trim();
+    if (!name) {
+      say("Add a recipe name.");
+      var nameField = document.getElementById("name");
+      if (nameField) nameField.focus();
+      return;
+    }
+    if (!draftLines(draft.ingredients).length) {
+      say("Add at least one ingredient, on its own line.");
+      return;
+    }
+    if (!draftLines(draft.steps).length) {
+      say("Add at least one step, on its own line.");
+      return;
+    }
+    if (!draft.confirm) {
+      say("Check the box so we know we may edit and publish it with credit.");
+      var box = document.getElementById("confirm");
+      if (box) box.focus();
+      return;
+    }
+    var mailto = recipeMailto(draft);
+    if (mailto.length > 1800) {
+      say("This one is long for an email link. Use Copy recipe, then paste it to " + MAIL_TO + ".");
+      return;
+    }
+    window.location.href = mailto;
+    say("Your email app should open. We review every recipe before adding it.");
   }
 
   function toggleWake() {
@@ -834,19 +1079,24 @@
       state.checked[target.getAttribute("data-id")] = !!target.checked;
       save();
       render({ stay: true });
+      return;
     }
+    if (target.form && target.form.id === "share-form") readShareForm();
   }
 
   function onInput(event) {
     if (event.target && event.target.id === "search") {
       state.query = event.target.value;
       render({ stay: true });
+      return;
     }
+    if (event.target && event.target.form && event.target.form.id === "share-form") readShareForm();
   }
 
   document.addEventListener("click", onClick);
   document.addEventListener("change", onChange);
   document.addEventListener("input", onInput);
+  document.addEventListener("submit", onSubmit);
   window.addEventListener("hashchange", function () {
     if (route().name !== "cook" && wakeLock) {
       wakeLock.release().catch(function () {});
@@ -873,6 +1123,16 @@
     var savedSort = "";
     try { savedSort = localStorage.getItem(KEYS.sort) || ""; } catch (error) { savedSort = ""; }
     if (savedSort === "book" || savedSort === "rating" || savedSort === "title") state.sort = savedSort;
+    try { state.welcomed = localStorage.getItem(KEYS.welcome) === "1"; } catch (error) { state.welcomed = false; }
+    var savedDraft = loadJson(KEYS.draft, null);
+    if (savedDraft && typeof savedDraft === "object" && !Array.isArray(savedDraft)) {
+      var blank = emptyDraft();
+      Object.keys(blank).forEach(function (key) {
+        if (key === "confirm") blank.confirm = !!savedDraft.confirm;
+        else if (typeof savedDraft[key] === "string") blank[key] = savedDraft[key];
+      });
+      state.draft = blank;
+    }
 
     render();
     var recipesPromise = fetch("data/recipes.json").then(function (response) {

@@ -163,6 +163,12 @@ button:disabled {
   object-fit: contain;
 }
 
+.bar-links {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
 .home-link {
   color: var(--gold);
   font-weight: 600;
@@ -170,6 +176,139 @@ button:disabled {
   min-height: 2.75rem;
   display: inline-flex;
   align-items: center;
+}
+
+.help-link {
+  width: 2.75rem;
+  height: 2.75rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  color: var(--gold);
+  text-decoration: none;
+  font-family: var(--serif);
+  font-weight: 650;
+  font-size: 1.25rem;
+}
+
+.help-link[aria-current="page"] {
+  background: var(--gold);
+  color: var(--gold-ink);
+  border-color: var(--gold);
+}
+
+.lede a,
+.guide a {
+  color: var(--gold);
+  font-weight: 600;
+}
+
+.welcome {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 0.95rem 1rem 1rem;
+  margin-bottom: 1rem;
+}
+
+.welcome p + .actions,
+.share-form .actions {
+  margin-top: 0.8rem;
+}
+
+.guide {
+  display: grid;
+  gap: 0.75rem;
+  margin-top: 1.1rem;
+}
+
+.guide h2 {
+  font-family: var(--serif);
+  font-weight: 650;
+  font-size: 1.35rem;
+  letter-spacing: -0.03em;
+  margin-top: 0.4rem;
+}
+
+.guide ul,
+.guide ol {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.guide li::marker {
+  color: var(--gold);
+  font-weight: 600;
+}
+
+.share-form {
+  margin-top: 0.4rem;
+}
+
+.field {
+  display: grid;
+  gap: 0.3rem;
+  margin-top: 0.85rem;
+}
+
+.field span {
+  color: var(--muted);
+  font-size: 0.86rem;
+}
+
+.field input,
+.field textarea,
+.field select {
+  width: 100%;
+  min-height: 2.75rem;
+  padding: 0.65rem 0.8rem;
+  border-radius: 12px;
+  border: 1px solid var(--line);
+  background: var(--card);
+  font-size: 1rem;
+}
+
+.field textarea {
+  min-height: 6.5rem;
+  resize: vertical;
+  line-height: 1.4;
+}
+
+.confirm {
+  display: flex;
+  gap: 0.75rem;
+  align-items: flex-start;
+  margin-top: 1rem;
+}
+
+.confirm input {
+  width: 1.35rem;
+  height: 1.35rem;
+  margin-top: 0.15rem;
+  accent-color: var(--gold);
+  flex: 0 0 auto;
+}
+
+.foot-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 1rem;
+  margin-top: 1.4rem;
+}
+
+.foot-links a {
+  color: var(--gold);
+  font-weight: 600;
+  text-decoration: none;
+  min-height: 2.75rem;
+  display: inline-flex;
+  align-items: center;
+}
+
+.foot-links + .legal {
+  margin-top: 0.15rem;
 }
 
 main {
@@ -667,7 +806,7 @@ h1:focus {
   grid-template-columns: repeat(3, 1fr);
   gap: 0.25rem;
   padding: 0.35rem 0.5rem calc(0.35rem + env(safe-area-inset-bottom));
-  background: rgba(11, 10, 9, 0.96);
+  background: var(--bg);
   border-top: 1px solid var(--line);
 }
 
@@ -721,7 +860,7 @@ h1:focus {
   margin-top: 1.4rem;
   color: var(--muted);
   font-size: 0.92rem;
-  padding-bottom: calc(4.6rem + env(safe-area-inset-bottom));
+  padding-bottom: calc(0.6rem + env(safe-area-inset-bottom));
 }
 
 .cook-page .legal {
@@ -729,14 +868,19 @@ h1:focus {
 }
 
 body.has-tabs {
+  padding-bottom: calc(5.6rem + env(safe-area-inset-bottom));
+}
+
+body.has-tabs .legal {
   padding-bottom: 0;
 }
 
 .status {
   position: fixed;
   left: 50%;
-  bottom: calc(4.8rem + env(safe-area-inset-bottom));
-  transform: translateX(-50%) translateY(140%);
+  bottom: calc(5.2rem + env(safe-area-inset-bottom));
+  transform: translateX(-50%);
+  display: none;
   width: min(22rem, calc(100% - 1.5rem));
   margin: 0;
   padding: 0.7rem 0.9rem;
@@ -746,11 +890,15 @@ body.has-tabs {
   font-weight: 600;
   text-align: center;
   z-index: 20;
-  transition: transform 180ms ease;
+  pointer-events: none;
 }
 
 .status.show {
-  transform: translateX(-50%) translateY(0);
+  display: block;
+}
+
+.status[hidden] {
+  display: none !important;
 }
 
 .noscript {
@@ -787,9 +935,5 @@ body.has-tabs {
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
-  }
-
-  .status {
-    transition: none;
   }
 }
