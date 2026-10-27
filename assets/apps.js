@@ -17,7 +17,7 @@ window.WINGS_APPS = [
   },
   {
     name: "Litter Crusaders Maps",
-    blurb: "Catch litter creatures on the map, fill your Litter-dex, and send park bosses packing.",
+    blurb: "Catch litter creatures on the map, fill your Litter Log, and send park bosses packing.",
     url: "https://windigo98.github.io/Litter-Crusaders-Maps/",
     badge: "Play",
   },
