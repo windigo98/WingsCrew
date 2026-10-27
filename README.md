@@ -1,6 +1,6 @@
 # WingsCrew
 
-Phone-first home for WingsCrew apps, plus a shop placeholder. Live apps from [windigo98](https://github.com/windigo98). The shop opens when the merch is ready.
+Phone-first home for WingsCrew apps, plus WingsCrew Clothing. Live apps from [windigo98](https://github.com/windigo98). WingsCrew Clothing is opening soon.
 
 The site is static files at the repo root (`index.html`, `assets/`, `.nojekyll`). There is no build step.
 
@@ -24,7 +24,22 @@ Adult humor and games live at [`/21plus/`](21plus/index.html). The first visit a
 
 Add a card by appending to [`assets/adult-apps.js`](assets/adult-apps.js), or by setting `adult: true` on an entry in `apps.js`. Either way it shows on the 21+ page and stays off the homepage. The homepage header links here. The page sends `noindex`.
 
-The **Tip** button goes to [Cash App $windigo98](https://cash.app/$windigo98). **Feedback** opens an email to [dovewingsbusiness@gmail.com](mailto:dovewingsbusiness@gmail.com). **Shop** is a coming-soon placeholder. Nothing there is for sale.
+The **Tip** button goes to [Cash App $windigo98](https://cash.app/$windigo98). **Feedback** opens an email to [dovewingsbusiness@gmail.com](mailto:dovewingsbusiness@gmail.com).
+
+## Shop
+
+WingsCrew Clothing is on Printify. Checkout is not taking payments yet, so the shop is marked **Opening soon**.
+
+[`assets/merch.js`](assets/merch.js) holds one `status` flag and the two collection links. That flag is the only line to change when payments go live:
+
+| `status` | What people see |
+| --- | --- |
+| `"coming soon"` | **Opening soon** on the homepage Shop link, the hero line, and each clothing card |
+| `"live"` | The Opening soon label comes off. The homepage link reads **Shop**, cards are labeled **Shop**, and the hero says WingsCrew Clothing is open |
+
+The homepage **Shop** link and the homepage Shop card open the [Clean collection](https://wingscrew-clothing.printify.me/collection/clean) in a new tab. The `/21plus/` Shop card opens the [21+ collection](https://wingscrew-clothing.printify.me/collection/21) in a new tab. Its blurb is adult-humor tees and more.
+
+Do not link the 21+ collection, or the store’s full product list (`https://wingscrew-clothing.printify.me` with no collection), from the homepage or any other non-21+ page. The Clean entry uses `audience: "clean"` and renders into `data-merch="clean"`. The 21+ entry uses `audience: "adult"` and renders only into `data-merch="adult"` on `/21plus/`.
 
 ## Caught Red-Handed, multi-phone
 

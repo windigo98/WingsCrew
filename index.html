@@ -6,7 +6,7 @@
     <title>WingsCrew — apps &amp; more</title>
     <meta
       name="description"
-      content="Phone-first home for live apps from windigo98, including Net Pulse and Litter Crusaders Maps. The shop opens when the merch is ready."
+      content="Phone-first home for live apps from windigo98, including Net Pulse and Litter Crusaders Maps. WingsCrew Clothing is opening soon."
     />
     <meta name="theme-color" content="#0b0a09" />
     <link rel="canonical" href="https://wingscrew.com/" />
@@ -25,7 +25,7 @@
     <meta property="og:title" content="WingsCrew — apps &amp; more" />
     <meta
       property="og:description"
-      content="Phone-first home for live apps from windigo98, including Net Pulse and Litter Crusaders Maps. The shop opens when the merch is ready."
+      content="Phone-first home for live apps from windigo98, including Net Pulse and Litter Crusaders Maps. WingsCrew Clothing is opening soon."
     />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://wingscrew.com/" />
@@ -39,7 +39,7 @@
     <meta name="twitter:title" content="WingsCrew — apps &amp; more" />
     <meta
       name="twitter:description"
-      content="Phone-first home for live apps from windigo98, including Net Pulse and Litter Crusaders Maps. The shop opens when the merch is ready."
+      content="Phone-first home for live apps from windigo98, including Net Pulse and Litter Crusaders Maps. WingsCrew Clothing is opening soon."
     />
     <meta name="twitter:image" content="https://wingscrew.com/assets/brand/logo.png" />
     <meta name="twitter:image:alt" content="WingsCrew logo" />
@@ -52,7 +52,7 @@
             "@id": "https://wingscrew.com/#website",
             "name": "WingsCrew",
             "url": "https://wingscrew.com/",
-            "description": "Phone-first home for live apps from windigo98, including Net Pulse and Litter Crusaders Maps. The shop opens when the merch is ready.",
+            "description": "Phone-first home for live apps from windigo98, including Net Pulse and Litter Crusaders Maps. WingsCrew Clothing is opening soon.",
             "inLanguage": "en",
             "publisher": { "@id": "https://wingscrew.com/#organization" }
           },
@@ -97,7 +97,15 @@
         </a>
         <nav class="nav" aria-label="Primary">
           <a href="#apps">Apps</a>
-          <a href="#shop">Shop</a>
+          <a
+            class="nav-shop"
+            href="https://wingscrew-clothing.printify.me/collection/clean"
+            target="_blank"
+            rel="noopener"
+            data-merch-nav="clean"
+            aria-label="Shop WingsCrew Clothing, opening soon (opens in a new tab)"
+            >Shop <span class="soon-tag">· Opening soon</span></a
+          >
           <a class="adult-link" href="/21plus/">21+ Adult Humor &amp; Games</a>
           <button
             class="share"
@@ -136,8 +144,8 @@
               <img src="assets/mark.svg" width="340" height="170" alt="Stylized gold wing" />
             </div>
           </div>
-          <p class="lede">
-            Live apps from windigo98. The shop opens when the merch is ready.
+          <p class="lede" data-shop-lede>
+            Live apps from windigo98. WingsCrew Clothing is opening soon.
           </p>
           <div class="hero-actions">
             <a class="see-apps" href="#apps">See the apps</a>
@@ -175,13 +183,23 @@
           <h2 class="section-title" id="shop-title">
             <span class="dash" aria-hidden="true">—</span> Shop
           </h2>
-          <article class="panel shop-card">
-            <p class="badge">Merch</p>
-            <h3>Coming soon</h3>
-            <p class="blurb">
-              The shop opens when the merch is ready. Nothing is for sale yet.
-            </p>
-          </article>
+          <!-- Clean collection only. The 21+ collection stays on /21plus/. -->
+          <div class="apps-grid shop-grid" data-merch="clean"></div>
+          <noscript>
+            <article class="panel shop-card">
+              <p class="badge">Opening soon</p>
+              <h3>WingsCrew Clothing</h3>
+              <p class="blurb">Tees and more</p>
+              <p>
+                <a
+                  href="https://wingscrew-clothing.printify.me/collection/clean"
+                  target="_blank"
+                  rel="noopener"
+                  >Open shop</a
+                >
+              </p>
+            </article>
+          </noscript>
         </div>
       </section>
     </main>
@@ -201,6 +219,7 @@
     ></a>
 
     <script src="assets/apps.js"></script>
+    <script src="assets/merch.js"></script>
     <script src="assets/site.js"></script>
   </body>
 </html>
