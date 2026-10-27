@@ -257,6 +257,7 @@ p{margin:.3rem 0 .6rem}
 .person{display:flex;gap:14px;align-items:center}
 .avatar{flex:0 0 72px;height:72px;border-radius:50%;background:var(--goldgrad);display:flex;align-items:center;justify-content:center;font-family:var(--serif-head);font-size:2rem;color:#fff;border:3px solid #fffaf0;box-shadow:0 0 0 2px #c9a75d}
 .footer{text-align:center;color:var(--ink-soft);font-size:.92rem;margin:18px 0 6px}
+.footer a{color:inherit;text-underline-offset:.15em}
 
 /* ---------- Overlays ---------- */
 #toast{position:fixed;left:50%;top:calc(var(--sat) + 12px);transform:translate(-50%,calc(-100% - 40px));opacity:0;z-index:80;max-width:min(92vw,560px);padding:12px 18px;border-radius:18px;

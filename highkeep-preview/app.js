@@ -1057,7 +1057,7 @@ function scr_more(){
       <button class="tool" data-act="nav" data-to="whos">${ic('whos')}Who\u2019s that?</button><button class="tool" data-act="tour">${ic('compass')}Replay the tour</button></div>
     <h2 style="margin:6px 4px 10px">Settings</h2>${settingsRows(['guide','read','voice','size','sensory','bad','world'])}
     <div class="card"><div class="setrow"><div class="lbl">${ic('repeat')}Reset prototype</div><p class="sub">Clears everything and starts again from Welcome.</p><button class="btn block" data-act="reset">Reset everything</button></div></div>
-    <p class="footer">Highkeep prototype \u00b7 \u00a9 2026 WingsCrew. All rights reserved.</p>`,
+    <p class="footer">Highkeep prototype \u00b7 \u00a9 2026 <a href="https://wingscrew.com/">WingsCrew</a>. All rights reserved.</p>`,
     acts:Object.assign({},settingActs,{tour:()=>{go('home');setTimeout(startTour,450);},
       reset:()=>modal('<h2>Reset everything?</h2><p>Your lists, notes, photos and keep will be cleared.</p>',[['Cancel',null],['Yes, reset',()=>{localStorage.removeItem(KEY);location.hash='';location.reload();},true]])})};
 }

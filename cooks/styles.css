@@ -863,6 +863,11 @@ h1:focus {
   padding-bottom: calc(0.6rem + env(safe-area-inset-bottom));
 }
 
+.legal a {
+  color: inherit;
+  text-underline-offset: 0.18em;
+}
+
 .cook-page .legal {
   padding-bottom: calc(0.6rem + env(safe-area-inset-bottom));
 }

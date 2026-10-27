@@ -379,7 +379,7 @@
     return (
       '<footer class="wrap">' +
       '<p class="foot-links"><a href="#/help">How it works</a><a href="#/share">Share a recipe</a></p>' +
-      '<p class="legal">© 2026 WingsCrew. All rights reserved.</p></footer>'
+      '<p class="legal">© 2026 <a href="https://wingscrew.com/">WingsCrew</a>. All rights reserved.</p></footer>'
     );
   }
 
@@ -668,7 +668,7 @@
       (index === steps.length ? " disabled" : "") + ">Next</button>" +
       "</div>" +
       wake +
-      '<p class="legal">© 2026 WingsCrew. All rights reserved.</p>' +
+      '<p class="legal">© 2026 <a href="https://wingscrew.com/">WingsCrew</a>. All rights reserved.</p>' +
       "</div>",
       true
     );
