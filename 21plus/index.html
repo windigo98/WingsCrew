@@ -119,6 +119,16 @@
             <div class="apps-grid" data-apps="adult"></div>
           </div>
         </section>
+
+        <!-- 21+ collection only. Do not mount data-merch="adult" on the homepage. -->
+        <section class="section" id="adult-shop" aria-labelledby="adult-shop-title">
+          <div class="wrap">
+            <h2 class="section-title" id="adult-shop-title">
+              <span class="dash" aria-hidden="true">—</span> Shop
+            </h2>
+            <div class="apps-grid shop-grid" data-merch="adult"></div>
+          </div>
+        </section>
       </div>
     </main>
 
@@ -131,6 +141,7 @@
 
     <script src="../assets/apps.js"></script>
     <script src="../assets/adult-apps.js"></script>
+    <script src="../assets/merch.js"></script>
     <script src="../assets/site.js"></script>
   </body>
 </html>

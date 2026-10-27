@@ -48,6 +48,142 @@
     return "#";
   }
 
+  function merchRecord() {
+    var merch = window.WINGS_MERCH;
+    if (!merch || typeof merch !== "object" || Array.isArray(merch)) {
+      return { status: "coming soon", items: [] };
+    }
+    return merch;
+  }
+
+  function merchStatus() {
+    return merchRecord().status === "live" ? "live" : "coming soon";
+  }
+
+  function onAdultPage() {
+    return /\/21plus(\/|$)/.test(window.location.pathname || "");
+  }
+
+  // Clean collection on family pages. 21+ collection only on /21plus/.
+  // The store root is the full product list, so it is never a merch link.
+  function merchUrl(audience, url) {
+    var parsed;
+    var path;
+    if (audience === "adult") {
+      if (!onAdultPage()) return "";
+    } else if (audience !== "clean") {
+      return "";
+    }
+    try {
+      parsed = new URL(url, window.location.href);
+    } catch (error) {
+      return "";
+    }
+    if (parsed.protocol !== "https:") return "";
+    if (parsed.hostname !== "wingscrew-clothing.printify.me") return "";
+    path = parsed.pathname.replace(/\/+$/, "") || "/";
+    if (audience === "adult" && path !== "/collection/21") return "";
+    if (audience === "clean" && path !== "/collection/clean") return "";
+    return "https://wingscrew-clothing.printify.me" + path;
+  }
+
+  function merchList(audience) {
+    var items = merchRecord().items;
+    if (!Array.isArray(items)) return [];
+    return items.filter(function (item) {
+      return (
+        item &&
+        item.audience === audience &&
+        item.name &&
+        merchUrl(audience, item.url)
+      );
+    }).map(function (item) {
+      return {
+        name: item.name,
+        blurb: item.blurb || "",
+        href: merchUrl(audience, item.url)
+      };
+    });
+  }
+
+  function merchLabel() {
+    return merchStatus() === "live" ? "Shop" : "Opening soon";
+  }
+
+  function renderMerch() {
+    var mounts = document.querySelectorAll("[data-merch]");
+    if (!mounts.length) return;
+
+    Array.prototype.forEach.call(mounts, function (node) {
+      var audience = node.getAttribute("data-merch");
+      var cards = merchList(audience);
+
+      if (!cards.length) {
+        node.innerHTML = '<p class="empty">Nothing in this shop yet.</p>';
+        return;
+      }
+
+      node.innerHTML = cards
+        .map(function (item) {
+          return (
+            '<a class="panel app-card" href="' +
+            escapeHtml(item.href) +
+            '" target="_blank" rel="noopener">' +
+            '<p class="badge">' +
+            escapeHtml(merchLabel()) +
+            "</p>" +
+            "<h3>" +
+            escapeHtml(item.name) +
+            "</h3>" +
+            '<p class="blurb">' +
+            escapeHtml(item.blurb) +
+            "</p>" +
+            '<span class="open">Open shop <span aria-hidden="true">↗</span>' +
+            '<span class="sr-only"> (opens in a new tab)</span></span>' +
+            "</a>"
+          );
+        })
+        .join("");
+    });
+  }
+
+  function applyMerchChrome() {
+    var live = merchStatus() === "live";
+    var lede = document.querySelector("[data-shop-lede]");
+    var navs = document.querySelectorAll("[data-merch-nav]");
+
+    if (lede) {
+      lede.textContent = live
+        ? "Live apps from windigo98. WingsCrew Clothing is open."
+        : "Live apps from windigo98. WingsCrew Clothing is opening soon.";
+    }
+
+    Array.prototype.forEach.call(navs, function (nav) {
+      var audience = nav.getAttribute("data-merch-nav");
+      var match = merchList(audience)[0];
+      var tag;
+
+      if (match) nav.setAttribute("href", match.href);
+      nav.setAttribute("target", "_blank");
+      nav.setAttribute("rel", "noopener");
+
+      while (nav.firstChild) nav.removeChild(nav.firstChild);
+      nav.appendChild(document.createTextNode("Shop"));
+      if (!live) {
+        tag = document.createElement("span");
+        tag.className = "soon-tag";
+        tag.textContent = "· Opening soon";
+        nav.appendChild(tag);
+      }
+      nav.setAttribute(
+        "aria-label",
+        live
+          ? "Shop WingsCrew Clothing (opens in a new tab)"
+          : "Shop WingsCrew Clothing, opening soon (opens in a new tab)"
+      );
+    });
+  }
+
   function renderApps() {
     if (!mount) return;
 
@@ -256,6 +392,8 @@
   }
 
   renderApps();
+  renderMerch();
+  applyMerchChrome();
   watchNav();
   wireShare();
   wireAgeGate();

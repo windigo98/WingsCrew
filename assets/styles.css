@@ -137,6 +137,20 @@ p {
   font-weight: 500;
 }
 
+.nav a.nav-shop {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.32rem;
+  white-space: nowrap;
+}
+
+.soon-tag {
+  color: var(--gold);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
 .nav a[aria-current="true"] {
   color: var(--cream);
 }
@@ -492,7 +506,8 @@ h1 {
   outline-offset: 3px;
 }
 
-.shop-card {
+.shop-card,
+.shop-grid {
   max-width: 36rem;
 }
 
