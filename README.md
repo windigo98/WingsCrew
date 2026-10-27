@@ -1,6 +1,6 @@
 # WingsCrew
 
-Phone-first home for WingsCrew apps, plus WingsCrew Clothing. Live apps from [windigo98](https://github.com/windigo98). WingsCrew Clothing is opening soon.
+Phone-first home for WingsCrew apps, plus WingsCrew Clothing. Live apps from [windigo98](https://github.com/windigo98). WingsCrew Clothing is open.
 
 The site is static files at the repo root (`index.html`, `assets/`, `.nojekyll`). There is no build step.
 
@@ -28,9 +28,9 @@ The **Tip** button goes to [Cash App $windigo98](https://cash.app/$windigo98). *
 
 ## Shop
 
-WingsCrew Clothing is on Printify. Checkout is not taking payments yet, so the shop is marked **Opening soon**.
+WingsCrew Clothing is on Printify. Payments are on, so the shop is live and `status` is `"live"`.
 
-[`assets/merch.js`](assets/merch.js) holds one `status` flag and the two collection links. That flag is the only line to change when payments go live:
+[`assets/merch.js`](assets/merch.js) holds one `status` flag and the two collection links. That flag is the only switch:
 
 | `status` | What people see |
 | --- | --- |

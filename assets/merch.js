@@ -18,7 +18,7 @@
 // url       Collection link (https). The card opens it in a new tab.
 // audience  "clean" or "adult"
 window.WINGS_MERCH = {
-  status: "coming soon",
+  status: "live",
   items: [
     {
       name: "WingsCrew Clothing",
