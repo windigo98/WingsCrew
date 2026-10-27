@@ -332,12 +332,9 @@
   function topbar() {
     return (
       '<header class="topbar"><div class="wrap bar">' +
-      '<a class="brand" href="https://wingscrew.com/" aria-label="WingsCrew home">' +
-      "<picture>" +
-      '<source srcset="../assets/brand/logo.webp" type="image/webp" />' +
-      '<img class="brand-logo" src="../assets/brand/logo.png" width="532" height="720" alt="WingsCrew" />' +
-      "</picture>" +
-      '<span aria-hidden="true">WingsCrew</span></a>' +
+      '<a class="brand" href="https://wingscrew.com/">' +
+      '<img src="icons/logo.webp" width="532" height="720" alt="" />' +
+      "<span>WingsCrew</span></a>" +
       '<nav class="bar-links" aria-label="Pages">' +
       '<a class="home-link" href="#/">Cooks</a>' +
       '<a class="help-link" href="#/help"' + (route().name === "help" ? ' aria-current="page"' : "") +
@@ -382,7 +379,7 @@
     return (
       '<footer class="wrap">' +
       '<p class="foot-links"><a href="#/help">How it works</a><a href="#/share">Share a recipe</a></p>' +
-      '<p class="legal">© 2026 <a href="https://wingscrew.com/">WingsCrew</a>. All rights reserved.</p></footer>'
+      '<p class="legal">© 2026 WingsCrew. All rights reserved.</p></footer>'
     );
   }
 
@@ -671,7 +668,7 @@
       (index === steps.length ? " disabled" : "") + ">Next</button>" +
       "</div>" +
       wake +
-      '<p class="legal">© 2026 <a href="https://wingscrew.com/">WingsCrew</a>. All rights reserved.</p>' +
+      '<p class="legal">© 2026 WingsCrew. All rights reserved.</p>' +
       "</div>",
       true
     );
