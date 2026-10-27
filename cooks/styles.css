@@ -156,10 +156,18 @@ button:disabled {
   letter-spacing: -0.02em;
 }
 
+.brand picture {
+  display: block;
+  flex: 0 0 auto;
+  line-height: 0;
+}
+
 .brand img {
   width: auto;
-  height: 2.4rem;
-  max-width: 2.6rem;
+  height: 2.75rem;
+  max-width: 3.5rem;
+  max-height: 2.75rem;
+  display: block;
   object-fit: contain;
 }
 

@@ -921,5 +921,9 @@ button.choice.nmopt svg{width:28px;height:28px;flex:0 0 28px}
 @media (orientation:landscape) and (max-height:560px){ .pkmsg,.rtmsg{margin:0 0 6px;font-size:.92rem;line-height:1.25} }
 /* Footer: always sits at the very bottom of the page (after the content), never floating mid-screen on short pages */
 body{display:flex;flex-direction:column}
+.wc-bar{position:relative;z-index:5;display:flex;align-items:center;min-height:4.1rem;padding:0.45rem 0.9rem 0.15rem}
+.wc-brand{display:inline-flex;align-items:center;gap:0.5rem;color:var(--ink);text-decoration:none;font-family:var(--caps);font-weight:700;font-size:1.05rem;letter-spacing:.02em}
+.wc-brand picture{display:block;line-height:0}
+.wc-logo{width:auto;height:2.75rem;max-width:3.5rem;max-height:2.75rem;display:block;object-fit:contain}
 #app{flex:1 0 auto}
 body>.footer{flex:0 0 auto;margin-top:auto}
