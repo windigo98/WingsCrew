@@ -17,6 +17,12 @@
 window.WINGS_UPDATES = [
   {
     date: "2026-10-27",
+    title: "WingsCrew Cooks",
+    description: "Our free cooking app, now with the WingsCrew look and a quick way back here.",
+    link: "https://wingscrew.com/cooks/",
+  },
+  {
+    date: "2026-10-27",
     title: "WingsCrew Clothing is open",
     description: "Our tee shop is live with clean tees, plus a separate 21+ collection.",
     link: "https://wingscrew-clothing.printify.me/collection/clean",
