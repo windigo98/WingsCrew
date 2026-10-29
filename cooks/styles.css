@@ -158,10 +158,10 @@ button:disabled {
   color: var(--cream);
   font-family: var(--serif);
   font-weight: 650;
-  font-size: 1.35rem;
-  letter-spacing: -0.02em;
+  font-size: 1.28rem;
+  letter-spacing: -0.03em;
   line-height: 1.05;
-  text-decoration: none;
+  white-space: nowrap;
 }
 
 .byline {
