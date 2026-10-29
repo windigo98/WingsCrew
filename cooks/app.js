@@ -346,7 +346,7 @@
     return (
       '<header class="topbar"><div class="wrap bar">' +
       '<div class="mast">' +
-      '<a class="app-title" href="#/">Cooks</a>' +
+      '<p class="app-title">WingsCrew Cooks</p>' +
       '<a class="byline" href="' + SITE + '" aria-label="WingsCrew home">' +
       "<picture>" +
       '<source srcset="/assets/brand/logo.webp" type="image/webp" />' +
