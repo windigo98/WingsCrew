@@ -1057,7 +1057,8 @@ function scr_more(){
       <button class="tool" data-act="nav" data-to="whos">${ic('whos')}Who\u2019s that?</button><button class="tool" data-act="tour">${ic('compass')}Replay the tour</button></div>
     <h2 style="margin:6px 4px 10px">Settings</h2>${settingsRows(['guide','read','voice','size','sensory','bad','world'])}
     <div class="card"><div class="setrow"><div class="lbl">${ic('repeat')}Reset prototype</div><p class="sub">Clears everything and starts again from Welcome.</p><button class="btn block" data-act="reset">Reset everything</button></div></div>
-    <p class="footer">Highkeep prototype \u00b7 \u00a9 2026 WingsCrew. All rights reserved.</p>`,
+    <a class="btn block wc-more" href="https://wingscrew.com/" target="_blank" rel="noopener"><img src="img/wingscrew-logo.webp" alt="" width="24" height="32">More from WingsCrew</a>
+    <p class="footer">Highkeep prototype \u00b7 \u00a9 2026 <a class="wc-link" href="https://wingscrew.com/" target="_blank" rel="noopener">WingsCrew</a>. All rights reserved.</p>`,
     acts:Object.assign({},settingActs,{tour:()=>{go('home');setTimeout(startTour,450);},
       reset:()=>modal('<h2>Reset everything?</h2><p>Your lists, notes, photos and keep will be cleared.</p>',[['Cancel',null],['Yes, reset',()=>{localStorage.removeItem(KEY);location.hash='';location.reload();},true]])})};
 }
@@ -1901,7 +1902,7 @@ function render(){
   const key=location.hash+'|'+sc.name;const same=key===lastKey;
   const cc=$('.content-col');const prevScroll=same?{y:window.scrollY,c:cc?cc.scrollTop:0}:null;
   const g=guideText(sc);
-  const top=`<div class="topbar">${sc.topLeft==='back'?`<button class="topbtn" data-act="back" aria-label="Back">${ic('back')}Back</button>`:`<span class="brand">Highkeep</span>`}
+  const top=`<div class="topbar">${sc.topLeft==='back'?`<button class="topbtn" data-act="back" aria-label="Back">${ic('back')}Back</button>`:`<span class="brand">Highkeep<a class="by-wc" href="https://wingscrew.com/" target="_blank" rel="noopener" aria-label="by WingsCrew, opens wingscrew.com"><img src="img/wingscrew-logo.webp" alt="" width="18" height="24">by WingsCrew</a></span>`}
     ${sc.topRight||(sc.topLeft==='back'&&!sc.noTabs?`<button class="topbtn" data-act="nav" data-to="home" aria-label="Home">${ic('castle')}Home</button>`:'')}</div>`;
   const guide=`<div class="guide ${S.guide?'':'off'}" id="guide"><span class="gicon">${ic('compass')}</span><div class="gtext">${sc.step?`<span class="gstep">Step ${sc.step.x} of ${sc.step.y}</span>`:''}<b>${esc(g.where)}</b><span class="next">${esc(g.next)}</span></div>
     <button class="whereami" data-act="where" aria-label="Where am I? Read this step aloud">${ic('speaker')}Where<br>am I?</button></div>`;
