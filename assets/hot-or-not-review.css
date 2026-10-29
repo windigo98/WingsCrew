@@ -85,6 +85,28 @@
   color: var(--gold-ink);
 }
 
+.review-instore {
+  width: 100%;
+  min-height: 2.75rem;
+  margin: 0 0 0.7rem;
+  border: 1px solid rgba(244, 240, 230, 0.28);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--cream);
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+  touch-action: manipulation;
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+.review-instore[aria-pressed="true"] {
+  border-color: var(--gold);
+  background: var(--gold);
+  color: var(--gold-ink);
+}
+
 .review-adult {
   display: inline-block;
   margin: 0 0 0.7rem;
@@ -587,6 +609,7 @@
 .review-back a:focus-visible,
 .review-sections button:focus-visible,
 .review-decided:focus-visible,
+.review-instore:focus-visible,
 .review-sets button:focus-visible,
 .review-zoom:focus-visible,
 .review-alt:focus-visible,
@@ -645,7 +668,8 @@
   .review-needs:hover,
   .review-sections button:hover,
   .review-sets button:hover,
-  .review-decided:hover {
+  .review-decided:hover,
+  .review-instore:hover {
     background: var(--gold);
     color: var(--gold-ink);
   }
