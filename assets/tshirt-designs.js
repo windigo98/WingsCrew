@@ -1,5 +1,6 @@
-// T-shirt designs for the unlisted Crew Lab review at /crew-lab/tshirt-review/.
-// Adult humor. Keep this page noindex, off the public hub, and out of sitemap.xml.
+// T-shirt designs for the Hot or Not review at /crew-lab/hot-or-not-review/.
+// The Shirts section reads this list. See assets/review-queue.js.
+// Adult humor. Keep the review noindex, off the public hub, and out of sitemap.xml.
 //
 // id          Stable key. Votes and notes are saved on this phone under this id.
 // title       Name on the card and in the copied review

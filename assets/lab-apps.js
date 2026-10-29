@@ -13,18 +13,11 @@
 window.WINGS_LAB = [
   {
     group: "progress",
-    name: "T-shirt review",
-    blurb: "Hot-or-not on adult humor shirts. Yes, no, and notes stay on this phone.",
+    name: "Hot or Not review",
+    blurb: "Shirts, books, and anything else waiting on a yes before it goes out. Picks and notes stay on this phone.",
     status: "live",
     mark: "Adult",
-    url: "/crew-lab/tshirt-review/",
-  },
-  {
-    group: "progress",
-    name: "Coloring review",
-    blurb: "Yes, no, or needs work on coloring pages. Votes and notes stay on this phone.",
-    status: "live",
-    url: "/crew-lab/coloring-review/",
+    url: "/crew-lab/hot-or-not-review/",
   },
   {
     group: "progress",

@@ -1,7 +1,8 @@
-// Coloring sets for the unlisted Crew Lab review at /crew-lab/coloring-review/.
-// Kids' pages. Keep this page noindex, off the public hub, and out of sitemap.xml.
+// Coloring books for the Hot or Not review at /crew-lab/hot-or-not-review/.
+// The Books section reads this list. See assets/review-queue.js.
+// Kids' pages. Keep the review noindex, off the public hub, and out of sitemap.xml.
 //
-// Add a set by appending one object to WINGS_COLORING_SETS. Put its images in
+// Add a book by appending one object to WINGS_COLORING_SETS. Put its images in
 // crew-lab/coloring-review/sets/<id>/ . Votes stay on this phone, per set.
 // No other file needs to change.
 //
