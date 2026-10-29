@@ -56,10 +56,9 @@
     {
       id: "nativity",
       title: "Reason for the Season: A Cute Nativity Coloring Book",
-      // ?v=1 on every image URL. File names stay pNN_a.webp and pNN_b.webp.
-      // Page 22 will be replaced later. Bump version (or that page's version)
-      // when the files change so phones load the new art.
-      version: 1,
+      // ?v=2 on every image URL. File names stay pNN_a.webp and pNN_b.webp.
+      // Bump version (or one page's version) when a file is replaced.
+      version: 2,
       pages: numberedPages(30, {
         1: { badge: "NEW" },
         9: { badge: "NEW" },
@@ -67,6 +66,7 @@
         17: { badge: "NEW" },
         19: { badge: "NEW" },
         21: { badge: "NEW" },
+        22: { badge: "NEW" },
         28: { badge: "NEW" },
         29: { badge: "NEW" },
       }),
