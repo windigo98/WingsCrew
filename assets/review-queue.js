@@ -24,7 +24,51 @@
 //   shirts  wingscrew-tshirt-review
 //   books   wingscrew-coloring-review
 //   other   wingscrew-hot-or-not-review
+//
+// In the store
+// IN_STORE is the only list to edit when another batch goes live.
+// A number hides every card for that design (shirt, hoodie, sticker, mug, tote).
+// Batches 03-11 are not live yet. Add their numbers here when they are.
+// 93 is Unc Status: Unlocked. It was dropped, not published. It stays in this
+// list so it does not sit in the decision queue.
 (function () {
+  var IN_STORE = [
+    // Launch set, live since Oct 26
+    "01",
+    "02",
+    "03",
+    "12",
+    "32",
+    "36",
+    "37",
+    "60",
+    "61",
+    "75",
+    "77",
+    "79",
+    "82",
+    "83",
+    "86",
+    "89",
+    "190",
+    // Batch 01, published Oct 26
+    "16",
+    "22",
+    "50",
+    "52",
+    "62",
+    "70",
+    "72",
+    "80",
+    "88",
+    // Batch 02, published Oct 29
+    "98",
+    "99",
+    "100",
+    // Dropped. Not in the store.
+    "93",
+  ];
+  window.WINGS_IN_STORE = IN_STORE;
   window.WINGS_REVIEW_OTHER = [
     // {
     //   id: "example",
@@ -106,8 +150,25 @@
     return list;
   }
 
+  var inStoreNumbers = {};
+  IN_STORE.forEach(function (value) {
+    var n = parseInt(value, 10);
+    if (isFinite(n)) inStoreNumbers[String(n)] = true;
+  });
+
+  function designNumber(id) {
+    var match = String(id).match(/^(\d+)/);
+    if (!match) return "";
+    return String(parseInt(match[1], 10));
+  }
+
   var queue = [];
   var shirtItems = mapList(window.WINGS_TSHIRTS, "");
+  shirtItems.forEach(function (item) {
+    var number = designNumber(item.id);
+    item.inStore = inStoreNumbers[number] === true;
+    item.notNeeded = number === "93";
+  });
   if (shirtItems.length) {
     queue.push({
       id: "shirts",
