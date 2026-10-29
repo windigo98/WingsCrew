@@ -77,7 +77,10 @@
 
 .review-sets button {
   min-height: 3.1rem;
-  padding: 0.45rem 0.9rem;
+  padding: 0.55rem 0.9rem;
+  line-height: 1.25;
+  text-align: center;
+  white-space: normal;
 }
 
 .review-sets button[aria-pressed="true"],

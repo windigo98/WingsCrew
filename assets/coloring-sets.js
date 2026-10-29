@@ -15,8 +15,9 @@
 // image      Main file name in that set's folder. Local .webp only.
 // alternate  The other version. Leave "" when the page has one file.
 // badge      Optional short label on the card, such as "NEW".
-//
-// Reason for the Season (Nativity) can be a second object in the array below.
+// version    Optional cache key. The review adds ?v= to each image URL.
+//            A page version wins over the set version. Bump it when a file
+//            is replaced but the file name stays the same.
 (function () {
   function page(number, options) {
     var id = number < 10 ? "0" + number : String(number);
@@ -29,6 +30,7 @@
       alternate: "p" + id + "_" + other + ".webp",
     };
     if (options && options.badge) entry.badge = options.badge;
+    if (options && options.version) entry.version = options.version;
     return entry;
   }
 
@@ -49,6 +51,24 @@
         14: { badge: "NEW" },
         17: { main: "b" },
         20: { badge: "NEW" },
+      }),
+    },
+    {
+      id: "nativity",
+      title: "Reason for the Season: A Cute Nativity Coloring Book",
+      // ?v=1 on every image URL. File names stay pNN_a.webp and pNN_b.webp.
+      // Page 22 will be replaced later. Bump version (or that page's version)
+      // when the files change so phones load the new art.
+      version: 1,
+      pages: numberedPages(30, {
+        1: { badge: "NEW" },
+        9: { badge: "NEW" },
+        13: { badge: "NEW" },
+        17: { badge: "NEW" },
+        19: { badge: "NEW" },
+        21: { badge: "NEW" },
+        28: { badge: "NEW" },
+        29: { badge: "NEW" },
       }),
     },
   ];

@@ -45,7 +45,13 @@
     return text;
   }
 
-  function loadPages(source) {
+  function cacheVersion(value) {
+    var n = Number(value);
+    if (!isFinite(n) || n < 1 || n > 9999 || Math.floor(n) !== n) return "";
+    return String(n);
+  }
+
+  function loadPages(source, setVersion) {
     if (!Array.isArray(source)) return [];
     var seen = {};
     var list = [];
@@ -64,6 +70,7 @@
         image: image,
         alternate: alternate,
         badge: badgeText(entry.badge),
+        version: cacheVersion(entry.version) || setVersion || "",
       });
     });
     return list;
@@ -78,7 +85,7 @@
       var id = entry.id.trim();
       var title = cleanLine(entry.title);
       if (!id || !title || seen[id] || !/^[a-z0-9-]+$/.test(id)) return;
-      var setPages = loadPages(entry.pages);
+      var setPages = loadPages(entry.pages, cacheVersion(entry.version));
       if (!setPages.length) return;
       seen[id] = true;
       list.push({ id: id, title: title, pages: setPages });
@@ -318,9 +325,11 @@
     );
   }
 
-  function imageSrc(setId, file) {
+  function imageSrc(setId, file, version) {
     if (!file || !/^[a-z0-9-]+$/.test(setId)) return "";
-    return "sets/" + setId + "/" + file;
+    var src = "sets/" + setId + "/" + file;
+    if (version && /^[1-9][0-9]{0,3}$/.test(version)) src += "?v=" + version;
+    return src;
   }
 
   function voteButton(vote, label, pressed) {
@@ -339,7 +348,7 @@
 
   function cardHtml(page) {
     var review = reviewFor(page.id);
-    var src = imageSrc(currentSet.id, review.lookingAt);
+    var src = imageSrc(currentSet.id, review.lookingAt, page.version);
     var visible = visibleIndexes();
     var pos = visible.indexOf(index);
     var showingAlt = page.alternate && review.lookingAt === page.alternate;
