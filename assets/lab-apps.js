@@ -21,6 +21,13 @@ window.WINGS_LAB = [
   },
   {
     group: "progress",
+    name: "Coloring review",
+    blurb: "Yes, no, or needs work on coloring pages. Votes and notes stay on this phone.",
+    status: "live",
+    url: "/crew-lab/coloring-review/",
+  },
+  {
+    group: "progress",
     name: "Highkeep",
     blurb: "Preview build on this site. Lists, reminders, and small games.",
     status: "live",
