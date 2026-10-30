@@ -15,6 +15,10 @@
 // title      Name on the card and in the copied review.
 // image      Main file name in that set's folder. Local .webp only.
 // alternate  The other version. Leave "" when the page has one file.
+// extras     Optional extra choices beside the pick and the other version.
+//            Each is { image, label }. image is a local .webp file name.
+//            label is the button, such as "New pose A". The choice on screen
+//            is saved with the vote as Looking at.
 // badge      Optional short label on the card, such as "NEW".
 // version    Optional cache key. The review adds ?v= to each image URL.
 //            A page version wins over the set version. Bump it when a file
@@ -32,6 +36,12 @@
     };
     if (options && options.badge) entry.badge = options.badge;
     if (options && options.version) entry.version = options.version;
+    if (options && options.poses) {
+      entry.extras = [
+        { image: "p" + id + "_pose_a.webp", label: "New pose A" },
+        { image: "p" + id + "_pose_b.webp", label: "New pose B" },
+      ];
+    }
     return entry;
   }
 
@@ -76,13 +86,22 @@
       id: "unicorns",
       title: "Cute Unicorns",
       pages: numberedPages(30, {
-        2: { badge: "NEW" },
+        1: { poses: true },
+        2: { badge: "NEW", poses: true },
         4: { badge: "NEW" },
-        5: { badge: "NEW" },
+        5: { badge: "NEW", poses: true },
         7: { badge: "NEW" },
+        8: { poses: true },
+        9: { poses: true },
+        10: { poses: true },
+        11: { poses: true },
+        12: { poses: true },
         16: { badge: "NEW" },
-        24: { badge: "NEW" },
+        20: { poses: true },
+        22: { poses: true },
+        24: { badge: "NEW", poses: true },
         25: { badge: "NEW" },
+        26: { poses: true },
         30: { badge: "NEW" },
       }),
     },

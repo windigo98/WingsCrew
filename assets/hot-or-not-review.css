@@ -242,6 +242,17 @@
   text-align: left;
 }
 
+.review-versions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.7rem;
+}
+
+.review-versions .review-alt {
+  margin-top: 0;
+}
+
 .review-alt {
   display: inline-flex;
   align-items: center;
