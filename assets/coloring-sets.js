@@ -72,5 +72,35 @@
         29: { badge: "NEW" },
       }),
     },
+    {
+      id: "unicorns",
+      title: "Cute Unicorns",
+      pages: numberedPages(30, {
+        2: { badge: "NEW" },
+        4: { badge: "NEW" },
+        5: { badge: "NEW" },
+        7: { badge: "NEW" },
+        16: { badge: "NEW" },
+        24: { badge: "NEW" },
+        25: { badge: "NEW" },
+        30: { badge: "NEW" },
+      }),
+    },
+    {
+      id: "trucks",
+      title: "Cute Trucks",
+      pages: numberedPages(30, {
+        5: { badge: "NEW" },
+        12: { badge: "NEW" },
+        13: { badge: "NEW" },
+        14: { badge: "NEW" },
+        18: { badge: "NEW" },
+        22: { badge: "NEW" },
+        23: { badge: "NEW" },
+        25: { badge: "NEW" },
+        27: { badge: "NEW" },
+        28: { badge: "NEW" },
+      }),
+    },
   ];
 })();
