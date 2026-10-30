@@ -16,8 +16,9 @@
 // imageBase  Optional folder relative to /crew-lab/hot-or-not-review/.
 // items      Cards, in order.
 //
-// Item fields: id, title, image, alternate, badge ("NEW"), version,
-// description, flag. Image is a local .webp file name.
+// Item fields: id, title, image, alternate, extras ({ image, label }),
+// badge ("NEW"), version, description, flag. Image is a local .webp file name.
+// extras are extra choices beside the pick and the other version.
 //
 // Do not put image files in this script.
 // Votes already on a phone stay in localStorage:
@@ -72,6 +73,23 @@
     return base;
   }
 
+  function mapExtras(source, image, alternate) {
+    if (!Array.isArray(source)) return [];
+    var seen = {};
+    var list = [];
+    if (image) seen[image] = true;
+    if (alternate) seen[alternate] = true;
+    source.forEach(function (entry) {
+      if (!entry || typeof entry !== "object") return;
+      var file = fileName(entry.image);
+      var label = badgeText(entry.label);
+      if (!file || !label || seen[file]) return;
+      seen[file] = true;
+      list.push({ image: file, label: label });
+    });
+    return list;
+  }
+
   function mapItem(entry, setVersion) {
     if (!entry || typeof entry.id !== "string" || typeof entry.title !== "string") return null;
     var id = entry.id.trim();
@@ -80,7 +98,7 @@
     if (!id || !title || !image) return null;
     var alternate = fileName(entry.alternate);
     if (alternate === image) alternate = "";
-    return {
+    var item = {
       id: id,
       title: title,
       image: image,
@@ -91,6 +109,9 @@
       hasBack: entry.hasBack === true,
       flag: typeof entry.flag === "string" ? clean(entry.flag) : "",
     };
+    var extras = mapExtras(entry.extras, image, alternate);
+    if (extras.length) item.extras = extras;
+    return item;
   }
 
   function mapList(source, setVersion) {

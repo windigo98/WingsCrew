@@ -87,13 +87,7 @@
         vote = value.vote;
       }
       if (typeof value.notes === "string") notes = value.notes;
-      if (
-        item &&
-        typeof value.lookingAt === "string" &&
-        (value.lookingAt === item.image || (item.alternate && value.lookingAt === item.alternate))
-      ) {
-        lookingAt = value.lookingAt;
-      }
+      if (item && knownFile(item, value.lookingAt)) lookingAt = value.lookingAt;
     }
     return { vote: vote, notes: notes, lookingAt: lookingAt };
   }
@@ -168,9 +162,43 @@
     return currentSet && currentSet.items[itemIndex] ? currentSet.items[itemIndex] : null;
   }
 
+  function knownFile(item, file) {
+    if (!item || typeof file !== "string") return false;
+    if (file === item.image) return true;
+    if (item.alternate && file === item.alternate) return true;
+    var extras = item.extras || [];
+    var i;
+    for (i = 0; i < extras.length; i++) {
+      if (extras[i].image === file) return true;
+    }
+    return false;
+  }
+
+  function extraLabel(item, file) {
+    var extras = item && item.extras ? item.extras : [];
+    var i;
+    for (i = 0; i < extras.length; i++) {
+      if (extras[i].image === file) return extras[i].label;
+    }
+    return "";
+  }
+
+  function showingText(item, file) {
+    var label = extraLabel(item, file);
+    if (label) return label + " (" + file + ")";
+    return file;
+  }
+
   function fileList(item) {
-    if (item.alternate) return item.image + ", " + item.alternate;
-    return item.image;
+    var names = [];
+    if (item.image) names.push(item.image);
+    if (item.alternate && names.indexOf(item.alternate) === -1) names.push(item.alternate);
+    var extras = item.extras || [];
+    var i;
+    for (i = 0; i < extras.length; i++) {
+      if (names.indexOf(extras[i].image) === -1) names.push(extras[i].image);
+    }
+    return names.join(", ");
   }
 
   function plainText() {
@@ -190,9 +218,9 @@
           lines.push("");
           lines.push(item.title);
           lines.push("Id: " + item.id);
-          if (item.alternate) {
+          if (item.alternate || (item.extras && item.extras.length)) {
             lines.push("Files: " + fileList(item));
-            lines.push("Looking at: " + review.lookingAt);
+            lines.push("Looking at: " + showingText(item, review.lookingAt));
           }
           if (item.badge) lines.push("Badge: " + item.badge);
           if (item.flag) lines.push("Flag: " + item.flag);
@@ -300,6 +328,48 @@
     writeSession(indexKey(currentSet), item ? item.id : "");
   }
 
+  function versionButtons(item, lookingAt) {
+    var extras = item.extras || [];
+    if (!extras.length) {
+      if (!item.alternate) return "";
+      return (
+        '<button type="button" class="review-alt" data-alt aria-pressed="' +
+        (lookingAt === item.alternate ? "true" : "false") +
+        '">Other version</button>' +
+        '<p class="review-version">Showing ' +
+        escapeHtml(lookingAt) +
+        "</p>"
+      );
+    }
+    var buttons = "";
+    if (item.alternate) {
+      buttons +=
+        '<button type="button" class="review-alt" data-version="' +
+        escapeHtml(item.alternate) +
+        '" aria-pressed="' +
+        (lookingAt === item.alternate ? "true" : "false") +
+        '">Other version</button>';
+    }
+    extras.forEach(function (extra) {
+      buttons +=
+        '<button type="button" class="review-alt" data-version="' +
+        escapeHtml(extra.image) +
+        '" aria-pressed="' +
+        (lookingAt === extra.image ? "true" : "false") +
+        '">' +
+        escapeHtml(extra.label) +
+        "</button>";
+    });
+    return (
+      '<div class="review-versions" role="group" aria-label="Choose a version">' +
+      buttons +
+      "</div>" +
+      '<p class="review-version">Showing ' +
+      escapeHtml(showingText(item, lookingAt)) +
+      "</p>"
+    );
+  }
+
   function voteButton(vote, label, pressed) {
     return (
       '<button type="button" class="review-' +
@@ -319,15 +389,16 @@
     var src = imageSrc(currentSet, item, review.lookingAt);
     var visible = visibleIndexes();
     var pos = visible.indexOf(index);
-    var showingAlt = item.alternate && review.lookingAt === item.alternate;
     var zoomHint = currentSet.type === "books" ? "Tap the page to enlarge" : "Tap the picture to enlarge";
+    var poseLabel = extraLabel(item, review.lookingAt);
+    var altText = poseLabel ? item.title + ", " + poseLabel : item.title;
     var art = src
       ? '<div class="review-art has-image">' +
         (item.badge ? '<p class="review-new">' + escapeHtml(item.badge) + "</p>" : "") +
         '<button type="button" class="review-zoom" data-zoom><img src="' +
         escapeHtml(src) +
         '" alt="' +
-        escapeHtml(item.title) +
+        escapeHtml(altText) +
         '" loading="lazy" decoding="async"></button></div>'
       : '<div class="review-art" role="img" aria-label="' +
         escapeHtml("No artwork for " + item.title) +
@@ -337,14 +408,7 @@
       '<article class="panel review-card">' +
       art +
       (src ? '<p class="review-zoom-hint">' + zoomHint + "</p>" : "") +
-      (item.alternate
-        ? '<button type="button" class="review-alt" data-alt aria-pressed="' +
-          (showingAlt ? "true" : "false") +
-          '">Other version</button>' +
-          '<p class="review-version">Showing ' +
-          escapeHtml(review.lookingAt) +
-          "</p>"
-        : "") +
+      versionButtons(item, review.lookingAt) +
       (item.flag ? '<p class="review-flag">' + escapeHtml(item.flag) + "</p>" : "") +
       '<h2 id="item-title" tabindex="-1">' +
       escapeHtml(item.title) +
@@ -621,6 +685,22 @@
         renderCard(false);
       });
     }
+
+    Array.prototype.forEach.call(card.querySelectorAll("[data-version]"), function (button) {
+      button.addEventListener("click", function () {
+        flushNotes();
+        var current = reviewFor(currentSet, item);
+        var target = button.getAttribute("data-version") || "";
+        if (!knownFile(item, target) || target === item.image) return;
+        var nextFile = current.lookingAt === target ? item.image : target;
+        writeReview(currentSet, item, {
+          vote: current.vote,
+          notes: current.notes,
+          lookingAt: nextFile,
+        });
+        renderCard(false);
+      });
+    });
 
     var notes = document.getElementById("item-notes");
     if (notes) {
