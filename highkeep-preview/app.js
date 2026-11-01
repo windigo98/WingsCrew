@@ -1108,7 +1108,13 @@ function rmParse0(input,nowTs,opts){
     if(a==='daily'||a==='everyday'||a==='nightly'){rep={type:'daily'};if(a==='nightly')part=part||'night';take(i,1);continue;}
     if(a==='weekdays'||(a==='on'&&w(i+1)==='weekdays')){const k=a==='on'?2:1;rep={type:'weekdays'};take(i,k);continue;}
     if(a==='weekly'){rep={type:'weekly'};take(i,1);continue;}
+    if(a==='hourly'){rep={type:'hours',n:1};take(i,1);continue;}
     if(a==='every'||a==='each'){const b=w(i+1);
+      /* "every hour", "every 2 hours", "every two hrs", "every other hour", "every couple of hours" */
+      if(rmUnit(b)==='hour'&&b!=='h'){rep={type:'hours',n:1};take(i,2);continue;}
+      if(b==='other'&&rmUnit(w(i+2))==='hour'){rep={type:'hours',n:2};take(i,3);continue;}
+      if((b==='couple'||(b==='a'&&w(i+2)==='couple'))){const k=b==='a'?3:2;const k2=w(i+k)==='of'?k+1:k;if(rmUnit(w(i+k2))==='hour'){rep={type:'hours',n:2};take(i,k2+1);continue;}}
+      {const na=numAt(i+1);if(na&&b!=='a'&&b!=='an'&&rmUnit(w(i+1+na.len))==='hour'&&na.n>=1&&na.n<=12){rep={type:'hours',n:na.n};take(i,2+na.len);continue;}}
       if(isPart(b)){rep={type:'daily'};part=b;take(i,2);continue;}
       if(b==='day'){rep={type:'daily'};take(i,2);continue;}
       if(b==='weekday'||b==='weekdays'){rep={type:'weekdays'};take(i,2);continue;}
@@ -1125,6 +1131,7 @@ function rmParse0(input,nowTs,opts){
     if(a==='for'){let j=i+1;let skip=0;if(w(j)==='the'&&w(j+1)==='next'){skip=2;j+=2;}else if(w(j)==='the'&&w(j+1)==='rest'){continue;}else if(w(j)==='next'){skip=1;j+=1;}
       const na=numAt(j);if(na){const n=na.n;const u=rmUnit(w(j+na.len));
       if(u&&(u==='day'||u==='week'||u==='month')){span={n,u};take(i,1+skip+na.len+1);continue;}
+      if(u==='hour'&&rep&&rep.type==='hours'){total=Math.max(1,Math.floor(n/rep.n));take(i,1+skip+na.len+1);continue;}
       if(w(j+na.len)==='times'||w(j+na.len)==='time'){total=n;take(i,1+skip+na.len+1);continue;}}
     }
     if(rmNum(a)!=null&&/^\d+$/.test(a)&&(w(i+1)==='times'||w(i+1)==='time')&&rep){const n=rmNum(a);if(n>0){total=n;take(i,2);continue;}}
@@ -1138,6 +1145,7 @@ function rmParse0(input,nowTs,opts){
       if(w(i+1)==='a'&&w(i+2)==='couple'){let k=3;if(w(i+3)==='of')k=4;const u=rmUnit(w(i+k));if(u&&u!=='month'){dur=rmDur(2,u);take(i,k+1);break;}}
       const na=numAt(i+1);
       if(na){const k=1+na.len;const u=rmUnit(w(i+k));
+        if(u==='month'&&na.n>=1&&na.n<=24){dur={days:rmMonthDays(na.n)};take(i,k+1);if(w(i+k)==='from'&&w(i+k+1)==='now')take(i+k,2);break;}
         if(u&&u!=='month'){
           if(w(i+k+1)==='and'&&w(i+k+2)==='a'&&w(i+k+3)==='half'&&u==='hour'){dur={min:na.n*60+30};take(i,k+4);break;}
           dur=rmDur(na.n,u);take(i,k+1);if(w(i+k)==='from'&&w(i+k+1)==='now')take(i+k,2);break;}}
@@ -1146,6 +1154,9 @@ function rmParse0(input,nowTs,opts){
     if(na&&/^\d+$/.test(a)){const u=rmUnit(w(i+na.len));const j=i+na.len+1;
       if(u&&u!=='month'&&((w(j)==='from'&&w(j+1)==='now')||w(j)==='later')){dur=rmDur(na.n,u);take(i,na.len+1+(w(j)==='later'?1:2));break;}}
   }
+  /* "in a month" / "next month": same date next month (or the month's last day), counted as days from now */
+  function rmMonthDays(n){const a=new Date(now);const t=new Date(a.getFullYear(),a.getMonth()+n,1,a.getHours(),a.getMinutes());const last=new Date(t.getFullYear(),t.getMonth()+1,0).getDate();t.setDate(Math.min(a.getDate(),last));const a0=new Date(a);a0.setHours(0,0,0,0);const t0=new Date(t);t0.setHours(0,0,0,0);return Math.round((t0-a0)/86400000);}
+  for(let i=0;i<T.length&&!dur;i++){if(w(i)==='next'&&w(i+1)==='month'){dur={days:rmMonthDays(1)};take(i,2);}}
   function rmDur(n,u){return u==='min'?{min:n}:u==='hour'?{min:n*60}:u==='day'?{days:n}:{days:n*7};}
   /* ---- pass 4: day words ---- */
   for(let i=0;i<T.length;i++){const a=w(i);if(!a)continue;
@@ -1180,6 +1191,13 @@ function rmParse0(input,nowTs,opts){
   }
   /* ---- pass 6: clock times ---- */
   for(let i=0;i<T.length&&!clock;i++){const a=w(i);if(!a)continue;
+    /* "half past 3", "quarter past 8", "quarter to 6" (optionally "at ... pm") */
+    if(a==='half'||a==='quarter'||(a==='a'&&w(i+1)==='quarter')){const q=a==='a'?i+1:i;const rel=w(q+1);const nb=numAt(q+2);
+      if((rel==='past'||rel==='after'||(w(q)==='quarter'&&(rel==='to'||rel==='till'||rel==='til'||rel==='before')))&&nb&&nb.n>=1&&nb.n<=12){
+        const fwd=rel==='past'||rel==='after';const mm=w(q)==='half'?30:(fwd?15:45);let h=fwd?nb.n:(nb.n===1?12:nb.n-1);
+        let len=(q-i)+2+nb.len;let mer=null;const nx=w(i+len);if(nx==='am'||nx==='pm'){mer=nx;len++;}
+        if(!fwd&&mer&&nb.n===12)mer=mer==='am'?'pm':'am'; /* quarter to 12 pm is 11:45 am */
+        const pre=w(i-1)==='at'?1:0;clock={h,m:mm,mer,explicit:!!mer};take(i-pre,len+pre);continue;}}
     let m=/^(\d{1,2})(?::(\d{2}))?(am|pm)$/.exec(a);
     if(m){const pre=w(i-1)==='at'||w(i-1)==='@'?1:0;clock={h:+m[1],m:+(m[2]||0),mer:m[3],explicit:true};take(i-pre,1+pre);if(w(i+1)==='oclock')take(i+1,1);if(clock.h<1||clock.h>12||clock.m>59){clock=null;}continue;}
     m=/^(\d{1,2}):(\d{2})$/.exec(a);
@@ -1208,6 +1226,12 @@ function rmParse0(input,nowTs,opts){
   R.found=foundTime;
   if(!foundTime){return R;}
   const nowD=new Date(now);
+  /* every N hours with no start time: first one N hours from now (or after a duration, if one was said) */
+  if(rep&&rep.type==='hours'&&!clock&&!part&&!day){
+    const first=dur?(dur.min!=null?now+dur.min*60000:rmAtDay(now,dur.days,nowD.getHours(),nowD.getMinutes())):now+rep.n*3600000;
+    const d0=new Date(first);d0.setSeconds(0,0);R.due=d0.getTime();R.hasTime=true;R.rep={type:'hours',n:rep.n,total:total!=null?Math.max(1,total):null};
+    if(span&&total==null){const days=span.u==='day'?span.n:span.u==='week'?span.n*7:span.n*30;R.rep.total=rmCountIn(R.rep,R.due,days,0,0);}
+    R.notes.push('First one '+(rep.n===1?'in an hour':'in '+rep.n+' hours')+'. Quiet hours (if on) are skipped.');return R;}
   /* duration wins */
   if(dur&&!rep){
     if(dur.min!=null){R.due=now+dur.min*60000;R.hasTime=true;R.notes.push('relative');return R;}
@@ -1276,7 +1300,7 @@ function rmParse0(input,nowTs,opts){
   R.hasTime=true;
   /* repeats */
   if(rep){
-    const r={type:rep.type,total:null};
+    const r={type:rep.type,total:null};if(rep.type==='hours')r.n=rep.n;
     if(rep.type==='weekly'){if(day&&day.type==='dow')r.dow=day.dow;else if(due)r.dow=new Date(due).getDay();}
     if(rep.type==='weekdays'&&due){let d=new Date(due);while(d.getDay()===0||d.getDay()===6){d.setDate(d.getDate()+1);d.setHours(H,M,0,0);}if(d.getTime()!==due){R.notes.push('Weekdays only, so the first one is on a '+RM_DOW[d.getDay()][0].toUpperCase()+RM_DOW[d.getDay()].slice(1)+'.');due=d.getTime();}}
     if(rep.type==='daily'&&dur&&dur.days)due=rmAtDay(now,dur.days,H,M);
@@ -1292,7 +1316,7 @@ function rmParse0(input,nowTs,opts){
 }
 function rmCountIn(rep,first,days,H,M){/* how many occurrences fall inside "days" days starting at the first one */
   const end=new Date(first);end.setDate(end.getDate()+days);end.setHours(0,0,0,0);
-  let n=0,t=first;for(let g=0;g<400&&t<end.getTime();g++){n++;t=rmStep({type:rep.type,dow:rep.dow},t,H,M);}return Math.max(1,n);
+  let n=0,t=first;for(let g=0;g<400&&t<end.getTime();g++){n++;t=rmStep({type:rep.type,dow:rep.dow,n:rep.n},t,H,M);}return Math.max(1,n);
 }
 function rmFmtHM(h,m){const ap=h>=12?'PM':'AM';const hh=h%12===0?12:h%12;return hh+':'+String(m).padStart(2,'0')+' '+ap;}
 /* Turns a spoken clock like "5" or "7:30 pm" into 24h, and says when it had to pick AM or PM. */
@@ -1311,6 +1335,7 @@ function rmClock(c,part,noAlt,day,ctx){
 }
 /* next occurrence for repeats, keeping the same clock time */
 function rmStep(rep,fromTs,H,M){
+  if(rep.type==='hours')return fromTs+Math.max(1,Math.min(12,+rep.n||1))*3600000;
   const d=new Date(fromTs);let n=0;
   do{d.setDate(d.getDate()+(rep.type==='weekly'?7:1));d.setHours(H,M,0,0);n++;}while(rep.type==='weekdays'&&(d.getDay()===0||d.getDay()===6)&&n<10);
   return d.getTime();
@@ -1342,6 +1367,8 @@ function rmRel(ts,now){now=now==null?rmNow():now;const m=Math.round((ts-now)/600
   return m>0?'in '+s:s+' ago';}
 function rmRepText(rep,ts,n,mode){
   if(!rep||rep.type==='once')return '';const t=rmTimeStr(ts);let b;
+  if(rep.type==='hours'){const hn=+rep.n||1;b=(hn===1?'Every hour':'Every '+hn+' hours')+', next at '+t;
+    if(n==null)return b+', until you stop it';return mode==='left'?b+' \u00b7 '+n+' more time'+(n===1?'':'s'):b+', '+n+' time'+(n===1?'':'s');}
   if(rep.type==='daily')b='Every day at '+t;else if(rep.type==='weekdays')b='Every weekday at '+t;else b='Every '+RMDOWN[rep.dow!=null?rep.dow:new Date(ts).getDay()]+' at '+t;
   const unit=rep.type==='daily'?'day':rep.type==='weekdays'?'weekday':'week';
   if(n==null)return b+', until you stop it';
@@ -1371,6 +1398,9 @@ function rmAdvance(r,now){
   if(r.rep.type==='once'){r.status='done';r.doneAt=now;r.snooze=null;return;}
   const [H,M]=rmHM(r.time||rmHMstr(r.due));let t=r.due,used=1,missed=0;
   t=rmStep(r.rep,t,H,M);
+  if(r.rep.type==='hours'){/* hourly repeats: skip slots that fall in quiet hours (not missed, not counted) */
+    for(let g=0;g<2000&&(t<=now||rmInQuiet(t));g++){if(!rmInQuiet(t)){missed++;used++;}t=rmStep(r.rep,t,H,M);}
+  }else
   while(t<=now&&used<500){missed++;used++;t=rmStep(r.rep,t,H,M);}
   r.missed+=missed;
   if(r.left!=null){r.left-=used;if(r.left<=0){r.status='done';r.doneAt=now;r.snooze=null;return;}}
@@ -1643,6 +1673,7 @@ function rmIcs(r){
   const t=r.due;let rr='';
   if(r.rep.type==='daily')rr='RRULE:FREQ=DAILY'+(r.left!=null?';COUNT='+r.left:'');
   else if(r.rep.type==='weekdays')rr='RRULE:FREQ=WEEKLY;BYDAY=MO,TU,WE,TH,FR'+(r.left!=null?';COUNT='+r.left:'');
+  else if(r.rep.type==='hours')rr='RRULE:FREQ=HOURLY;INTERVAL='+(+r.rep.n||1)+(r.left!=null?';COUNT='+r.left:'');
   else if(r.rep.type==='weekly')rr='RRULE:FREQ=WEEKLY'+(r.left!=null?';COUNT='+r.left:'');
   const L=['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//WingsCrew//Highkeep//EN','CALSCALE:GREGORIAN','BEGIN:VEVENT','UID:'+r.id+'@highkeep','DTSTAMP:'+f(rmNow()),'DTSTART:'+f(t),'DTEND:'+f(t+15*60000),'SUMMARY:'+esc2('Reminder: '+r.text)];
   if(rr)L.push(rr);L.push('BEGIN:VALARM','ACTION:DISPLAY','DESCRIPTION:'+esc2(r.text),'TRIGGER:PT0M','END:VALARM','END:VEVENT','END:VCALENDAR');
@@ -1753,7 +1784,8 @@ function scr_rmwizard(sub,p1,p2){
   }
   if(step===3){
     const types=[['once','bell','Just once'],['daily','repeat','Every day'],['weekdays','briefcase','Weekdays'],['weekly','calendar','Every week']];
-    const t=d.rep.type;const opts=t==='daily'?[3,5,7,14,30]:t==='weekdays'?[5,10,20]:[4,8,12];const unit=t==='daily'?'days':t==='weekdays'?'weekdays':'weeks';
+    if(d.rep.type==='hours'){const hn=+d.rep.n||1;types.splice(1,0,['hours','clock',hn===1?'Every hour':'Every '+hn+' hours']);}
+    const t=d.rep.type;const opts=t==='daily'?[3,5,7,14,30]:t==='weekdays'?[5,10,20]:t==='hours'?[3,4,6,8]:[4,8,12];const unit=t==='daily'?'days':t==='weekdays'?'weekdays':t==='hours'?'times':'weeks';
     return Object.assign(base,{guide:'Choose if this happens once or repeats. Then tap Next.',
       body:`<div class="card"><h3>How often?</h3><div class="rm-picks rm-types" role="group" aria-label="How often">${types.map(([k,i,l])=>`<button class="rm-pick" data-act="rmtype" data-v="${k}" aria-pressed="${t===k}">${ic(i)}<span>${l}</span></button>`).join('')}</div>
       ${t!=='once'?`<h3 style="margin-top:16px">For how long?</h3><div class="seg rm-seg" role="group" aria-label="For how long">${opts.map(n=>`<button data-act="rmtotal" data-v="${n}" aria-pressed="${d.rep.total===n}">${n} ${unit}</button>`).join('')}<button data-act="rmtotal" data-v="" aria-pressed="${d.rep.total==null}">Until I stop</button></div>
