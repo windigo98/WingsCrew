@@ -1984,30 +1984,32 @@ function reveal(){
 /* Tour */
 const TOUR=[['.gauge-medal','Your keep','This is your keep. It fills with golden light as you check things off and play. Tap it to see your palace.'],
  ['#today','Today\u2019s list','Tap each thing as you pack it. A gold check means it\u2019s done.'],
+ ['#reminder','Remind Me','Your next reminder shows here. Tap it to add a new one by talking or typing, like \u201ctake my pills at 8\u201d. I keep showing it until you tap Done.'],
  ['.tools','Quick helpers','Done-check remembers what you did. Where is it? remembers where things are. Who\u2019s that? remembers people.'],
  ['[data-act=bad]','Bad day switch','Having a hard day? Turn this on and Highkeep shows only the basics, with bigger buttons.'],
  ['.whereami','Where am I?','Lost? Tap here any time and I\u2019ll read out where you are and what to do next.'],
  ['.tabs','Moving around','Use these to go to Practice, Games, your Palace, and More. Home always brings you back here.']];
 let tourI=0;
-function startTour(){if(route()[0]!=='home'){go('home');}tourI=0;showTour();}
+let tourL=TOUR;const tourVis=sel=>[...document.querySelectorAll(sel)].find(e=>e.offsetParent!==null||e.getClientRects().length);
+function startTour(){if(route()[0]!=='home'){go('home');}tourI=0;tourL=TOUR.filter(([sel])=>tourVis(sel));if(!tourL.length)return;showTour();}
 function showTour(){
-  const [sel,t,txt]=TOUR[tourI];const el=[...document.querySelectorAll(sel)].find(e=>e.offsetParent!==null||e.getClientRects().length);if(!el){return endTour();}
+  const [sel,t,txt]=tourL[tourI];const el=tourVis(sel);if(!el){return endTour();}
   const rcol=el.closest('.content-col');el.scrollIntoView({block:'center',behavior:'auto'});
   setTimeout(()=>{const b=el.getBoundingClientRect();const pad=6;
     const tipBelow=b.top+b.height/2<innerHeight/2;
     overlay(`<div class="tour-spot" style="top:${b.top-pad}px;left:${b.left-pad}px;width:${b.width+pad*2}px;height:${b.height+pad*2}px"></div>
     <div style="position:fixed;inset:0;z-index:69"></div>
     <div class="tour-tip" role="dialog" aria-live="polite" style="${tipBelow?`top:${Math.min(b.bottom+16,innerHeight-230)}px`:`bottom:${Math.min(innerHeight-b.top+16,innerHeight-230)}px`}">
-    <span class="steptag">Tour \u00b7 ${tourI+1} of ${TOUR.length}</span><h3>${t}</h3><p>${txt}</p>
-    <div class="acts"><button class="btn" id="tskip">Skip tour</button>${tourI>0?`<button class="btn" id="tback">Back</button>`:''}<button class="btn primary" id="tnext">${tourI===TOUR.length-1?'Finish':'Next'}</button></div></div>`);
-    $('#tskip').onclick=endTour;$('#tnext').onclick=()=>{tourI++;tourI>=TOUR.length?endTour():showTour();};
+    <span class="steptag">Tour \u00b7 ${tourI+1} of ${tourL.length}</span><h3>${t}</h3><p>${txt}</p>
+    <div class="acts"><button class="btn" id="tskip">Skip tour</button>${tourI>0?`<button class="btn" id="tback">Back</button>`:''}<button class="btn primary" id="tnext">${tourI===tourL.length-1?'Finish':'Next'}</button></div></div>`);
+    $('#tskip').onclick=endTour;$('#tnext').onclick=()=>{tourI++;tourI>=tourL.length?endTour():showTour();};
     const tb=$('#tback');if(tb)tb.onclick=()=>{tourI--;showTour();};
     if(S.readAloud)speak(t+'. '+txt,false);
   },120);
 }
 function endTour(){$('#overlay-root').innerHTML='';S.tourDone=true;save();toast('Tour finished. Tap Where am I? any time.');}
 window.addEventListener('resize',()=>{if($('.tour-spot'))showTour();});
-window.Highkeep={rm:{parse:rmParse,now:rmNow,warp:ms=>{let left=ms;while(left>0){const d=Math.min(30000,left);rmOffset+=d;left-=d;rmTick();}},jump:ms=>{rmOffset+=ms;rmTick();},tick:rmTick,items:()=>S.rm.items,add:rmAdd,due:rmDueList,log:()=>rmLog,caps:rmCaps,draft:()=>rmDraft,ics:rmIcs,exportText:rmExportText,alertId:()=>rmAlertId,catchUp:()=>rmCatch,seenReset:()=>{rmLastTick=null;},fireAt:rmFireAt,load:()=>{rmNorm();}},guide:()=>cur&&guideText(cur).speech,TOUR:()=>TOUR,startTour,state:()=>S,flip,reveal,game:()=>game,wc:()=>wc,wcPick,sr:()=>sr,srPick,STORIES:()=>STORIES,pk:()=>pk,sm:()=>sm,smTap,nm:()=>nm,nmPick,rt:()=>rt,rtPlace,newGameLines};
+if(location.hostname==='localhost'||location.hostname==='127.0.0.1'||new URLSearchParams(location.search).get('hktest')==='1')window.Highkeep={rm:{parse:rmParse,now:rmNow,warp:ms=>{let left=ms;while(left>0){const d=Math.min(30000,left);rmOffset+=d;left-=d;rmTick();}},jump:ms=>{rmOffset+=ms;rmTick();},tick:rmTick,items:()=>S.rm.items,add:rmAdd,due:rmDueList,log:()=>rmLog,caps:rmCaps,draft:()=>rmDraft,ics:rmIcs,exportText:rmExportText,alertId:()=>rmAlertId,catchUp:()=>rmCatch,seenReset:()=>{rmLastTick=null;},fireAt:rmFireAt,load:()=>{rmNorm();}},guide:()=>cur&&guideText(cur).speech,TOUR:()=>TOUR,startTour,state:()=>S,flip,reveal,game:()=>game,wc:()=>wc,wcPick,sr:()=>sr,srPick,STORIES:()=>STORIES,pk:()=>pk,sm:()=>sm,smTap,nm:()=>nm,nmPick,rt:()=>rt,rtPlace,newGameLines};
 
 rmNorm();rmLastTick=S.rm.seen||null;
 render();
