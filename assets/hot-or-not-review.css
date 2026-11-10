@@ -713,3 +713,27 @@
   border-color: var(--cream);
   color: var(--cream);
 }
+
+.review-received {
+  display: grid;
+  gap: 0.7rem;
+  margin-top: 1.6rem;
+}
+
+.review-received .review-subhead,
+.review-received .review-hint,
+.review-received .review-label,
+.review-received .review-field {
+  margin-top: 0;
+}
+
+#review-short {
+  min-height: 0;
+}
+
+.review-received textarea[hidden],
+.review-received label[hidden],
+.review-received button[hidden],
+.review-received .review-warn[hidden] {
+  display: none;
+}

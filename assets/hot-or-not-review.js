@@ -596,6 +596,17 @@
       '<label class="review-label" for="review-plain">Review text</label>' +
       '<textarea class="review-field" id="review-plain" readonly></textarea>' +
       "</div>" +
+      '<div class="review-received">' +
+      '<h2 class="review-subhead">Shorten a received review</h2>' +
+      '<p class="review-hint">Paste the emails here. Hot picks are counted and left off the list. Not and Needs work stay, with their notes. A missing part is named, so a short list is never the whole review by accident.</p>' +
+      '<label class="review-label" for="review-received">Pasted emails</label>' +
+      '<textarea class="review-field" id="review-received" rows="5" placeholder="Paste one or more Hot or Not emails"></textarea>' +
+      '<button type="button" class="review-mail" data-shorten>Shorten this list</button>' +
+      '<p class="review-warn" data-shorten-warn hidden role="alert"></p>' +
+      '<label class="review-label" for="review-short" data-short-label hidden>Short list</label>' +
+      '<textarea class="review-field" id="review-short" readonly hidden></textarea>' +
+      '<button type="button" class="review-mail" data-shorten-copy hidden>Copy the short list</button>' +
+      "</div>" +
       '<dialog class="review-lightbox" data-lightbox aria-label="Enlarged item">' +
       '<div class="review-lightbox-bar">' +
       '<button type="button" class="review-lightbox-zoom" data-lightbox-zoom>Show all</button>' +
@@ -1098,6 +1109,59 @@
           }
           node = node.parentNode;
         }
+      });
+    }
+
+    var shorten = mount.querySelector("[data-shorten]");
+    if (shorten) {
+      shorten.addEventListener("click", function () {
+        var api = exportApi();
+        var field = document.getElementById("review-received");
+        var out = document.getElementById("review-short");
+        var shortLabel = mount.querySelector("[data-short-label]");
+        var warn = mount.querySelector("[data-shorten-warn]");
+        var copyShortButton = mount.querySelector("[data-shorten-copy]");
+        if (!api || !field || !out) return;
+        var result = api.shortenReceived(field.value);
+        out.value = result.text;
+        out.rows = Math.min(Math.max(result.text.split("\n").length, 3), 18);
+        out.hidden = !result.text;
+        if (shortLabel) shortLabel.hidden = !result.text;
+        if (copyShortButton) copyShortButton.hidden = !result.text;
+        if (warn) {
+          warn.hidden = result.ok;
+          warn.textContent = result.ok ? "" : result.problems.join(" ");
+        }
+        var focusNode = !result.ok && warn ? warn : out;
+        if (focusNode && focusNode.scrollIntoView) focusNode.scrollIntoView({ block: "nearest" });
+      });
+    }
+
+    var copyShort = mount.querySelector("[data-shorten-copy]");
+    if (copyShort) {
+      copyShort.addEventListener("click", function () {
+        var out = document.getElementById("review-short");
+        var text = out ? out.value : "";
+        if (!text) return;
+        var write =
+          navigator.clipboard && navigator.clipboard.writeText
+            ? navigator.clipboard.writeText(text)
+            : Promise.reject(new Error("clipboard unavailable"));
+        write.then(
+          function () {
+            copyShort.textContent = "Copied";
+            window.setTimeout(function () {
+              copyShort.textContent = "Copy the short list";
+            }, 1600);
+          },
+          function () {
+            if (out) {
+              out.hidden = false;
+              out.focus();
+              out.select();
+            }
+          }
+        );
       });
     }
 

@@ -172,6 +172,228 @@
     return { label: label, total: total, safe: safe, messages: messages };
   }
 
+  var BEGIN_RE = /^BEGIN ([A-Za-z]+) (\d+)(?: part (\d+) of (\d+))?$/;
+  var END_RE = /^END ([A-Za-z]+) (\d+) picks included(?: part (\d+) of (\d+))?$/;
+  var ITEM_RE = /^(.+?): (Hot|Not|Needs work)(?: \| (.*))?$/;
+
+  function cleanLine(line) {
+    return String(line || "").replace(/^\s*>\s?/, "").trim();
+  }
+
+  function parseBlocks(text) {
+    var lines = String(text || "")
+      .replace(/\r\n/g, "\n")
+      .split("\n")
+      .map(cleanLine)
+      .filter(Boolean);
+    var blocks = [];
+    var i = 0;
+    while (i < lines.length) {
+      var begin = BEGIN_RE.exec(lines[i]);
+      if (!begin) {
+        i += 1;
+        continue;
+      }
+      i += 1;
+      var collected = [];
+      var end = null;
+      while (i < lines.length) {
+        end = END_RE.exec(lines[i]);
+        if (end || BEGIN_RE.exec(lines[i])) break;
+        collected.push(lines[i]);
+        i += 1;
+      }
+      var items = [];
+      var fields = {};
+      var problems = [];
+      collected.forEach(function (line) {
+        var total = /^set total (\d+)$/.exec(line);
+        var sum = /^checksum fnv1a32 ([0-9a-f]{8})$/.exec(line);
+        var setSum = /^set-checksum fnv1a32 ([0-9a-f]{8})$/.exec(line);
+        var ids = /^ids (\d+)$/.exec(line);
+        var item = ITEM_RE.exec(line);
+        if (total) fields.setTotal = Number(total[1]);
+        else if (sum) fields.checksum = sum[1];
+        else if (setSum) fields.setChecksum = setSum[1];
+        else if (ids) fields.ids = Number(ids[1]);
+        else if (item) items.push({ status: item[2], line: line });
+        else problems.push("Skipped a line that is not a pick.");
+      });
+      var label = begin[1];
+      var count = Number(begin[2]);
+      var part = begin[3] ? Number(begin[3]) : 1;
+      var parts = begin[4] ? Number(begin[4]) : 1;
+      var partName = parts > 1 ? " part " + part + " of " + parts : "";
+      if (!end) problems.push(label + partName + " has no END line.");
+      else if (
+        end[1] !== label ||
+        Number(end[2]) !== count ||
+        (end[3] ? Number(end[3]) : 1) !== part ||
+        (end[4] ? Number(end[4]) : 1) !== parts
+      ) {
+        problems.push(label + " END line does not match BEGIN.");
+      }
+      if (items.length !== count || fields.ids !== count) {
+        problems.push(label + partName + " count does not match.");
+      }
+      var hash = checksumHex(
+        items
+          .map(function (item) {
+            return item.line;
+          })
+          .join("\n")
+      );
+      if (fields.checksum !== hash) problems.push(label + partName + " checksum does not match.");
+      if (typeof fields.setTotal !== "number") problems.push(label + partName + " has no set total.");
+      blocks.push({
+        label: label,
+        part: part,
+        parts: parts,
+        items: items,
+        fields: fields,
+        problems: problems,
+        trusted: problems.length === 0,
+      });
+      if (end) i += 1;
+    }
+    return blocks;
+  }
+
+  function statusLines(title, items) {
+    var list = items.filter(function (item) {
+      return item.status === title;
+    });
+    if (!list.length) return [];
+    return [title + " (" + list.length + ")"].concat(
+      list.map(function (item) {
+        return item.line;
+      })
+    );
+  }
+
+  function shortenReceived(text) {
+    var blocks = parseBlocks(text);
+    if (!blocks.length) {
+      var empty = "No Hot or Not review was found in that paste.";
+      return { ok: false, problems: [empty], sets: [], text: empty };
+    }
+    var order = [];
+    var groups = {};
+    blocks.forEach(function (block) {
+      if (!groups[block.label]) {
+        groups[block.label] = [];
+        order.push(block.label);
+      }
+      groups[block.label].push(block);
+    });
+    var problems = [];
+    var setTexts = [];
+    var sets = [];
+    order.forEach(function (label) {
+      var group = groups[label];
+      var byPart = {};
+      var seen = {};
+      var partCount = 1;
+      group.forEach(function (block) {
+        if (block.parts > partCount) partCount = block.parts;
+        seen[block.part] = true;
+        if (!block.trusted) {
+          block.problems.forEach(function (problem) {
+            problems.push(problem);
+          });
+          return;
+        }
+        var prev = byPart[block.part];
+        if (!prev) {
+          byPart[block.part] = block;
+          return;
+        }
+        var prevText = prev.items
+          .map(function (item) {
+            return item.line;
+          })
+          .join("\n");
+        var nextText = block.items
+          .map(function (item) {
+            return item.line;
+          })
+          .join("\n");
+        if (prevText !== nextText) {
+          problems.push(label + " part " + block.part + " of " + block.parts + " was pasted more than once and the copies do not match.");
+          delete byPart[block.part];
+        }
+      });
+      var trusted = [];
+      var part;
+      for (part = 1; part <= partCount; part++) {
+        if (byPart[part]) trusted.push(byPart[part]);
+        else if (!seen[part]) problems.push(label + " is missing part " + part + " of " + partCount + ".");
+      }
+      if (!trusted.length) {
+        sets.push({ label: label, complete: false, received: 0, expected: 0, hot: 0, not: 0, needs: 0 });
+        return;
+      }
+      var setTotal = trusted[0].fields.setTotal;
+      var agreed = trusted.every(function (block) {
+        return block.parts === partCount && block.fields.setTotal === setTotal;
+      });
+      if (!agreed) problems.push(label + " parts do not agree on the set total.");
+      var items = [];
+      trusted.forEach(function (block) {
+        items = items.concat(block.items);
+      });
+      var missing = partCount - trusted.length;
+      var complete = agreed && missing === 0 && items.length === setTotal;
+      if (complete) {
+        var setHash = checksumHex(
+          items
+            .map(function (item) {
+              return item.line;
+            })
+            .join("\n")
+        );
+        var checksums = {};
+        trusted.forEach(function (block) {
+          if (block.fields.setChecksum) checksums[block.fields.setChecksum] = true;
+        });
+        var keys = Object.keys(checksums);
+        if (keys.length > 1 || (keys.length === 1 && keys[0] !== setHash)) {
+          problems.push(label + " set-checksum does not match.");
+          complete = false;
+        }
+      } else if (agreed && missing === 0 && items.length !== setTotal) {
+        problems.push(label + " set total does not match the picks.");
+      }
+      var hot = items.filter(function (item) {
+        return item.status === "Hot";
+      }).length;
+      var lines = [
+        complete
+          ? label + ": " + items.length + " picks. " + hot + " Hot left off this list."
+          : label + ": " + items.length + " of " + setTotal + " picks pasted.",
+      ];
+      lines = lines.concat(statusLines("Not", items), statusLines("Needs work", items));
+      setTexts.push(lines.join("\n"));
+      sets.push({
+        label: label,
+        complete: complete,
+        received: items.length,
+        expected: setTotal,
+        hot: hot,
+        not: items.filter(function (item) {
+          return item.status === "Not";
+        }).length,
+        needs: items.filter(function (item) {
+          return item.status === "Needs work";
+        }).length,
+      });
+    });
+    var chunks = [];
+    if (problems.length) chunks.push(problems.join("\n"));
+    if (setTexts.length) chunks.push(setTexts.join("\n\n"));
+    return { ok: problems.length === 0, problems: problems, sets: sets, text: chunks.join("\n\n") };
+  }
+
   function copyText(sections) {
     return (sections || [])
       .map(function (section) {
@@ -192,5 +414,6 @@
     pickLine: pickLine,
     buildMessages: buildMessages,
     copyText: copyText,
+    shortenReceived: shortenReceived,
   };
 });

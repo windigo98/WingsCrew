@@ -247,6 +247,77 @@ assert.ok(huge.messages.some(function (message) {
 var hugeCopy = exp.copyText([{ label: "Shirts", picks: [{ id: "01-armor-off", status: "Not", note: hugeNote }] }]);
 assert.ok(hugeCopy.indexOf(hugeNote) !== -1);
 
+function linesFor(picks, status) {
+  return picks
+    .filter(function (pick) {
+      return pick.status === status;
+    })
+    .map(function (pick) {
+      return exp.pickLine(pick.id, pick.status, pick.note);
+    });
+}
+
+function assertShortSet(text, label, picks) {
+  var hot = linesFor(picks, "Hot");
+  var nots = linesFor(picks, "Not");
+  var needs = linesFor(picks, "Needs work");
+  assert.ok(text.indexOf(label + ": " + picks.length + " picks. " + hot.length + " Hot left off this list.") !== -1);
+  nots.concat(needs).forEach(function (line) {
+    assert.ok(text.indexOf(line) !== -1, "missing " + line);
+  });
+  hot.forEach(function (line) {
+    assert.strictEqual(text.indexOf(line), -1, "Hot line should be left off: " + line);
+  });
+  if (nots.length) assert.ok(text.indexOf("Not (" + nots.length + ")") !== -1);
+  if (needs.length) assert.ok(text.indexOf("Needs work (" + needs.length + ")") !== -1);
+}
+
+var received = bookMail.messages
+  .map(function (message) {
+    return "Subject: " + message.subject + "\n\n" + message.body;
+  })
+  .join("\n\n");
+var shortened = exp.shortenReceived(received);
+assert.strictEqual(shortened.ok, true);
+assert.deepStrictEqual(shortened.problems, []);
+assertShortSet(shortened.text, "Books", books);
+assert.ok(shortened.text.indexOf("BEGIN ") === -1);
+assert.ok(shortened.text.indexOf("checksum ") === -1);
+
+var combined = exp.shortenReceived(
+  [shirtMail, bookMail, otherMail]
+    .map(function (batch) {
+      return batch.messages
+        .map(function (message) {
+          return message.body;
+        })
+        .join("\n");
+    })
+    .join("\n")
+);
+assert.strictEqual(combined.ok, true);
+assertShortSet(combined.text, "Shirts", shirts);
+assertShortSet(combined.text, "Books", books);
+assertShortSet(combined.text, "Other", others);
+
+var missingPart = exp.shortenReceived(
+  [bookMail.messages[0].body, bookMail.messages[2].body].join("\n\n")
+);
+assert.strictEqual(missingPart.ok, false);
+assert.ok(missingPart.problems.some(function (problem) {
+  return problem === "Books is missing part 2 of 3.";
+}));
+var pastedCount = bookMail.messages[0].lines.length + bookMail.messages[2].lines.length;
+assert.ok(missingPart.text.indexOf(pastedCount + " of 90 picks pasted") !== -1);
+assert.ok(missingPart.text.indexOf("dinosaurs p06 a: Hot") === -1);
+
+var tampered = exp.shortenReceived(bookMail.messages[0].body.replace(": Hot", ": Not"));
+assert.strictEqual(tampered.ok, false);
+assert.ok(tampered.problems.some(function (problem) {
+  return problem.indexOf("checksum") !== -1;
+}));
+assert.strictEqual(tampered.text.indexOf("dinosaurs p01"), -1);
+
 console.log("ok");
 console.log("shirts parts " + shirtMail.messages.length);
 console.log("books parts " + bookMail.messages.length + " first url " + bookMail.messages[0].href.length);

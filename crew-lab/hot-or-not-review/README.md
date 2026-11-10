@@ -44,10 +44,24 @@ ASCII matches byte-wise FNV-1a (`"a"` → `e40c292c`, empty → `811c9dc5`). The
 
 To verify a set, concatenate the item lines from part 1 through part n. The count must equal `set total`, and the hash must equal `set-checksum`.
 
+## After the emails arrive
+
+Paste one or more emails into **Shorten a received review** on the same page. Hot picks are counted and left off the list. Not and Needs work stay, notes included:
+
+```
+Books: 4 picks. 2 Hot left off this list.
+Not (1)
+dinosaurs p17 b: Not | too busy
+Needs work (1)
+trucks p05 a: Needs work | wheels
+```
+
+The paste is checked first. A bad checksum is dropped, and a missing part is named (`Books is missing part 2 of 3.`). The short list then says how many picks actually arrived (`39 of 90 picks pasted`), so a shorter list is never mistaken for the whole review. The same steps are `shortenReceived` in `assets/hot-or-not-export.js`.
+
 ## Test
 
 ```
 node crew-lab/hot-or-not-review/test-export.js
 ```
 
-The script builds 500 shirt picks, 90 book picks from the files in `crew-lab/coloring-review/sets/`, and a few other picks. It checks the URL limit, the BEGIN/END counts, the checksum, and that the parts union to the full list with nothing missing or repeated.
+The script builds 500 shirt picks, 90 book picks from the files in `crew-lab/coloring-review/sets/`, and a few other picks. It checks the URL limit, the BEGIN/END counts, the checksum, and that the parts union to the full list with nothing missing or repeated. It also pastes those emails back through `shortenReceived` and checks that Hot lines are left off, and that a missing part is named instead of being treated as the whole review.
