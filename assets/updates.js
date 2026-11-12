@@ -16,6 +16,12 @@
 // link         Optional https URL
 window.WINGS_UPDATES = [
   {
+    date: "2026-11-11",
+    title: "WingsCrew Printables",
+    description: "Our printable coloring books are now for sale, including Rainbow Sprinkle Unicorns and a Christmas bundle.",
+    link: "https://wingscrew.com/#printables",
+  },
+  {
     date: "2026-10-27",
     title: "WingsCrew Cooks",
     description: "Our free cooking app, now with the WingsCrew look and a quick way back here.",
