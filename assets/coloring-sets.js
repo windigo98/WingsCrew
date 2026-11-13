@@ -54,6 +54,49 @@
     return list;
   }
 
+  function dinoRedoPages() {
+    var scenes = {
+      2: "Jungle fern forest",
+      3: "Dino egg nest",
+      4: "Sunny beach",
+      5: "Jungle waterfall",
+      7: "Cozy cave",
+      8: "Desert canyon",
+      9: "Flower meadow",
+      10: "Lazy river",
+      11: "Rainy day puddles",
+      12: "Hot spring pond",
+      13: "Dino playground",
+      14: "Jungle picnic",
+      15: "Birthday party clearing",
+      16: "Starry campsite",
+      17: "Ice age snowy hill",
+      19: "Vegetable garden",
+      20: "Forest music stage",
+      22: "Bubble bath lagoon",
+      23: "Rainbow hill",
+      24: "Fossil dig site",
+      29: "Seashore tide line",
+    };
+    var numbers = [2, 3, 4, 5, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 19, 20, 22, 23, 24, 29];
+    var regen = { 10: true, 12: true, 22: true };
+    var pages = [];
+    numbers.forEach(function (number) {
+      var id = number < 10 ? "0" + number : String(number);
+      ["a", "b"].forEach(function (letter) {
+        var entry = {
+          id: "p" + id + "-" + letter,
+          title: "Page " + id + " " + letter.toUpperCase(),
+          image: "p" + id + "_" + letter + ".webp",
+          description: scenes[number],
+        };
+        if (regen[number]) entry.flag = "Regen advised";
+        pages.push(entry);
+      });
+    });
+    return pages;
+  }
+
   window.WINGS_COLORING_SETS = [
     {
       id: "dinosaurs",
@@ -122,6 +165,13 @@
         27: { badge: "NEW" },
         28: { badge: "NEW" },
       }),
+    },
+    {
+      id: "dinosaurs-regen-nov11",
+      title: "Cute Dinosaurs: redo (Nov 11), pick A or B",
+      // Separate cards for version A and version B, so a vote on one
+      // does not decide the other. Ids are not the old Cute Dinosaurs page ids.
+      pages: dinoRedoPages(),
     },
   ];
 })();
