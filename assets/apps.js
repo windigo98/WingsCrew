@@ -25,7 +25,7 @@ window.WINGS_APPS = [
     name: "WingsCrew Looks",
     blurb: "Plan outfits from your own closet, keep a gift wishlist, and get votes with Fit or Miss?",
     url: "https://windigo98.github.io/WingsCrew-Looks/",
-    badge: "New",
+    badge: "Outfit planner",
   },
   {
     name: "WingsCrew Cooks",
