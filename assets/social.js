@@ -1,7 +1,13 @@
 // Social profiles for the About "Find us" section and every site footer.
-// This is the only list. To add Instagram, TikTok, X, or Facebook, append:
-//   { name: "Instagram", href: "https://www.instagram.com/example/" }
+// This is the only list. To add X or Facebook, append:
+//   { name: "X", href: "https://x.com/example/" }
+// Instagram is not ready yet. Add it here when the profile is live:
+//   { name: "Instagram", href: "https://www.instagram.com/..." }
 window.WINGS_SOCIAL = [
+  {
+    name: "TikTok",
+    href: "https://www.tiktok.com/@wingscrewofficial",
+  },
   {
     name: "Pinterest",
     href: "https://www.pinterest.com/wingscrewofficial/",

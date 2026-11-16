@@ -41,6 +41,15 @@ The homepage **Shop** link and the homepage Shop card open the [Clean collection
 
 Do not link the 21+ collection, or the store’s full product list (`https://wingscrew-clothing.printify.me` with no collection), from the homepage or any other non-21+ page. The Clean entry uses `audience: "clean"` and renders into `data-merch="clean"`. The 21+ entry uses `audience: "adult"` and renders only into `data-merch="adult"` on `/21plus/`.
 
+
+## Printables
+
+WingsCrew Printables is the Payhip coloring-book shop. The homepage has a **Printables** section under Clothing, with one card per live book plus the Christmas bundle. Each card opens its Payhip page in a new tab.
+
+Add or edit a book in [`assets/printables.js`](assets/printables.js). Cover images are webp files in [`assets/printables/`](assets/printables/). The header **Printables** link jumps to `#printables`. Leave the **Shop** link pointing at the Printify clothing store.
+
+The footer already has “© 2026 WingsCrew. All rights reserved.”
+
 ## Caught Red-Handed, multi-phone
 
 [`/21plus/caught-red-handed/`](21plus/caught-red-handed/index.html) is the 21+ party game. Pass-the-phone works with no network. Each-phone play uses [PeerJS](https://peerjs.com/) 1.5.5, vendored at `21plus/caught-red-handed/vendor/peerjs.min.js`.

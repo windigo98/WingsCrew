@@ -2,7 +2,9 @@
 // Shirt votes stay in wingscrew-tshirt-review.
 // Book votes stay in wingscrew-coloring-review.
 // Anything else stays in wingscrew-hot-or-not-review.
-// Copy and the mailto link are the only ways out. Nothing is sent on its own.
+// Copy and the mailto drafts are the only ways out. Nothing is sent on its own.
+// Long drafts are split in assets/hot-or-not-export.js. A link over the safe
+// limit is not opened.
 (function () {
   var SHIRT_KEY = "wingscrew-tshirt-review";
   var BOOK_KEY = "wingscrew-coloring-review";
@@ -88,13 +90,7 @@
         vote = value.vote;
       }
       if (typeof value.notes === "string") notes = value.notes;
-      if (
-        item &&
-        typeof value.lookingAt === "string" &&
-        (value.lookingAt === item.image || (item.alternate && value.lookingAt === item.alternate))
-      ) {
-        lookingAt = value.lookingAt;
-      }
+      if (item && knownFile(item, value.lookingAt)) lookingAt = value.lookingAt;
     }
     return { vote: vote, notes: notes, lookingAt: lookingAt };
   }
@@ -183,56 +179,199 @@
     return currentSet && currentSet.items[itemIndex] ? currentSet.items[itemIndex] : null;
   }
 
-  function fileList(item) {
-    if (item.alternate) return item.image + ", " + item.alternate;
-    return item.image;
+  function knownFile(item, file) {
+    if (!item || typeof file !== "string") return false;
+    if (file === item.image) return true;
+    if (item.alternate && file === item.alternate) return true;
+    var extras = item.extras || [];
+    var i;
+    for (i = 0; i < extras.length; i++) {
+      if (extras[i].image === file) return true;
+    }
+    return false;
   }
 
-  function plainText() {
-    var lines = ["Hot or Not review", ""];
-    ["shirts", "books", "other"].forEach(function (type) {
-      var sets = setsFor(type);
-      lines.push(sectionName(type));
-      if (!sets.length) {
-        lines.push("Nothing waiting here right now.");
-        lines.push("");
-        return;
-      }
-      sets.forEach(function (set) {
-        lines.push("Set: " + set.title);
-        set.items.forEach(function (item) {
-          var review = reviewFor(set, item);
-          lines.push("");
-          lines.push(item.title);
-          lines.push("Id: " + item.id);
-          if (item.alternate) {
-            lines.push("Files: " + fileList(item));
-            lines.push("Looking at: " + review.lookingAt);
-          }
-          if (item.badge) lines.push("Badge: " + item.badge);
-          if (item.notNeeded) lines.push("Not needed: yes");
-          else if (item.inStore) lines.push("In store: yes");
-          if (item.flag) lines.push("Flag: " + item.flag);
-          if (item.hasBack) lines.push("Has a back: yes");
-          lines.push("Status: " + statusLabel(review.vote));
-          lines.push("Notes:");
-          lines.push(review.notes.trim() || "(none)");
+  function extraLabel(item, file) {
+    var extras = item && item.extras ? item.extras : [];
+    var i;
+    for (i = 0; i < extras.length; i++) {
+      if (extras[i].image === file) return extras[i].label;
+    }
+    return "";
+  }
+
+  function showingText(item, file) {
+    var label = extraLabel(item, file);
+    if (label) return label + " (" + file + ")";
+    return file;
+  }
+
+  function exportApi() {
+    return window.WingsHotOrNotExport || null;
+  }
+
+  function picksFor(type) {
+    var picks = [];
+    var api = exportApi();
+    setsFor(type).forEach(function (set) {
+      set.items.forEach(function (item) {
+        var review = reviewFor(set, item);
+        if (review.vote !== "yes" && review.vote !== "no" && review.vote !== "needs") return;
+        picks.push({
+          id: api ? api.pickId(set, item, review) : item.id,
+          status: statusLabel(review.vote),
+          note: review.notes,
         });
-        lines.push("");
       });
     });
-    return lines.join("\n").replace(/\n+$/, "\n");
+    return picks;
   }
 
-  function mailtoHref() {
-    return (
-      "mailto:" +
-      MAIL +
-      "?subject=" +
-      encodeURIComponent("Hot or Not review") +
-      "&body=" +
-      encodeURIComponent(plainText())
+  function reviewText() {
+    var api = exportApi();
+    if (!api) return "";
+    return api.copyText(
+      ["shirts", "books", "other"].map(function (type) {
+        return { label: sectionName(type), picks: picksFor(type) };
+      })
     );
+  }
+
+  function messagesFor(scope) {
+    var api = exportApi();
+    if (!api) return [];
+    var types = scope === "all" ? ["shirts", "books", "other"] : [scope];
+    var messages = [];
+    types.forEach(function (type) {
+      var picks = picksFor(type);
+      if (!picks.length) return;
+      api.buildMessages(sectionName(type), picks).messages.forEach(function (message) {
+        message.sectionLabel = sectionName(type);
+        messages.push(message);
+      });
+    });
+    return messages;
+  }
+
+  function hideWarning() {
+    var warn = mount.querySelector("[data-mail-warn]");
+    if (!warn) return;
+    warn.hidden = true;
+    warn.textContent = "";
+  }
+
+  function showWarning(length) {
+    var warn = mount.querySelector("[data-mail-warn]");
+    var parts = mount.querySelector("[data-mail-parts]");
+    if (parts) parts.hidden = true;
+    if (!warn) return;
+    var api = exportApi();
+    warn.hidden = false;
+    if (warn.scrollIntoView) warn.scrollIntoView({ block: "center" });
+    if (!api) {
+      warn.textContent = "The email builder did not load. Reload the page, then use Copy my review if it still fails.";
+      return;
+    }
+    if (!length) {
+      warn.textContent = "Nothing picked in this set yet. Only Hot, Not, and Needs work are included.";
+      return;
+    }
+    var shown = Number(length).toLocaleString();
+    warn.textContent =
+      "This email link is " +
+      shown +
+      " characters. Mail apps cut links longer than " +
+      api.SAFE_LIMIT.toLocaleString() +
+      ", so it was not opened and nothing was cut off. Use Copy my review, then paste the whole text into a message to " +
+      MAIL +
+      ".";
+  }
+
+  function openMail(href) {
+    var api = exportApi();
+    var limit = api ? api.SAFE_LIMIT : 1800;
+    if (!href || href.length > limit) {
+      showWarning(href ? href.length : 0);
+      return false;
+    }
+    window.location.href = href;
+    return true;
+  }
+
+  function partLabel(message, scope) {
+    if (scope === "all") {
+      if (message.parts > 1) {
+        return "Send " + message.sectionLabel + " part " + message.part + " of " + message.parts;
+      }
+      return "Send " + message.sectionLabel;
+    }
+    return "Send part " + message.part + " of " + message.parts;
+  }
+
+  function flowIntro(messages) {
+    var names = [];
+    var total = 0;
+    messages.forEach(function (message) {
+      if (names.indexOf(message.sectionLabel) === -1) {
+        names.push(message.sectionLabel);
+        total += message.setTotal;
+      }
+    });
+    var emails = messages.length === 1 ? "1 email" : messages.length + " emails";
+    var picks = total === 1 ? "1 pick" : total + " picks";
+    return (
+      names.join(", ") +
+      ": " +
+      picks +
+      " in " +
+      emails +
+      ". Tap one at a time so the browser does not block the next draft. Each button is marked after it opens. Nothing is sent until you send it."
+    );
+  }
+
+  function renderFlow(scope) {
+    var box = mount.querySelector("[data-mail-parts]");
+    var messages = messagesFor(scope);
+    if (!messages.length) {
+      if (box) box.hidden = true;
+      showWarning(0);
+      return;
+    }
+    var longest = 0;
+    var unsafe = false;
+    messages.forEach(function (message) {
+      if (message.href.length > longest) longest = message.href.length;
+      if (!message.safe || message.href.length > (exportApi() ? exportApi().SAFE_LIMIT : 1800)) unsafe = true;
+    });
+    if (unsafe) {
+      showWarning(longest);
+      return;
+    }
+    if (messages.length === 1) {
+      if (box) box.hidden = true;
+      hideWarning();
+      openMail(messages[0].href);
+      return;
+    }
+    hideWarning();
+    if (!box) return;
+    var intro = document.createElement("p");
+    intro.className = "review-hint";
+    intro.textContent = flowIntro(messages);
+    box.innerHTML = "";
+    box.hidden = false;
+    box.appendChild(intro);
+    messages.forEach(function (message, index) {
+      var button = document.createElement("button");
+      button.type = "button";
+      button.className = "review-mail";
+      button.setAttribute("data-send-part", String(index));
+      button.setAttribute("data-mail-scope", scope);
+      button.textContent = partLabel(message, scope);
+      box.appendChild(button);
+    });
+    var first = box.querySelector("button");
+    if (first) first.focus();
   }
 
   function imageSrc(set, item, file) {
@@ -317,6 +456,48 @@
     writeSession(indexKey(currentSet), item ? item.id : "");
   }
 
+  function versionButtons(item, lookingAt) {
+    var extras = item.extras || [];
+    if (!extras.length) {
+      if (!item.alternate) return "";
+      return (
+        '<button type="button" class="review-alt" data-alt aria-pressed="' +
+        (lookingAt === item.alternate ? "true" : "false") +
+        '">Other version</button>' +
+        '<p class="review-version">Showing ' +
+        escapeHtml(lookingAt) +
+        "</p>"
+      );
+    }
+    var buttons = "";
+    if (item.alternate) {
+      buttons +=
+        '<button type="button" class="review-alt" data-version="' +
+        escapeHtml(item.alternate) +
+        '" aria-pressed="' +
+        (lookingAt === item.alternate ? "true" : "false") +
+        '">Other version</button>';
+    }
+    extras.forEach(function (extra) {
+      buttons +=
+        '<button type="button" class="review-alt" data-version="' +
+        escapeHtml(extra.image) +
+        '" aria-pressed="' +
+        (lookingAt === extra.image ? "true" : "false") +
+        '">' +
+        escapeHtml(extra.label) +
+        "</button>";
+    });
+    return (
+      '<div class="review-versions" role="group" aria-label="Choose a version">' +
+      buttons +
+      "</div>" +
+      '<p class="review-version">Showing ' +
+      escapeHtml(showingText(item, lookingAt)) +
+      "</p>"
+    );
+  }
+
   function voteButton(vote, label, pressed) {
     return (
       '<button type="button" class="review-' +
@@ -336,15 +517,16 @@
     var src = imageSrc(currentSet, item, review.lookingAt);
     var visible = visibleIndexes();
     var pos = visible.indexOf(index);
-    var showingAlt = item.alternate && review.lookingAt === item.alternate;
     var zoomHint = currentSet.type === "books" ? "Tap the page to enlarge" : "Tap the picture to enlarge";
+    var poseLabel = extraLabel(item, review.lookingAt);
+    var altText = poseLabel ? item.title + ", " + poseLabel : item.title;
     var art = src
       ? '<div class="review-art has-image">' +
         (item.badge ? '<p class="review-new">' + escapeHtml(item.badge) + "</p>" : "") +
         '<button type="button" class="review-zoom" data-zoom><img src="' +
         escapeHtml(src) +
         '" alt="' +
-        escapeHtml(item.title) +
+        escapeHtml(altText) +
         '" loading="lazy" decoding="async"></button></div>'
       : '<div class="review-art" role="img" aria-label="' +
         escapeHtml("No artwork for " + item.title) +
@@ -354,14 +536,7 @@
       '<article class="panel review-card">' +
       art +
       (src ? '<p class="review-zoom-hint">' + zoomHint + "</p>" : "") +
-      (item.alternate
-        ? '<button type="button" class="review-alt" data-alt aria-pressed="' +
-          (showingAlt ? "true" : "false") +
-          '">Other version</button>' +
-          '<p class="review-version">Showing ' +
-          escapeHtml(review.lookingAt) +
-          "</p>"
-        : "") +
+      versionButtons(item, review.lookingAt) +
       (item.notNeeded
         ? '<p class="review-flag">Not needed</p>'
         : item.inStore
@@ -426,15 +601,31 @@
       '<div id="review-panel" role="tabpanel" data-panel></div>' +
       '<div class="review-actions">' +
       '<button type="button" class="review-copy" data-copy aria-live="polite">Copy my review</button>' +
-      '<a class="review-mail" data-mail aria-describedby="review-mail-hint">Email my review</a>' +
-      '<p class="review-hint" id="review-mail-hint">Opens a message to ' +
+      '<button type="button" class="review-mail" data-mail="shirts" aria-describedby="review-mail-hint">Email Shirts (0)</button>' +
+      '<button type="button" class="review-mail" data-mail="books" aria-describedby="review-mail-hint">Email Books (0)</button>' +
+      '<button type="button" class="review-mail" data-mail="other" aria-describedby="review-mail-hint">Email Other (0)</button>' +
+      '<button type="button" class="review-mail" data-mail="all" aria-describedby="review-mail-hint">Email all (0)</button>' +
+      '<p class="review-hint" id="review-mail-hint">Opens a draft to ' +
       escapeHtml(MAIL) +
-      ". Nothing is sent until you send it. If the draft is cut short, paste from Copy my review.</p>" +
+      ". Nothing is sent until you send it. A long set is split into parts you tap one at a time. If a link would be cut off, it stays closed. Use Copy my review instead.</p>" +
+      '<p class="review-warn" data-mail-warn hidden role="alert"></p>' +
+      '<div class="review-parts" data-mail-parts hidden></div>' +
       '<p class="review-hint" data-memory hidden>This browser is not storing picks on this phone. Copy or email them before you leave.</p>' +
       "</div>" +
       '<div class="review-fallback" data-fallback hidden>' +
       '<label class="review-label" for="review-plain">Review text</label>' +
       '<textarea class="review-field" id="review-plain" readonly></textarea>' +
+      "</div>" +
+      '<div class="review-received">' +
+      '<h2 class="review-subhead">Shorten a received review</h2>' +
+      '<p class="review-hint">Paste the emails here. Hot picks are counted and left off the list. Not and Needs work stay, with their notes. A missing part is named, so a short list is never the whole review by accident.</p>' +
+      '<label class="review-label" for="review-received">Pasted emails</label>' +
+      '<textarea class="review-field" id="review-received" rows="5" placeholder="Paste one or more Hot or Not emails"></textarea>' +
+      '<button type="button" class="review-mail" data-shorten>Shorten this list</button>' +
+      '<p class="review-warn" data-shorten-warn hidden role="alert"></p>' +
+      '<label class="review-label" for="review-short" data-short-label hidden>Short list</label>' +
+      '<textarea class="review-field" id="review-short" readonly hidden></textarea>' +
+      '<button type="button" class="review-mail" data-shorten-copy hidden>Copy the short list</button>' +
       "</div>" +
       '<dialog class="review-lightbox" data-lightbox aria-label="Enlarged item">' +
       '<div class="review-lightbox-bar">' +
@@ -508,8 +699,19 @@
   }
 
   function paintMail() {
-    var mail = mount.querySelector("[data-mail]");
-    if (mail) mail.href = mailtoHref();
+    var counts = {
+      shirts: picksFor("shirts").length,
+      books: picksFor("books").length,
+      other: picksFor("other").length,
+    };
+    counts.all = counts.shirts + counts.books + counts.other;
+    ["shirts", "books", "other", "all"].forEach(function (scope) {
+      var button = mount.querySelector('[data-mail="' + scope + '"]');
+      if (!button) return;
+      var name = scope === "all" ? "Email all" : "Email " + sectionName(scope);
+      button.textContent = name + " (" + counts[scope] + ")";
+      button.disabled = counts[scope] === 0;
+    });
     var memory = mount.querySelector("[data-memory]");
     if (memory) memory.hidden = !memoryOnly;
   }
@@ -654,6 +856,22 @@
         renderCard(false);
       });
     }
+
+    Array.prototype.forEach.call(card.querySelectorAll("[data-version]"), function (button) {
+      button.addEventListener("click", function () {
+        flushNotes();
+        var current = reviewFor(currentSet, item);
+        var target = button.getAttribute("data-version") || "";
+        if (!knownFile(item, target) || target === item.image) return;
+        var nextFile = current.lookingAt === target ? item.image : target;
+        writeReview(currentSet, item, {
+          vote: current.vote,
+          notes: current.notes,
+          lookingAt: nextFile,
+        });
+        renderCard(false);
+      });
+    });
 
     var notes = document.getElementById("item-notes");
     if (notes) {
@@ -874,7 +1092,7 @@
       copyButton.addEventListener("click", function () {
         flushNotes();
         paintMail();
-        var text = plainText();
+        var text = reviewText();
         var write =
           navigator.clipboard && navigator.clipboard.writeText
             ? navigator.clipboard.writeText(text)
@@ -897,11 +1115,97 @@
       });
     }
 
-    var mail = mount.querySelector("[data-mail]");
-    if (mail) {
-      mail.addEventListener("click", function () {
-        flushNotes();
-        paintMail();
+    var actions = mount.querySelector(".review-actions");
+    if (actions) {
+      actions.addEventListener("click", function (event) {
+        var node = event.target;
+        while (node && node !== actions) {
+          if (node.getAttribute && node.getAttribute("data-mail")) {
+            flushNotes();
+            paintMail();
+            if (node.disabled) return;
+            renderFlow(node.getAttribute("data-mail"));
+            return;
+          }
+          if (node.hasAttribute && node.hasAttribute("data-send-part")) {
+            var scope = node.getAttribute("data-mail-scope");
+            var index = Number(node.getAttribute("data-send-part"));
+            flushNotes();
+            paintMail();
+            var messages = messagesFor(scope);
+            var message = messages[index];
+            if (!message) {
+              renderFlow(scope);
+              return;
+            }
+            var limit = exportApi() ? exportApi().SAFE_LIMIT : 1800;
+            if (!message.safe || message.href.length > limit) {
+              showWarning(message.href.length);
+              return;
+            }
+            if (!openMail(message.href)) return;
+            node.classList.add("is-opened");
+            node.setAttribute("aria-pressed", "true");
+            var opened = partLabel(message, scope).replace(/^Send /, "");
+            opened = opened.charAt(0).toUpperCase() + opened.slice(1);
+            node.textContent = opened + " opened";
+            return;
+          }
+          node = node.parentNode;
+        }
+      });
+    }
+
+    var shorten = mount.querySelector("[data-shorten]");
+    if (shorten) {
+      shorten.addEventListener("click", function () {
+        var api = exportApi();
+        var field = document.getElementById("review-received");
+        var out = document.getElementById("review-short");
+        var shortLabel = mount.querySelector("[data-short-label]");
+        var warn = mount.querySelector("[data-shorten-warn]");
+        var copyShortButton = mount.querySelector("[data-shorten-copy]");
+        if (!api || !field || !out) return;
+        var result = api.shortenReceived(field.value);
+        out.value = result.text;
+        out.rows = Math.min(Math.max(result.text.split("\n").length, 3), 18);
+        out.hidden = !result.text;
+        if (shortLabel) shortLabel.hidden = !result.text;
+        if (copyShortButton) copyShortButton.hidden = !result.text;
+        if (warn) {
+          warn.hidden = result.ok;
+          warn.textContent = result.ok ? "" : result.problems.join(" ");
+        }
+        var focusNode = !result.ok && warn ? warn : out;
+        if (focusNode && focusNode.scrollIntoView) focusNode.scrollIntoView({ block: "nearest" });
+      });
+    }
+
+    var copyShort = mount.querySelector("[data-shorten-copy]");
+    if (copyShort) {
+      copyShort.addEventListener("click", function () {
+        var out = document.getElementById("review-short");
+        var text = out ? out.value : "";
+        if (!text) return;
+        var write =
+          navigator.clipboard && navigator.clipboard.writeText
+            ? navigator.clipboard.writeText(text)
+            : Promise.reject(new Error("clipboard unavailable"));
+        write.then(
+          function () {
+            copyShort.textContent = "Copied";
+            window.setTimeout(function () {
+              copyShort.textContent = "Copy the short list";
+            }, 1600);
+          },
+          function () {
+            if (out) {
+              out.hidden = false;
+              out.focus();
+              out.select();
+            }
+          }
+        );
       });
     }
 

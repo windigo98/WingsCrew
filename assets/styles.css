@@ -978,3 +978,55 @@ h1 {
   outline: 2px solid var(--cream);
   outline-offset: 3px;
 }
+
+/* WingsCrew Printables — homepage section. Append to assets/styles.css. */
+
+/* Shop was the last section, so it filled the viewport. With Printables
+   under it, that min-height would leave a tall empty gap. */
+#shop {
+  min-height: 0;
+}
+
+.printables-intro {
+  margin: -0.15rem 0 1rem;
+  color: var(--muted);
+  font-size: 1.02rem;
+  line-height: 1.5;
+}
+
+.printables-intro a {
+  color: var(--cream);
+  text-underline-offset: 0.3rem;
+  text-decoration-thickness: 1px;
+}
+
+.printables-intro a:hover,
+.printables-intro a:focus-visible {
+  color: var(--gold);
+}
+
+.printables-intro a:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 3px;
+}
+
+.printables-cover {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin: 0 0 0.7rem;
+  border-radius: 10px;
+  background: #0e0d0b;
+}
+
+.printables-price {
+  margin-top: 0.45rem;
+  color: var(--gold);
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+/* Let the book cards share the apps grid, not the single-card shop max-width. */
+.printables-grid {
+  max-width: none;
+}

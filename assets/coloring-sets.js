@@ -15,6 +15,10 @@
 // title      Name on the card and in the copied review.
 // image      Main file name in that set's folder. Local .webp only.
 // alternate  The other version. Leave "" when the page has one file.
+// extras     Optional extra choices beside the pick and the other version.
+//            Each is { image, label }. image is a local .webp file name.
+//            label is the button, such as "New pose A". The choice on screen
+//            is saved with the vote as Looking at.
 // badge      Optional short label on the card, such as "NEW".
 // version    Optional cache key. The review adds ?v= to each image URL.
 //            A page version wins over the set version. Bump it when a file
@@ -32,6 +36,12 @@
     };
     if (options && options.badge) entry.badge = options.badge;
     if (options && options.version) entry.version = options.version;
+    if (options && options.poses) {
+      entry.extras = [
+        { image: "p" + id + "_pose_a.webp", label: "New pose A" },
+        { image: "p" + id + "_pose_b.webp", label: "New pose B" },
+      ];
+    }
     return entry;
   }
 
@@ -42,6 +52,49 @@
       list.push(page(i, overrides && overrides[i]));
     }
     return list;
+  }
+
+  function dinoRedoPages() {
+    var scenes = {
+      2: "Jungle fern forest",
+      3: "Dino egg nest",
+      4: "Sunny beach",
+      5: "Jungle waterfall",
+      7: "Cozy cave",
+      8: "Desert canyon",
+      9: "Flower meadow",
+      10: "Lazy river",
+      11: "Rainy day puddles",
+      12: "Hot spring pond",
+      13: "Dino playground",
+      14: "Jungle picnic",
+      15: "Birthday party clearing",
+      16: "Starry campsite",
+      17: "Ice age snowy hill",
+      19: "Vegetable garden",
+      20: "Forest music stage",
+      22: "Bubble bath lagoon",
+      23: "Rainbow hill",
+      24: "Fossil dig site",
+      29: "Seashore tide line",
+    };
+    var numbers = [2, 3, 4, 5, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 19, 20, 22, 23, 24, 29];
+    var regen = { 10: true, 12: true, 22: true };
+    var pages = [];
+    numbers.forEach(function (number) {
+      var id = number < 10 ? "0" + number : String(number);
+      ["a", "b"].forEach(function (letter) {
+        var entry = {
+          id: "p" + id + "-" + letter,
+          title: "Page " + id + " " + letter.toUpperCase(),
+          image: "p" + id + "_" + letter + ".webp",
+          description: scenes[number],
+        };
+        if (regen[number]) entry.flag = "Regen advised";
+        pages.push(entry);
+      });
+    });
+    return pages;
   }
 
   window.WINGS_COLORING_SETS = [
@@ -71,6 +124,54 @@
         28: { badge: "NEW" },
         29: { badge: "NEW" },
       }),
+    },
+    {
+      id: "unicorns",
+      title: "Cute Unicorns",
+      pages: numberedPages(30, {
+        1: { poses: true },
+        2: { badge: "NEW", poses: true },
+        4: { badge: "NEW" },
+        5: { badge: "NEW", poses: true },
+        6: { version: 1 },
+        7: { badge: "NEW" },
+        8: { poses: true },
+        9: { poses: true },
+        10: { poses: true },
+        11: { poses: true },
+        12: { poses: true },
+        16: { badge: "NEW" },
+        20: { poses: true },
+        22: { poses: true },
+        23: { version: 1 },
+        24: { badge: "NEW", poses: true },
+        25: { badge: "NEW" },
+        26: { poses: true },
+        30: { badge: "NEW" },
+      }),
+    },
+    {
+      id: "trucks",
+      title: "Cute Trucks",
+      pages: numberedPages(30, {
+        5: { badge: "NEW" },
+        12: { badge: "NEW" },
+        13: { badge: "NEW" },
+        14: { badge: "NEW" },
+        18: { badge: "NEW" },
+        22: { badge: "NEW" },
+        23: { badge: "NEW" },
+        25: { badge: "NEW" },
+        27: { badge: "NEW" },
+        28: { badge: "NEW" },
+      }),
+    },
+    {
+      id: "dinosaurs-regen-nov11",
+      title: "Cute Dinosaurs: redo (Nov 11), pick A or B",
+      // Separate cards for version A and version B, so a vote on one
+      // does not decide the other. Ids are not the old Cute Dinosaurs page ids.
+      pages: dinoRedoPages(),
     },
   ];
 })();
