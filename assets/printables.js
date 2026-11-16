@@ -15,6 +15,17 @@ window.WINGS_PRINTABLES = {
   storeUrl: "https://payhip.com/WingsCrewPrintables",
   items: [
     {
+      name: "Dino Cuddle Friends",
+      blurb: "30 busy, happy kawaii dinosaur scenes with bold, easy outlines for ages 3 to 6. Letter + A4 printable PDFs.",
+      price: "$5.99 printable PDF",
+      url: "https://payhip.com/b/xhtMj",
+      image: "assets/printables/dino-cuddle-friends.webp",
+      imageWidth: 800,
+      imageHeight: 600,
+      alt: "Dino Cuddle Friends coloring book cover",
+      badge: "New",
+    },
+    {
       name: "Rainbow Sprinkle Unicorns",
       blurb: "30 soft, sparkly unicorn scenes for little colorers.",
       price: "$5.99 printable PDF",
