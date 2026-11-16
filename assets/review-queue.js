@@ -25,7 +25,109 @@
 //   shirts  wingscrew-tshirt-review
 //   books   wingscrew-coloring-review
 //   other   wingscrew-hot-or-not-review
+//
+// In the store
+// IN_STORE is the only list to edit when another batch goes live.
+// A number hides every card for that design (shirt, hoodie, sticker, mug, tote).
+// Published designs from the WingsCrew Clothing store list dated Nov 5, 2026.
+// 93 is Unc Status: Unlocked. It was dropped, not published. It stays in this
+// list so it does not sit in the decision queue.
 (function () {
+  var IN_STORE = [
+    // Published Nov 5, 2026
+    "01",
+    "02",
+    "03",
+    "06",
+    "07",
+    "11",
+    "12",
+    "16",
+    "22",
+    "23",
+    "24",
+    "28",
+    "30",
+    "31",
+    "32",
+    "36",
+    "37",
+    "41",
+    "44",
+    "45",
+    "46",
+    "48",
+    "50",
+    "52",
+    "56",
+    "57",
+    "59",
+    "60",
+    "61",
+    "62",
+    "63",
+    "68",
+    "69",
+    "70",
+    "72",
+    "75",
+    "77",
+    "78",
+    "79",
+    "80",
+    "82",
+    "83",
+    "86",
+    "88",
+    "89",
+    "98",
+    "99",
+    "100",
+    "102",
+    "103",
+    "104",
+    "106",
+    "113",
+    "114",
+    "115",
+    "122",
+    "123",
+    "125",
+    "129",
+    "130",
+    "132",
+    "138",
+    "148",
+    "149",
+    "154",
+    "157",
+    "159",
+    "160",
+    "164",
+    "173",
+    "174",
+    "179",
+    "180",
+    "187",
+    "189",
+    "190",
+    "191",
+    "192",
+    "193",
+    "194",
+    "195",
+    "196",
+    "197",
+    "199",
+    "200",
+    "201",
+    "202",
+    "203",
+    "204",
+    // Dropped. Not in the store.
+    "93",
+  ];
+  window.WINGS_IN_STORE = IN_STORE;
   window.WINGS_REVIEW_OTHER = [
     // {
     //   id: "example",
@@ -127,8 +229,25 @@
     return list;
   }
 
+  var inStoreNumbers = {};
+  IN_STORE.forEach(function (value) {
+    var n = parseInt(value, 10);
+    if (isFinite(n)) inStoreNumbers[String(n)] = true;
+  });
+
+  function designNumber(id) {
+    var match = String(id).match(/^(\d+)/);
+    if (!match) return "";
+    return String(parseInt(match[1], 10));
+  }
+
   var queue = [];
   var shirtItems = mapList(window.WINGS_TSHIRTS, "");
+  shirtItems.forEach(function (item) {
+    var number = designNumber(item.id);
+    item.inStore = inStoreNumbers[number] === true;
+    item.notNeeded = number === "93";
+  });
   if (shirtItems.length) {
     queue.push({
       id: "shirts",

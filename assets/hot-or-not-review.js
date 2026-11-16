@@ -26,6 +26,7 @@
   var currentSet = null;
   var index = 0;
   var showDecided = false;
+  var showInStore = false;
 
   function escapeHtml(value) {
     return String(value)
@@ -145,7 +146,18 @@
     var total = 0;
     setsFor(type).forEach(function (set) {
       set.items.forEach(function (item) {
+        if (item.inStore) return;
         if (!isDecided(set, item)) total += 1;
+      });
+    });
+    return total;
+  }
+
+  function inStoreCount() {
+    var total = 0;
+    setsFor("shirts").forEach(function (set) {
+      set.items.forEach(function (item) {
+        if (item.inStore) total += 1;
       });
     });
     return total;
@@ -154,7 +166,10 @@
   function visibleIndexes() {
     var list = [];
     if (!currentSet) return list;
+    var shirts = currentSet.type === "shirts";
     currentSet.items.forEach(function (item, itemIndex) {
+      if (shirts && showInStore && !item.inStore) return;
+      if (shirts && !showInStore && item.inStore) return;
       if (showDecided || !isDecided(currentSet, item)) list.push(itemIndex);
     });
     return list;
@@ -522,6 +537,11 @@
       art +
       (src ? '<p class="review-zoom-hint">' + zoomHint + "</p>" : "") +
       versionButtons(item, review.lookingAt) +
+      (item.notNeeded
+        ? '<p class="review-flag">Not needed</p>'
+        : item.inStore
+          ? '<p class="review-flag">In the store</p>'
+          : "") +
       (item.flag ? '<p class="review-flag">' + escapeHtml(item.flag) + "</p>" : "") +
       '<h2 id="item-title" tabindex="-1">' +
       escapeHtml(item.title) +
@@ -630,8 +650,17 @@
           "</div>"
         : "";
     var adult = section === "shirts" ? '<p class="badge review-adult">Adult</p>' : "";
+    var inStore =
+      section === "shirts" && inStoreCount()
+        ? '<button type="button" class="review-instore" data-instore aria-pressed="' +
+          (showInStore ? "true" : "false") +
+          '">In store (' +
+          inStoreCount() +
+          ")</button>"
+        : "";
     return (
       adult +
+      inStore +
       picker +
       '<p class="review-count" data-count></p>' +
       '<div data-card></div>' +
@@ -654,6 +683,8 @@
     });
     var decided = mount.querySelector("[data-decided]");
     if (decided) decided.setAttribute("aria-pressed", showDecided ? "true" : "false");
+    var inStoreButton = mount.querySelector("[data-instore]");
+    if (inStoreButton) inStoreButton.setAttribute("aria-pressed", showInStore ? "true" : "false");
     var panel = mount.querySelector("[data-panel]");
     if (panel) panel.setAttribute("aria-labelledby", section);
   }
@@ -932,6 +963,18 @@
       });
     }
 
+    var inStoreButton = mount.querySelector("[data-instore]");
+    if (inStoreButton) {
+      inStoreButton.addEventListener("click", function () {
+        flushNotes();
+        showInStore = !showInStore;
+        var visible = visibleIndexes();
+        if (visible.indexOf(index) === -1) index = visible.length ? visible[0] : -1;
+        if (index < 0) showEmptyFilter();
+        else renderCard(false);
+      });
+    }
+
     Array.prototype.forEach.call(mount.querySelectorAll("[data-set]"), function (button) {
       button.addEventListener("click", function () {
         var nextId = button.getAttribute("data-set");
@@ -965,6 +1008,7 @@
 
   function useSection(type, focusTitle) {
     if (SECTIONS.indexOf(type) === -1) type = "shirts";
+    if (type !== "shirts") showInStore = false;
     section = type;
     useSet(findSet(type, loadSetId(type)), focusTitle);
   }
