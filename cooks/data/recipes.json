@@ -5926,5 +5926,257 @@
         "a splash of lemon-lime soda"
       ]
     }
+  },
+  {
+    "id": "frozen-honey-peanut-butter-banana-bites",
+    "title": "WingsCrew Frozen Honey Peanut Butter Banana Bites",
+    "sourceUrl": null,
+    "inspiredBy": false,
+    "servings": 2,
+    "totalMinutes": 135,
+    "notes": "Our take: frozen banana sandwiches instead of a fresh scoop, Hill Country Fare peanut butter mixed with honey and cinnamon, a light pinch of salt, and no chocolate unless you want it. 15 minutes hands-on; total includes about 2 hours freezing. Rough cost: about 35¢ a serving (about 70¢ for the batch) with store-brand peanut butter, honey and bananas.",
+    "ingredients": [
+      {
+        "item": "ripe bananas, sliced into ½-inch rounds",
+        "qty": 2,
+        "unit": ""
+      },
+      {
+        "item": "creamy peanut butter (Hill Country Fare)",
+        "qty": 3,
+        "unit": "Tbsp"
+      },
+      {
+        "item": "honey (Hill Country Fare)",
+        "qty": 1,
+        "unit": "Tbsp"
+      },
+      {
+        "item": "ground cinnamon, a pinch",
+        "qty": null,
+        "unit": ""
+      },
+      {
+        "item": "salt (a pinch)",
+        "qty": null,
+        "unit": ""
+      }
+    ],
+    "steps": [
+      "Line a plate or small tray with parchment or wax paper.",
+      "Stir the peanut butter, honey, cinnamon and salt until smooth. If the peanut butter is stiff, microwave it 15 seconds.",
+      "Peel the bananas and slice into ½-inch rounds. Lay them out in a single layer.",
+      "Spread a little peanut butter mixture on half the slices and top with the rest to make bite-size sandwiches. (A dollop on top works too if that's easier.)",
+      "Freeze until firm, about 2 hours. Eat straight from the freezer. Keep leftovers in a freezer bag up to 2 weeks."
+    ],
+    "tags": [
+      "sweet",
+      "dessert",
+      "snack",
+      "no-cook",
+      "no-bake",
+      "freezer-friendly",
+      "frozen",
+      "bananas",
+      "peanut-butter",
+      "honey",
+      "vegetarian",
+      "gluten-free",
+      "dairy-free",
+      "cheap",
+      "contains-peanut"
+    ],
+    "sections": [
+      "Bachelor Sweets"
+    ],
+    "seasoning": {
+      "base": "cinnamon, honey and a light pinch of salt",
+      "tryThis": [
+        "a light drizzle of chocolate syrup, like J D's banana scoop",
+        "a little extra cinnamon on top"
+      ],
+      "tip": "Ripe bananas with a few spots freeze creamier; green ones stay icy and less sweet."
+    }
+  },
+  {
+    "id": "sharp-cheddar-ribeye-skillet",
+    "title": "WingsCrew Sharp Cheddar Ribeye Skillet",
+    "sourceUrl": null,
+    "inspiredBy": false,
+    "servings": 4,
+    "totalMinutes": 30,
+    "notes": "Our take: cheaper H-E-B Select value-pack ribeyes sliced thin, sharp cheddar instead of provolone, Nature's Seasoning and fresh garlic instead of a heavy salt rub, no mushrooms, and no hoagie required. Eat it from the skillet or pile it into corn tortillas. About 1 lb of steak feeds 4. Rough cost: about $4.25 to $4.50 a serving with the value-pack ribeye, green peppers and store-brand cheddar.",
+    "ingredients": [
+      {
+        "item": "ribeye steaks, sliced thin (H-E-B Select value pack)",
+        "qty": 1,
+        "unit": "lb"
+      },
+      {
+        "item": "Nature's Seasoning",
+        "qty": 1,
+        "unit": "tsp"
+      },
+      {
+        "item": "garlic powder",
+        "qty": 0.5,
+        "unit": "tsp"
+      },
+      {
+        "item": "black pepper",
+        "qty": 0.5,
+        "unit": "tsp"
+      },
+      {
+        "item": "corn oil (Hill Country Fare), divided",
+        "qty": 2,
+        "unit": "Tbsp"
+      },
+      {
+        "item": "yellow onion, thinly sliced",
+        "qty": 1,
+        "unit": ""
+      },
+      {
+        "item": "green bell peppers, thinly sliced",
+        "qty": 2,
+        "unit": ""
+      },
+      {
+        "item": "garlic cloves, minced",
+        "qty": 3,
+        "unit": ""
+      },
+      {
+        "item": "shredded sharp cheddar (Great Value)",
+        "qty": 1,
+        "unit": "cup"
+      },
+      {
+        "item": "corn tortillas, warmed, to serve (optional)",
+        "qty": null,
+        "unit": ""
+      }
+    ],
+    "steps": [
+      "Pat the steaks dry. Slice them as thin as you can across the grain (a 20-minute freeze first makes this easier). Toss with Nature's Seasoning, garlic powder and black pepper.",
+      "Heat 1 Tbsp oil in a big skillet on medium-high. Cook the onion and peppers 6-8 minutes until soft and a little browned. Add the garlic for 30 seconds. Scoop the veggies onto a plate.",
+      "Add the last oil. Spread half the steak in a single layer and sear 1-2 minutes a side until just browned. Repeat with the rest. The thickest pieces should reach 145°F.",
+      "Turn the heat off. Stir the veggies back in. Sprinkle the cheddar over the top, cover, and let it melt 1-2 minutes. Rest a couple minutes.",
+      "Eat from the skillet, or pile into warm corn tortillas."
+    ],
+    "tags": [
+      "dinner",
+      "ribeye",
+      "beef",
+      "skillet",
+      "one-pan",
+      "quick",
+      "gluten-free",
+      "sharp-cheddar",
+      "bell-peppers",
+      "garlic",
+      "stretch-the-steak",
+      "cast-iron",
+      "contains-dairy"
+    ],
+    "sections": [
+      "Dinner"
+    ],
+    "seasoning": {
+      "base": "Nature's Seasoning, garlic and black pepper",
+      "tryThis": [
+        "a pinch of chili powder on the steak",
+        "hot sauce",
+        "a pinch of cumin with the peppers"
+      ],
+      "tip": "Nature's Seasoning and cheddar are both salty; don't add extra salt until you taste. Don't overcook the thin slices or they get tough."
+    }
+  },
+  {
+    "id": "microwave-ham-cheddar-egg-mug",
+    "title": "WingsCrew Microwave Ham & Sharp Cheddar Egg Mug",
+    "sourceUrl": null,
+    "inspiredBy": false,
+    "servings": 1,
+    "totalMinutes": 7,
+    "notes": "Our take: two eggs so it's a real meal, diced ham and sharp cheddar, Nature's Seasoning and garlic powder instead of salt, a splash of milk, and no bread in the mug. Use a 12-oz or bigger microwave-safe mug so it doesn't overflow. Rough cost: about $1.10 a serving with Great Value eggs, store-brand cheddar and diced ham.",
+    "ingredients": [
+      {
+        "item": "large eggs (Great Value)",
+        "qty": 2,
+        "unit": ""
+      },
+      {
+        "item": "milk",
+        "qty": 1,
+        "unit": "Tbsp"
+      },
+      {
+        "item": "Nature's Seasoning",
+        "qty": 0.125,
+        "unit": "tsp"
+      },
+      {
+        "item": "garlic powder",
+        "qty": 0.125,
+        "unit": "tsp"
+      },
+      {
+        "item": "black pepper",
+        "qty": 0.125,
+        "unit": "tsp"
+      },
+      {
+        "item": "diced cooked ham (Farmland)",
+        "qty": 0.33,
+        "unit": "cup"
+      },
+      {
+        "item": "shredded sharp cheddar (Great Value), divided",
+        "qty": 0.25,
+        "unit": "cup"
+      },
+      {
+        "item": "butter or corn oil, for the mug",
+        "qty": 0.5,
+        "unit": "tsp"
+      }
+    ],
+    "steps": [
+      "Lightly butter or oil a 12-oz or bigger microwave-safe mug. No metal.",
+      "Beat the eggs, milk, Nature's Seasoning, garlic powder and pepper in the mug with a fork. Stir in the ham and most of the cheddar.",
+      "Microwave on High 45 seconds. Stir, scraping the sides. Microwave 30-45 seconds more, until the eggs are just set and the center reaches 160°F. The ham should be steaming hot.",
+      "Sprinkle the last cheddar on top and let the mug stand 1 minute (it's hot — hold the handle).",
+      "Eat from the mug. Microwaves vary; add 10-second bursts if the center is still wet."
+    ],
+    "tags": [
+      "breakfast",
+      "microwave",
+      "quick",
+      "single-serving",
+      "eggs",
+      "ham",
+      "sharp-cheddar",
+      "gluten-free",
+      "high-protein",
+      "cheap",
+      "5-min-prep",
+      "contains-dairy",
+      "contains-egg"
+    ],
+    "sections": [
+      "Bachelor Meals",
+      "Breakfast"
+    ],
+    "seasoning": {
+      "base": "Nature's Seasoning, garlic powder and black pepper",
+      "tryThis": [
+        "hot sauce",
+        "a pinch of chili powder",
+        "crumbled leftover bacon instead of ham"
+      ],
+      "tip": "Ham and cheddar are salty, so keep the Nature's Seasoning light. A bigger mug leaves room for the eggs to puff."
+    }
   }
 ]
