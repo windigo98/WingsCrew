@@ -16,6 +16,18 @@
 // link         Optional https URL
 window.WINGS_UPDATES = [
   {
+    date: "2026-11-17",
+    title: "New WingsCrew Cooks recipes",
+    description: "Three new recipes: frozen honey peanut butter banana bites, a sharp cheddar ribeye skillet, and a microwave ham and cheddar egg mug.",
+    link: "https://wingscrew.com/cooks/",
+  },
+  {
+    date: "2026-11-16",
+    title: "Dino Cuddle Friends coloring book",
+    description: "Our new printable dinosaur coloring book is available.",
+    link: "https://wingscrew.com/#printables",
+  },
+  {
     date: "2026-11-11",
     title: "WingsCrew Printables",
     description: "Our printable coloring books are now for sale, including Rainbow Sprinkle Unicorns and a Christmas bundle.",
