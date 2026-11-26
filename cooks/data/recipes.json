@@ -6178,5 +6178,291 @@
       ],
       "tip": "Ham and cheddar are salty, so keep the Nature's Seasoning light. A bigger mug leaves room for the eggs to puff."
     }
+  },
+  {
+    "id": "honey-cinnamon-pb-banana-skillet-quesadilla",
+    "title": "WingsCrew Honey Cinnamon PB Banana Skillet Quesadilla",
+    "sourceUrl": null,
+    "inspiredBy": false,
+    "servings": 1,
+    "totalMinutes": 10,
+    "notes": "Our take: J D's Banana Peanut Butter Scoop folded into a crispy tortilla. Hill Country Fare peanut butter, more honey than anything else, cinnamon, and a tiny pinch of salt. Twist: a few chocolate chips inside if you want it more like the Scoop. Rough cost: about 60¢ with store-brand tortillas, peanut butter and a banana (estimate).",
+    "ingredients": [
+      {
+        "item": "burrito-size flour tortilla (H-E-B or Great Value)",
+        "qty": 1,
+        "unit": ""
+      },
+      {
+        "item": "creamy peanut butter (Hill Country Fare)",
+        "qty": 2,
+        "unit": "Tbsp"
+      },
+      {
+        "item": "ripe banana, thinly sliced",
+        "qty": 1,
+        "unit": ""
+      },
+      {
+        "item": "honey (Hill Country Fare)",
+        "qty": 2,
+        "unit": "tsp"
+      },
+      {
+        "item": "ground cinnamon",
+        "qty": 0.25,
+        "unit": "tsp"
+      },
+      {
+        "item": "salt",
+        "qty": "pinch",
+        "unit": ""
+      },
+      {
+        "item": "butter, for the pan",
+        "qty": 1,
+        "unit": "tsp"
+      },
+      {
+        "item": "chocolate chips (optional)",
+        "qty": 1,
+        "unit": "Tbsp"
+      }
+    ],
+    "steps": [
+      "Spread the peanut butter over half of the tortilla, leaving a thin border.",
+      "Lay the banana slices on the peanut butter. Drizzle with honey, then sprinkle the cinnamon and a tiny pinch of salt (and chocolate chips, if using).",
+      "Fold the bare half over to make a half-moon and press down gently.",
+      "Melt the butter in a nonstick or cast-iron skillet over medium-low heat. Cook the quesadilla 2 to 3 minutes per side, until golden and crisp. Keep the heat low so the honey doesn't scorch.",
+      "Let it rest 1 minute (the filling is hot), then cut into wedges. Extra honey on top is allowed."
+    ],
+    "tags": [
+      "sweet",
+      "dessert",
+      "snack",
+      "bachelor",
+      "quick",
+      "stovetop",
+      "bananas",
+      "peanut-butter",
+      "honey",
+      "single-serving",
+      "cheap",
+      "vegetarian",
+      "contains-peanut",
+      "contains-gluten",
+      "contains-dairy"
+    ],
+    "sections": [
+      "Bachelor Sweets"
+    ],
+    "seasoning": {
+      "base": "Cinnamon, honey and a tiny pinch of salt",
+      "tryThis": [
+        "a dusting of cinnamon sugar on the outside after cooking",
+        "a drizzle of chocolate syrup, like the Scoop",
+        "a pinch of pumpkin pie spice instead of cinnamon"
+      ],
+      "tip": "The pinch of salt makes the peanut butter and honey taste sweeter. Low heat is the key: the tortilla crisps before the filling burns."
+    }
+  },
+  {
+    "id": "instant-pot-loaded-bacon-cheddar-potato-soup",
+    "title": "WingsCrew Loaded Bacon & Sharp Cheddar Potato Soup (Instant Pot)",
+    "sourceUrl": null,
+    "inspiredBy": false,
+    "servings": 6,
+    "totalMinutes": 45,
+    "notes": "Our take: no flour and no heavy cream. We mash some of the potatoes to thicken it, use milk and a little cream cheese, and season with Nature's Seasoning and garlic instead of lots of salt. Bacon gets crisped right in the pot. Rough cost: about $1.25 a serving with a 5-lb bag of russets, H-E-B bacon and Hill Country Fare cheddar (estimate).",
+    "ingredients": [
+      {
+        "item": "bacon (H-E-B or Great Value), chopped",
+        "qty": 6,
+        "unit": "slices"
+      },
+      {
+        "item": "yellow onion, diced",
+        "qty": 1,
+        "unit": ""
+      },
+      {
+        "item": "garlic cloves, minced",
+        "qty": 4,
+        "unit": ""
+      },
+      {
+        "item": "russet potatoes, peeled and cut into 1-inch cubes (about 6 cups)",
+        "qty": 2.5,
+        "unit": "lb"
+      },
+      {
+        "item": "low-sodium chicken broth (Hill Country Fare)",
+        "qty": 3,
+        "unit": "cups"
+      },
+      {
+        "item": "Nature's Seasoning",
+        "qty": 1,
+        "unit": "tsp"
+      },
+      {
+        "item": "garlic powder",
+        "qty": 0.5,
+        "unit": "tsp"
+      },
+      {
+        "item": "black pepper",
+        "qty": 0.5,
+        "unit": "tsp"
+      },
+      {
+        "item": "milk",
+        "qty": 1.5,
+        "unit": "cups"
+      },
+      {
+        "item": "cream cheese (Hill Country Fare), cubed",
+        "qty": 2,
+        "unit": "oz"
+      },
+      {
+        "item": "shredded sharp cheddar (Hill Country Fare), plus more for topping",
+        "qty": 1.5,
+        "unit": "cups"
+      },
+      {
+        "item": "green onions, sliced, for topping",
+        "qty": 3,
+        "unit": ""
+      }
+    ],
+    "steps": [
+      "Set the Instant Pot to Sauté. Cook the chopped bacon, stirring, until crisp, about 6 to 8 minutes. Scoop it onto a paper towel. Pour off all but about 1 Tbsp of the grease.",
+      "Add the onion and cook 3 minutes, until soft. Add the garlic and stir 30 seconds.",
+      "Pour in about ½ cup of the broth and scrape the bottom well so nothing is stuck (this prevents the Burn warning). Turn off Sauté.",
+      "Add the potatoes, the rest of the broth, Nature's Seasoning, garlic powder and pepper. Lock the lid, set the valve to Sealing, and pressure cook on High for 5 minutes.",
+      "Let the pressure release naturally for 10 minutes, then carefully quick-release the rest, keeping your hand and face away from the valve.",
+      "Mash about half the potatoes right in the pot with a potato masher, leaving the rest chunky.",
+      "Set to Sauté on Low (or Keep Warm). Stir in the milk and cream cheese until the cream cheese melts. Heat until steaming, but don't let it boil hard so the milk doesn't curdle.",
+      "Turn off the heat and stir in the cheddar a handful at a time until melted. Taste and add salt only if it needs it.",
+      "Top bowls with the bacon, extra cheddar and green onions. Cool leftovers within 2 hours and refrigerate up to 4 days; reheat to steaming hot (165°F)."
+    ],
+    "tags": [
+      "soup",
+      "instant-pot",
+      "dinner",
+      "lunch",
+      "potatoes",
+      "bacon",
+      "sharp-cheddar",
+      "comfort-food",
+      "make-ahead",
+      "cheap",
+      "gluten-free",
+      "contains-dairy"
+    ],
+    "sections": [
+      "Instant Pot",
+      "Dinner",
+      "Lunch"
+    ],
+    "seasoning": {
+      "base": "Nature's Seasoning, fresh and powdered garlic, and black pepper",
+      "tryThis": [
+        "diced leftover ham instead of bacon",
+        "a spoon of pickled jalapeños for a kick",
+        "smoked paprika on top",
+        "a scoop of sour cream in each bowl"
+      ],
+      "tip": "Bacon, cheddar and broth are all salty, so season light and taste at the end. Check that your broth and bacon are labeled gluten-free if that matters for your crew."
+    }
+  },
+  {
+    "id": "grilled-honey-garlic-mustard-ham-steaks",
+    "title": "WingsCrew Grilled Honey Garlic Mustard Ham Steaks",
+    "sourceUrl": null,
+    "inspiredBy": false,
+    "servings": 4,
+    "totalMinutes": 20,
+    "notes": "Our take: honey (not brown sugar) carries the glaze, with yellow mustard, fresh garlic and a little Nature's Seasoning. Ham steaks are already fully cooked, so this is a fast weeknight grill meal. Twist: throw thick pineapple rings on the grill next to them. Rough cost: about $1.75 a serving with store-brand ham steaks (estimate; check the price per pound).",
+    "ingredients": [
+      {
+        "item": "fully cooked bone-in or boneless ham steaks, about ½ inch thick (H-E-B or Great Value)",
+        "qty": 2,
+        "unit": "lb"
+      },
+      {
+        "item": "honey (Hill Country Fare)",
+        "qty": 3,
+        "unit": "Tbsp"
+      },
+      {
+        "item": "yellow mustard (Great Value) or Dijon",
+        "qty": 2,
+        "unit": "Tbsp"
+      },
+      {
+        "item": "garlic cloves, minced",
+        "qty": 2,
+        "unit": ""
+      },
+      {
+        "item": "apple cider vinegar",
+        "qty": 1,
+        "unit": "tsp"
+      },
+      {
+        "item": "Nature's Seasoning",
+        "qty": 0.25,
+        "unit": "tsp"
+      },
+      {
+        "item": "black pepper",
+        "qty": 0.25,
+        "unit": "tsp"
+      },
+      {
+        "item": "canned pineapple rings, drained (optional)",
+        "qty": 4,
+        "unit": ""
+      },
+      {
+        "item": "oil, for the grates",
+        "qty": 1,
+        "unit": "tsp"
+      }
+    ],
+    "steps": [
+      "Heat the grill to medium-high (about 400°F). Clean and lightly oil the grates.",
+      "Stir the honey, mustard, garlic, vinegar, Nature's Seasoning and pepper in a small bowl. Spoon about a third into a separate cup to serve at the table (it never touches raw-meat brushes).",
+      "Pat the ham steaks dry. Snip the fatty edge in a couple of spots so they don't curl.",
+      "Grill the ham 3 to 4 minutes, brush the top with glaze, flip, and grill 3 to 4 minutes more, brushing again. Add the pineapple rings for the same time if using.",
+      "The ham is ready when it has grill marks and is heated through to 140°F in the center. Honey burns fast, so move it to a cooler part of the grill if the glaze starts to blacken.",
+      "Rest 2 minutes, cut into pieces, and spoon the saved glaze over the top. Great with Microwave Baked Potatoes or butter corn."
+    ],
+    "tags": [
+      "grill",
+      "dinner",
+      "ham",
+      "honey",
+      "quick",
+      "high-protein",
+      "cheap",
+      "gluten-free",
+      "dairy-free"
+    ],
+    "sections": [
+      "Grill",
+      "Dinner"
+    ],
+    "seasoning": {
+      "base": "Honey, yellow mustard, fresh garlic and a little Nature's Seasoning",
+      "tryThis": [
+        "a pinch of cayenne or chili powder in the glaze",
+        "swap half the honey for Welch's grape jelly",
+        "a squeeze of lime at the end"
+      ],
+      "tip": "Ham is already salty, so go very light on Nature's Seasoning and skip extra salt. Check that the mustard and ham are gluten-free if needed."
+    }
   }
 ]
